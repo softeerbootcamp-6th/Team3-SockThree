@@ -1,0 +1,59 @@
+name: Dependency Update
+
+on:
+  schedule:
+    - cron: '0 2 * * 1' # 매주 월요일 오전 2시
+  workflow_dispatch: # 수동 실행 가능
+
+jobs:
+  update-dependencies:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+    
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+    
+    - name: Update Gradle dependencies
+      run: |
+        cd apps/backend
+        ./gradlew dependencyUpdates
+    
+    - name: Update npm dependencies
+      run: |
+        cd apps/frontend
+        npx npm-check-updates -u
+        npm install
+    
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        commit-message: '⬆️ Update dependencies'
+        title: '⬆️ Weekly dependency update'
+        body: |
+          ## 📦 의존성 업데이트
+          
+          자동으로 생성된 의존성 업데이트 PR입니다.
+          
+          ### 변경사항
+          - Backend (Gradle) 의존성 업데이트
+          - Frontend (npm) 의존성 업데이트
+          
+          ### 확인사항
+          - [ ] 테스트가 정상적으로 통과하는지 확인
+          - [ ] Breaking changes가 있는지 확인
+          - [ ] 보안 취약점이 해결되었는지 확인
+        branch: dependency-updates
+        delete-branch: true

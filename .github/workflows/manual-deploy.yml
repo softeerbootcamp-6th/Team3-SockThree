@@ -1,0 +1,100 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '배포할 환경을 선택하세요'
+        required: true
+        default: 'development'
+        type: choice
+        options:
+        - development
+        - staging
+        - production
+      service:
+        description: '배포할 서비스를 선택하세요'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+        - all
+        - backend
+        - frontend
+      image_tag:
+        description: '배포할 이미지 태그 (기본: latest)'
+        required: false
+        default: 'latest'
+
+env:
+  REGISTRY: ghcr.io
+  BACKEND_IMAGE_NAME: ${{ github.repository }}/backend
+  FRONTEND_IMAGE_NAME: ${{ github.repository }}/frontend
+
+jobs:
+  deploy-backend:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.service == 'all' || inputs.service == 'backend' }}
+    environment: ${{ inputs.environment }}
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Deploy Backend
+      run: |
+        echo "🚀 Backend 배포를 시작합니다..."
+        echo "환경: ${{ inputs.environment }}"
+        echo "이미지: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}:${{ inputs.image_tag }}"
+        
+        # TODO: 실제 배포 로직 구현
+        # 예시:
+        # - SSH로 서버 접속
+        # - Docker Compose 업데이트
+        # - 컨테이너 재시작
+        # - 헬스체크
+        
+        echo "✅ Backend 배포가 완료되었습니다!"
+
+  deploy-frontend:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.service == 'all' || inputs.service == 'frontend' }}
+    environment: ${{ inputs.environment }}
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Deploy Frontend
+      run: |
+        echo "🚀 Frontend 배포를 시작합니다..."
+        echo "환경: ${{ inputs.environment }}"
+        echo "이미지: ${{ env.REGISTRY }}/${{ env.FRONTEND_IMAGE_NAME }}:${{ inputs.image_tag }}"
+        
+        # TODO: 실제 배포 로직 구현
+        # 예시:
+        # - S3에 정적 파일 업로드
+        # - CloudFront 캐시 무효화
+        # 또는
+        # - Docker 컨테이너 배포
+        
+        echo "✅ Frontend 배포가 완료되었습니다!"
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: [deploy-backend, deploy-frontend]
+    if: always()
+    
+    steps:
+    - name: Notify deployment result
+      run: |
+        echo "📋 배포 결과 알림"
+        echo "환경: ${{ inputs.environment }}"
+        echo "서비스: ${{ inputs.service }}"
+        echo "이미지 태그: ${{ inputs.image_tag }}"
+        
+        # TODO: 실제 알림 로직 구현
+        # 예시:
+        # - Slack 알림
+        # - Discord 알림
+        # - 이메일 알림

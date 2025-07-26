@@ -1,0 +1,320 @@
+# ==============================================
+# Team3-SockThree .gitignore
+# Spring Boot Backend + React Frontend
+# ==============================================
+
+# ==============================================
+# OS 관련 파일
+# ==============================================
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msm
+*.msp
+*.lnk
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ==============================================
+# IDE 관련 파일
+# ==============================================
+
+# IntelliJ IDEA
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.idea_modules/
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# Eclipse
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ==============================================
+# Java/Spring Boot 관련
+# ==============================================
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+
+# BlueJ files
+*.ctxt
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# virtual machine crash logs
+hs_err_pid*
+replay_pid*
+
+# Gradle
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Maven
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Spring Boot
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ==============================================
+# Node.js/React 관련
+# ==============================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+jspm_packages/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# ==============================================
+# 환경 변수 및 설정 파일
+# ==============================================
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Application properties (민감한 정보 포함)
+application-local.yml
+application-secret.yml
+application-prod.yml
+
+# ==============================================
+# 빌드 및 배포 관련
+# ==============================================
+
+# Docker
+*.dockerignore
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ==============================================
+# 테스트 관련
+# ==============================================
+
+# Test results
+/test-results/
+/playwright-report/
+/test-results.xml
+coverage.xml
+
+# JUnit
+TEST-*.xml
+
+# ==============================================
+# 기타 개발 도구
+# ==============================================
+
+# Swagger/OpenAPI
+swagger-ui/
+
+# JMeter
+*.jmx.log
+
+# Postman
+*.postman_collection.json
+*.postman_environment.json
+
+# ==============================================
+# 프로젝트별 무시 파일
+# ==============================================
+
+# 임시 파일
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# 백업 파일
+*.bak
+*.backup
+
+# 압축 파일 (소스코드 백업용)
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# 개발용 스크립트
+scripts/local/
+scripts/dev/
+
+# 문서 임시 파일
+*.docx~
+*.xlsx~
+*.pptx~
+
+# ==============================================
+# 커스텀 무시 파일
+# ==============================================
+
+# 로컬 설정 파일
+local/
+local.properties
+
+# 개발자별 설정
+*.local.*
+
+# 실험적 기능
+experimental/
+prototypes/
+
+# TODO: 프로젝트 진행하면서 필요에 따라 추가
