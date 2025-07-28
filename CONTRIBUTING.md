@@ -51,6 +51,9 @@ Git Flow를 기반으로 한 브랜치 전략을 사용합니다.
 - `fix/*`: 버그 수정
 - `hotfix/*`: 긴급 수정
 - `release/*`: 릴리스 준비
+- `refactor/*`: 코드 리팩토링
+- `docs/*`: 문서 작업
+- `chore/*`: 빌드 시스템, 의존성 업데이트 등
 
 ### 브랜치 네이밍 규칙
 
@@ -58,6 +61,10 @@ Git Flow를 기반으로 한 브랜치 전략을 사용합니다.
 feature/이슈번호-간단한설명
 fix/이슈번호-간단한설명
 hotfix/이슈번호-간단한설명
+release/이슈번호-간단한설명
+refactor/이슈번호-간단한설명
+docs/이슈번호-간단한설명
+chore/이슈번호-간단한설명
 ```
 
 예시:
@@ -65,6 +72,10 @@ hotfix/이슈번호-간단한설명
 feature/123-user-authentication
 fix/456-login-bug
 hotfix/789-security-patch
+release/101-v1.2.0
+refactor/202-database-layer
+docs/303-api-documentation
+chore/404-update-dependencies
 ```
 
 ## 📝 커밋 컨벤션
