@@ -1,2 +1,5 @@
-# Global owners
-* @softeerbootcamp-6th/team3-sockthree
+# Backend owners
+/apps/backend/ @coffeesigma @hkjbrian
+
+# Frontend owners
+/apps/frontend/ @yyeonzu @choi-jiae
