@@ -17,7 +17,7 @@ Team3-SockThree/
 
 ### 필수 요구사항
 
-- **Java**: 21 이상
+- **Java**: 17 이상
 - **Node.js**: 18 이상
 - **Docker**: 최신 버전 (선택사항)
 
@@ -68,7 +68,8 @@ cd ../frontend
 
 ## 🛠️ 개발 도구
 
-- **Backend**: Spring Boot (Java 21), Gradle, JPA, MySQL
+- **Backend**: Spring Boot (Java 17), Gradle, JPA, MySQL
+  - **아키텍처**: DDD (Domain Driven Design)
 - **Frontend**: React, TypeScript, Vite
 - **CI/CD**: GitHub Actions
 - **Container**: Docker, GitHub Container Registry
