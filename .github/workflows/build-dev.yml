@@ -28,9 +28,9 @@ jobs:
         with:
           filters: |
             backend:
-              - 'apps/backend/**'
+              - 'server/**'
             frontend:
-              - 'apps/frontend/**'
+              - 'client/**'
 
   build-backend-dev:
     runs-on: ubuntu-latest
@@ -63,7 +63,7 @@ jobs:
     - name: Build and push backend Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./apps/backend
+        context: ./server
         push: true
         tags: ${{ steps.backend-meta.outputs.tags }}
         labels: ${{ steps.backend-meta.outputs.labels }}
@@ -99,7 +99,7 @@ jobs:
     - name: Build and push frontend Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./apps/frontend
+        context: ./client
         push: true
         tags: ${{ steps.frontend-meta.outputs.tags }}
         labels: ${{ steps.frontend-meta.outputs.labels }}

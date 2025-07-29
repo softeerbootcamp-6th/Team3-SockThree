@@ -12,9 +12,8 @@ Team3-SockThree/
 │   ├── CODEOWNERS              # 코드 소유자 정의
 │   ├── PULL_REQUEST_TEMPLATE.md # PR 템플릿
 │   └── BRANCH_PROTECTION.md    # 브랜치 보호 가이드
-├── apps/                       # 애플리케이션 코드
-│   ├── backend/                # Spring Boot 백엔드
-│   └── frontend/               # React 프론트엔드
+├── client/                     # React 프론트엔드
+├── server/                     # Spring Boot 백엔드
 ├── libs/                       # 공통 라이브러리
 ├── docs/                       # 프로젝트 문서
 ├── scripts/                    # 유틸리티 스크립트
@@ -25,15 +24,15 @@ Team3-SockThree/
 └── package.json                # 루트 패키지 설정 (모노레포)
 ```
 
-## 🌐 Backend 구조 (apps/backend/)
+## 🌐 Backend 구조 (server/)
 
 Spring Boot 기반 백엔드 애플리케이션으로 DDD(Domain Driven Design) 구조를 따릅니다.
 
 ```
-backend/
+server/
 ├── src/
 │   ├── main/
-│   │   ├── java/com/softeer/backend/
+│   │   ├── java/com/softeer/server/
 │   │   │   ├── common/         # 공통 모듈
 │   │   │   │   ├── config/     # 설정 클래스 (DB, Security, etc.)
 │   │   │   │   ├── exception/  # 전역 예외 처리
@@ -68,7 +67,7 @@ backend/
 │   │       ├── application-prod.yml # 운영 환경 설정
 │   │       └── data.sql        # 초기 데이터
 │   └── test/                   # 테스트 코드
-│       ├── java/com/softeer/backend/
+│       ├── java/com/softeer/server/
 │       │   ├── domain/         # 도메인 단위 테스트
 │       │   ├── application/    # 응용 서비스 테스트
 │       │   ├── infrastructure/ # 인프라스트럭처 테스트
@@ -118,12 +117,12 @@ domain/user/
     └── Password.java       # 패스워드 값 객체
 ```
 
-## ⚛️ Frontend 구조 (apps/frontend/)
+## ⚛️ Frontend 구조 (client/sockthree-frontend/)
 
 React 기반 프론트엔드 애플리케이션 구조입니다.
 
 ```
-frontend/
+client/
 ├── public/                     # 정적 파일
 │   ├── index.html
 │   └── favicon.ico
@@ -219,19 +218,13 @@ scripts/
    git clone https://github.com/softeerbootcamp-6th/Team3-SockThree.git
    ```
 
-2. **개발 환경 설정**
-   ```bash
-   cd Team3-SockThree
-   ./scripts/setup.sh
-   ```
-
-3. **개발 서버 실행**
+2. **개발 서버 실행**
    ```bash
    # 백엔드
-   cd apps/backend
+   cd server/
    ./gradlew bootRun
    
    # 프론트엔드
-   cd apps/frontend
+   cd client/
    npm start
    ```

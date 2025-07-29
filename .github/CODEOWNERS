@@ -1,5 +1,5 @@
 # Backend owners
-/apps/backend/ @coffeesigma @hkjbrian
+/server/ @coffeesigma @hkjbrian
 
 # Frontend owners
-/apps/frontend/ @yyeonzu @choi-jiae
+/client/ @yyeonzu @choi-jiae

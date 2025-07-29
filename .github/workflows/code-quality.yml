@@ -25,10 +25,10 @@ jobs:
         with:
           filters: |
             backend:
-              - 'apps/backend/**'
+              - 'server/**'
               - '.github/workflows/code-quality.yml'
             frontend:
-              - 'apps/frontend/**'
+              - 'client/**'
               - '.github/workflows/code-quality.yml'
 
   backend-quality:
@@ -56,16 +56,16 @@ jobs:
           ${{ runner.os }}-gradle-
     
     - name: Grant execute permission for gradlew
-      run: chmod +x ./apps/backend/gradlew
-      
+      run: chmod +x ./server/backend/gradlew
+
     - name: Run Checkstyle
       run: |
-        cd apps/backend
+        cd server/backend
         ./gradlew checkstyleMain checkstyleTest
       
     - name: Run SpotBugs
       run: |
-        cd apps/backend
+        cd server/backend
         ./gradlew spotbugsMain
 
   frontend-quality:
@@ -81,19 +81,19 @@ jobs:
       with:
         node-version: '18'
         cache: 'npm'
-        cache-dependency-path: apps/frontend/package-lock.json
-    
+        cache-dependency-path: client/sockthree-frontend/package-lock.json
+
     - name: Install dependencies
       run: |
-        cd apps/frontend
+        cd client/sockthree-frontend
         npm ci
     
     - name: Run ESLint
       run: |
-        cd apps/frontend
+        cd client/sockthree-frontend
         npm run lint
     
     - name: Run Prettier check
       run: |
-        cd apps/frontend
+        cd client/sockthree-frontend
         npm run format:check
