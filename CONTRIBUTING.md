@@ -59,18 +59,18 @@ Git Flow를 기반으로 한 브랜치 전략을 사용합니다.
 ### 브랜치 네이밍 규칙
 
 ```
-feature/이슈번호-간단한설명
+fe/feature/이슈번호-간단한설명
 ```
 
 예시:
 ```
-feature/123-user-authentication
-fix/456-login-bug
-hotfix/789-security-patch
+fe/feature/123-user-authentication
+be/fix/456-login-bug
+fe/hotfix/789-security-patch
 release/101-v1.2.0
-refactor/202-database-layer
+fe/refactor/202-database-layer
 docs/303-api-documentation
-chore/404-update-dependencies
+fe/chore/404-update-dependencies
 ```
 
 ## 📝 커밋 컨벤션
@@ -80,7 +80,7 @@ chore/404-update-dependencies
 ### 커밋 메시지 형식
 
 ```
-<type>(<scope>): <description>
+<type>: <description>
 
 [optional body]
 
@@ -125,13 +125,14 @@ Closes #123
 ### PR 제목
 
 ```
-[타입] 간단한 설명 (#이슈번호)
+간단한 설명
 ```
+이후 frontend / backend, type label 등록
 
 예시:
 ```
-[FEAT] 사용자 인증 기능 구현 (#123)
-[FIX] 로그인 버그 수정 (#456)
+사용자 인증 기능 구현
+로그인 버그 수정
 ```
 
 ### PR 설명
@@ -183,11 +184,10 @@ Closes #123
 
 ### 이슈 라벨
 
-- **우선순위**: `P1(높음)`, `P2(보통)`, `P3(낮음)`
-- **상태**: `진행중`, `검토필요`, `완료`
-- **영역**: `backend`, `frontend`, `infra`, `docs`
-- **DDD**: `domain`, `application`, `infrastructure`, `presentation`
-- **영역**: `backend`, `frontend`, `infra`, `docs`
+- **우선순위**: `high`, `middle`, `low`
+- **상태**: `Backlog`, `TODO`, `In Progress`, `Done`
+- **영역**: `backend`, `frontend`
+- **타입**: `epic`, `feature`, `fix`, `refactor`, `docs`, `design`, `test`
 
 ## 🔍 코드 리뷰
 
