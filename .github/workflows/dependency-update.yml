@@ -27,12 +27,12 @@ jobs:
     
     - name: Update Gradle dependencies
       run: |
-        cd apps/backend
+        cd server
         ./gradlew dependencyUpdates
     
     - name: Update npm dependencies
       run: |
-        cd apps/frontend
+        cd client
         npx npm-check-updates -u
         npm install
     
