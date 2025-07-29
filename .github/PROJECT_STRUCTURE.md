@@ -117,7 +117,7 @@ domain/user/
     └── Password.java       # 패스워드 값 객체
 ```
 
-## ⚛️ Frontend 구조 (client/sockthree-frontend/)
+## ⚛️ Frontend 구조 (client/)
 
 React 기반 프론트엔드 애플리케이션 구조입니다.
 

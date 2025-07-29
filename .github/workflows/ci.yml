@@ -25,10 +25,10 @@ jobs:
         with:
           filters: |
             backend:
-              - 'server/backend/**'
+              - 'server/**'
               - '.github/workflows/ci.yml'
             frontend:
-              - 'client/sockthree-frontend/**'
+              - 'client/**'
               - '.github/workflows/ci.yml'
 
   backend-test:
@@ -66,11 +66,11 @@ jobs:
           ${{ runner.os }}-gradle-
     
     - name: Grant execute permission for gradlew
-      run: chmod +x ./server/backend/gradlew
+      run: chmod +x ./server/gradlew
 
     - name: Test with Gradle
       run: |
-        cd server/backend
+        cd server
         ./gradlew test
       env:
         SPRING_PROFILES_ACTIVE: test
