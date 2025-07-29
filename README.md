@@ -1,74 +1,92 @@
-# Team3-SockThree
+<div align="center">
+<img width="200" alt="Image" src="https://github.com/user-attachments/assets/b0284a96-9834-4a5e-9f05-b6e5d041c87d" /></div>
 
-Softeer bootcamp 6기 3조 개발 레포지토리입니다.
+<h1> 🥒 시니클 </h1>
 
-## 🏗️ 프로젝트 구조
+> 오직 시니어만을 위한 클래스, 시니클
+> 시니클은 액티브 시니어 대상 자기계발 강좌 통합 검색 & 수요기반 개설 플랫폼입니다.
 
-```
-Team3-SockThree/
-├── client/         # React 프론트엔드
-├── server/         # Spring Boot 백엔드 
-├── .github/        # GitHub 설정 및 워크플로우
-└── docs/           # 프로젝트 문서
-```
+<br/>
 
-## 🚀 시작하기
+<p align="center">
+<a href="">🐭 wiki</a><br>
+  <a href="#서비스-소개">🥒 서비스 소개</a> <br>
+  <a href="#팀원-소개">🍻 팀원 소개</a> <br>
+  <a href="#기술-스택">🛠️ 기술 스택</a> <br>
+  <a href="#프로젝트-구조">⚙️ 프로젝트 구조</a> <br>
+</p>
 
-### 필수 요구사항
+<br/>
 
-- **Java**: 17 이상
-- **Node.js**: 18 이상
-- **Docker**: 최신 버전 (선택사항)
+# 서비스 소개
+시니클입니다!
 
-### 로컬 개발 환경 설정
+<br/>
 
-```bash
-# 저장소 클론
-git clone https://github.com/softeerbootcamp-6th/Team3-SockThree.git
-cd Team3-SockThree
+# 팀원 소개
 
-# 백엔드 설정 (추후 추가)
-cd apps/backend
-# ./gradlew build
+<table align="center">
+  <tr>
+    <td align="center">
+      <a href="https://github.com/yyeonzu">
+        <strong>이정빈</strong>
+      </a><br />
+      <img width="120" src="https://avatars.githubusercontent.com/u/100709499?v=4" alt="정연주 프로필"/><br />
+      <strong>팀장</strong><br />
+      <sub><code>Backend</code></sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/yyeonzu">
+        <strong>정연주</strong>
+      </a><br />
+      <img width="120" src="https://avatars.githubusercontent.com/u/100709499?v=4" alt="정연주 프로필"/><br />
+      <sub><strong>팀원</strong></sub><br />
+      <sub><code>Frontend</code></sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/choi-jiae">
+        <strong>최지애</strong>
+      </a><br />
+      <img width="120" src="https://avatars.githubusercontent.com/u/100709499?v=4" alt="정연주 프로필"/><br />
+      <sub><strong>팀원</strong></sub><br />
+      <sub><code>Frontend</code></sub>
+    </td>
+    <td align="center">
+      <a href="https://github.com/yyeonzu">
+        <strong>한경준</strong>
+      </a><br />
+      <img width="120" src="https://avatars.githubusercontent.com/u/100709499?v=4" alt="정연주 프로필"/><br />
+      <sub><strong>팀원</strong></sub><br />
+      <sub><code>Backend</code></sub>
+    </td>
+  </tr>
+</table>
 
-# 프론트엔드 설정 (추후 추가)
-cd ../frontend
-# npm install
-# npm start
-```
+<br/>
 
-## 🔄 CI/CD 워크플로우
+# 기술 스택
 
-### 자동 실행 워크플로우
+<table>
+  <tr>
+    <td><strong>Frontend:</strong></td>
+    <td>
+      <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=react&logoColor=black" />
+      <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=typescript&logoColor=white" />
+      <img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white" />
+      <img src="https://img.shields.io/badge/Zustand-000000?style=flat&logo=zotero&logoColor=white" />
+      <img src="https://img.shields.io/badge/TanStack_Query-FF4154?style=flat&logo=reactquery&logoColor=white" />
+      <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=flat&logo=tailwindcss&logoColor=white" />
+    </td>
+  </tr>
+  <tr>
+    <td><strong>Backend:</strong></td>
+    <td>
+      <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat&logo=springboot&logoColor=white" />
+      <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=openjdk&logoColor=white" />
+      <img src="https://img.shields.io/badge/JPA-59666C?style=flat" />
+      <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=mysql&logoColor=white" />
+    </td>
+  </tr>
+</table>
 
-- **CI**: 변경된 부분만 테스트 및 빌드
-  - `server/` 변경 시 → 백엔드 테스트 실행
-  - `client/` 변경 시 → 프론트엔드 테스트 실행
-
-- **Code Quality**: 변경된 부분만 품질 검사
-  - 백엔드: Checkstyle, SpotBugs
-  - 프론트엔드: ESLint, Prettier
-
-- **Build Images**: main 브랜치 푸시 시 Docker 이미지 빌드
-
-### 수동 실행 워크플로우
-
-- **Manual Deploy**: GitHub Actions에서 수동으로 배포 실행 가능
-  - 환경 선택: development, staging, production
-  - 서비스 선택: all, backend, frontend
-  - 이미지 태그 지정 가능
-
-## 📝 개발 가이드
-
-- [기여 가이드라인](CONTRIBUTING.md)
-- [프로젝트 구조 가이드](.github/PROJECT_STRUCTURE.md)
-- [DDD 개발 가이드](.github/DDD_GUIDE.md)
-- [브랜치 보호 규칙](.github/BRANCH_PROTECTION.md)
-
-## 🛠️ 개발 도구
-
-- **Backend**: Spring Boot (Java 17), Gradle, JPA, MySQL
-  - **아키텍처**: DDD (Domain Driven Design)
-- **Frontend**: React, TypeScript, Vite
-- **CI/CD**: GitHub Actions
-- **Container**: Docker, GitHub Container Registry
+<br/>
