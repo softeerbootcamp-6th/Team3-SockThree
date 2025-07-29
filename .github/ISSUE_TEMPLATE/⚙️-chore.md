@@ -2,7 +2,6 @@
 name: "⚙️ chore"
 about: 기타 작업을 위한 이슈 템플릿
 titles: "⚙️ "
-labels: "⚙️ chore"
 assignees: ''
 
 ---
