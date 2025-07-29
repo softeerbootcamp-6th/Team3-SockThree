@@ -6,10 +6,9 @@ Softeer bootcamp 6기 3조 개발 레포지토리입니다.
 
 ```
 Team3-SockThree/
-├── apps/
-│   ├── backend/     # Spring Boot 백엔드
-│   └── frontend/    # React 프론트엔드
-├── .github/         # GitHub 설정 및 워크플로우
+├── client/         # React 프론트엔드
+├── server/         # Spring Boot 백엔드 
+├── .github/        # GitHub 설정 및 워크플로우
 └── docs/           # 프로젝트 문서
 ```
 
@@ -43,8 +42,8 @@ cd ../frontend
 ### 자동 실행 워크플로우
 
 - **CI**: 변경된 부분만 테스트 및 빌드
-  - `apps/backend/` 변경 시 → 백엔드 테스트 실행
-  - `apps/frontend/` 변경 시 → 프론트엔드 테스트 실행
+  - `server/` 변경 시 → 백엔드 테스트 실행
+  - `client/` 변경 시 → 프론트엔드 테스트 실행
 
 - **Code Quality**: 변경된 부분만 품질 검사
   - 백엔드: Checkstyle, SpotBugs
