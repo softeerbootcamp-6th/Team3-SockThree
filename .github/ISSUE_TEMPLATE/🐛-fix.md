@@ -2,7 +2,7 @@
 name: "🐛 fix"
 about: 버그 수정을 위한 이슈 템플릿
 titles: "🐛 "
-labels: "🐛 fix"
+labels: "fix"
 assignees: ''
 
 ---
