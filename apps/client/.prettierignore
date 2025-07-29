@@ -7,6 +7,3 @@ node_modules/
 
 # 퍼블릭 정적 파일 (HTML 템플릿, 이미지 등)
 public/
-
-# 자동 생성된 타입 정의
-*.d.ts
