@@ -144,9 +144,9 @@ Closes #123
 
 ## 🎨 코드 스타일
 
-### Backend (Java 21/Spring Boot)
+### Backend (Java 17/Spring Boot)
 
-- **Java 21** 최신 기능 활용
+- **Java 17** 사용
 - **Google Java Style Guide** 준수
 - **Checkstyle** 설정 준수
 - **SpotBugs** 경고 해결
