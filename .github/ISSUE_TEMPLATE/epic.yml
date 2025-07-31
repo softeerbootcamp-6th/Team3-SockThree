@@ -26,12 +26,12 @@ body:
       description: 핵심 목표 2-3개
       placeholder: |
         - [ ] 사용자 경험 개선
-        - [ ] 성능 최적화  
+        - [ ] 성능 최적화
         - [ ] 새로운 기능 구현
       value: |
-        - [ ] 
-        - [ ] 
-        - [ ] 
+        - [ ]
+        - [ ]
+        - [ ]
 
   - type: textarea
     id: sub-issues
@@ -59,8 +59,8 @@ body:
         - [ ] 코드 리뷰 완료
       value: |
         - [ ] 모든 하위 이슈 완료
-        - [ ] 
-        - [ ] 
+        - [ ]
+        - [ ]
 
   - type: input
     id: target-date

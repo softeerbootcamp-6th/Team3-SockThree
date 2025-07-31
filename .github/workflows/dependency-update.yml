@@ -8,34 +8,34 @@ on:
 jobs:
   update-dependencies:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-    
+
     - name: Set up JDK 17
       uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'temurin'
-    
+
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
-    
+
     - name: Update Gradle dependencies
       run: |
         cd server
         ./gradlew dependencyUpdates
-    
+
     - name: Update npm dependencies
       run: |
         cd client
         npx npm-check-updates -u
         npm install
-    
+
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v5
       with:
@@ -44,13 +44,13 @@ jobs:
         title: '⬆️ Weekly dependency update'
         body: |
           ## 📦 의존성 업데이트
-          
+
           자동으로 생성된 의존성 업데이트 PR입니다.
-          
+
           ### 변경사항
           - Backend (Gradle) 의존성 업데이트
           - Frontend (npm) 의존성 업데이트
-          
+
           ### 확인사항
           - [ ] 테스트가 정상적으로 통과하는지 확인
           - [ ] Breaking changes가 있는지 확인

@@ -24,8 +24,8 @@ body:
         - [ ] 통합 테스트 통과
         - [ ] UI/UX 검토 완료
       value: |
-        - [ ] 
-        - [ ] 
+        - [ ]
+        - [ ]
         - [ ]
 
   - type: textarea

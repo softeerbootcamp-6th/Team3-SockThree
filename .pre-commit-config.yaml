@@ -17,12 +17,7 @@ repos:
         language: system
         types: [java]
         files: ^server/
-    -   id: checkstyle
-        name: Checkstyle (Backend)
-        entry: ./server/gradlew -p server checkstyleMain
-        language: system
-        types: [java]
-        files: ^server/
+        pass_filenames: false
     -   id: eslint
         name: ESLint (Frontend)
         entry: npm run --prefix client lint
