@@ -77,6 +77,9 @@
 
 /* like reset.css */
 @layer base {
+  body {
+    font-family: var(--font-pretendard);
+  }
 }
 
 /* TYPOGRAPHY */
