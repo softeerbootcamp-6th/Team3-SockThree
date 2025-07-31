@@ -54,20 +54,37 @@
   --color-gradient-sub2: linear-gradient(90deg, #73bcfc 0%, #146de1 100%);
 
   /* ========================= */
+  /*         NUMBER            */
+  /* ========================= */
+
+  /* ========================= */
   /*         SPACING           */
   /* ========================= */
 
-  --spacing-0: 0px;
-  --spacing-100: 2px;
-  --spacing-200: 4px;
-  --spacing-300: 8px;
-  --spacing-400: 12px;
-  --spacing-500: 16px;
-  --spacing-600: 20px;
-  --spacing-700: 24px;
-  --spacing-800: 28px;
-  --spacing-900: 32px;
-  --spacing-1000: 36px;
+  --spacing-0: 0rem;
+  --spacing-2: 0.125rem; /* 2px */
+  --spacing-4: 0.25rem; /* 4px */
+  --spacing-8: 0.5rem; /* 8px */
+  --spacing-12: 0.75rem; /* 12px */
+  --spacing-16: 1rem; /* 16px */
+  --spacing-20: 1.25rem; /* 20px */
+  --spacing-24: 1.5rem; /* 24px */
+  --spacing-28: 1.75rem; /* 28px */
+  --spacing-32: 2rem; /* 32px */
+  --spacing-60: 3.75rem; /* 60px */
+  --spacing-70: 4.375rem; /* 70px */
+  --spacing-84: 5.25rem; /* 84px */
+  --spacing-210: 13.125rem; /* 210px */
+  --spacing-227: 14.1875rem; /* 227px */
+
+  /* ========================= */
+  /*         RADIUS (rem)      */
+  /* ========================= */
+  --radius-10: 0.625rem;
+  --radius-15: 0.9375rem;
+  --radius-20: 1.25rem;
+  --radius-30: 1.875rem;
+  --radius-50: 3.125rem;
 }
 
 /* like reset.css */
@@ -139,9 +156,17 @@
     background-image: var(--color-gradient-main);
   }
 
-  .border-gradient-main {
+  .border-gradient-main-1 {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      var(--color-gradient-main) border-box;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
+
+  .border-gradient-main-2 {
     border: 2px solid transparent;
-    border-radius: 12px;
     background:
       linear-gradient(#fff, #fff) padding-box,
       var(--color-gradient-main) border-box;
