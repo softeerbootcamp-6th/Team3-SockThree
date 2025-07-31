@@ -4,22 +4,29 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive inline-flex shrink-0 items-center justify-center gap-2 rounded-md whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dis inline-flex shrink-0 items-center justify-center whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:bg-gray-200 disabled:bg-none disabled:text-gray-500 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "text-title-5 rounded-[15px] bg-gradient-main-diagonal-reverse text-white hover:bg-gradient-main-diagonal",
-        outline: "border-gradient-main shadow-main hover:text-main-500",
+          "rounded-[15px] bg-gradient-main-diagonal-reverse text-white hover:bg-gradient-main-diagonal hover:text-white",
+        outline:
+          "border-gradient-main text-black shadow-main hover:text-main-500",
       },
       size: {
-        default: "py-[20px 1.25rem] h-[4.5625rem] w-[20.375rem] px-[5.25rem]",
+        fixed: "h-[4.5625rem] w-[20.375rem] px-[5.25rem] py-[1.25rem]",
+        flexible: "h-auto w-auto px-[5.25rem] py-[1.25rem]",
         icon: "size-9",
+      },
+      textSize: {
+        title2: "text-title-2",
+        title5: "text-title-5",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "default",
+      size: "fixed",
+      textSize: "title5",
     },
   }
 );
@@ -28,6 +35,7 @@ function Button({
   className,
   variant,
   size,
+  textSize,
   asChild = false,
   ...props
 }: React.ComponentProps<"button"> &
@@ -39,7 +47,7 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size, textSize, className }))}
       {...props}
     />
   );
