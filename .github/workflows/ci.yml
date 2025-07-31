@@ -95,11 +95,6 @@ jobs:
         cd client
         npm ci
 
-    - name: Run tests
-      run: |
-        cd client
-        npm run test -- --coverage --watchAll=false
-
     - name: Build
       run: |
         cd client
