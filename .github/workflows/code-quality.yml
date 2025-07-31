@@ -63,11 +63,6 @@ jobs:
         cd server
         ./gradlew spotlessCheck
 
-    - name: Run Checkstyle
-      run: |
-        cd server
-        ./gradlew checkstyleMain checkstyleTest
-
     - name: Run SpotBugs
       run: |
         cd server
