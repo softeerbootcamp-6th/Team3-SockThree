@@ -148,6 +148,10 @@
     background-image: var(--color-gradient-main-reverse);
   }
 
+  .hover\:bg-gradient-main:hover {
+    background-image: var(--color-gradient-main);
+  }
+
   .border-gradient-main {
     border: 2px solid transparent;
     border-radius: 12px;
