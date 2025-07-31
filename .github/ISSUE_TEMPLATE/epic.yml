@@ -1,0 +1,81 @@
+name: "🎯 Epic"
+description: Epic 이슈 템플릿 - 대규모 기능의 하위 이슈들을 관리합니다
+title: "[EPIC] - "
+labels: ["epic"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## 📌 Epic Overview
+        <!-- Epic의 목표를 간단히 설명해주세요 -->
+
+  - type: textarea
+    id: overview
+    attributes:
+      label: Epic 개요
+      description: 이 Epic의 목표와 개요를 설명해주세요
+      placeholder: Epic의 목표를 간단히 설명해주세요
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: main-goals
+    attributes:
+      label: 🎯 Main Goals
+      description: 핵심 목표 2-3개
+      options:
+        - label: "목표 1"
+          required: false
+        - label: "목표 2"
+          required: false
+        - label: "목표 3"
+          required: false
+
+  - type: textarea
+    id: sub-issues
+    attributes:
+      label: 📋 Sub Issues
+      description: 이 Epic의 하위 이슈 설명 (생성 후 링크로 연결)
+      placeholder: |
+        - #이슈번호 - `FE`이슈 제목
+        - #이슈번호 - `BE`이슈 제목
+        - #이슈번호 - `BE`이슈 제목
+      value: |
+        - [ ] #이슈번호 - 이슈 제목
+        - [ ] #이슈번호 - 이슈 제목
+        - [ ] #이슈번호 - 이슈 제목
+
+  - type: checkboxes
+    id: definition-of-done
+    attributes:
+      label: ✅ Definition of Done
+      description: Epic 완료 기준
+      options:
+        - label: "모든 하위 이슈 완료"
+          required: false
+        - label: "추가 완료 기준 1"
+          required: false
+        - label: "추가 완료 기준 2"
+          required: false
+
+  - type: input
+    id: target-date
+    attributes:
+      label: 🗓️ 목표 완료일
+      description: Epic 완료 목표 날짜
+      placeholder: "YYYY-MM-DD"
+
+  - type: input
+    id: assignee
+    attributes:
+      label: 담당자
+      description: Epic 담당자 GitHub 사용자명
+      placeholder: "@username"
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 📝 Notes
+      description: 추가 정보
+      placeholder: 추가 정보를 입력하세요

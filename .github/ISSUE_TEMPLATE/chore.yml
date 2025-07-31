@@ -1,0 +1,43 @@
+name: "⚙️ Chore"
+description: 기타 작업을 위한 이슈 템플릿
+title: "[CHORE] - "
+labels: ["chore"]
+assignees: []
+body:
+  - type: textarea
+    id: task-description
+    attributes:
+      label: 📌 Task Description
+      description: 수행할 작업에 대해 설명해주세요
+      placeholder: 수행할 작업의 내용을 자세히 설명해주세요
+    validations:
+      required: true
+
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 🎯 Purpose
+      description: 이 작업을 수행하는 이유
+      placeholder: 이 작업이 필요한 이유와 목적을 설명해주세요
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: task-items
+    attributes:
+      label: 📋 Task Items
+      description: 수행할 작업 항목들
+      options:
+        - label: "작업 항목 1"
+          required: false
+        - label: "작업 항목 2"
+          required: false
+        - label: "작업 항목 3"
+          required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 📝 Notes
+      description: 추가 정보나 참고사항
+      placeholder: 추가 정보나 참고사항을 입력하세요

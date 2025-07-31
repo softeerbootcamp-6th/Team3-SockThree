@@ -1,0 +1,34 @@
+name: "✨ Feature"
+description: 새로운 기능 추가를 위한 이슈 템플릿
+title: "[FEATURE] - "
+labels: ["feature"]
+assignees: []
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 📌 Description
+      description: 추가할 기능에 대해 설명해주세요
+      placeholder: 추가할 기능의 목적과 내용을 자세히 설명해주세요
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: acceptance-criteria
+    attributes:
+      label: ✅ Acceptance Criteria
+      description: 기능 완료를 위한 조건들
+      options:
+        - label: "완료 조건 1"
+          required: false
+        - label: "완료 조건 2"
+          required: false
+        - label: "완료 조건 3"
+          required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 📝 Notes
+      description: 추가 정보나 참고사항
+      placeholder: 추가 정보나 참고사항을 입력하세요

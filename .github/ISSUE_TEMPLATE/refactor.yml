@@ -1,0 +1,39 @@
+name: "♻️ Refactor"
+description: 코드 리팩토링을 위한 이슈 템플릿
+title: "[REFACTOR] - "
+labels: ["refactor"]
+assignees: []
+body:
+  - type: textarea
+    id: refactor-target
+    attributes:
+      label: 📌 Refactor Target
+      description: 리팩토링할 부분과 이유를 설명해주세요
+      placeholder: 리팩토링이 필요한 코드 부분과 리팩토링을 하는 이유를 설명해주세요
+    validations:
+      required: true
+
+  - type: textarea
+    id: current-issue
+    attributes:
+      label: 🎯 Current Issue
+      description: 현재 코드의 문제점
+      placeholder: 현재 코드에서 개선이 필요한 문제점들을 설명해주세요
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-improvement
+    attributes:
+      label: ✨ Expected Improvement
+      description: 리팩토링 후 기대 효과
+      placeholder: 리팩토링을 통해 얻을 수 있는 개선 효과를 설명해주세요
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 📝 Notes
+      description: 추가 정보나 주의사항
+      placeholder: 리팩토링 시 주의해야 할 사항이나 추가 정보를 입력하세요

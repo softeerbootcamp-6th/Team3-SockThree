@@ -1,0 +1,51 @@
+name: "🐛 Bug Fix"
+description: 버그 수정을 위한 이슈 템플릿
+title: "[FIX] - "
+labels: ["fix"]
+assignees: []
+body:
+  - type: textarea
+    id: bug-description
+    attributes:
+      label: 📌 Bug Description
+      description: 발생한 버그에 대해 설명해주세요
+      placeholder: 버그의 현상과 영향을 자세히 설명해주세요
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: 🔄 Steps to Reproduce
+      description: 버그를 재현하는 단계
+      placeholder: |
+        1. 첫 번째 단계
+        2. 두 번째 단계
+        3. 세 번째 단계
+      value: |
+        1. 
+        2. 
+        3.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected-vs-actual
+    attributes:
+      label: 🎯 Expected vs Actual
+      description: 예상 결과와 실제 결과
+      placeholder: |
+        **Expected**: 예상되는 동작
+        **Actual**: 실제 발생한 동작
+      value: |
+        **Expected**: 
+        **Actual**:
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: 📝 Notes
+      description: 추가 정보나 환경 정보
+      placeholder: 브라우저, OS, 버전 등 환경 정보나 추가 정보를 입력하세요
