@@ -11,12 +11,7 @@ const buttonVariants = cva(
         default:
           "text-title-5 rounded-[15px] bg-gradient-main-diagonal-reverse text-white hover:bg-gradient-main-diagonal",
         outline:
-          "hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 border border-gradient-main bg-white shadow-xs",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-xs",
-        ghost:
-          "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+          "hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 bg-white0 4px 26px rgba(0, 0, 0, 0.08) border-gradient-main shadow-main",
       },
       size: {
         default: "py-[20px 1.25rem] h-[4.5625rem] w-[20.375rem] px-[5.25rem]",
