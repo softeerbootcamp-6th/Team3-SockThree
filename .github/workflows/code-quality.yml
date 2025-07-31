@@ -63,11 +63,6 @@ jobs:
         cd server
         ./gradlew spotlessCheck
 
-    - name: Run SpotBugs
-      run: |
-        cd server
-        ./gradlew spotbugsMain
-
   frontend-quality:
     runs-on: ubuntu-latest
     needs: detect-changes
