@@ -19,18 +19,19 @@ body:
     validations:
       required: true
 
-  - type: checkboxes
+  - type: textarea
     id: main-goals
     attributes:
       label: 🎯 Main Goals
       description: 핵심 목표 2-3개
-      options:
-        - label: "목표 1"
-          required: false
-        - label: "목표 2"
-          required: false
-        - label: "목표 3"
-          required: false
+      placeholder: |
+        - [ ] 사용자 경험 개선
+        - [ ] 성능 최적화  
+        - [ ] 새로운 기능 구현
+      value: |
+        - [ ] 
+        - [ ] 
+        - [ ] 
 
   - type: textarea
     id: sub-issues
@@ -46,18 +47,20 @@ body:
         - #이슈번호 - `BE`이슈 제목
         - #이슈번호 - `BE`이슈 제목
 
-  - type: checkboxes
+  - type: textarea
     id: definition-of-done
     attributes:
       label: ✅ Definition of Done
       description: Epic 완료 기준
-      options:
-        - label: "모든 하위 이슈 완료"
-          required: false
-        - label: "추가 완료 기준 1"
-          required: false
-        - label: "추가 완료 기준 2"
-          required: false
+      placeholder: |
+        - [ ] 모든 하위 이슈 완료
+        - [ ] QA 테스트 통과
+        - [ ] 문서화 완료
+        - [ ] 코드 리뷰 완료
+      value: |
+        - [ ] 모든 하위 이슈 완료
+        - [ ] 
+        - [ ] 
 
   - type: input
     id: target-date

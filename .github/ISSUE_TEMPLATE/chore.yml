@@ -22,18 +22,20 @@ body:
     validations:
       required: true
 
-  - type: checkboxes
+  - type: textarea
     id: task-items
     attributes:
       label: 📋 Task Items
       description: 수행할 작업 항목들
-      options:
-        - label: "작업 항목 1"
-          required: false
-        - label: "작업 항목 2"
-          required: false
-        - label: "작업 항목 3"
-          required: false
+      placeholder: |
+        - [ ] 의존성 업데이트
+        - [ ] 설정 파일 수정
+        - [ ] 문서 업데이트
+        - [ ] 빌드 스크립트 수정
+      value: |
+        - [ ] 
+        - [ ] 
+        - [ ]
 
   - type: textarea
     id: notes
