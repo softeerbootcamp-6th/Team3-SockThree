@@ -1,7 +1,7 @@
 ---
 name: "🎯 epic"
 about: Epic 이슈 템플릿 - 대규모 기능의 하위 이슈들을 관리합니다
-titles: "🎯 "
+titles: "[EPIC] - "
 labels: "epic"
 assignees: ''
 
