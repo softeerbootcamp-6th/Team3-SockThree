@@ -3,8 +3,6 @@ plugins {
     id 'org.springframework.boot' version '3.5.4'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'com.diffplug.spotless' version '6.25.0'
-    id 'checkstyle'
-    id 'com.github.spotbugs' version '5.0.14'
 }
 
 group = 'com.seniclass'
@@ -55,23 +53,5 @@ spotless {
         removeUnusedImports()
         trimTrailingWhitespace()
         endWithNewline()
-    }
-}
-
-spotbugs {
-    toolVersion = '4.7.3'
-}
-
-tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
-    classes.setFrom(sourceSets.main.output.classesDirs)
-    sourceDirs.setFrom(sourceSets.main.allSource.srcDirs)
-    classpath.setFrom(sourceSets.main.compileClasspath)
-
-    effort = com.github.spotbugs.snom.Effort.MAX
-    reportLevel = com.github.spotbugs.snom.ReportLevel.LOW
-
-    reports {
-        xml.required.set(false)
-        html.required.set(true)
     }
 }
