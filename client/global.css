@@ -50,8 +50,13 @@
 
   /* Gradient */
   --color-gradient-main: linear-gradient(90deg, #26caba 0%, #0850fd 100%);
-  --color-gradient-main-reverse: linear-gradient(
-    90deg,
+  --color-gradient-main-diagonal: linear-gradient(
+    78deg,
+    #26caba 0%,
+    #0850fd 100%
+  );
+  --color-gradient-main-diagonal-reverse: linear-gradient(
+    78deg,
     #0850fd 0%,
     #26caba 100%
   );
@@ -147,12 +152,16 @@
     background-image: var(--color-gradient-main);
   }
 
-  .bg-gradient-main-reverse {
-    background-image: var(--color-gradient-main-reverse);
+  .bg-gradient-main-diagonal {
+    background-image: var(--color-gradient-main-diagonal);
   }
 
-  .hover\:bg-gradient-main:hover {
-    background-image: var(--color-gradient-main);
+  .bg-gradient-main-diagonal-reverse {
+    background-image: var(--color-gradient-main-diagonal-reverse);
+  }
+
+  .hover\:bg-gradient-main-diagonal:hover {
+    background-image: var(--color-gradient-main-diagonal);
   }
 
   .border-gradient-main {
