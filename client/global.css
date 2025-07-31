@@ -50,6 +50,11 @@
 
   /* Gradient */
   --color-gradient-main: linear-gradient(90deg, #26caba 0%, #0850fd 100%);
+  --color-gradient-main-reverse: linear-gradient(
+    90deg,
+    #0850fd 0%,
+    #26caba 100%
+  );
   --color-gradient-sub: linear-gradient(90deg, #b6dde6 0%, #26caba 100%);
   --color-gradient-sub2: linear-gradient(90deg, #73bcfc 0%, #146de1 100%);
 
@@ -137,6 +142,10 @@
 @layer utilities {
   .bg-gradient-main {
     background-image: var(--color-gradient-main);
+  }
+
+  .bg-gradient-main-reverse {
+    background-image: var(--color-gradient-main-reverse);
   }
 
   .border-gradient-main {
