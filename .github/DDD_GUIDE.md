@@ -66,20 +66,20 @@ public class User {
     private Password password;
     private UserStatus status;
     private LocalDateTime createdAt;
-    
+
     // 비즈니스 메서드
     public void changePassword(Password newPassword) {
         validatePasswordPolicy(newPassword);
         this.password = newPassword;
     }
-    
+
     public void activate() {
         if (this.status == UserStatus.DELETED) {
             throw new IllegalStateException("삭제된 사용자는 활성화할 수 없습니다.");
         }
         this.status = UserStatus.ACTIVE;
     }
-    
+
     private void validatePasswordPolicy(Password password) {
         // 패스워드 정책 검증 로직
     }
@@ -92,18 +92,18 @@ public class User {
 // domain/user/vo/Email.java
 @Embeddable
 public class Email {
-    private static final Pattern EMAIL_PATTERN = 
+    private static final Pattern EMAIL_PATTERN =
         Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");
-    
+
     private String value;
-    
+
     protected Email() {} // JPA용
-    
+
     public Email(String value) {
         validate(value);
         this.value = value;
     }
-    
+
     private void validate(String value) {
         if (value == null || value.trim().isEmpty()) {
             throw new IllegalArgumentException("이메일은 필수입니다.");
@@ -112,7 +112,7 @@ public class Email {
             throw new IllegalArgumentException("유효하지 않은 이메일 형식입니다.");
         }
     }
-    
+
     // equals, hashCode, toString 구현
 }
 ```
@@ -137,11 +137,11 @@ public interface UserRepository {
 @Service
 public class UserDomainService {
     private final UserRepository userRepository;
-    
+
     public boolean isEmailDuplicated(Email email) {
         return userRepository.findByEmail(email).isPresent();
     }
-    
+
     public void validateUserRegistration(User user) {
         if (isEmailDuplicated(user.getEmail())) {
             throw new DuplicateEmailException("이미 사용 중인 이메일입니다.");
@@ -159,20 +159,20 @@ public class UserDomainService {
 public class UserApplicationService {
     private final UserRepository userRepository;
     private final UserDomainService userDomainService;
-    
+
     public UserDto registerUser(RegisterUserCommand command) {
         // 1. DTO를 도메인 객체로 변환
         User user = User.create(
             new Email(command.getEmail()),
             new Password(command.getPassword())
         );
-        
+
         // 2. 도메인 서비스를 통한 비즈니스 규칙 검증
         userDomainService.validateUserRegistration(user);
-        
+
         // 3. 저장
         userRepository.save(user);
-        
+
         // 4. 도메인 객체를 DTO로 변환하여 반환
         return UserDto.from(user);
     }
@@ -221,10 +221,10 @@ class UserTest {
         // given
         User user = createUser();
         Password newPassword = new Password("newPassword123!");
-        
+
         // when
         user.changePassword(newPassword);
-        
+
         // then
         assertThat(user.getPassword()).isEqualTo(newPassword);
     }
@@ -237,9 +237,9 @@ class UserTest {
 class UserApplicationServiceTest {
     @Mock UserRepository userRepository;
     @Mock UserDomainService userDomainService;
-    
+
     @InjectMocks UserApplicationService userApplicationService;
-    
+
     @Test
     void 사용자_등록_성공() {
         // given, when, then

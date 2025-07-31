@@ -23,8 +23,8 @@ body:
         2. 두 번째 단계
         3. 세 번째 단계
       value: |
-        1. 
-        2. 
+        1.
+        2.
         3.
     validations:
       required: true
@@ -38,7 +38,7 @@ body:
         **Expected**: 예상되는 동작
         **Actual**: 실제 발생한 동작
       value: |
-        **Expected**: 
+        **Expected**:
         **Actual**:
     validations:
       required: true

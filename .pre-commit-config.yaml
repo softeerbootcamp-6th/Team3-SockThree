@@ -1,0 +1,32 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+    -   id: trailing-whitespace
+    -   id: end-of-file-fixer
+    -   id: check-yaml
+    -   id: check-added-large-files
+
+-   repo: local
+    hooks:
+    -   id: spotless-check
+        name: Spotless Check (Backend)
+        entry: ./server/gradlew -p server spotlessCheck
+        language: system
+        types: [java]
+        files: ^server/
+        pass_filenames: false
+    -   id: eslint
+        name: ESLint (Frontend)
+        entry: npm run --prefix client lint
+        language: system
+        types: [javascript, tsx, ts]
+        files: ^client/
+    -   id: prettier-check
+        name: Prettier Check (Frontend)
+        entry: npm run --prefix client format:check
+        language: system
+        types: [javascript, tsx, ts, css, json, markdown]
+        files: ^client/

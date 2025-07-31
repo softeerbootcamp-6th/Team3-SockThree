@@ -223,7 +223,7 @@ scripts/
    # 백엔드
    cd server/
    ./gradlew bootRun
-   
+
    # 프론트엔드
    cd client/
    npm start

@@ -19,6 +19,7 @@ Team3-SockThree 프로젝트에 기여해주셔서 감사합니다! 이 문서�
 - **Node.js**: 18 이상
 - **MySQL**: 8.0 이상
 - **Git**: 2.30 이상
+- **Python & pip**: `pre-commit` 설치를 위해 필요합니다.
 
 ### 프로젝트 설정
 
@@ -27,14 +28,36 @@ Team3-SockThree 프로젝트에 기여해주셔서 감사합니다! 이 문서�
 git clone https://github.com/softeerbootcamp-6th/Team3-SockThree.git
 cd Team3-SockThree
 
-# 백엔드 설정
-cd apps/backend
+# 백엔드 의존성 설치
+cd server
 ./gradlew build
 
-# 프론트엔드 설정
-cd ../frontend
+# 프론트엔드 의존성 설치
+cd ../client
 npm install
 ```
+
+### Git Hooks 설정 (Pre-commit)
+
+프로젝트는 커밋 시점에 코드 스타일과 품질을 자동으로 검사하기 위해 `pre-commit`을 사용합니다. 이를 통해 모든 커밋이 일관된 품질 기준을 만족하도록 보장합니다.
+
+1.  **pre-commit 설치:**
+    아직 `pre-commit`이 설치되지 않았다면, 다음 명령어를 실행하여 설치합니다.
+    ```bash
+    pip install pre-commit
+    ```
+
+2.  **Git 훅 활성화:**
+    프로젝트의 루트 디렉토리에서 다음 명령어를 실행하여 Git 훅을 활성화합니다.
+    ```bash
+    pre-commit install
+    ```
+
+이제 `git commit`을 실행하면, 커밋 전에 자동으로 코드 검사가 실행됩니다. 검사에 실패하면 문제가 되는 부분을 수정한 후 다시 커밋해주세요.
+
+- **백엔드 코드 자동 수정:** `server` 디렉토리에서 `./gradlew spotlessApply` 실행
+- **프론트엔드 코드 자동 수정:** `client` 디렉토리에서 `npm run format` 실행
+
 
 ## 🌟 브랜치 전략
 
@@ -151,12 +174,6 @@ Closes #123
 - **Google Java Style Guide** 준수
 - **Checkstyle** 설정 준수
 - **SpotBugs** 경고 해결
-
-#### DDD 관련 코딩 규칙
-- 도메인 로직은 Entity/Value Object에 구현
-- Repository는 인터페이스로 도메인 계층에 정의
-- Application Service는 도메인 객체 조정만 담당
-- 계층 간 의존성 방향 준수 (Presentation → Application → Domain ← Infrastructure)
 
 ### Frontend (React/TypeScript)
 
