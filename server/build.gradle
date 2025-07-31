@@ -63,7 +63,7 @@ spotbugs {
 }
 
 tasks.withType(com.github.spotbugs.snom.SpotBugsTask).configureEach {
-    classes.setFrom(sourceSets.main.output)
+    classes.setFrom(sourceSets.main.output.classesDirs)
     sourceDirs.setFrom(sourceSets.main.allSource.srcDirs)
     classpath.setFrom(sourceSets.main.compileClasspath)
 
