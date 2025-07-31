@@ -10,8 +10,7 @@ const buttonVariants = cva(
       variant: {
         default:
           "text-title-5 rounded-[15px] bg-gradient-main-diagonal-reverse text-white hover:bg-gradient-main-diagonal",
-        outline:
-          "hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 bg-white0 4px 26px rgba(0, 0, 0, 0.08) border-gradient-main shadow-main",
+        outline: "border-gradient-main shadow-main hover:text-main-500",
       },
       size: {
         default: "py-[20px 1.25rem] h-[4.5625rem] w-[20.375rem] px-[5.25rem]",

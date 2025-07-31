@@ -49,7 +49,7 @@
   --color-primary-400: #cefeff;
 
   /* Gradient */
-  --color-gradient-main: linear-gradient(90deg, #26caba 0%, #0850fd 100%);
+  --color-gradient-main: linear-gradient(0deg, #0850fd 0%, #26caba 100%);
   --color-gradient-main-diagonal: linear-gradient(
     78deg,
     #26caba 0%,
@@ -178,11 +178,5 @@
       var(--color-gradient-main) border-box;
     background-origin: border-box;
     background-clip: padding-box, border-box;
-  }
-
-  .text-gradient-main {
-    background: var(--color-gradient-main);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 }
