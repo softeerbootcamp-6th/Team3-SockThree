@@ -3,7 +3,7 @@ version: '3.8'
 services:
   app:
     # 빌드하지 않고 GitHub Packages에서 이미지 가져오기
-    image: ghcr.io/softeer-be-p1/team3-sockthree/backend:${IMAGE_TAG:-latest}
+    image: ghcr.io/softeerbootcamp-6th/team3-sockthree/backend:${IMAGE_TAG:-latest}
     container_name: ssockthree-server
     ports:
       - "8080:8080"
