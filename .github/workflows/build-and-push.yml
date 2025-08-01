@@ -54,9 +54,12 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
         tags: |
-          type=ref,event=branch
-          type=sha,prefix={{branch}}-
-          type=raw,value=latest,enable={{is_default_branch}}
+          # main 브랜치: latest 태그 생성
+          type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+          # develop 브랜치: develop-{short_sha} 태그 생성
+          type=raw,value=develop-{{short_sha}},enable=${{ github.ref == 'refs/heads/develop' }}
+          # main 브랜치: main-{short_sha} 태그도 생성 (버전 관리용)
+          type=raw,value=main-{{short_sha}},enable=${{ github.ref == 'refs/heads/main' }}
 
     - name: Build and push backend Docker image
       uses: docker/build-push-action@v5
@@ -65,3 +68,8 @@ jobs:
         push: true
         tags: ${{ steps.backend-meta.outputs.tags }}
         labels: ${{ steps.backend-meta.outputs.labels }}
+
+    - name: Output image info
+      run: |
+        echo "Built and pushed image with tags:"
+        echo "${{ steps.backend-meta.outputs.tags }}"

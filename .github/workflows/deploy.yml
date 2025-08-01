@@ -1,0 +1,79 @@
+name: Deploy to EC2
+
+on:
+  workflow_run:
+    workflows: ["Build and Push"]
+    types:
+      - completed
+    branches: [main, develop]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/backend
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set image tag
+      id: image-tag
+      run: |
+        SHORT_SHA=$(echo "${{ github.event.workflow_run.head_sha }}" | cut -c1-7)
+        if [ "${{ github.event.workflow_run.head_branch }}" = "main" ]; then
+          echo "tag=latest" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event.workflow_run.head_branch }}" = "develop" ]; then
+          echo "tag=develop-${SHORT_SHA}" >> $GITHUB_OUTPUT
+        else
+          echo "tag=${{ github.event.workflow_run.head_branch }}-${SHORT_SHA}" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create .env file
+      run: |
+        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+        echo "IMAGE_TAG=${{ steps.image-tag.outputs.tag }}" >> .env
+        echo "SPRING_PROFILES_ACTIVE=prod" >> .env
+
+    - name: Copy docker-compose and .env to EC2
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: 43.203.245.248
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "docker-compose.yml,.env"
+        target: "/home/ec2-user/sockthree"
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: 43.203.245.248
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd /home/ec2-user/sockthree
+
+          # GitHub Container Registry 로그인
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+          # 기존 컨테이너 중지 및 제거
+          docker compose down || true
+
+          # 최신 이미지 pull 및 컨테이너 시작
+          docker compose pull
+          docker compose up -d
+
+          # 컨테이너 상태 확인
+          docker compose ps
+
+          # 로그 확인
+          docker compose logs --tail=20 app
+
+          # 배포 완료 메시지
+          echo "✅ Deployment completed successfully!"
+          echo "🌐 Application URL: http://43.203.245.248:8080"
+          echo "📋 Deployed image tag: ${{ steps.image-tag.outputs.tag }}"
