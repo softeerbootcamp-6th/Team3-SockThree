@@ -37,6 +37,8 @@ jobs:
         echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
         echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
         echo "IMAGE_TAG=${{ steps.image-tag.outputs.tag }}" >> .env
+        echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> .env
+        echo "GITHUB_USERNAME=${{ github.actor }}" >> .env
         echo "SPRING_PROFILES_ACTIVE=prod" >> .env
 
     - name: Copy docker-compose and .env to EC2
