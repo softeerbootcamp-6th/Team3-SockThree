@@ -4,12 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dis inline-flex shrink-0 items-center justify-center whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:bg-gray-200 disabled:bg-none disabled:text-gray-500 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive inline-flex shrink-0 items-center justify-center whitespace-nowrap transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:bg-gray-200 disabled:bg-none disabled:text-gray-500 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
         default:
-          "rounded-[15px] bg-gradient-main-diagonal-reverse text-white hover:bg-gradient-main-diagonal hover:text-white",
+          "rounded-[15px] bg-gradient-main-diagonal-reverse text-white hover:bg-gradient-main-diagonal",
         outline:
           "border-gradient-main text-black shadow-main hover:text-main-500",
       },
@@ -20,7 +20,7 @@ const buttonVariants = cva(
       },
       textSize: {
         title2: "text-title-2",
-        title5: "text-title-5",
+        title5: "title-2",
       },
     },
     defaultVariants: {

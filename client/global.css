@@ -96,59 +96,59 @@
 /* TYPOGRAPHY */
 @layer components {
   /* Title */
-  .text-title-0 {
+  .typo-title-0 {
     @apply text-[4.8rem] leading-[5.7rem] font-bold; /* font-size, line-height, font-weight*/
   }
-  .text-title-1 {
+  .typo-title-1 {
     @apply text-[4.0rem] leading-normal font-bold;
   }
-  .text-title-2 {
+  .typo-title-2 {
     @apply text-[2.8rem] leading-normal font-medium;
   }
-  .text-title-3 {
+  .typo-title-3 {
     @apply text-[2.6rem] leading-normal font-bold;
   }
-  .text-title-4 {
+  .typo-title-4 {
     @apply text-[2.6rem] leading-normal font-medium;
   }
-  .text-title-5 {
+  .typo-title-5 {
     @apply text-[2.4rem] leading-normal font-bold;
   }
 
   /* Body */
-  .text-body-0 {
+  .typo-body-0 {
     @apply text-[2.6rem] leading-normal font-normal;
   }
-  .text-body-1 {
+  .typo-body-1 {
     @apply text-[2.4rem] leading-normal font-medium;
   }
-  .text-body-2 {
+  .typo-body-2 {
     @apply text-[2.4rem] leading-normal font-normal;
   }
-  .text-body-3 {
+  .typo-body-3 {
     @apply text-[2.2rem] leading-normal font-normal;
   }
-  .text-body-4 {
+  .typo-body-4 {
     @apply text-[2.0rem] leading-normal font-bold;
   }
-  .text-body-5 {
+  .typo-body-5 {
     @apply text-[2.0rem] leading-normal font-normal;
   }
 
   /* Label */
-  .text-label-0 {
+  .typo-label-0 {
     @apply text-[1.6rem] leading-normal font-medium;
   }
-  .text-label-1 {
+  .typo-label-1 {
     @apply text-[1.8rem] leading-normal font-normal;
   }
-  .text-label-2 {
+  .typo-label-2 {
     @apply text-[1.6rem] leading-normal font-normal;
   }
-  .text-label-3 {
+  .typo-label-3 {
     @apply text-[1.4rem] leading-normal font-medium;
   }
-  .text-label-4 {
+  .typo-label-4 {
     @apply text-[1.4rem] leading-normal font-normal;
   }
 }
