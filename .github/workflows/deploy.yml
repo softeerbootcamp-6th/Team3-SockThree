@@ -12,9 +12,38 @@ env:
   IMAGE_NAME: ${{ github.repository }}/backend
 
 jobs:
-  deploy:
+  # 백엔드 변경 여부 확인
+  check-backend-changes:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      backend-changed: ${{ steps.changes.outputs.backend }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.workflow_run.head_sha }}
+        fetch-depth: 0
+
+    - name: Get previous commit
+      run: |
+        PREV_COMMIT=$(git rev-parse ${{ github.event.workflow_run.head_sha }}~1)
+        echo "PREV_COMMIT=$PREV_COMMIT" >> $GITHUB_ENV
+
+    - name: Detect backend changes
+      uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        base: ${{ env.PREV_COMMIT }}
+        head: ${{ github.event.workflow_run.head_sha }}
+        filters: |
+          backend:
+            - 'server/**'
+            - '.github/workflows/build-and-push.yml'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: check-backend-changes
+    if: needs.check-backend-changes.outputs.backend-changed == 'true'
 
     steps:
     - uses: actions/checkout@v3
@@ -37,8 +66,8 @@ jobs:
         echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
         echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
         echo "IMAGE_TAG=${{ steps.image-tag.outputs.tag }}" >> .env
-        echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> .env
-        echo "GITHUB_USERNAME=${{ github.actor }}" >> .env
+        echo "GITHUB_TOKEN=${{ secrets.GIT_TOKEN }}" >> .env
+        echo "GITHUB_USERNAME=${{ secrets.GIT_USERNAME }}" >> .env
         echo "SPRING_PROFILES_ACTIVE=prod" >> .env
 
     - name: Copy docker-compose and .env to EC2
@@ -60,7 +89,7 @@ jobs:
           cd /home/ec2-user/sockthree
 
           # GitHub Container Registry 로그인
-          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          echo "${{ secrets.GIT_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GIT_USERNAME }} --password-stdin
 
           # 기존 컨테이너 중지 및 제거
           docker-compose down || true
