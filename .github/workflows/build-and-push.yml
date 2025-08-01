@@ -51,6 +51,17 @@ jobs:
         username: ${{ secrets.GIT_USERNAME }}
         password: ${{ secrets.GIT_TOKEN }}
 
+    - name: Set primary tag for deployment
+      id: set-primary-tag
+      run: |
+        SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+        echo "short-sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
+        if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          echo "tag=latest" >> $GITHUB_OUTPUT
+        elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+          echo "tag=develop-${SHORT_SHA}" >> $GITHUB_OUTPUT
+        fi
+
     - name: Extract metadata for backend
       id: backend-meta
       uses: docker/metadata-action@v5
@@ -60,19 +71,9 @@ jobs:
           # main 브랜치: latest 태그 생성
           type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
           # develop 브랜치: develop-{short_sha} 태그 생성
-          type=raw,value=develop-{{short_sha}},enable=${{ github.ref == 'refs/heads/develop' }}
+          type=raw,value=develop-${{ steps.set-primary-tag.outputs.short-sha }},enable=${{ github.ref == 'refs/heads/develop' }}
           # main 브랜치: main-{short_sha} 태그도 생성 (버전 관리용)
-          type=raw,value=main-{{short_sha}},enable=${{ github.ref == 'refs/heads/main' }}
-
-    - name: Set primary tag for deployment
-      id: set-primary-tag
-      run: |
-        if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-          echo "tag=latest" >> $GITHUB_OUTPUT
-        elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
-          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
-          echo "tag=develop-${SHORT_SHA}" >> $GITHUB_OUTPUT
-        fi
+          type=raw,value=main-${{ steps.set-primary-tag.outputs.short-sha }},enable=${{ github.ref == 'refs/heads/main' }}
 
     - name: Build and push backend Docker image
       uses: docker/build-push-action@v5

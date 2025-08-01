@@ -93,6 +93,23 @@ jobs:
           # GitHub Container Registry 로그인
           echo "${{ secrets.GIT_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GIT_USERNAME }} --password-stdin
 
+          # 사용할 이미지 태그 확인
+          echo "🔍 Attempting to pull image: ghcr.io/softeer-be-p1/team3-sockthree/backend:${{ needs.check-backend-changes.outputs.image-tag }}"
+
+          # 이미지가 존재하는지 확인
+          if docker manifest inspect ghcr.io/softeer-be-p1/team3-sockthree/backend:${{ needs.check-backend-changes.outputs.image-tag }} >/dev/null 2>&1; then
+            echo "✅ Image found with tag: ${{ needs.check-backend-changes.outputs.image-tag }}"
+          else
+            echo "❌ Image not found with tag: ${{ needs.check-backend-changes.outputs.image-tag }}"
+            echo "📋 Available tags:"
+            # 최신 태그들 확인 (GitHub API 사용)
+            curl -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 "https://api.github.com/repos/softeer-be-p1/team3-sockthree/packages/container/backend/versions" | \
+                 jq -r '.[0:5][] | .metadata.container.tags[]?' || echo "API call failed"
+            exit 1
+          fi
+
           # 기존 컨테이너 중지 및 제거
           docker-compose down || true
 
