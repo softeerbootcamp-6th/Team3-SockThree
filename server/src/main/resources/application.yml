@@ -16,6 +16,16 @@ spring:
     activate:
       on-profile: "default"
 
+# Actuator 헬스체크 설정
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

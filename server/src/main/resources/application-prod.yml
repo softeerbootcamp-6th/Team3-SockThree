@@ -1,0 +1,28 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # EC2에서 직접 RDS 엔드포인트로 접속
+    url: jdbc:mysql://senicle-rds-database.cxxlveyko9rd.ap-northeast-2.rds.amazonaws.com:3306/${DB_NAME:senicle_db}?useSSL=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+        show_sql: false
+    open-in-view: false
+
+logging:
+  level:
+    org.springframework.security: INFO
+    com.seniclass.server: INFO
+    org.hibernate.SQL: ERROR
+    org.hibernate.type: ERROR

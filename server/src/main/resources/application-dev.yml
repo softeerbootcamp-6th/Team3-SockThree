@@ -5,6 +5,22 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/your-db?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
-    username: your-username
-    password: your-password
+    # SSH 터널링을 통해 localhost:3306으로 RDS에 접속
+    url: jdbc:mysql://localhost:3306/${DB_NAME:senicle_db}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: false
+    open-in-view: false
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+    com.seniclass.server: DEBUG

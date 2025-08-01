@@ -174,7 +174,6 @@ dist-ssr
 # Application properties (민감한 정보 포함)
 application-local.yml
 application-secret.yml
-application-prod.yml
 
 # ==============================================
 # 빌드 및 배포 관련
