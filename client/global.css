@@ -60,8 +60,27 @@
     #0850fd 0%,
     #26caba 100%
   );
+  --color-gradient-main: linear-gradient(0deg, #0850fd 0%, #26caba 100%);
+  --color-gradient-main-diagonal: linear-gradient(
+    78deg,
+    #26caba 0%,
+    #0850fd 100%
+  );
+  --color-gradient-main-diagonal-reverse: linear-gradient(
+    78deg,
+    #0850fd 0%,
+    #26caba 100%
+  );
   --color-gradient-sub: linear-gradient(90deg, #b6dde6 0%, #26caba 100%);
   --color-gradient-sub2: linear-gradient(90deg, #73bcfc 0%, #146de1 100%);
+
+  /* ========================= */
+  /*         SHADOW            */
+  /* ========================= */
+
+  --shadow-main: 0 4px 26px rgba(0, 0, 0, 0.08);
+  --shadow-color: 0 10px 15px rgba(38, 202, 186, 0.3);
+  --shadow-dark: 0 0 5px rgba(0, 0, 0, 0.15);
 
   /* ========================= */
   /*         SHADOW            */
@@ -72,22 +91,35 @@
   /* ========================= */
   /*         SPACING           */
   /* ========================= */
+  --spacing-4: 0.25rem; /* 4px */
+  --spacing-8: 0.5rem; /* 8px */
+  --spacing-12: 0.75rem; /* 12px */
+  --spacing-16: 1rem; /* 16px */
+  --spacing-20: 1.25rem; /* 20px */
+  --spacing-24: 1.5rem; /* 24px */
+  --spacing-28: 1.75rem; /* 28px */
+  --spacing-32: 2rem; /* 32px */
+  --spacing-60: 3.75rem; /* 60px */
+  --spacing-70: 4.375rem; /* 70px */
+  --spacing-84: 5.25rem; /* 84px */
+  --spacing-210: 13.125rem; /* 210px */
+  --spacing-227: 14.1875rem; /* 227px */
 
-  --spacing-0: 0px;
-  --spacing-100: 2px;
-  --spacing-200: 4px;
-  --spacing-300: 8px;
-  --spacing-400: 12px;
-  --spacing-500: 16px;
-  --spacing-600: 20px;
-  --spacing-700: 24px;
-  --spacing-800: 28px;
-  --spacing-900: 32px;
-  --spacing-1000: 36px;
+  /* ========================= */
+  /*         RADIUS            */
+  /* ========================= */
+  --radius-10: 0.625rem; /* 10px */
+  --radius-15: 0.9375rem; /* 15px */
+  --radius-20: 1.25rem; /* 20px */
+  --radius-30: 1.875rem; /* 30px */
+  --radius-50: 3.125rem; /* 50px */
 }
 
 /* like reset.css */
 @layer base {
+  body {
+    font-family: var(--font-pretendard);
+  }
   body {
     font-family: var(--font-pretendard);
   }
@@ -97,20 +129,32 @@
 @layer components {
   /* Title */
   .typo-title-0 {
+    @apply text-[3rem] leading-none font-bold; /* font-size, line-height, font-weight*/
+  .typo-title-0 {
     @apply text-[4.8rem] leading-[5.7rem] font-bold; /* font-size, line-height, font-weight*/
   }
+  .typo-title-1 {
+    @apply text-[2.5rem] leading-none font-bold;
   .typo-title-1 {
     @apply text-[4.0rem] leading-normal font-bold;
   }
   .typo-title-2 {
+    @apply text-[1.75rem] leading-none font-medium;
+  .typo-title-2 {
     @apply text-[2.8rem] leading-normal font-medium;
   }
+  .typo-title-3 {
+    @apply text-[1.625rem] leading-none font-bold;
   .typo-title-3 {
     @apply text-[2.6rem] leading-normal font-bold;
   }
   .typo-title-4 {
+    @apply text-[1.625rem] leading-none font-medium;
+  .typo-title-4 {
     @apply text-[2.6rem] leading-normal font-medium;
   }
+  .typo-title-5 {
+    @apply text-[1.5rem] leading-none font-bold;
   .typo-title-5 {
     @apply text-[2.4rem] leading-normal font-bold;
   }
@@ -137,25 +181,48 @@
 
   /* Label */
   .typo-label-0 {
+    @apply text-[1rem] leading-normal font-medium;
+  .typo-label-0 {
     @apply text-[1.6rem] leading-normal font-medium;
   }
+  .typo-label-1 {
+    @apply text-[1.125rem] leading-normal font-normal;
   .typo-label-1 {
     @apply text-[1.8rem] leading-normal font-normal;
   }
   .typo-label-2 {
+    @apply text-[1rem] leading-normal font-normal;
+  .typo-label-2 {
     @apply text-[1.6rem] leading-normal font-normal;
   }
   .typo-label-3 {
+    @apply text-[0.875rem] leading-normal font-medium;
+  .typo-label-3 {
     @apply text-[1.4rem] leading-normal font-medium;
   }
+  .typo-label-4 {
+    @apply text-[0.875rem] leading-normal font-normal;
   .typo-label-4 {
     @apply text-[1.4rem] leading-normal font-normal;
   }
 }
 
 @layer utilities {
+  /* buttons */
   .bg-gradient-main {
     background-image: var(--color-gradient-main);
+  }
+
+  .bg-gradient-main-diagonal {
+    background-image: var(--color-gradient-main-diagonal);
+  }
+
+  .bg-gradient-main-diagonal-reverse {
+    background-image: var(--color-gradient-main-diagonal-reverse);
+  }
+
+  .hover\:bg-gradient-main-diagonal:hover {
+    background-image: var(--color-gradient-main-diagonal);
   }
 
   .bg-gradient-main-diagonal {
