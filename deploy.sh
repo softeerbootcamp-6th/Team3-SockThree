@@ -33,19 +33,19 @@ echo ""
 
 # 기존 컨테이너 중지
 echo "🛑 Stopping existing containers..."
-docker compose down || true
+docker-compose down || true
 
 # 최신 이미지 pull
 echo "📥 Pulling latest image from GitHub Packages..."
-docker compose pull
+docker-compose pull
 
 # 컨테이너 시작
 echo "🚀 Starting containers..."
-docker compose up -d
+docker-compose up -d
 
 # 컨테이너 상태 확인
 echo "📊 Checking container status..."
-docker compose ps
+docker-compose ps
 
 # 애플리케이션 시작 대기
 echo "⏳ Waiting for application to start..."
@@ -59,7 +59,7 @@ if curl -f http://localhost:8080/actuator/health > /dev/null 2>&1; then
     echo "📋 Swagger UI: http://43.203.245.248:8080/swagger-ui.html"
 else
     echo "❌ Health check failed. Checking logs..."
-    docker compose logs --tail=50 app
+    docker-compose logs --tail=50 app
     exit 1
 fi
 
