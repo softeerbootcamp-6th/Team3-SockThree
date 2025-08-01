@@ -18,6 +18,10 @@
 
 > 오직 시니어만을 위한 클래스, 시니클<br>
 > 시니클은 액티브 시니어 대상 자기계발 강좌 통합 검색 & 수요기반 개설 플랫폼입니다.
+> 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/c0498221-d11f-4d9c-9562-3e1e671efc1d" />
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/02ec50bc-0578-448b-9c4a-f81c41691f7b" />
+
 
 
 <br/>
