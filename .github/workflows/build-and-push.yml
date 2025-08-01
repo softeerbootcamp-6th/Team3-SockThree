@@ -36,6 +36,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-tags: ${{ steps.backend-meta.outputs.tags }}
+      primary-tag: ${{ steps.set-primary-tag.outputs.tag }}
 
     steps:
     - name: Checkout
@@ -61,6 +64,16 @@ jobs:
           # main 브랜치: main-{short_sha} 태그도 생성 (버전 관리용)
           type=raw,value=main-{{short_sha}},enable=${{ github.ref == 'refs/heads/main' }}
 
+    - name: Set primary tag for deployment
+      id: set-primary-tag
+      run: |
+        if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          echo "tag=latest" >> $GITHUB_OUTPUT
+        elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+          SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+          echo "tag=develop-${SHORT_SHA}" >> $GITHUB_OUTPUT
+        fi
+
     - name: Build and push backend Docker image
       uses: docker/build-push-action@v5
       with:
@@ -73,3 +86,4 @@ jobs:
       run: |
         echo "Built and pushed image with tags:"
         echo "${{ steps.backend-meta.outputs.tags }}"
+        echo "Primary tag for deployment: ${{ steps.set-primary-tag.outputs.tag }}"
