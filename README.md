@@ -1,25 +1,21 @@
-<div align="center">
-<img width="200" alt="Image" src="https://github.com/user-attachments/assets/b0284a96-9834-4a5e-9f05-b6e5d041c87d" /></div>
+이미지쓰기
 
-<h1> 🥒 시니클 </h1>
-
-> 오직 시니어만을 위한 클래스, 시니클
-> 시니클은 액티브 시니어 대상 자기계발 강좌 통합 검색 & 수요기반 개설 플랫폼입니다.
-
-<br/>
 
 <p align="center">
-<a href="">🐭 wiki</a><br>
-  <a href="#서비스-소개">🥒 서비스 소개</a> <br>
-  <a href="#팀원-소개">🍻 팀원 소개</a> <br>
-  <a href="#기술-스택">🛠️ 기술 스택</a> <br>
-  <a href="#프로젝트-구조">⚙️ 프로젝트 구조</a> <br>
+<a href="https://github.com/softeerbootcamp-6th/Team3-SockThree/wiki">🐭 wiki</a><br>
+  <a href="#서비스-소개">🌱 서비스 소개</a> <br>
+  <a href="#팀원-소개">🌱 팀원 소개</a> <br>
+  <a href="#기술-스택">🌱️ 기술 스택</a> <br>
+  <a href="#프로젝트-구조">🌱 프로젝트 구조</a> <br>
 </p>
 
 <br/>
 
 # 서비스 소개
-시니클입니다!
+
+> 오직 시니어만을 위한 클래스, 시니클
+> 시니클은 액티브 시니어 대상 자기계발 강좌 통합 검색 & 수요기반 개설 플랫폼입니다.
+
 
 <br/>
 
@@ -28,11 +24,11 @@
 <table align="center">
   <tr>
     <td align="center">
-      <a href="https://github.com/yyeonzu">
+      <a href="https://github.com/coffeesigma">
         <strong>이정빈</strong>
       </a><br />
       <img width="120" src="https://avatars.githubusercontent.com/u/100709499?v=4" alt="정연주 프로필"/><br />
-      <strong>팀장</strong><br />
+      <sub><strong>팀장</strong></sub><br />
       <sub><code>Backend</code></sub>
     </td>
     <td align="center">
@@ -52,7 +48,7 @@
       <sub><code>Frontend</code></sub>
     </td>
     <td align="center">
-      <a href="https://github.com/yyeonzu">
+      <a href="https://github.com/hkjbrian">
         <strong>한경준</strong>
       </a><br />
       <img width="120" src="https://avatars.githubusercontent.com/u/100709499?v=4" alt="정연주 프로필"/><br />
@@ -90,3 +86,5 @@
 </table>
 
 <br/>
+
+# 프로젝트-구조
