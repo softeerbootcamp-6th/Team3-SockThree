@@ -109,59 +109,59 @@
 @layer components {
   /* Title */
   .typo-title-0 {
-    @apply text-[3rem] font-bold leading-none; /* font-size, line-height, font-weight*/
+    @apply text-[3rem] leading-none font-bold; /* font-size, line-height, font-weight*/
   }
   .typo-title-1 {
-    @apply text-[2.5rem] font-bold leading-none;
+    @apply text-[2.5rem] leading-none font-bold;
   }
   .typo-title-2 {
-    @apply text-[1.75rem] font-medium leading-none;
+    @apply text-[1.75rem] leading-none font-medium;
   }
   .typo-title-3 {
-    @apply text-[1.625rem] font-bold leading-none;
+    @apply text-[1.625rem] leading-none font-bold;
   }
   .typo-title-4 {
-    @apply text-[1.625rem] font-medium leading-none;
+    @apply text-[1.625rem] leading-none font-medium;
   }
   .typo-title-5 {
-    @apply text-[1.5rem] font-bold leading-none;
+    @apply text-[1.5rem] leading-none font-bold;
   }
 
   /* Body */
   .typo-body-0 {
-    @apply text-[1.625rem] font-normal leading-none;
+    @apply text-[1.625rem] leading-none font-normal;
   }
   .typo-body-1 {
-    @apply text-[1.5rem] font-medium leading-none;
+    @apply text-[1.5rem] leading-none font-medium;
   }
   .typo-body-2 {
-    @apply text-[1.5rem] font-normal leading-none;
+    @apply text-[1.5rem] leading-none font-normal;
   }
   .typo-body-3 {
-    @apply text-[1.375rem] font-normal leading-none;
+    @apply text-[1.375rem] leading-none font-normal;
   }
   .typo-body-4 {
-    @apply text-[1.25rem] font-bold leading-none;
+    @apply text-[1.25rem] leading-none font-bold;
   }
   .typo-body-5 {
-    @apply text-[1.25rem] font-normal leading-none;
+    @apply text-[1.25rem] leading-none font-normal;
   }
 
   /* Label */
   .typo-label-0 {
-    @apply text-[1rem] font-medium leading-normal;
+    @apply text-[1rem] leading-normal font-medium;
   }
   .typo-label-1 {
-    @apply text-[1.125rem] font-normal leading-normal;
+    @apply text-[1.125rem] leading-normal font-normal;
   }
   .typo-label-2 {
-    @apply text-[1rem] font-normal leading-normal;
+    @apply text-[1rem] leading-normal font-normal;
   }
   .typo-label-3 {
-    @apply text-[0.875rem] font-medium leading-normal;
+    @apply text-[0.875rem] leading-normal font-medium;
   }
   .typo-label-4 {
-    @apply text-[0.875rem] font-normal leading-normal;
+    @apply text-[0.875rem] leading-normal font-normal;
   }
 }
 
