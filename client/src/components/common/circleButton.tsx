@@ -46,4 +46,4 @@ function CircleButton({
   );
 }
 
-export { CircleButton, circleButtonVariants };
+export { CircleButton };
