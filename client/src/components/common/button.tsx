@@ -22,7 +22,6 @@ const buttonVariants = cva(
         md: "h-[4.0625rem] w-[16.125rem] px-[4.0625rem] py-[1.125rem]",
         sm: "typo-body-4 h-[4.375rem] w-[12rem] px-[1.375rem] py-[1.4375rem]",
         xs: "typo-label-3 h-[1.9375rem] w-[4.5rem] px-[.75rem] py-[.4375rem]",
-        icon: "size-9",
       },
       textSize: {
         title2: "typo-title-2",
