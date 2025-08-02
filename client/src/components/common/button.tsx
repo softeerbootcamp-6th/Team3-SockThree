@@ -14,7 +14,7 @@ const buttonVariants = cva(
           "border-gradient-main text-black shadow-main hover:text-main-500",
         ghost: "rounded-[5px] border border-gray-400 bg-transparent text-black",
         hoverUp:
-          "rounded-[15px] border-gradient-main bg-white text-black transition-transform duration-300 ease-in-out hover:-translate-y-[18px]",
+          "rounded-[15px] border-gradient-main bg-white text-black transition-transform duration-300 ease-in-out hover:-translate-y-[18px] hover:bg-gray-100",
       },
       size: {
         lgFixed: "h-[4.5625rem] w-[20.375rem] px-[5.25rem] py-[1.25rem]",
