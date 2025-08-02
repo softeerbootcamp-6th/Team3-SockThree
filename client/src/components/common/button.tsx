@@ -12,20 +12,26 @@ const buttonVariants = cva(
           "rounded-[15px] bg-gradient-main-diagonal-reverse text-white hover:bg-gradient-main-diagonal",
         outline:
           "border-gradient-main text-black shadow-main hover:text-main-500",
+        ghost: "rounded-[5px] border border-gray-400 bg-transparent text-black",
+        hoverUp:
+          "rounded-[15px] border-gradient-main bg-white text-black transition-transform duration-300 ease-in-out hover:-translate-y-[18px]",
       },
       size: {
-        fixed: "h-[4.5625rem] w-[20.375rem] px-[5.25rem] py-[1.25rem]",
-        flexible: "h-auto w-auto px-[5.25rem] py-[1.25rem]",
+        lgFixed: "h-[4.5625rem] w-[20.375rem] px-[5.25rem] py-[1.25rem]",
+        lgFlexible: "h-auto w-auto px-[5.25rem] py-[1.25rem]",
+        md: "h-[4.0625rem] w-[16.125rem] px-[4.0625rem] py-[1.125rem]",
+        sm: "typo-body-4 h-[4.375rem] w-[12rem] px-[1.375rem] py-[1.4375rem]",
+        xs: "typo-label-3 h-[1.9375rem] w-[4.5rem] px-[.75rem] py-[.4375rem]",
         icon: "size-9",
       },
       textSize: {
-        title2: "text-title-2",
-        title5: "title-2",
+        title2: "typo-title-2",
+        title5: "typo-title-5",
       },
     },
     defaultVariants: {
       variant: "default",
-      size: "fixed",
+      size: "lgFixed",
       textSize: "title5",
     },
   }
