@@ -49,20 +49,31 @@
   --color-primary-400: #cefeff;
 
   /* Gradient */
-  --color-gradient-main: linear-gradient(90deg, #26caba 0%, #0850fd 100%);
+  --color-gradient-main: linear-gradient(0deg, #0850fd 0%, #26caba 100%);
+  --color-gradient-main-diagonal: linear-gradient(
+    78deg,
+    #26caba 0%,
+    #0850fd 100%
+  );
+  --color-gradient-main-diagonal-reverse: linear-gradient(
+    78deg,
+    #0850fd 0%,
+    #26caba 100%
+  );
   --color-gradient-sub: linear-gradient(90deg, #b6dde6 0%, #26caba 100%);
   --color-gradient-sub2: linear-gradient(90deg, #73bcfc 0%, #146de1 100%);
 
   /* ========================= */
-  /*         NUMBER            */
+  /*         SHADOW            */
   /* ========================= */
+
+  --shadow-main: 0 4px 26px rgba(0, 0, 0, 0.08);
+  --shadow-color: 0 10px 15px rgba(38, 202, 186, 0.3);
+  --shadow-dark: 0 0 5px rgba(0, 0, 0, 0.15);
 
   /* ========================= */
   /*         SPACING           */
   /* ========================= */
-
-  --spacing-0: 0rem;
-  --spacing-2: 0.125rem; /* 2px */
   --spacing-4: 0.25rem; /* 4px */
   --spacing-8: 0.5rem; /* 8px */
   --spacing-12: 0.75rem; /* 12px */
@@ -78,105 +89,107 @@
   --spacing-227: 14.1875rem; /* 227px */
 
   /* ========================= */
-  /*         RADIUS (rem)      */
+  /*         RADIUS            */
   /* ========================= */
-  --radius-10: 0.625rem;
-  --radius-15: 0.9375rem;
-  --radius-20: 1.25rem;
-  --radius-30: 1.875rem;
-  --radius-50: 3.125rem;
+  --radius-10: 0.625rem; /* 10px */
+  --radius-15: 0.9375rem; /* 15px */
+  --radius-20: 1.25rem; /* 20px */
+  --radius-30: 1.875rem; /* 30px */
+  --radius-50: 3.125rem; /* 50px */
 }
 
 /* like reset.css */
 @layer base {
+  body {
+    font-family: var(--font-pretendard);
+  }
 }
 
 /* TYPOGRAPHY */
 @layer components {
   /* Title */
-  .text-title-0 {
-    @apply text-[4.8rem] leading-[5.7rem] font-bold; /* font-size, line-height, font-weight*/
+  .typo-title-0 {
+    @apply text-[3rem] font-bold leading-none; /* font-size, line-height, font-weight*/
   }
-  .text-title-1 {
-    @apply text-[4.0rem] leading-normal font-bold;
+  .typo-title-1 {
+    @apply text-[2.5rem] font-bold leading-none;
   }
-  .text-title-2 {
-    @apply text-[2.8rem] leading-normal font-medium;
+  .typo-title-2 {
+    @apply text-[1.75rem] font-medium leading-none;
   }
-  .text-title-3 {
-    @apply text-[2.6rem] leading-normal font-bold;
+  .typo-title-3 {
+    @apply text-[1.625rem] font-bold leading-none;
   }
-  .text-title-4 {
-    @apply text-[2.6rem] leading-normal font-medium;
+  .typo-title-4 {
+    @apply text-[1.625rem] font-medium leading-none;
   }
-  .text-title-5 {
-    @apply text-[2.4rem] leading-normal font-bold;
+  .typo-title-5 {
+    @apply text-[1.5rem] font-bold leading-none;
   }
 
   /* Body */
-  .text-body-0 {
-    @apply text-[2.6rem] leading-normal font-normal;
+  .typo-body-0 {
+    @apply text-[1.625rem] font-normal leading-none;
   }
-  .text-body-1 {
-    @apply text-[2.4rem] leading-normal font-medium;
+  .typo-body-1 {
+    @apply text-[1.5rem] font-medium leading-none;
   }
-  .text-body-2 {
-    @apply text-[2.4rem] leading-normal font-normal;
+  .typo-body-2 {
+    @apply text-[1.5rem] font-normal leading-none;
   }
-  .text-body-3 {
-    @apply text-[2.2rem] leading-normal font-normal;
+  .typo-body-3 {
+    @apply text-[1.375rem] font-normal leading-none;
   }
-  .text-body-4 {
-    @apply text-[2.0rem] leading-normal font-bold;
+  .typo-body-4 {
+    @apply text-[1.25rem] font-bold leading-none;
   }
-  .text-body-5 {
-    @apply text-[2.0rem] leading-normal font-normal;
+  .typo-body-5 {
+    @apply text-[1.25rem] font-normal leading-none;
   }
 
   /* Label */
-  .text-label-0 {
-    @apply text-[1.6rem] leading-normal font-medium;
+  .typo-label-0 {
+    @apply text-[1rem] font-medium leading-normal;
   }
-  .text-label-1 {
-    @apply text-[1.8rem] leading-normal font-normal;
+  .typo-label-1 {
+    @apply text-[1.125rem] font-normal leading-normal;
   }
-  .text-label-2 {
-    @apply text-[1.6rem] leading-normal font-normal;
+  .typo-label-2 {
+    @apply text-[1rem] font-normal leading-normal;
   }
-  .text-label-3 {
-    @apply text-[1.4rem] leading-normal font-medium;
+  .typo-label-3 {
+    @apply text-[0.875rem] font-medium leading-normal;
   }
-  .text-label-4 {
-    @apply text-[1.4rem] leading-normal font-normal;
+  .typo-label-4 {
+    @apply text-[0.875rem] font-normal leading-normal;
   }
 }
 
 @layer utilities {
+  /* buttons */
   .bg-gradient-main {
     background-image: var(--color-gradient-main);
   }
 
-  .border-gradient-main-1 {
-    border: 1px solid transparent;
-    background:
-      linear-gradient(#fff, #fff) padding-box,
-      var(--color-gradient-main) border-box;
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
+  .bg-gradient-main-diagonal {
+    background-image: var(--color-gradient-main-diagonal);
   }
 
-  .border-gradient-main-2 {
+  .bg-gradient-main-diagonal-reverse {
+    background-image: var(--color-gradient-main-diagonal-reverse);
+  }
+
+  .hover\:bg-gradient-main-diagonal:hover {
+    background-image: var(--color-gradient-main-diagonal);
+  }
+
+  .border-gradient-main {
     border: 2px solid transparent;
+    border-radius: 12px;
     background:
       linear-gradient(#fff, #fff) padding-box,
       var(--color-gradient-main) border-box;
     background-origin: border-box;
     background-clip: padding-box, border-box;
-  }
-
-  .text-gradient-main {
-    background: var(--color-gradient-main);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 }

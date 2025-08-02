@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  app:
+    # 빌드하지 않고 GitHub Packages에서 이미지 가져오기
+    image: ghcr.io/softeerbootcamp-6th/team3-sockthree/backend:${IMAGE_TAG:-latest}
+    container_name: ssockthree-server
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME:-senicle_db}
+      - SPRING_PROFILES_ACTIVE=prod
+      # GitHub Container Registry 인증 정보
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_USERNAME=${GITHUB_USERNAME}
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
