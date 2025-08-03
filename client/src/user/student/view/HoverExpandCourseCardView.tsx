@@ -35,11 +35,11 @@ export default function HoverExpandCourseCardView() {
         <div
           key={index}
           onMouseEnter={() => setActiveId(index)}
-          className="transition-all duration-300"
         >
           <HoverExpandCourseCard
             cardData={card}
             isActive={index === activeId}
+            
           />
         </div>
       ))}

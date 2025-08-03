@@ -26,7 +26,7 @@ export default function HoverExpandCourseCard({
 }: HoverExpandCourseCardProps) {
   return (
     <div
-      className={`relative h-[21.3125rem] transition-all duration-300 ${isActive ? `w-[54.375rem] rounded-[1.875rem]` : "w-[5rem] rounded-[3.125rem] opacity-60"} cursor-pointer bg-cover bg-center`}
+      className={`relative h-[21.3125rem] transition-all duration-600 ${isActive ? `w-[54.375rem] rounded-[1.875rem]` : "w-[5rem] rounded-[3.125rem] opacity-60"} cursor-pointer bg-cover bg-center`}
       style={{
         backgroundImage: `url(${cardData.courseImg})`,
       }}
@@ -42,7 +42,7 @@ export default function HoverExpandCourseCard({
         </div>
       )}
       {isActive && (
-        <div className="pointer-events-none absolute inset-0 rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
+        <div className="overflow-hidden pointer-events-none absolute inset-0 rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
           <div className="flex h-full flex-col justify-between text-white">
             {cardTopContainer(cardData)}
             {cardBottomContainer(cardData)}
