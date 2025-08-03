@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Student extends BaseTimeEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,7 @@ public class Student extends BaseTimeEntity {
   private Integer age;
 
   @Column(name = "student_gender", nullable = false)
+  @Enumerated(EnumType.STRING)
   private Gender gender;
 
   @Column(name = "student_password", nullable = false)
@@ -39,7 +40,6 @@ public class Student extends BaseTimeEntity {
     this.age = age;
     this.gender = gender;
     this.password = password;
-    this.name = name;
   }
 
   public static Student createStudent(
