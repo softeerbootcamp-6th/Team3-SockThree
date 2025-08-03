@@ -30,10 +30,14 @@ function CircleButton({
   variant,
   size,
   asChild = false,
+  icon,
+  text,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof circleButtonVariants> & {
     asChild?: boolean;
+    icon?: React.ReactNode;
+    text?: React.ReactNode;
   }) {
   const Comp = asChild ? Slot : "button";
 
@@ -42,7 +46,10 @@ function CircleButton({
       data-slot="button"
       className={cn(circleButtonVariants({ variant, size, className }))}
       {...props}
-    />
+    >
+      {icon}
+      {text && <span>{text}</span>}
+    </Comp>
   );
 }
 
