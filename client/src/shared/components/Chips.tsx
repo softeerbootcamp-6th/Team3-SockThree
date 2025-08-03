@@ -44,9 +44,20 @@ const chipsVariant = tv({
         description: "text-gray-500 typo-label-2",
       },
     },
+    interactive: {
+      true: "",
+      false: {
+        borderBase: "bg-transparent cursor-default pointer-events-none",
+        border: "bg-transparent",
+        base: "bg-white/30",
+        textContainer: "text-white",
+        title: "text-white",
+      },
+    },
   },
   defaultVariants: {
     selected: false,
+    interactive: true,
   },
 });
 
@@ -54,6 +65,7 @@ interface ChipsBaseProps
   extends Omit<React.HTMLAttributes<HTMLButtonElement>, "type"> {
   title: string;
   selected?: boolean;
+  interactive?: boolean;
 }
 
 interface LevelChipsProps extends ChipsBaseProps {
@@ -71,6 +83,7 @@ export type ChipsProps = LevelChipsProps | NonLevelChipsProps;
 const Chips = ({
   type,
   selected,
+  interactive,
   title,
   description,
   ...props
@@ -85,6 +98,7 @@ const Chips = ({
   } = chipsVariant({
     type,
     selected,
+    interactive,
   });
 
   return (
