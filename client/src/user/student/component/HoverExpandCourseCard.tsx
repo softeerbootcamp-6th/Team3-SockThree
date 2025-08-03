@@ -1,4 +1,5 @@
 import Chips from "@/shared/components/Chips";
+import PersonIcon from "@/assets/icons/default/person.svg?react";
 
 type HoverExpandCourseCardProps = {
   cardData: {
@@ -64,19 +65,18 @@ const cardTopContainer = (cardData: CardData) => {
 const cardBottomContainer = (cardData: CardData) => {
   return (
     <div className="flex w-full flex-row justify-between gap-2">
-      <div className="flex w-[13.75rem] h-[4.8125rem] flex-col">
-        <p className="typo-body-6">{cardData.description}</p>
-        <p className="typo-title-1 h-[3rem] truncate">
-          {cardData.title}
+      <div className="flex h-[4.8125rem] w-[13.75rem] flex-col">
+        <p className="typo-body-6 h-[1.3125rem] truncate">
+          {cardData.description}
         </p>
+        <p className="typo-title-1 h-[3rem] truncate">{cardData.title}</p>
       </div>
       <div className="W-[32.0625rem] flex flex-col">
-        <span className="text-sm">{`${cardData.nowStudents} / ${cardData.maxStudents} students`}</span>
         <div className="flex flex-row gap-[var(--spacing-1)]">
-         
+          <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
+          <span className="text-sm">{`${cardData.nowStudents} / ${cardData.maxStudents}`}</span>
         </div>
       </div>
-   
     </div>
   );
 };
