@@ -51,7 +51,7 @@ const ProgressBar = ({
   size = "md",
 }: ProgressBarProps) => {
   // value가 주어지지 않았을 경우 current와 max를 이용해 계산
-  const computedValue = computeValue(value ?? 0, current, max);
+  const computedValue = computeValue(value, current, max);
 
   const { root, track, fill, label } = progressBarVariant({
     size,
@@ -81,7 +81,7 @@ const ProgressBar = ({
 
 export default ProgressBar;
 
-const computeValue = (value: number, current?: number, max?: number) => {
+const computeValue = (value?: number, current?: number, max?: number) => {
   if (value !== undefined) {
     return value;
   } else if (current !== undefined && max !== undefined && max !== 0) {
