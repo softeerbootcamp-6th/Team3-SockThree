@@ -6,14 +6,19 @@ import { fakerKO as faker } from "@faker-js/faker";
 const createRandomCards = () => {
   return {
     id: faker.number.int({ min: 1, max: 100 }),
-    title: faker.lorem.sentence(),
-    description: faker.lorem.sentence(),
+    title: faker.lorem.words({ min: 1, max: 2 }),
+    description: faker.lorem.sentence({ min: 3, max: 5 }),
     tags: faker.helpers.arrayElements(["운동", "골프", "1개월"]),
-    teacherId: faker.number.int({ min: 1, max: 10 }),
+    teacherName: faker.person.firstName(),
     teacherImg: faker.image.avatar(),
     nowStudents: faker.number.int({ min: 1, max: 15 }),
     maxStudents: faker.number.int({ min: 15, max: 30 }),
-    courseImg: faker.image.urlPicsumPhotos({ width: 600, height: 400 }),
+    courseImg: faker.image.urlPicsumPhotos({
+      width: 600,
+      height: 400,
+      grayscale: false,
+      blur: 0,
+    }),
   };
 };
 
