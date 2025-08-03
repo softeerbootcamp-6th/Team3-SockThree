@@ -23,9 +23,7 @@ export default function HoverExpandCourseCard({
 }: HoverExpandCourseCardProps) {
   return (
     <div
-      className={
-        `h-[21.3125rem] transition-all duration-300 ${isActive ? `w-[54.375rem] rounded-[1.875rem] px-[1.4375rem] py-[1.5rem]` : "w-[5rem] rounded-[3.125rem] opacity-60 brightness-50"} cursor-pointer bg-cover bg-center`
-      }
+      className={`h-[21.3125rem] transition-all duration-300 ${isActive ? `w-[54.375rem] rounded-[1.875rem] px-[1.4375rem] py-[1.5rem]` : "w-[5rem] rounded-[3.125rem] opacity-60 brightness-50"} cursor-pointer bg-cover bg-center`}
       style={{
         backgroundImage: `url(${cardData.courseImg})`,
       }}
@@ -35,36 +33,50 @@ export default function HoverExpandCourseCard({
       )}
       {isActive && (
         <div className="flex h-full flex-col justify-between text-white">
-          {teacherTagContainer(cardData)}
-          <p className="text-sm">{cardData.description}</p>
-          <h3 className="text-lg font-bold">{cardData.title}</h3>
-
-          <div className="mt-2 flex items-center">
-            <span className="text-sm">{`${cardData.nowStudents} / ${cardData.maxStudents} students`}</span>
-          </div>
-          <div className="mt-auto flex items-center justify-between">
-            <div className="text-sm">D-4</div>
-          </div>
+          {cardTopContainer(cardData)}
+          {cardBottomContainer(cardData)}
         </div>
       )}
     </div>
   );
 }
 
-const teacherTagContainer = (cardData: CardData) => {
+const cardTopContainer = (cardData: CardData) => {
   return (
     <div className="flex w-[824px] justify-between">
-      <div className="flex items-center">
+      <div className="flex items-center gap-0.5">
         <img
           src={cardData.teacherImg}
           alt="Teacher"
-          className="mr-2 h-8 w-8 rounded-full"
+          className="h-[1.8125rem] w-[1.8125rem] rounded-full"
         />
-        <span className="text-sm">{cardData.teacherName}</span>
+        <span className="typo-body-6">{cardData.teacherName}</span>
       </div>
-      {cardData.tags?.map((tag, index) => (
-        <Chips key={index} type="field" title={tag} interactive={false} />
-      ))}
+      <div className="flex items-center gap-[1.06rem]">
+        {cardData.tags?.map((tag, index) => (
+          <Chips key={index} type="field" title={tag} interactive={false} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const cardBottomContainer = (cardData: CardData) => {
+  return (
+    <div className="flex w-full flex-row justify-between gap-2">
+      <div className="flex w-[13.75rem] h-[4.8125rem] flex-col">
+        <p className="typo-body-6">{cardData.description}</p>
+        <p className="typo-title-1 h-[3rem] truncate">
+          {cardData.title}
+        </p>
+      </div>
+      <div className="W-[32.0625rem] flex flex-col">
+        <span className="text-sm">{`${cardData.nowStudents} / ${cardData.maxStudents} students`}</span>
+        <div className="flex flex-row gap-[var(--spacing-1)]">
+         
+        </div>
+      </div>
+   
     </div>
   );
 };
