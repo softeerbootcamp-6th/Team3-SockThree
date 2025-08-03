@@ -1,5 +1,6 @@
 import Chips from "@/shared/components/Chips";
 import PersonIcon from "@/assets/icons/default/person.svg?react";
+import ProgressBar from "@/shared/components/ProgressBar";
 
 type HoverExpandCourseCardProps = {
   cardData: {
@@ -72,9 +73,9 @@ const cardBottomContainer = (cardData: CardData) => {
         <p className="typo-title-1 h-[3rem] truncate">{cardData.title}</p>
       </div>
       <div className="W-[32.0625rem] flex flex-col">
-        <div className="flex flex-row gap-[var(--spacing-1)]">
+        <div className="flex flex-row gap-[.9375rem]">
           <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
-          <span className="text-sm">{`${cardData.nowStudents} / ${cardData.maxStudents}`}</span>
+          <ProgressBar type={"ratio"} current={cardData.nowStudents} max={cardData.maxStudents} />
         </div>
       </div>
     </div>
