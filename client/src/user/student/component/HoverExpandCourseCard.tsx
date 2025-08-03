@@ -26,16 +26,23 @@ export default function HoverExpandCourseCard({
 }: HoverExpandCourseCardProps) {
   return (
     <div
-      className={`h-[21.3125rem] transition-all duration-300 ${isActive ? `relative w-[54.375rem] rounded-[1.875rem]` : "w-[5rem] rounded-[3.125rem] opacity-60 brightness-50"} cursor-pointer bg-cover bg-center`}
+      className={`relative h-[21.3125rem] transition-all duration-300 ${isActive ? `w-[54.375rem] rounded-[1.875rem]` : "w-[5rem] rounded-[3.125rem] opacity-60"} cursor-pointer bg-cover bg-center`}
       style={{
         backgroundImage: `url(${cardData.courseImg})`,
       }}
     >
       {!isActive && (
-        <div className="flex h-full flex-col justify-end p-4 text-white"></div>
+        <div className="pointer-events-none absolute inset-0 rounded-[3.125rem] bg-black/50 py-[1.375rem]">
+          <div className="flex h-full flex-col items-center justify-end gap-[1rem]">
+            <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
+            <div className="typo-body-5 h-[1.5rem] text-white/70">
+              {cardData.nowStudents}/{cardData.maxStudents}
+            </div>
+          </div>
+        </div>
       )}
       {isActive && (
-        <div className="absolute inset-0 pointer-events-none rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
+        <div className="pointer-events-none absolute inset-0 rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
           <div className="flex h-full flex-col justify-between text-white">
             {cardTopContainer(cardData)}
             {cardBottomContainer(cardData)}
@@ -68,18 +75,24 @@ const cardTopContainer = (cardData: CardData) => {
 
 const cardBottomContainer = (cardData: CardData) => {
   return (
-    <div className="flex w-full flex-row justify-between gap-2">
-      <div className="flex h-[4.8125rem] w-[13.75rem] flex-col">
-        <p className="typo-body-6 h-[1.3125rem] truncate">
+    <div className="flex w-full flex-row items-center justify-between gap-2">
+      <div className="flex h-[4.8125rem] w-[13.75rem] flex-col gap-[.5rem]">
+        <p className="typo-body-6 h-[1.3125rem] truncate text-white/60">
           {cardData.description}
         </p>
         <p className="typo-title-1 h-[3rem] truncate">{cardData.title}</p>
       </div>
-      <div className="W-[32.0625rem] flex flex-col">
-        <RoundTooltip text={`${cardData.maxStudents - cardData.nowStudents}명 남았어요`} />
+      <div className="W-[32.0625rem] flex flex-col items-center gap-y-[.25rem]">
+        <RoundTooltip
+          text={`${cardData.maxStudents - cardData.nowStudents}명 남았어요`}
+        />
         <div className="flex flex-row gap-[.9375rem]">
           <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
-          <ProgressBar type={"ratio"} current={cardData.nowStudents} max={cardData.maxStudents} />
+          <ProgressBar
+            type={"ratio"}
+            current={cardData.nowStudents}
+            max={cardData.maxStudents}
+          />
         </div>
       </div>
     </div>
