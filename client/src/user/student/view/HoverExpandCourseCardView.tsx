@@ -27,19 +27,19 @@ const cards = faker.helpers.multiple(createRandomCards, {
 });
 
 export default function HoverExpandCourseCardView() {
-  const [activeId, setActiveId] = useState<number>(1);
+  const [activeId, setActiveId] = useState<number>(2);
 
   return (
     <div className="flex items-center gap-2 px-4">
-      {cards.map((card) => (
+      {cards.map((card, index) => (
         <div
-          key={card.id}
-          onMouseEnter={() => setActiveId(card.id)}
+          key={index}
+          onMouseEnter={() => setActiveId(index)}
           className="transition-all duration-300"
         >
           <HoverExpandCourseCard
             cardData={card}
-            isActive={card.id === activeId}
+            isActive={index === activeId}
           />
         </div>
       ))}
