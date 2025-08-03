@@ -1,18 +1,19 @@
 import Chips from "@/shared/components/Chips";
 import PersonIcon from "@/assets/icons/default/person.svg?react";
 import ProgressBar from "@/shared/components/ProgressBar";
+import RoundTooltip from "@/shared/components/RoundTooltip";
 
 type HoverExpandCourseCardProps = {
   cardData: {
     id: number;
     title: string;
     description?: string;
-    tags?: string[];
-    teacherName?: string;
-    teacherImg?: string;
-    nowStudents?: number;
-    maxStudents?: number;
-    courseImg?: string;
+    tags: string[];
+    teacherName: string;
+    teacherImg: string;
+    nowStudents: number;
+    maxStudents: number;
+    courseImg: string;
   };
   isActive: boolean;
 };
@@ -25,7 +26,7 @@ export default function HoverExpandCourseCard({
 }: HoverExpandCourseCardProps) {
   return (
     <div
-      className={`h-[21.3125rem] transition-all duration-300 ${isActive ? `w-[54.375rem] rounded-[1.875rem] px-[1.4375rem] py-[1.5rem]` : "w-[5rem] rounded-[3.125rem] opacity-60 brightness-50"} cursor-pointer bg-cover bg-center`}
+      className={`h-[21.3125rem] transition-all duration-300 ${isActive ? `relative w-[54.375rem] rounded-[1.875rem]` : "w-[5rem] rounded-[3.125rem] opacity-60 brightness-50"} cursor-pointer bg-cover bg-center`}
       style={{
         backgroundImage: `url(${cardData.courseImg})`,
       }}
@@ -34,9 +35,11 @@ export default function HoverExpandCourseCard({
         <div className="flex h-full flex-col justify-end p-4 text-white"></div>
       )}
       {isActive && (
-        <div className="flex h-full flex-col justify-between text-white">
-          {cardTopContainer(cardData)}
-          {cardBottomContainer(cardData)}
+        <div className="absolute inset-0 pointer-events-none rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
+          <div className="flex h-full flex-col justify-between text-white">
+            {cardTopContainer(cardData)}
+            {cardBottomContainer(cardData)}
+          </div>
         </div>
       )}
     </div>
@@ -73,6 +76,7 @@ const cardBottomContainer = (cardData: CardData) => {
         <p className="typo-title-1 h-[3rem] truncate">{cardData.title}</p>
       </div>
       <div className="W-[32.0625rem] flex flex-col">
+        <RoundTooltip text={`${cardData.maxStudents - cardData.nowStudents}명 남았어요`} />
         <div className="flex flex-row gap-[.9375rem]">
           <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
           <ProgressBar type={"ratio"} current={cardData.nowStudents} max={cardData.maxStudents} />
