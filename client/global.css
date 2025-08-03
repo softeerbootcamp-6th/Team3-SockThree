@@ -192,4 +192,14 @@
     background-origin: border-box;
     background-clip: padding-box, border-box;
   }
+
+  .border-circle-gradient-main {
+    border: 2px solid transparent;
+    border-radius: var(--radius-50);
+    background:
+      linear-gradient(#fff, #fff) padding-box,
+      var(--color-gradient-main) border-box;
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  }
 }
