@@ -24,34 +24,45 @@ export default function HoverExpandCourseCard({
   cardData,
   isActive,
 }: HoverExpandCourseCardProps) {
+  const resultCard = isActive
+    ? closedCardContainer(cardData)
+    : expandedCardContainer(cardData);
+  return resultCard;
+}
+
+const closedCardContainer = (cardData: CardData) => {
   return (
     <div
-      className={`relative h-[21.3125rem] transition-all duration-600 ${isActive ? `w-[54.375rem] rounded-[1.875rem]` : "w-[5rem] rounded-[3.125rem] opacity-60"} cursor-pointer bg-cover bg-center`}
-      style={{
-        backgroundImage: `url(${cardData.courseImg})`,
-      }}
+      className="cursor-pointer relative h-[21.3125rem] w-[54.375rem] rounded-[1.875rem] bg-cover bg-center transition-all duration-600"
+      style={{ backgroundImage: `url(${cardData.courseImg})` }}
     >
-      {!isActive && (
-        <div className="pointer-events-none absolute inset-0 rounded-[3.125rem] bg-black/50 py-[1.375rem]">
-          <div className="flex h-full flex-col items-center justify-end gap-[1rem]">
-            <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
-            <div className="typo-body-5 h-[1.5rem] text-white/70">
-              {cardData.nowStudents}/{cardData.maxStudents}
-            </div>
-          </div>
+      <div className="absolute inset-0 overflow-hidden rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
+        <div className="flex h-full flex-col justify-between text-white">
+          {cardTopContainer(cardData)}
+          {cardBottomContainer(cardData)}
         </div>
-      )}
-      {isActive && (
-        <div className="overflow-hidden pointer-events-none absolute inset-0 rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
-          <div className="flex h-full flex-col justify-between text-white">
-            {cardTopContainer(cardData)}
-            {cardBottomContainer(cardData)}
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
-}
+};
+
+const expandedCardContainer = (cardData: CardData) => {
+  return (
+    <div
+      className="relative h-[21.3125rem] w-[5rem] rounded-[3.125rem] bg-cover bg-center opacity-60 transition-all duration-600"
+      style={{ backgroundImage: `url(${cardData.courseImg})` }}
+    >
+      <div className="absolute inset-0 rounded-[3.125rem] bg-black/50 py-[1.375rem]">
+        <div className="flex h-full flex-col items-center justify-end gap-[1rem]">
+          <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
+          <div className="typo-body-5 h-[1.5rem] text-white/70">
+            {cardData.nowStudents}/{cardData.maxStudents}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const cardTopContainer = (cardData: CardData) => {
   return (
