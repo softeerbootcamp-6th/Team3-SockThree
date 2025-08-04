@@ -1,4 +1,4 @@
-import HoverExpandCourseCardView from "../view/HoverExpandCourseCardView";
+import HoverExpandCourseCardView from "@/user/student/view/HoverExpandCourseCardView";
 
 const StudentHomePage = () => {
   return <HoverExpandCourseCardView />;
