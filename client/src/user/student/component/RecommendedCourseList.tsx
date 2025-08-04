@@ -30,7 +30,7 @@ const RecommendedCourseList = ({ listData }: RecommendedCourseListProps) => {
           <span className="typo-title-6 text-black">
             {listData.teacherName}
           </span>
-          <span className="typo-title-5 text-black">
+          <span className="typo-title-5 overflow-ellipsis whitespace-nowrap text-black">
             {listData.courseTitle}
           </span>
         </div>
