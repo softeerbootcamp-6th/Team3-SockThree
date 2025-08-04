@@ -11,7 +11,7 @@ const chipsVariant = tv({
     textContainer:
       "flex flex-col items-start justify-start gap-[2.5rem] text-gray-600",
     title: "",
-    description: "whitespace-normal block max-w-[8rem] text-left break-words",
+    description: "whitespace-normal block max-w-[8.9rem] text-left break-words",
   },
   variants: {
     type: {
