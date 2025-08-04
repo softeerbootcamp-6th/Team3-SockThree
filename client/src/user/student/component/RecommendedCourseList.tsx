@@ -8,13 +8,20 @@ interface RecommendedCourseListProps {
     nowStudents: number;
     maxStudents: number;
   };
+  onClick?: () => void;
 }
-const RecommendedCourseList = ({ listData }: RecommendedCourseListProps) => {
+const RecommendedCourseList = ({
+  listData,
+  onClick,
+}: RecommendedCourseListProps) => {
   const courseStatus =
     listData.nowStudents >= listData.maxStudents ? "마감" : "모집중";
 
   return (
-    <li className="flex h-[3.5rem] w-[51.6875rem] items-center justify-between">
+    <li
+      className="flex h-[3.5rem] w-[51.6875rem] cursor-pointer items-center justify-between"
+      onClick={onClick}
+    >
       {/* 프로필 + 제목 */}
       <div className="flex items-center gap-2">
         {/* 상태 점 */}
@@ -30,7 +37,7 @@ const RecommendedCourseList = ({ listData }: RecommendedCourseListProps) => {
           <span className="typo-title-6 text-black">
             {listData.teacherName}
           </span>
-          <span className="typo-title-5 overflow-ellipsis whitespace-nowrap text-black">
+          <span className="typo-title-5 w-[14.375rem] overflow-ellipsis whitespace-nowrap text-black">
             {listData.courseTitle}
           </span>
         </div>
