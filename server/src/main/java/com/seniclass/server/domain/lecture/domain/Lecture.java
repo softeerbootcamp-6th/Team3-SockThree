@@ -5,6 +5,9 @@ import com.seniclass.server.domain.lecture.enums.Level;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,7 +32,7 @@ public class Lecture extends BaseTimeEntity {
   @Enumerated(EnumType.STRING)
   private Level level;
 
-  @Column(name = "lecture_start_date", nullable = false, unique = true)
+  @Column(name = "lecture_start_date", nullable = false)
   private LocalDate startDate;
 
   @Column(name = "lecture_end_date", nullable = false)
@@ -48,6 +51,10 @@ public class Lecture extends BaseTimeEntity {
   @Column(name = "lecture_description", nullable = false)
   private String description;
 
+  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+  @JoinColumn(name = "lecture_id")
+  private List<UploadTime> uploadTimes = new ArrayList<>();
+
   @Builder(access = AccessLevel.PRIVATE)
   public Lecture(
       String name,
@@ -58,7 +65,8 @@ public class Lecture extends BaseTimeEntity {
       Integer maxStudent,
       Integer fee,
       String instruction,
-      String description) {
+      String description,
+      List<UploadTime> uploadTimes) {
     this.name = name;
     this.cohort = cohort;
     this.level = level;
@@ -68,6 +76,7 @@ public class Lecture extends BaseTimeEntity {
     this.fee = fee;
     this.instruction = instruction;
     this.description = description;
+    this.uploadTimes = uploadTimes;
   }
 
   public static Lecture createLecture(
@@ -79,7 +88,8 @@ public class Lecture extends BaseTimeEntity {
       Integer maxStudent,
       Integer fee,
       String instruction,
-      String description) {
+      String description,
+      List<UploadTime> uploadTimes) {
     return Lecture.builder()
         .name(name)
         .cohort(cohort)
@@ -90,6 +100,7 @@ public class Lecture extends BaseTimeEntity {
         .fee(fee)
         .instruction(instruction)
         .description(description)
+        .uploadTimes(uploadTimes)
         .build();
   }
 }
