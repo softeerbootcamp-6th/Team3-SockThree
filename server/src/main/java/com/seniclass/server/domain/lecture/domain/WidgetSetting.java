@@ -19,6 +19,7 @@ public class WidgetSetting extends BaseTimeEntity {
   private Long id;
 
   @Column(name = "widget_setting_type", nullable = false)
+  @Enumerated(EnumType.STRING)
   private WidgetType widgetType;
 
   @Column(name = "widget_setting_row", nullable = false)
