@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier . --check"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.3",
