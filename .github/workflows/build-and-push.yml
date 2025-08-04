@@ -36,17 +36,34 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      image-tags: ${{ steps.backend-meta.outputs.tags }}
+      primary-tag: ${{ steps.set-primary-tag.outputs.tag }}
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
     - name: Log in to Container Registry
       uses: docker/login-action@v3
       with:
         registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        username: ${{ secrets.GIT_USERNAME }}
+        password: ${{ secrets.GIT_TOKEN }}
+
+    - name: Set primary tag for deployment
+      id: set-primary-tag
+      run: |
+        SHORT_SHA=$(echo "${{ github.sha }}" | cut -c1-7)
+        echo "short-sha=${SHORT_SHA}" >> $GITHUB_OUTPUT
+        if [ "${{ github.ref }}" = "refs/heads/main" ]; then
+          echo "tag=latest" >> $GITHUB_OUTPUT
+        elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+          echo "tag=develop-${SHORT_SHA}" >> $GITHUB_OUTPUT
+        fi
 
     - name: Extract metadata for backend
       id: backend-meta
@@ -54,14 +71,24 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.BACKEND_IMAGE_NAME }}
         tags: |
-          type=ref,event=branch
-          type=sha,prefix={{branch}}-
-          type=raw,value=latest,enable={{is_default_branch}}
+          # main 브랜치: latest 태그 생성
+          type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+          # develop 브랜치: develop-{short_sha} 태그 생성
+          type=raw,value=develop-${{ steps.set-primary-tag.outputs.short-sha }},enable=${{ github.ref == 'refs/heads/develop' }}
+          # main 브랜치: main-{short_sha} 태그도 생성 (버전 관리용)
+          type=raw,value=main-${{ steps.set-primary-tag.outputs.short-sha }},enable=${{ github.ref == 'refs/heads/main' }}
 
     - name: Build and push backend Docker image
       uses: docker/build-push-action@v5
       with:
         context: ./server
+        platforms: linux/amd64,linux/arm64
         push: true
         tags: ${{ steps.backend-meta.outputs.tags }}
         labels: ${{ steps.backend-meta.outputs.labels }}
+
+    - name: Output image info
+      run: |
+        echo "Built and pushed image with tags:"
+        echo "${{ steps.backend-meta.outputs.tags }}"
+        echo "Primary tag for deployment: ${{ steps.set-primary-tag.outputs.tag }}"

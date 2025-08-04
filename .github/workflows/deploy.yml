@@ -1,0 +1,129 @@
+name: Deploy to EC2
+
+on:
+  workflow_run:
+    workflows: ["Build and Push"]
+    types:
+      - completed
+    branches: [main, develop]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/backend
+
+jobs:
+  # 백엔드 변경 여부 확인
+  check-backend-changes:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    outputs:
+      backend-changed: ${{ steps.changes.outputs.backend }}
+      image-tag: ${{ steps.get-image-tag.outputs.tag }}
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ github.event.workflow_run.head_sha }}
+        fetch-depth: 0
+
+    - name: Get previous commit
+      run: |
+        PREV_COMMIT=$(git rev-parse ${{ github.event.workflow_run.head_sha }}~1)
+        echo "PREV_COMMIT=$PREV_COMMIT" >> $GITHUB_ENV
+
+    - name: Detect backend changes
+      uses: dorny/paths-filter@v2
+      id: changes
+      with:
+        base: ${{ env.PREV_COMMIT }}
+        head: ${{ github.event.workflow_run.head_sha }}
+        filters: |
+          backend:
+            - 'server/**'
+            - '.github/workflows/build-and-push.yml'
+
+    - name: Get image tag from build workflow
+      id: get-image-tag
+      run: |
+        # Build 워크플로우에서 사용한 것과 동일한 로직으로 태그 생성
+        SHORT_SHA=$(echo "${{ github.event.workflow_run.head_sha }}" | cut -c1-7)
+        if [ "${{ github.event.workflow_run.head_branch }}" = "main" ]; then
+          echo "tag=latest" >> $GITHUB_OUTPUT
+        elif [ "${{ github.event.workflow_run.head_branch }}" = "develop" ]; then
+          echo "tag=develop-${SHORT_SHA}" >> $GITHUB_OUTPUT
+        else
+          echo "tag=${{ github.event.workflow_run.head_branch }}-${SHORT_SHA}" >> $GITHUB_OUTPUT
+        fi
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: check-backend-changes
+    if: needs.check-backend-changes.outputs.backend-changed == 'true'
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Create .env file
+      run: |
+        echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+        echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> .env
+        echo "IMAGE_TAG=${{ needs.check-backend-changes.outputs.image-tag }}" >> .env
+        echo "GITHUB_TOKEN=${{ secrets.GIT_TOKEN }}" >> .env
+        echo "GITHUB_USERNAME=${{ secrets.GIT_USERNAME }}" >> .env
+        echo "SPRING_PROFILES_ACTIVE=prod" >> .env
+
+    - name: Copy docker-compose and .env to EC2
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: 43.203.245.248
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        source: "docker-compose.yml,.env"
+        target: "/home/ec2-user/sockthree"
+
+    - name: Deploy to EC2
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: 43.203.245.248
+        username: ec2-user
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd /home/ec2-user/sockthree
+
+          # GitHub Container Registry 로그인
+          echo "${{ secrets.GIT_TOKEN }}" | docker login ghcr.io -u ${{ secrets.GIT_USERNAME }} --password-stdin
+
+          # 사용할 이미지 태그 확인
+          echo "🔍 Attempting to pull image: ghcr.io/softeerbootcamp-6th/team3-sockthree/backend:${{ needs.check-backend-changes.outputs.image-tag }}"
+
+          # 이미지가 존재하는지 확인
+          if docker manifest inspect ghcr.io/softeerbootcamp-6th/team3-sockthree/backend:${{ needs.check-backend-changes.outputs.image-tag }} >/dev/null 2>&1; then
+            echo "✅ Image found with tag: ${{ needs.check-backend-changes.outputs.image-tag }}"
+          else
+            echo "❌ Image not found with tag: ${{ needs.check-backend-changes.outputs.image-tag }}"
+            echo "📋 Available tags:"
+            # 최신 태그들 확인 (GitHub API 사용)
+            curl -H "Authorization: Bearer ${{ secrets.GIT_TOKEN }}" \
+                 -H "Accept: application/vnd.github.v3+json" \
+                 "https://api.github.com/repos/softeerbootcamp-6th/team3-sockthree/packages/container/backend/versions" | \
+                 jq -r '.[0:5][] | .metadata.container.tags[]?' || echo "API call failed"
+            exit 1
+          fi
+
+          # 기존 컨테이너 중지 및 제거
+          docker-compose down || true
+
+          # 최신 이미지 pull 및 컨테이너 시작
+          docker-compose pull
+          docker-compose up -d
+
+          # 컨테이너 상태 확인
+          docker-compose ps
+
+          # 로그 확인
+          docker-compose logs --tail=20 app
+
+          # 배포 완료 메시지
+          echo "✅ Deployment completed successfully!"
+          echo "🌐 Application URL: http://43.203.245.248:8080"
+          echo "📋 Deployed image tag: ${{ needs.check-backend-changes.outputs.image-tag }}"
