@@ -20,7 +20,7 @@ public class Lecture extends BaseTimeEntity {
   private Long id;
 
   @Column(name = "lecture_name", nullable = false)
-  private Integer name;
+  private String name;
 
   @Column(name = "lecture_cohort")
   private Integer cohort;
@@ -50,7 +50,7 @@ public class Lecture extends BaseTimeEntity {
 
   @Builder(access = AccessLevel.PRIVATE)
   public Lecture(
-      Integer name,
+      String name,
       Integer cohort,
       Level level,
       LocalDate startDate,
@@ -71,7 +71,7 @@ public class Lecture extends BaseTimeEntity {
   }
 
   public static Lecture createLecture(
-      Integer name,
+      String name,
       Integer cohort,
       Level level,
       LocalDate startDate,
