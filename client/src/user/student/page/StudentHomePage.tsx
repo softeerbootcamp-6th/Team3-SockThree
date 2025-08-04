@@ -1,9 +1,7 @@
-import HoverExpandCourseCardView from "../view/HoverExpandCourseCardView"
+import HoverExpandCourseCardView from "../view/HoverExpandCourseCardView";
 
 const StudentHomePage = () => {
-    return (
-        <HoverExpandCourseCardView />
-    )
-}
+  return <HoverExpandCourseCardView />;
+};
 
-export default StudentHomePage
+export default StudentHomePage;

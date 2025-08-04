@@ -33,7 +33,7 @@ export default function HoverExpandCourseCard({
 const closedCardContainer = (cardData: CardData) => {
   return (
     <div
-      className="cursor-pointer relative h-[21.3125rem] w-[54.375rem] rounded-[1.875rem] bg-cover bg-center transition-all duration-600"
+      className="relative h-[21.3125rem] w-[54.375rem] cursor-pointer rounded-[1.875rem] bg-cover bg-center transition-all duration-600"
       style={{ backgroundImage: `url(${cardData.courseImg})` }}
     >
       <div className="absolute inset-0 overflow-hidden rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">

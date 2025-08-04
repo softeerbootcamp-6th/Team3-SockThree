@@ -32,14 +32,10 @@ export default function HoverExpandCourseCardView() {
   return (
     <div className="flex items-center gap-2 px-4">
       {cards.map((card, index) => (
-        <div
-          key={index}
-          onMouseEnter={() => setActiveId(index)}
-        >
+        <div key={index} onMouseEnter={() => setActiveId(index)}>
           <HoverExpandCourseCard
             cardData={card}
             isActive={index === activeId}
-            
           />
         </div>
       ))}
