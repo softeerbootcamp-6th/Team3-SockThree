@@ -50,3 +50,10 @@ jwt:
   secret: ${JWT_SECRET:seniclass-jwt-secret-key-that-should-be-changed-in-production-environment}
   access-token-validity: ${JWT_ACCESS_TOKEN_VALIDITY:3600000}  # 1시간 (밀리초)
   refresh-token-validity: ${JWT_REFRESH_TOKEN_VALIDITY:2592000000}  # 30일 (밀리초)
+
+# 로그 설정 추가
+logging:
+  level:
+    com.seniclass.server.domain.auth: DEBUG
+    org.springframework.data.redis: DEBUG
+    root: INFO
