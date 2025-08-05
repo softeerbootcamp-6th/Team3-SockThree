@@ -28,7 +28,7 @@ public class Chapter extends BaseTimeEntity {
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public Chapter(String name, Lecture lecture) {
+    private Chapter(String name, Lecture lecture) {
         this.name = name;
         this.lecture = lecture;
     }
