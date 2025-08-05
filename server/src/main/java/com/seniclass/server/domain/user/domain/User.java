@@ -1,6 +1,7 @@
 package com.seniclass.server.domain.user.domain;
 
 import com.seniclass.server.domain.auth.enums.UserRole;
+import com.seniclass.server.domain.common.model.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public abstract class User {
+public abstract class User extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
