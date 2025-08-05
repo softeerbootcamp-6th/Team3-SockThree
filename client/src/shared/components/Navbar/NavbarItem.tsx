@@ -1,4 +1,4 @@
-interface SidebarItemProps {
+interface NavbarItemProps {
   icon: React.FC<React.SVGProps<SVGSVGElement>>;
   label: string;
   routePath: string;
@@ -6,12 +6,12 @@ interface SidebarItemProps {
   onClick?: () => void;
 }
 
-const SidebarItem = ({
+const NavbarItem = ({
   icon: Icon,
   label,
   isSelected,
   onClick,
-}: SidebarItemProps) => {
+}: NavbarItemProps) => {
   return (
     <li className="h-[7.75rem] w-[5.9375rem] cursor-pointer" onClick={onClick}>
       <a className="flex h-full flex-col items-center justify-start">
@@ -39,4 +39,4 @@ const SidebarItem = ({
   );
 };
 
-export default SidebarItem;
+export default NavbarItem;

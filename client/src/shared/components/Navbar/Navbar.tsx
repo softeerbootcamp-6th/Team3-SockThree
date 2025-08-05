@@ -1,12 +1,12 @@
 import Logo from "@/assets/logo/logo.svg?react";
 import Button from "@/shared/components/Button";
 
-interface SidebarProps {
+interface NavbarProps {
   userImg?: string;
   children?: React.ReactNode;
 }
 
-const Sidebar = ({ userImg, children }: SidebarProps) => {
+const Navbar = ({ userImg, children }: NavbarProps) => {
   return (
     <aside className="ml-[2.625rem] flex h-screen w-[6.8125rem] flex-col items-center justify-between bg-transparent pt-[4.5625rem] pb-[5.9431rem]">
       {/* 로고 */}
@@ -42,4 +42,4 @@ const Sidebar = ({ userImg, children }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export default Navbar;
