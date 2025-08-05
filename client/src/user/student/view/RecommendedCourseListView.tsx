@@ -37,7 +37,7 @@ const AUTO_INTERVAL = 3000; // 3초
 
 const RecommendedCourseListView = () => {
   const [index, setIndex] = useState(0);
-  const [transition, setTransition] = useState(true);
+  const [isTransition, setIsTransition] = useState(true);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const createCarouselList = ({
@@ -72,11 +72,11 @@ const RecommendedCourseListView = () => {
 
           // 마지막 transition이 끝난 후에 transition을 제거하고 첫 번째로 점프
           setTimeout(() => {
-            setTransition(false);
+            setIsTransition(false);
             setIndex(0);
           }, 700);
         } else {
-          setTransition(true);
+          setIsTransition(true);
         }
         return prev + 1;
       });
@@ -103,7 +103,7 @@ const RecommendedCourseListView = () => {
         onMouseEnter={stopAutoSlide}
         onMouseLeave={startAutoSlide}
         className={`transition-transform ${
-          transition ? "duration-700 ease-in-out" : "transition-none"
+          isTransition ? "duration-700 ease-in-out" : "transition-none"
         }`}
         style={{
           transform: `translateY(-${offsetY}px)`,
