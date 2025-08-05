@@ -34,7 +34,7 @@ public class Video extends BaseTimeEntity {
     private LocalDateTime publicationDateTime;
 
     @Column(name = "video_streamable", nullable = false)
-    private Boolean isStreamable;
+    private Boolean streamable;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chapter_id", nullable = false)
@@ -47,13 +47,13 @@ public class Video extends BaseTimeEntity {
             String uploadPath,
             String streamingPath,
             LocalDateTime publicationDateTime,
-            Boolean isStreamable,
+            boolean streamable,
             Chapter chapter) {
         this.name = name;
         this.uploadPath = uploadPath;
         this.streamingPath = streamingPath;
         this.publicationDateTime = publicationDateTime;
-        this.isStreamable = isStreamable;
+        this.streamable = streamable;
         this.chapter = chapter;
     }
 
@@ -63,13 +63,13 @@ public class Video extends BaseTimeEntity {
                 .name(name)
                 .uploadPath(uploadPath)
                 .publicationDateTime(publicationDateTime)
-                .isStreamable(false)
+                .streamable(false)
                 .chapter(chapter)
                 .build();
     }
 
     public void finalizeVideoUpload(String streamingPath) {
         this.streamingPath = PATH.CDN_STREAMING_PATH.getPath() + streamingPath;
-        isStreamable = true;
+        streamable = true;
     }
 }
