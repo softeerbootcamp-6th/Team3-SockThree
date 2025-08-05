@@ -34,7 +34,7 @@ public class AuthController {
   }
 
   @PostMapping("/logout")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ResponseStatus(HttpStatus.OK)
   public void logout(HttpServletRequest request) {
     String token = extractTokenFromRequest(request);
     if (token != null) {
@@ -43,7 +43,7 @@ public class AuthController {
   }
 
   @GetMapping("/validate")
-  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @ResponseStatus(HttpStatus.OK)
   public void validateToken(HttpServletRequest request) {
     String token = extractTokenFromRequest(request);
     if (token == null || !authService.isTokenValid(token)) {
