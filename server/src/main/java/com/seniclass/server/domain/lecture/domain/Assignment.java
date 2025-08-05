@@ -39,7 +39,12 @@ public class Assignment extends BaseTimeEntity {
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public Assignment(String name, String instruction, String fileLink, LocalDateTime dueDateTime, Lecture lecture) {
+    public Assignment(
+            String name,
+            String instruction,
+            String fileLink,
+            LocalDateTime dueDateTime,
+            Lecture lecture) {
         this.name = name;
         this.instruction = instruction;
         this.fileLink = fileLink;
@@ -47,7 +52,12 @@ public class Assignment extends BaseTimeEntity {
         this.lecture = lecture;
     }
 
-    public static Assignment createAssignment(String name, String instruction, String fileLink, LocalDateTime dueDateTime, Lecture lecture) {
+    public static Assignment createAssignment(
+            String name,
+            String instruction,
+            String fileLink,
+            LocalDateTime dueDateTime,
+            Lecture lecture) {
         return Assignment.builder()
                 .name(name)
                 .instruction(instruction)
