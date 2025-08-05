@@ -17,41 +17,41 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice(basePackages = "com.seniclass")
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-  @ExceptionHandler(CommonException.class)
-  public ResponseEntity<CommonResponse> handleCustomException(CommonException e) {
-    final BaseErrorCode errorCode = e.getErrorCode();
-    final ErrorResponse errorResponse =
-        ErrorResponse.of(errorCode.errorClassName(), errorCode.getMessage());
-    final CommonResponse response =
-        CommonResponse.onFailure(errorCode.getHttpStatus().value(), errorResponse);
+    @ExceptionHandler(CommonException.class)
+    public ResponseEntity<CommonResponse> handleCustomException(CommonException e) {
+        final BaseErrorCode errorCode = e.getErrorCode();
+        final ErrorResponse errorResponse =
+                ErrorResponse.of(errorCode.errorClassName(), errorCode.getMessage());
+        final CommonResponse response =
+                CommonResponse.onFailure(errorCode.getHttpStatus().value(), errorResponse);
 
-    return ResponseEntity.status(errorCode.getHttpStatus()).body(response);
-  }
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(response);
+    }
 
-  @SneakyThrows
-  @Override
-  protected ResponseEntity<Object> handleMethodArgumentNotValid(
-      MethodArgumentNotValidException e,
-      HttpHeaders headers,
-      HttpStatusCode status,
-      WebRequest request) {
-    final String errorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-    final ErrorResponse errorResponse =
-        ErrorResponse.of(e.getClass().getSimpleName(), errorMessage);
-    final CommonResponse<ErrorResponse> response =
-        CommonResponse.onFailure(HttpStatus.BAD_REQUEST.value(), errorResponse);
+    @SneakyThrows
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException e,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request) {
+        final String errorMessage = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
+        final ErrorResponse errorResponse =
+                ErrorResponse.of(e.getClass().getSimpleName(), errorMessage);
+        final CommonResponse<ErrorResponse> response =
+                CommonResponse.onFailure(HttpStatus.BAD_REQUEST.value(), errorResponse);
 
-    return ResponseEntity.status(status).body(response);
-  }
+        return ResponseEntity.status(status).body(response);
+    }
 
-  @ExceptionHandler(Exception.class)
-  protected ResponseEntity<CommonResponse> handleException(Exception e) {
-    final BaseErrorCode errorCode = GlobalErrorCode.INTERNAL_SERVER_ERROR;
-    final ErrorResponse errorResponse =
-        ErrorResponse.of(e.getClass().getSimpleName(), errorCode.getMessage());
-    final CommonResponse response =
-        CommonResponse.onFailure(errorCode.getHttpStatus().value(), errorResponse);
+    @ExceptionHandler(Exception.class)
+    protected ResponseEntity<CommonResponse> handleException(Exception e) {
+        final BaseErrorCode errorCode = GlobalErrorCode.INTERNAL_SERVER_ERROR;
+        final ErrorResponse errorResponse =
+                ErrorResponse.of(e.getClass().getSimpleName(), errorCode.getMessage());
+        final CommonResponse response =
+                CommonResponse.onFailure(errorCode.getHttpStatus().value(), errorResponse);
 
-    return ResponseEntity.status(errorCode.getHttpStatus().value()).body(response);
-  }
+        return ResponseEntity.status(errorCode.getHttpStatus().value()).body(response);
+    }
 }

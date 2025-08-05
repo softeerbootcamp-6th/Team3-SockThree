@@ -1,0 +1,68 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7.2-alpine
+    container_name: seniclass-redis-local
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_local_data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - local-network
+
+  # 로컬 개발용 MySQL (선택적 - RDS 대신 사용 가능)
+  mysql:
+    image: mysql:8.0
+    container_name: seniclass-mysql-local
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=senicle_db
+      - MYSQL_USER=seniclass
+      - MYSQL_PASSWORD=seniclass123
+    volumes:
+      - mysql_local_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - local-network
+    profiles:
+      - mysql  # 선택적으로 실행: docker-compose --profile mysql up
+
+  # Redis 관리 도구 (선택적)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: seniclass-redis-commander
+    ports:
+      - "8081:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    depends_on:
+      - redis
+    restart: unless-stopped
+    networks:
+      - local-network
+    profiles:
+      - redis-gui  # 선택적으로 실행: docker-compose --profile redis-gui up
+
+volumes:
+  redis_local_data:
+  mysql_local_data:
+
+networks:
+  local-network:
+    driver: bridge
