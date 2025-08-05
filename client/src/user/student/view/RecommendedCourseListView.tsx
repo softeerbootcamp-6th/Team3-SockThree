@@ -10,7 +10,7 @@ const createRandomLists = () => ({
     "이정빈",
     "한경준",
   ]),
-  courseTitle: faker.lorem.words({ min: 1, max: 2 }),
+  courseTitle: faker.lorem.words({ min: 2, max: 3 }),
   courseType: faker.helpers.arrayElement(["운동", "골프"]),
   courseDays: faker.helpers.arrayElements(["월", "화", "수", "목", "금"], {
     min: 1,

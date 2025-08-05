@@ -35,7 +35,7 @@ const RecommendedCourseListItem = ({
           <span className="typo-title-6 text-black">
             {listItemData.teacherName}
           </span>
-          <span className="typo-title-5 w-[14.375rem] overflow-ellipsis whitespace-nowrap text-black">
+          <span className="typo-title-5 w-[10.625rem] overflow-hidden text-ellipsis whitespace-nowrap text-black">
             {listItemData.courseTitle}
           </span>
         </div>
