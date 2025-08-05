@@ -39,7 +39,7 @@ public class Assignment extends BaseTimeEntity {
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public Assignment(
+    private Assignment(
             String name,
             String instruction,
             String fileLink,
