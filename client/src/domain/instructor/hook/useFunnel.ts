@@ -1,20 +1,23 @@
-import { useState, useCallback } from "react";
+import { useState } from "react";
 
-export function useFunnel<T extends Record<string, unknown>>() {
-  const [step, setStep] = useState(1);
-  const [context, setContext] = useState<Partial<T>>({});
+export function useFunnel<T>(steps: Array<keyof T>) {
+  const [step, setStep] = useState<keyof T>(steps[0]);
 
-  const pushStep = useCallback(<K extends keyof T>(key: K, value: T[K]) => {
-    setContext((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-    setStep((prev) => prev + 1);
-  }, []);
-
-  return {
-    step,
-    context,
-    pushStep,
+  const goNextStep = () => {
+    const currentIndex = steps.indexOf(step);
+    const nextStep = steps[currentIndex + 1];
+    if (nextStep) setStep(nextStep);
   };
+
+  const goToStep = (target: keyof T) => {
+    if (steps.includes(target)) {
+      setStep(target);
+      const el = document.getElementById(`step-${String(target)}`);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  };
+
+  return { step, goNextStep, goToStep };
 }
