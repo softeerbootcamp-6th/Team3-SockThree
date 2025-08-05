@@ -27,7 +27,7 @@ public class Video extends BaseTimeEntity {
     @Column(name = "video_upload_path", nullable = false)
     private String uploadPath;
 
-    @Column(name = "video_streaming_path", nullable = false)
+    @Column(name = "video_streaming_path")
     private String streamingPath;
 
     @Column(name = "video_publication_date_time", nullable = false)
