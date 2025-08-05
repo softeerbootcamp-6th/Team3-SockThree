@@ -3,22 +3,38 @@ spring:
     activate:
       on-profile: "dev"
 
+  docker:
+    compose:
+      enabled: false
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     # SSH 터널링을 통해 localhost:3306으로 RDS에 접속
     url: jdbc:mysql://localhost:3306/${DB_NAME:senicle_db}?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    username: ${DB_USERNAME:seniclass}
+    password: ${DB_PASSWORD:seniclass123}
 
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
         show_sql: false
     open-in-view: false
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: # 개발 환경에서는 비밀번호 없음
+      timeout: 2000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
 
 logging:
   level:

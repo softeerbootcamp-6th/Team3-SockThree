@@ -29,7 +29,7 @@ public class Lecture extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    @Column(name = "lecture_start_date", nullable = false, unique = true)
+    @Column(name = "lecture_start_date", nullable = false)
     private LocalDate startDate;
 
     @Column(name = "lecture_end_date", nullable = false)
