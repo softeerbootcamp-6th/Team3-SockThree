@@ -3,13 +3,16 @@ import { Outlet } from "react-router";
 
 import HomeIcon from "@/assets/icons/default/home.svg?react";
 import SearchIcon from "@/assets/icons/default/search.svg?react";
+import CourseIcon from "@/assets/icons/default/course.svg?react";
 
 import { useState } from "react";
 import NavbarItem from "@/shared/components/Navbar/NavbarItem";
 
+import { useLocation } from "react-router";
+
 const StudentLayout = () => {
   return (
-    <div>
+    <div className="flex h-screen flex-row justify-between">
       {renderStudentNavbar()}
       <Outlet />
     </div>
@@ -24,8 +27,12 @@ const renderStudentNavbar = () => {
       label: "강의 검색",
       routePath: "/student/course-search",
     },
+    { icon: CourseIcon, label: "???", routePath: "/student/course" },
   ];
-  const [selectedPath, setSelectedPath] = useState("home");
+
+  const location = useLocation();
+
+  const [selectedPath, setSelectedPath] = useState(location.pathname);
 
   const handleItemClick = (path: string) => {
     setSelectedPath(path);
