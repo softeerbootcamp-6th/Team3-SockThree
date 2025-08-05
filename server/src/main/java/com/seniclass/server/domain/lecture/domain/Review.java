@@ -44,7 +44,13 @@ public class Review extends BaseTimeEntity {
         this.student = student;
     }
 
-    public static Review createReview(String content, Double rating, Lecture lecture, Student student) {
-        return Review.builder().content(content).rating(rating).lecture(lecture).student(student).build();
+    public static Review createReview(
+            String content, Double rating, Lecture lecture, Student student) {
+        return Review.builder()
+                .content(content)
+                .rating(rating)
+                .lecture(lecture)
+                .student(student)
+                .build();
     }
 }
