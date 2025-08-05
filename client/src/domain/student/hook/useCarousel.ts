@@ -51,7 +51,7 @@ const useCarousel = <T>({
         return prev + 1;
       });
     }, autoInterval);
-  }, []);
+  }, [autoInterval, originalListItems.length, transitionDuration]);
 
   const stopAutoSlide = useCallback(() => {
     if (intervalRef.current) {
