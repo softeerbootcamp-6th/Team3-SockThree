@@ -14,82 +14,82 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Lecture extends BaseTimeEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "lecture_id", nullable = false)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "lecture_id", nullable = false)
+    private Long id;
 
-  @Column(name = "lecture_name", nullable = false)
-  private String name;
+    @Column(name = "lecture_name", nullable = false)
+    private String name;
 
-  @Column(name = "lecture_cohort")
-  private Integer cohort;
+    @Column(name = "lecture_cohort")
+    private Integer cohort;
 
-  @Column(name = "lecture_level", nullable = false)
-  @Enumerated(EnumType.STRING)
-  private Level level;
+    @Column(name = "lecture_level", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Level level;
 
-  @Column(name = "lecture_start_date", nullable = false, unique = true)
-  private LocalDate startDate;
+    @Column(name = "lecture_start_date", nullable = false, unique = true)
+    private LocalDate startDate;
 
-  @Column(name = "lecture_end_date", nullable = false)
-  private LocalDate endDate;
+    @Column(name = "lecture_end_date", nullable = false)
+    private LocalDate endDate;
 
-  @Column(name = "lecture_max_student", nullable = false)
-  private Integer maxStudent;
+    @Column(name = "lecture_max_student", nullable = false)
+    private Integer maxStudent;
 
-  @Column(name = "lecture_fee", nullable = false)
-  private Integer fee;
+    @Column(name = "lecture_fee", nullable = false)
+    private Integer fee;
 
-  @Column(name = "lecture_instruction", nullable = false)
-  private String instruction;
+    @Column(name = "lecture_instruction", nullable = false)
+    private String instruction;
 
-  @Lob
-  @Column(name = "lecture_description", nullable = false)
-  private String description;
+    @Lob
+    @Column(name = "lecture_description", nullable = false)
+    private String description;
 
-  @Builder(access = AccessLevel.PRIVATE)
-  public Lecture(
-      String name,
-      Integer cohort,
-      Level level,
-      LocalDate startDate,
-      LocalDate endDate,
-      Integer maxStudent,
-      Integer fee,
-      String instruction,
-      String description) {
-    this.name = name;
-    this.cohort = cohort;
-    this.level = level;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.maxStudent = maxStudent;
-    this.fee = fee;
-    this.instruction = instruction;
-    this.description = description;
-  }
+    @Builder(access = AccessLevel.PRIVATE)
+    public Lecture(
+            String name,
+            Integer cohort,
+            Level level,
+            LocalDate startDate,
+            LocalDate endDate,
+            Integer maxStudent,
+            Integer fee,
+            String instruction,
+            String description) {
+        this.name = name;
+        this.cohort = cohort;
+        this.level = level;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.maxStudent = maxStudent;
+        this.fee = fee;
+        this.instruction = instruction;
+        this.description = description;
+    }
 
-  public static Lecture createLecture(
-      String name,
-      Integer cohort,
-      Level level,
-      LocalDate startDate,
-      LocalDate endDate,
-      Integer maxStudent,
-      Integer fee,
-      String instruction,
-      String description) {
-    return Lecture.builder()
-        .name(name)
-        .cohort(cohort)
-        .level(level)
-        .startDate(startDate)
-        .endDate(endDate)
-        .maxStudent(maxStudent)
-        .fee(fee)
-        .instruction(instruction)
-        .description(description)
-        .build();
-  }
+    public static Lecture createLecture(
+            String name,
+            Integer cohort,
+            Level level,
+            LocalDate startDate,
+            LocalDate endDate,
+            Integer maxStudent,
+            Integer fee,
+            String instruction,
+            String description) {
+        return Lecture.builder()
+                .name(name)
+                .cohort(cohort)
+                .level(level)
+                .startDate(startDate)
+                .endDate(endDate)
+                .maxStudent(maxStudent)
+                .fee(fee)
+                .instruction(instruction)
+                .description(description)
+                .build();
+    }
 }
