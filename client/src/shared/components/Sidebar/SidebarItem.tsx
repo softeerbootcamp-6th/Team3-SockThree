@@ -1,19 +1,20 @@
+import { Link } from "react-router";
+
 interface SidebarItemProps {
   item: {
     icon: React.ReactNode;
     label: string;
-    route?: string;
+    route: string;
     isSelected?: boolean;
   };
-  onClick?: () => void;
 }
 
-const SidebarItem = ({ item, onClick }: SidebarItemProps) => {
+const SidebarItem = ({ item }: SidebarItemProps) => {
   return (
-    <button className="" onClick={onClick}>
+    <Link to={item.route} className="">
       <span className="">{item.icon}</span>
       <span className="">{item.label}</span>
-    </button>
+    </Link>
   );
 };
 

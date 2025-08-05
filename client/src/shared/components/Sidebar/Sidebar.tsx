@@ -4,7 +4,7 @@ import Button from "@/shared/components/Button";
 
 interface SidebarProps {
   userImg?: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const Sidebar = ({ userImg, children }: SidebarProps) => {
