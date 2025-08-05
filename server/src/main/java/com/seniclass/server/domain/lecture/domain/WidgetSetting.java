@@ -8,6 +8,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -37,6 +39,11 @@ public class WidgetSetting extends BaseTimeEntity {
   @Column(name = "widget_setting_visible", nullable = false)
   private Boolean visible;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "lecture_id", nullable = false)
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Lecture lecture;
+
   @Builder(access = AccessLevel.PRIVATE)
   public WidgetSetting(
       WidgetType widgetType,
@@ -44,13 +51,15 @@ public class WidgetSetting extends BaseTimeEntity {
       Integer column,
       Integer width,
       Integer height,
-      Boolean visible) {
+      Boolean visible,
+      Lecture lecture) {
     this.widgetType = widgetType;
     this.row = row;
     this.column = column;
     this.width = width;
     this.height = height;
     this.visible = visible;
+    this.lecture = lecture;
   }
 
   public static WidgetSetting createWidgetSetting(

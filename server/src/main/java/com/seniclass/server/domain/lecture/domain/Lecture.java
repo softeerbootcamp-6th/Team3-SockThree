@@ -5,7 +5,6 @@ import com.seniclass.server.domain.lecture.enums.Level;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import java.time.LocalDate;
-import java.util.List;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,10 +48,6 @@ public class Lecture extends BaseTimeEntity {
   @Column(name = "lecture_description", nullable = false)
   private String description;
 
-  @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-  @JoinColumn(name = "lecture_id")
-  private List<WidgetSetting> widgetSettings;
-
   @Builder(access = AccessLevel.PRIVATE)
   public Lecture(
       String name,
@@ -63,8 +58,7 @@ public class Lecture extends BaseTimeEntity {
       Integer maxStudent,
       Integer fee,
       String instruction,
-      String description,
-      List<WidgetSetting> widgetSettings) {
+      String description) {
     this.name = name;
     this.cohort = cohort;
     this.level = level;
@@ -74,7 +68,6 @@ public class Lecture extends BaseTimeEntity {
     this.fee = fee;
     this.instruction = instruction;
     this.description = description;
-    this.widgetSettings = widgetSettings;
   }
 
   public static Lecture createLecture(
@@ -86,8 +79,7 @@ public class Lecture extends BaseTimeEntity {
       Integer maxStudent,
       Integer fee,
       String instruction,
-      String description,
-      List<WidgetSetting> widgetSettings) {
+      String description) {
     return Lecture.builder()
         .name(name)
         .cohort(cohort)
@@ -98,7 +90,6 @@ public class Lecture extends BaseTimeEntity {
         .fee(fee)
         .instruction(instruction)
         .description(description)
-        .widgetSettings(widgetSettings)
         .build();
   }
 }
