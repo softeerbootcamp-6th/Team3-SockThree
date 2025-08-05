@@ -3,6 +3,7 @@ import RecommendedCourseList from "../component/RecommendedCourseList";
 import { fakerKO as faker } from "@faker-js/faker";
 
 const createRandomLists = (index: number) => ({
+  courseId: faker.number.int({ min: 1, max: 100 }),
   teacherImg: faker.image.avatar(),
   teacherName: (index + 1).toString(),
   courseTitle: faker.lorem.words({ min: 1, max: 2 }),
@@ -20,6 +21,7 @@ const originalLists = Array.from({ length: 10 }, (_, i) =>
 );
 
 interface listData {
+  courseId: number;
   teacherImg: string;
   teacherName: string;
   courseTitle: string;
@@ -107,11 +109,8 @@ const RecommendedCourseListView = () => {
           transform: `translateY(-${offsetY}px)`,
         }}
       >
-        {carouselList.map((course, i) => (
-          <RecommendedCourseList
-            key={`${course.teacherName}-${i}`}
-            listData={course}
-          />
+        {carouselList.map((course) => (
+          <RecommendedCourseList key={course.courseId} listData={course} />
         ))}
       </ul>
     </div>
