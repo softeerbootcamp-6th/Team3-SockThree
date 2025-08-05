@@ -1,63 +1,38 @@
 import { useState } from "react";
-import Chips from "@/shared/components/Chips.tsx";
+import MaxHeadCountSlider from "@/domain/instructor/component/Slider.tsx";
 
 interface StepMaxHeadCountProps {
   onNextStep: (context: { maxHeadCount: number }) => void;
 }
 
 const StepMaxHeadCount = ({ onNextStep }: StepMaxHeadCountProps) => {
-  const [maxHeadCount, setMaxHeadCount] = useState<number | null>(null);
-  const [customCount, setCustomCount] = useState("");
+  // 초기 최대 인원수 (서버에서 fetch 해올 값)
+  const INIT_COUNT = 35;
 
-  const predefinedOptions = [5, 10, 15, 20];
-
-  const handlePredefinedClick = (count: number) => {
-    setMaxHeadCount(count);
-    setCustomCount("");
-    onNextStep({ maxHeadCount: count });
-  };
+  const [maxHeadCount, setMaxHeadCount] = useState(INIT_COUNT);
 
   const handleCustomSubmit = () => {
-    const count = parseInt(customCount);
-    if (count > 0) {
-      setMaxHeadCount(count);
-      onNextStep({ maxHeadCount: count });
-    }
+    onNextStep({ maxHeadCount });
   };
 
   return (
-    <div className="border- flex w-[71rem] flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="border- flex w-[71rem] flex-col gap-[90px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">최대 몇 명까지 수강할 수 있나요?</p>
       <div className="flex flex-col gap-6">
-        <div className="flex flex-wrap gap-4">
-          {predefinedOptions.map((count) => (
-            <Chips
-              key={count}
-              type="field"
-              title={`${count}명`}
-              selected={maxHeadCount === count}
-              onClick={() => handlePredefinedClick(count)}
-            />
-          ))}
-        </div>
-        <div className="flex items-center gap-4">
-          <span>직접 입력:</span>
-          <input
-            type="number"
-            value={customCount}
-            onChange={(e) => setCustomCount(e.target.value)}
-            placeholder="인원수 입력"
-            className="rounded-lg border px-4 py-2"
-            min="1"
+        <div className="w-full max-w-xl space-y-4">
+          <div className="flex items-end gap-2"></div>
+          <MaxHeadCountSlider
+            value={maxHeadCount}
+            onChange={(val) => setMaxHeadCount(val)}
           />
-          <button
-            onClick={handleCustomSubmit}
-            disabled={!customCount || parseInt(customCount) <= 0}
-            className="rounded-lg bg-blue-500 px-4 py-2 text-white disabled:bg-gray-300"
-          >
-            선택
-          </button>
         </div>
+        <button
+          onClick={handleCustomSubmit}
+          disabled={!maxHeadCount || maxHeadCount <= 0}
+          className="rounded-lg bg-blue-500 px-4 py-2 text-white disabled:bg-gray-300"
+        >
+          선택
+        </button>
       </div>
     </div>
   );
