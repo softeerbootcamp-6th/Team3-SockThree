@@ -9,6 +9,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -24,6 +26,11 @@ public class UploadTime extends BaseTimeEntity {
 
   @Column(name = "upload_time_scheduled_at")
   private LocalTime scheduledAt;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "lecture_id")
+  @OnDelete(action = OnDeleteAction.CASCADE)
+  private Lecture lecture;
 
   @Builder(access = AccessLevel.PRIVATE)
   public UploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt) {
