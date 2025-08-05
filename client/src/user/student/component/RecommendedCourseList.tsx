@@ -7,6 +7,7 @@ interface RecommendedCourseListProps {
     courseDays: string[];
     nowStudents: number;
     maxStudents: number;
+    courseStatus?: string; // 확인: status 삭제될 수도 있음
   };
   onClick?: () => void;
 }
@@ -14,9 +15,6 @@ const RecommendedCourseList = ({
   listData,
   onClick,
 }: RecommendedCourseListProps) => {
-  const courseStatus =
-    listData.nowStudents >= listData.maxStudents ? "마감" : "모집중";
-
   return (
     <li
       className="flex h-[3.5rem] w-[51.6875rem] cursor-pointer items-center justify-between"
@@ -52,7 +50,7 @@ const RecommendedCourseList = ({
             {listData.nowStudents}/{listData.maxStudents}명
           </span>
         </span>
-        <span className="typo-body-4 text-black">{courseStatus}</span>
+        <span className="typo-body-4 text-black">{listData.courseStatus}</span>
       </div>
     </li>
   );
