@@ -1,7 +1,7 @@
-import RecommendedCourseList from "@/user/student/component/RecommendedCourseList";
+import RecommendedCourseListItem from "@/user/student/component/RecommendedCourseListItem";
 import { useCarousel } from "@/user/student/hook/useCarousel";
 
-interface listData {
+interface listItemData {
   courseId: number;
   teacherImg: string;
   teacherName: string;
@@ -19,20 +19,20 @@ const AUTO_INTERVAL = 3000;
 const TRANSITION_DURATION = 700;
 
 interface RecommendListCarouselProps {
-  originalLists: listData[];
+  originalListItems: listItemData[];
 }
 
 const RecommendedCourseListCarousel = ({
-  originalLists,
+  originalListItems,
 }: RecommendListCarouselProps) => {
   const {
-    carouselList,
+    carouselListItems,
     offsetY,
     isTransition,
     handleMouseEnter,
     handleMouseLeave,
   } = useCarousel({
-    originalLists: originalLists,
+    originalListItems: originalListItems,
     itemHeight: ITEM_HEIGHT,
     itemsPerPage: COURSES_PER_PAGE,
     autoInterval: AUTO_INTERVAL,
@@ -57,8 +57,8 @@ const RecommendedCourseListCarousel = ({
           transform: `translateY(-${offsetY}px)`,
         }}
       >
-        {carouselList.map((course: listData) => (
-          <RecommendedCourseList key={course.courseId} listData={course} />
+        {carouselListItems.map((course: listItemData) => (
+          <RecommendedCourseListItem key={course.courseId} listItemData={course} />
         ))}
       </ul>
     </div>

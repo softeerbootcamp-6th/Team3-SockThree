@@ -21,10 +21,12 @@ const createRandomLists = () => ({
   courseStatus: faker.helpers.arrayElement(["진행중", "마감"]), // 확인: status 삭제될 수도 있음
 });
 
-const originalLists = Array.from({ length: 10 }, () => createRandomLists());
+const originalListItems = Array.from({ length: 10 }, () => createRandomLists());
 
 const RecommendedCourseListView = () => {
-  return <RecommendedCourseListCarousel originalLists={originalLists} />;
+  return (
+    <RecommendedCourseListCarousel originalListItems={originalListItems} />
+  );
 };
 
 export default RecommendedCourseListView;

@@ -1,5 +1,5 @@
-interface RecommendedCourseListProps {
-  listData: {
+interface RecommendedCourseListItemProps {
+  listItemData: {
     teacherImg: string;
     teacherName: string;
     courseTitle: string;
@@ -11,10 +11,10 @@ interface RecommendedCourseListProps {
   };
   onClick?: () => void;
 }
-const RecommendedCourseList = ({
-  listData,
+const RecommendedCourseListItem = ({
+  listItemData,
   onClick,
-}: RecommendedCourseListProps) => {
+}: RecommendedCourseListItemProps) => {
   return (
     <li
       className="flex h-[3.5rem] w-[51.6875rem] cursor-pointer items-center justify-between"
@@ -26,34 +26,36 @@ const RecommendedCourseList = ({
         <span className="h-[.75rem] w-[.75rem] rounded-full bg-black" />
         {/* 프로필 이미지 */}
         <img
-          src={listData.teacherImg}
+          src={listItemData.teacherImg}
           alt="Teacher"
           className="h-[1.8125rem] w-[1.8125rem] rounded-full object-cover"
         />
         {/* 이름 + 제목 */}
         <div className="flex flex-row items-center gap-[1rem]">
           <span className="typo-title-6 text-black">
-            {listData.teacherName}
+            {listItemData.teacherName}
           </span>
           <span className="typo-title-5 w-[14.375rem] overflow-ellipsis whitespace-nowrap text-black">
-            {listData.courseTitle}
+            {listItemData.courseTitle}
           </span>
         </div>
       </div>
 
       {/* 타입 + 요일 + 인원 + 모집 상태*/}
       <div className="typo-body-5 flex w-[29.1875rem] flex-row items-center justify-between text-gray-600">
-        <span>{listData.courseType}</span>
-        <span>{listData.courseDays.join(" / ")}</span>
+        <span>{listItemData.courseType}</span>
+        <span>{listItemData.courseDays.join(" / ")}</span>
         <span>
           <span>
-            {listData.nowStudents}/{listData.maxStudents}명
+            {listItemData.nowStudents}/{listItemData.maxStudents}명
           </span>
         </span>
-        <span className="typo-body-4 text-black">{listData.courseStatus}</span>
+        <span className="typo-body-4 text-black">
+          {listItemData.courseStatus}
+        </span>
       </div>
     </li>
   );
 };
 
-export default RecommendedCourseList;
+export default RecommendedCourseListItem;
