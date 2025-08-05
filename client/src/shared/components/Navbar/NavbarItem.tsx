@@ -17,7 +17,10 @@ const NavbarItem = ({
 }: NavbarItemProps) => {
   return (
     <li className="h-[7.75rem] w-[5.9375rem] cursor-pointer" onClick={onClick}>
-      <Link to={routePath} className="flex h-full flex-col items-center justify-start">
+      <Link
+        to={routePath}
+        className="flex h-full flex-col items-center justify-start"
+      >
         <div
           className={`mb-[.625rem] flex h-[5rem] w-[5rem] items-center justify-center rounded-[1.875rem] transition-all duration-500 ${
             isSelected ? "bg-white" : "bg-transparent"
