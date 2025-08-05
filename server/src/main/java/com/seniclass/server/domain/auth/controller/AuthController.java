@@ -15,47 +15,47 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-  private final AuthService authService;
+    private final AuthService authService;
 
-  @PostMapping("/register/student")
-  @ResponseStatus(HttpStatus.CREATED)
-  public RegisterResponse registerStudent(@Valid @RequestBody StudentRegisterRequest request) {
-    return authService.registerStudent(request);
-  }
-
-  @PostMapping("/login")
-  public LoginResponse login(@Valid @RequestBody LoginRequest request) {
-    return authService.login(request);
-  }
-
-  @PostMapping("/refresh")
-  public TokenResponse refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
-    return authService.refreshToken(request);
-  }
-
-  @PostMapping("/logout")
-  @ResponseStatus(HttpStatus.OK)
-  public void logout(HttpServletRequest request) {
-    String token = extractTokenFromRequest(request);
-    if (token != null) {
-      authService.logout(token);
+    @PostMapping("/register/student")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RegisterResponse registerStudent(@Valid @RequestBody StudentRegisterRequest request) {
+        return authService.registerStudent(request);
     }
-  }
 
-  @GetMapping("/validate")
-  @ResponseStatus(HttpStatus.OK)
-  public void validateToken(HttpServletRequest request) {
-    String token = extractTokenFromRequest(request);
-    if (token == null || !authService.isTokenValid(token)) {
-      throw new CommonException(AuthErrorCode.UNAUTHORIZED);
+    @PostMapping("/login")
+    public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+        return authService.login(request);
     }
-  }
 
-  private String extractTokenFromRequest(HttpServletRequest request) {
-    String bearerToken = request.getHeader("Authorization");
-    if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-      return bearerToken.substring(7);
+    @PostMapping("/refresh")
+    public TokenResponse refreshToken(@Valid @RequestBody RefreshTokenRequest request) {
+        return authService.refreshToken(request);
     }
-    return null;
-  }
+
+    @PostMapping("/logout")
+    @ResponseStatus(HttpStatus.OK)
+    public void logout(HttpServletRequest request) {
+        String token = extractTokenFromRequest(request);
+        if (token != null) {
+            authService.logout(token);
+        }
+    }
+
+    @GetMapping("/validate")
+    @ResponseStatus(HttpStatus.OK)
+    public void validateToken(HttpServletRequest request) {
+        String token = extractTokenFromRequest(request);
+        if (token == null || !authService.isTokenValid(token)) {
+            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
+        }
+    }
+
+    private String extractTokenFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader("Authorization");
+        if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
+            return bearerToken.substring(7);
+        }
+        return null;
+    }
 }

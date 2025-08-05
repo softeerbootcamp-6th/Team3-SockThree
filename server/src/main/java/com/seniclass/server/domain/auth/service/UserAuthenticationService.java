@@ -5,14 +5,14 @@ import com.seniclass.server.domain.student.enums.Gender;
 
 public interface UserAuthenticationService {
 
-  AuthenticatedUser authenticate(String email, String password);
+    AuthenticatedUser authenticate(String email, String password);
 
-  AuthenticatedUser findByIdAndValidate(String userId);
+    AuthenticatedUser findByIdAndValidate(String userId);
 
-  AuthenticatedUser findByEmailAndValidate(String email);
+    AuthenticatedUser findByEmailAndValidate(String email);
 
-  String createStudent(
-      String name, String email, Integer age, Gender gender, String encodedPassword);
+    String createStudent(
+            String name, String email, Integer age, Gender gender, String encodedPassword);
 
-  boolean existsByEmail(String email);
+    boolean existsByEmail(String email);
 }

@@ -3,11 +3,11 @@ package com.seniclass.server.domain.auth.domain;
 import com.seniclass.server.domain.auth.enums.UserRole;
 
 public interface AuthenticatedUser {
-  String getId();
+    String getId();
 
-  String getEmail();
+    String getEmail();
 
-  String getPassword();
+    String getPassword();
 
-  UserRole getRole();
+    UserRole getRole();
 }

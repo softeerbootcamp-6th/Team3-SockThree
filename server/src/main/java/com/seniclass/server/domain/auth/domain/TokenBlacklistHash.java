@@ -16,42 +16,42 @@ import org.springframework.data.redis.core.index.Indexed;
 @AllArgsConstructor
 public class TokenBlacklistHash {
 
-  @Id private String tokenHash; // SHA-256 해시된 토큰을 ID로 사용
+    @Id private String tokenHash; // SHA-256 해시된 토큰을 ID로 사용
 
-  @Indexed private String userId;
+    @Indexed private String userId;
 
-  private long expiresAt;
+    private long expiresAt;
 
-  @TimeToLive private long ttl; // seconds
+    @TimeToLive private long ttl; // seconds
 
-  public static TokenBlacklistHash create(String token, String userId, long ttlSeconds) {
-    String tokenHash = hashToken(token);
-    long expiresAt = System.currentTimeMillis() + (ttlSeconds * 1000);
+    public static TokenBlacklistHash create(String token, String userId, long ttlSeconds) {
+        String tokenHash = hashToken(token);
+        long expiresAt = System.currentTimeMillis() + (ttlSeconds * 1000);
 
-    return new TokenBlacklistHash(tokenHash, userId, expiresAt, ttlSeconds);
-  }
-
-  public boolean isExpired() {
-    return System.currentTimeMillis() > expiresAt;
-  }
-
-  private static String hashToken(String token) {
-    try {
-      MessageDigest digest = MessageDigest.getInstance("SHA-256");
-      byte[] hash = digest.digest(token.getBytes());
-      StringBuilder hexString = new StringBuilder();
-
-      for (byte b : hash) {
-        String hex = Integer.toHexString(0xff & b);
-        if (hex.length() == 1) {
-          hexString.append('0');
-        }
-        hexString.append(hex);
-      }
-
-      return hexString.toString();
-    } catch (NoSuchAlgorithmException e) {
-      throw new RuntimeException("SHA-256 algorithm not available", e);
+        return new TokenBlacklistHash(tokenHash, userId, expiresAt, ttlSeconds);
     }
-  }
+
+    public boolean isExpired() {
+        return System.currentTimeMillis() > expiresAt;
+    }
+
+    private static String hashToken(String token) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(token.getBytes());
+            StringBuilder hexString = new StringBuilder();
+
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256 algorithm not available", e);
+        }
+    }
 }

@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RequireAuth {
-  UserRole[] roles() default {};
+    UserRole[] roles() default {};
 
-  boolean requireAuth() default true;
+    boolean requireAuth() default true;
 }

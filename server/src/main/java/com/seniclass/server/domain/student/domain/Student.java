@@ -15,32 +15,32 @@ import lombok.NoArgsConstructor;
 @Table(name = "students")
 public class Student extends User {
 
-  @Column(nullable = false)
-  private String name;
+    @Column(nullable = false)
+    private String name;
 
-  @Column(nullable = false)
-  private Integer age;
+    @Column(nullable = false)
+    private Integer age;
 
-  @Column(nullable = false)
-  @Enumerated(EnumType.STRING)
-  private Gender gender;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-  @Builder(access = AccessLevel.PRIVATE)
-  private Student(String name, String email, Integer age, Gender gender, String password) {
-    super(email, password, UserRole.STUDENT);
-    this.name = name;
-    this.age = age;
-    this.gender = gender;
-  }
+    @Builder(access = AccessLevel.PRIVATE)
+    private Student(String name, String email, Integer age, Gender gender, String password) {
+        super(email, password, UserRole.STUDENT);
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
 
-  public static Student createStudent(
-      String name, String email, Integer age, Gender gender, String password) {
-    return Student.builder()
-        .name(name)
-        .email(email)
-        .age(age)
-        .gender(gender)
-        .password(password)
-        .build();
-  }
+    public static Student createStudent(
+            String name, String email, Integer age, Gender gender, String password) {
+        return Student.builder()
+                .name(name)
+                .email(email)
+                .age(age)
+                .gender(gender)
+                .password(password)
+                .build();
+    }
 }

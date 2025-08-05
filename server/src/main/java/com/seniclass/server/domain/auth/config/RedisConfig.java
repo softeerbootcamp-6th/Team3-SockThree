@@ -15,46 +15,47 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @EnableRedisRepositories // @RedisHash Repository 활성화
 public class RedisConfig {
 
-  @Value("${spring.data.redis.host:localhost}")
-  private String redisHost;
+    @Value("${spring.data.redis.host:localhost}")
+    private String redisHost;
 
-  @Value("${spring.data.redis.port:6379}")
-  private int redisPort;
+    @Value("${spring.data.redis.port:6379}")
+    private int redisPort;
 
-  @Value("${spring.data.redis.password:}")
-  private String redisPassword;
+    @Value("${spring.data.redis.password:}")
+    private String redisPassword;
 
-  @Bean
-  public RedisConnectionFactory redisConnectionFactory() {
-    RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
-    config.setHostName(redisHost);
-    config.setPort(redisPort);
+    @Bean
+    public RedisConnectionFactory redisConnectionFactory() {
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+        config.setHostName(redisHost);
+        config.setPort(redisPort);
 
-    if (redisPassword != null && !redisPassword.trim().isEmpty()) {
-      config.setPassword(redisPassword);
+        if (redisPassword != null && !redisPassword.trim().isEmpty()) {
+            config.setPassword(redisPassword);
+        }
+
+        return new LettuceConnectionFactory(config);
     }
 
-    return new LettuceConnectionFactory(config);
-  }
+    @Bean
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Object> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
 
-  @Bean
-  public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
-    RedisTemplate<String, Object> template = new RedisTemplate<>();
-    template.setConnectionFactory(connectionFactory);
+        // 직렬화 설정
+        StringRedisSerializer stringSerializer = new StringRedisSerializer();
+        GenericJackson2JsonRedisSerializer jsonSerializer =
+                new GenericJackson2JsonRedisSerializer();
 
-    // 직렬화 설정
-    StringRedisSerializer stringSerializer = new StringRedisSerializer();
-    GenericJackson2JsonRedisSerializer jsonSerializer = new GenericJackson2JsonRedisSerializer();
+        // Key 직렬화
+        template.setKeySerializer(stringSerializer);
+        template.setHashKeySerializer(stringSerializer);
 
-    // Key 직렬화
-    template.setKeySerializer(stringSerializer);
-    template.setHashKeySerializer(stringSerializer);
+        // Value 직렬화
+        template.setValueSerializer(jsonSerializer);
+        template.setHashValueSerializer(jsonSerializer);
 
-    // Value 직렬화
-    template.setValueSerializer(jsonSerializer);
-    template.setHashValueSerializer(jsonSerializer);
-
-    template.afterPropertiesSet();
-    return template;
-  }
+        template.afterPropertiesSet();
+        return template;
+    }
 }
