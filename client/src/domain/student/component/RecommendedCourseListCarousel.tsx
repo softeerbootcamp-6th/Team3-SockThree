@@ -1,5 +1,5 @@
-import RecommendedCourseListItem from "@/user/student/component/RecommendedCourseListItem";
-import { useCarousel } from "@/user/student/hook/useCarousel";
+import RecommendedCourseListItem from "@/domain/student/component/RecommendedCourseListItem";
+import { useCarousel } from "@/domain/student/hook/useCarousel";
 
 interface listItemData {
   courseId: number;
