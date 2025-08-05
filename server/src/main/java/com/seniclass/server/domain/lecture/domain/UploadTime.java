@@ -28,7 +28,7 @@ public class UploadTime extends BaseTimeEntity {
     private LocalTime scheduledAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lecture_id")
+    @JoinColumn(name = "lecture_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
