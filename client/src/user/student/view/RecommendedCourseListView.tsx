@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef, useCallback } from "react";
 import RecommendedCourseList from "../component/RecommendedCourseList";
+import { useCarousel } from "../hook/useCarousel";
 import { fakerKO as faker } from "@faker-js/faker";
 
 const createRandomLists = (index: number) => ({
@@ -33,78 +33,38 @@ interface listData {
 
 const COURSES_PER_PAGE = 3;
 const ITEM_HEIGHT = 56; // px
-const AUTO_INTERVAL = 3000; // 3초
+const AUTO_INTERVAL = 3000;
+const TRANSITION_DURATION = 700;
 
 const RecommendedCourseListView = () => {
-  const [index, setIndex] = useState(0);
-  const [isTransition, setIsTransition] = useState(true);
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-
-  const createCarouselList = ({
-    listPerPage,
-    originalLists,
-  }: {
-    listPerPage: number;
-    originalLists: listData[];
-  }): listData[] => {
-    const repeatedList = Array.from(
-      { length: listPerPage },
-      () => originalLists
-    ).flat();
-
-    // 첫 번째 리스트로 자연스럽게 넘어가기 위해 요소 추가
-    const overflowItems = originalLists.slice(0, listPerPage);
-
-    return [...repeatedList, ...overflowItems];
-  };
-
-  const carouselList = createCarouselList({
-    listPerPage: COURSES_PER_PAGE,
-    originalLists: originalLists,
+  const {
+    carouselList,
+    offsetY,
+    isTransition,
+    handleMouseEnter,
+    handleMouseLeave,
+  } = useCarousel<listData>({
+    originalList: originalLists,
+    itemHeight: ITEM_HEIGHT,
+    itemsPerPage: COURSES_PER_PAGE,
+    autoInterval: AUTO_INTERVAL,
+    transitionDuration: TRANSITION_DURATION,
   });
 
-  const startAutoSlide = useCallback(() => {
-    if (intervalRef.current) return;
-    intervalRef.current = setInterval(() => {
-      setIndex((prev) => {
-        if (prev === originalLists.length - 1) {
-          setIndex(originalLists.length);
+  const transitionMap = {
+    700: "duration-700 ease-in-out",
+  };
 
-          // 마지막 transition이 끝난 후에 transition을 제거하고 첫 번째로 점프
-          setTimeout(() => {
-            setIsTransition(false);
-            setIndex(0);
-          }, 700);
-        } else {
-          setIsTransition(true);
-        }
-        return prev + 1;
-      });
-    }, AUTO_INTERVAL);
-  }, []);
-
-  const stopAutoSlide = useCallback(() => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
-  }, []);
-
-  useEffect(() => {
-    startAutoSlide();
-    return () => stopAutoSlide();
-  }, [startAutoSlide, stopAutoSlide]);
-
-  const offsetY = index * ITEM_HEIGHT * COURSES_PER_PAGE;
+  const transitionClass = isTransition
+    ? transitionMap[TRANSITION_DURATION]
+    : `transition-none`;
 
   return (
     <div className="h-[10.4375rem] w-full overflow-hidden">
       <ul
-        onMouseEnter={stopAutoSlide}
-        onMouseLeave={startAutoSlide}
-        className={`transition-transform ${
-          isTransition ? "duration-700 ease-in-out" : "transition-none"
-        }`}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className={`transition-transform ${transitionClass}`}
         style={{
           transform: `translateY(-${offsetY}px)`,
         }}
