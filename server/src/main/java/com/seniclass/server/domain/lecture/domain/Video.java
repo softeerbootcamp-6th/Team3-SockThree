@@ -4,14 +4,13 @@ import com.seniclass.server.domain.common.model.BaseTimeEntity;
 import com.seniclass.server.global.enums.PATH;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -43,7 +42,13 @@ public class Video extends BaseTimeEntity {
     private Chapter chapter;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Video(String name, String uploadPath, String streamingPath, LocalDateTime publicationDateTime, Boolean isStreamable, Chapter chapter) {
+    private Video(
+            String name,
+            String uploadPath,
+            String streamingPath,
+            LocalDateTime publicationDateTime,
+            Boolean isStreamable,
+            Chapter chapter) {
         this.name = name;
         this.uploadPath = uploadPath;
         this.streamingPath = streamingPath;

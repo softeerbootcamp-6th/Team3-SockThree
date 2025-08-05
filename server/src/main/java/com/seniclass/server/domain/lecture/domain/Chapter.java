@@ -37,4 +37,3 @@ public class Chapter extends BaseTimeEntity {
         return Chapter.builder().name(name).lecture(lecture).build();
     }
 }
-
