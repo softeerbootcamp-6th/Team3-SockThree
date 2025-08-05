@@ -23,9 +23,19 @@ const createRandomLists = () => ({
 
 const originalListItems = Array.from({ length: 10 }, () => createRandomLists());
 
+const userName = "홍길동";
+
 const RecommendedCourseListView = () => {
   return (
-    <RecommendedCourseListCarousel originalListItems={originalListItems} />
+    <div className="flex flex-col items-start gap-[1.1875rem]">
+      <div className="flex flex-row">
+        <p className="typo-title-0">
+          {userName}님을 위한 <br /> 추천 강의
+        </p>
+        <span className="typo-body-1">추천 강좌</span>
+      </div>
+      <RecommendedCourseListCarousel originalListItems={originalListItems} />
+    </div>
   );
 };
 
