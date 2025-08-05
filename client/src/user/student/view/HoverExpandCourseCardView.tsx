@@ -26,8 +26,9 @@ const cards = faker.helpers.multiple(createRandomCards, {
   count: 7,
 });
 
-export default function HoverExpandCourseCardView() {
-  const [activeId, setActiveId] = useState<number>(2);
+const HoverExpandCourseCardView = () => {
+  const expandedCardIndex = 2;
+  const [activeId, setActiveId] = useState<number>(expandedCardIndex);
 
   return (
     <div className="flex items-center gap-2 px-4">
@@ -41,4 +42,6 @@ export default function HoverExpandCourseCardView() {
       ))}
     </div>
   );
-}
+};
+
+export default HoverExpandCourseCardView;
