@@ -13,10 +13,10 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class LectureBookmark extends BaseTimeEntity {
+public class LectureQna extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lecture_bookmark_id", nullable = false)
+    @Column(name = "lecture_question_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,13 +29,27 @@ public class LectureBookmark extends BaseTimeEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
+    @Lob
+    @Column(name = "lecture_qna_question", nullable = false)
+    private String question;
+
+    @Lob
+    @Column(name = "lecture_qna_answer")
+    private String answer;
+
     @Builder(access = AccessLevel.PRIVATE)
-    public LectureBookmark(Student student, Lecture lecture) {
+    public LectureQna(Student student, Lecture lecture, String question, String answer) {
         this.student = student;
         this.lecture = lecture;
+        this.question = question;
+        this.answer = answer;
     }
 
-    public static LectureBookmark createLectureBookmark(Student student, Lecture lecture) {
-        return LectureBookmark.builder().student(student).lecture(lecture).build();
+    public static LectureQna createLectureQna(Student student, Lecture lecture, String question) {
+        return LectureQna.builder().student(student).lecture(lecture).question(question).build();
+    }
+
+    public void updateAnswer(String answer) {
+        this.answer = answer;
     }
 }
