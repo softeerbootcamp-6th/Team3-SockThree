@@ -57,8 +57,11 @@ const RecommendedCourseListCarousel = ({
           transform: `translateY(-${offsetY}px)`,
         }}
       >
-        {carouselListItems.map((course: listItemData) => (
-          <RecommendedCourseListItem key={course.courseId} listItemData={course} />
+        {carouselListItems.map((course: listItemData, index) => (
+          <RecommendedCourseListItem
+            key={`${course.courseId}-${index}`}
+            listItemData={course}
+          />
         ))}
       </ul>
     </div>
