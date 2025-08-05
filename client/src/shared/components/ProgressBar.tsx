@@ -64,10 +64,12 @@ const ProgressBar = ({
     setProgress(computedValue);
   }, [computedValue]);
 
-  const defaultLabel =
-    type === "ratio" && current !== undefined && max !== undefined
-      ? `${current}/${max}`
-      : `${Math.round(computedValue)}%`;
+  let defaultLabel: string;
+  if (type === "ratio" && current !== undefined && max !== undefined) {
+    defaultLabel = `${current}/${max}`;
+  } else {
+    defaultLabel = `${Math.round(computedValue)}%`;
+  }
 
   return (
     <div className={root()}>
