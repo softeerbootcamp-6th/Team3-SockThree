@@ -33,9 +33,10 @@ public class UploadTime extends BaseTimeEntity {
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt) {
+    private UploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt, Lecture lecture) {
         this.dayOfWeek = dayOfWeek;
         this.scheduledAt = scheduledAt;
+        this.lecture = lecture;
     }
 
     public static UploadTime createUploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt) {
