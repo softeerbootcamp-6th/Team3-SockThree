@@ -4,8 +4,9 @@ import RecommendedCourseListView from "../view/RecommendedCourseListView";
 import CheckIcon from "@/assets/icons/default/check.svg?react";
 
 const StudentHomePage = () => {
+
   return (
-    <div className="w-full pt-[4rem] pl-[2.8125rem]">
+    <div className="w-full pt-[4rem] pr-[3.5625rem] pl-[2.8125rem]">
       <div className="flex w-full items-center justify-between">
         <div>
           <div className="flex items-center gap-[1.1875rem]">
