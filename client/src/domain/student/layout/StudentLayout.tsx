@@ -11,15 +11,6 @@ import NavbarItem from "@/shared/components/Navbar/NavbarItem";
 import { useLocation } from "react-router";
 
 const StudentLayout = () => {
-  return (
-    <div className="flex h-screen flex-row justify-between">
-      {renderStudentNavbar()}
-      <Outlet />
-    </div>
-  );
-};
-
-const renderStudentNavbar = () => {
   const navbarMenus = [
     { icon: HomeIcon, label: "홈", routePath: "/student/home" },
     {
@@ -31,7 +22,6 @@ const renderStudentNavbar = () => {
   ];
 
   const location = useLocation();
-
   const [selectedPath, setSelectedPath] = useState(location.pathname);
 
   const handleItemClick = (path: string) => {
@@ -49,7 +39,12 @@ const renderStudentNavbar = () => {
     />
   ));
 
-  return <Navbar>{navbarItems}</Navbar>;
+  return (
+    <div className="flex h-screen flex-row justify-between">
+      <Navbar>{navbarItems}</Navbar>
+      <Outlet />
+    </div>
+  );
 };
 
 export default StudentLayout;
