@@ -20,20 +20,20 @@ type HoverExpandCourseCardProps = {
 
 type CardData = HoverExpandCourseCardProps["cardData"];
 
-export default function HoverExpandCourseCard({
+const HoverExpandCourseCard = ({
   cardData,
   isActive,
-}: HoverExpandCourseCardProps) {
+}: HoverExpandCourseCardProps) => {
   const resultCard = isActive
-    ? closedCardContainer(cardData)
-    : expandedCardContainer(cardData);
+    ? expandedCardContainer(cardData)
+    : closedCardContainer(cardData);
   return resultCard;
-}
+};
 
-const closedCardContainer = (cardData: CardData) => {
+const expandedCardContainer = (cardData: CardData) => {
   return (
     <div
-      className="relative h-[21.3125rem] w-[54.375rem] cursor-pointer rounded-[1.875rem] bg-cover bg-center transition-all duration-600"
+      className="relative mx-[.8125rem] h-[21.3125rem] w-[54.375rem] cursor-pointer rounded-[1.875rem] bg-cover bg-center transition-all duration-600"
       style={{ backgroundImage: `url(${cardData.courseImg})` }}
     >
       <div className="absolute inset-0 overflow-hidden rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
@@ -46,10 +46,10 @@ const closedCardContainer = (cardData: CardData) => {
   );
 };
 
-const expandedCardContainer = (cardData: CardData) => {
+const closedCardContainer = (cardData: CardData) => {
   return (
     <div
-      className="relative mx-[.8125rem] h-[21.3125rem] w-[5rem] rounded-[3.125rem] bg-cover bg-center opacity-60 transition-all duration-600"
+      className="relative h-[21.3125rem] w-[5rem] rounded-[3.125rem] bg-cover bg-center opacity-60 transition-all duration-600"
       style={{ backgroundImage: `url(${cardData.courseImg})` }}
     >
       <div className="absolute inset-0 rounded-[3.125rem] bg-black/50 py-[1.375rem]">
@@ -109,3 +109,5 @@ const cardBottomContainer = (cardData: CardData) => {
     </div>
   );
 };
+
+export default HoverExpandCourseCard;
