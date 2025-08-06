@@ -74,20 +74,36 @@ const FunnelForm = () => {
     mode: "onChange",
   });
 
-  const { goNextStep, step } = useFunnel<Context>(steps.map((s) => s.key));
+  const { goNextStep } = useFunnel<Context>(steps.map((s) => s.key));
 
   return (
     <FormProvider {...methods}>
-      <div className="flex flex-col items-center justify-center gap-[30px]">
-        {steps.map((s) => {
-          const StepComponent = stepComponentMap[s.key]; // 아래 참고
+      <div className="flex justify-center">
+        <div className="flex flex-col items-center justify-center gap-[30px]">
+          {steps.map((s) => {
+            const StepComponent = stepComponentMap[s.key]; // 아래 참고
 
-          return (
-            <div id={`step-${s.key}`}>
-              <StepComponent key={s.key} onNext={goNextStep} />
-            </div>
-          );
-        })}
+            return (
+              <div id={`step-${s.key}`}>
+                <StepComponent key={s.key} onNext={goNextStep} />
+              </div>
+            );
+          })}
+        </div>
+        <aside className="sticky top-0 h-1/2 w-48 p-4">
+          <ul className="space-y-2">
+            {steps.map((s) => (
+              <li key={s.key}>
+                <a
+                  href={`#step-${s.key}`}
+                  className="text-sm text-blue-600 hover:underline"
+                >
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </aside>
       </div>
     </FormProvider>
   );
