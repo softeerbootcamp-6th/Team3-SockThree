@@ -104,23 +104,17 @@ public class Lecture extends BaseTimeEntity {
 
     public void updateLecture(
             SubCategory subCategory,
-            String name,
-            Integer cohort,
             Level level,
             LocalDate startDate,
             LocalDate endDate,
             Integer maxStudent,
-            Integer fee,
             String instruction,
             String description) {
         this.subCategory = subCategory;
-        this.name = name;
-        this.cohort = cohort;
         this.level = level;
         this.startDate = startDate;
         this.endDate = endDate;
         this.maxStudent = maxStudent;
-        this.fee = fee;
         this.instruction = instruction;
         this.description = description;
     }
