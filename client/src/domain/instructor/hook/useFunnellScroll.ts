@@ -1,27 +1,25 @@
 import { useEffect, useRef } from "react";
 
 export const useFunnelScroll = ({
-  activeId,
-  scrollMode = "start",
+  stepIndex
 }: {
-  activeId: string;
-  scrollMode?: ScrollLogicalPosition;
+  stepIndex: number;
 }) => {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const stepRef = useRef<HTMLElement | null>(null);
+
 
   useEffect(() => {
-    const target = document.getElementById(activeId);
-    if (target) {
-      requestAnimationFrame(() => {
-        target.scrollIntoView({
-          behavior: "smooth",
-          block: scrollMode,
-        });
+    requestAnimationFrame(() => {
+      stepRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
       });
-    }
-  }, [activeId, scrollMode]);
+    });
+  }, [stepIndex]);
 
   return {
     containerRef,
+    stepRef,
   };
 };
