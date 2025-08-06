@@ -21,7 +21,7 @@ public class SubCategory extends BaseTimeEntity {
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "main_category_id")
+    @JoinColumn(name = "main_category_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private MainCategory mainCategory;
 }
