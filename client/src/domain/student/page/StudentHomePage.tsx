@@ -3,7 +3,14 @@ import RecommendedCourseListView from "../view/RecommendedCourseListView";
 
 const StudentHomePage = () => {
   return (
-    <div className="flex w-full max-w-4xl flex-col items-center justify-center space-y-6 p-6">
+    <div className="w-full pt-[4rem] pl-[2.8125rem]">
+      <div className="flex w-full items-center justify-between">
+        <div>
+          <div>
+            <span className="typo-title-0">마감까지</span>
+          </div>
+        </div>
+      </div>
       <HoverExpandCourseCardView />
       <RecommendedCourseListView />
     </div>
