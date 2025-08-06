@@ -11,11 +11,11 @@ interface QuestionWidgetProps {
   frequentQuestionList: Question[];
 }
 
-export default function QuestionWidget({
+const QuestionWidget = ({
   size,
   resentQuestionList,
   frequentQuestionList,
-}: QuestionWidgetProps) {
+}: QuestionWidgetProps) => {
   if (size === "small") {
     return (
       <div className="flex h-[23.875rem] w-[23.875rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white px-[1.5625rem] py-[1.9063rem]">
@@ -86,7 +86,7 @@ export default function QuestionWidget({
   }
 
   return null;
-}
+};
 
 const renderQuestions = (questionList: Question[]) => {
   return questionList.slice(0, 6).map(({ questionID, questionTitle }) => (
@@ -100,3 +100,5 @@ const renderQuestions = (questionList: Question[]) => {
     </li>
   ));
 };
+
+export default QuestionWidget;
