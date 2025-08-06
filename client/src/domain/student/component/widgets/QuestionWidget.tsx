@@ -16,8 +16,6 @@ export default function QuestionWidget({
   resentQuestionList,
   frequentQuestionList,
 }: QuestionWidgetProps) {
-
-
   if (size === "small") {
     return (
       <div className="flex h-[23.875rem] w-[23.875rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white px-[1.5625rem] py-[1.9063rem]">
