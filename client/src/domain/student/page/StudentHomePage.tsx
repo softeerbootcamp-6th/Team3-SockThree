@@ -1,26 +1,37 @@
+import ExpandSearchBar from "@/domain/student/component/ExpandSearchBar";
 import HoverExpandCourseCardView from "../view/HoverExpandCourseCardView";
 import RecommendedCourseListView from "../view/RecommendedCourseListView";
 
 import CheckIcon from "@/assets/icons/default/check.svg?react";
+import Button from "@/shared/components/Button";
 
 const StudentHomePage = () => {
-
   return (
     <div className="w-full pt-[4rem] pr-[3.5625rem] pl-[2.8125rem]">
-      <div className="flex w-full items-center justify-between">
+      <div className="flex w-full items-center justify-between pb-[2.6875rem]">
         <div>
           <div className="flex items-center gap-[1.1875rem]">
-            <span className="typo-title-0">마감까지</span>
+            <span className="typo-title-0 whitespace-nowrap">마감까지</span>
             <CheckIcon className="-z-10 h-[4.0625rem]" />
           </div>
-          <span className="typo-title-0">얼마 남지 않았어요!</span>
+          <span className="typo-title-0 whitespace-nowrap">
+            얼마 남지 않았어요!
+          </span>
         </div>
-        <div className="flex items-center gap-[1.1875rem]">
-          <span className="typo-label-0">오늘의 추천 강의</span>
+        <div className="flex flex-col items-center gap-[1.1875rem]">
+          <ExpandSearchBar />
         </div>
       </div>
       <HoverExpandCourseCardView />
-      <RecommendedCourseListView />
+      <div className="mt-[3.8125rem] mb-[2.8125rem] flex h-[.0625rem] w-[91.6875rem] bg-gray-500" />
+      <div className="flex flex-row justify-between">
+        <RecommendedCourseListView />
+        <div className="item-start flex h-[22.0625rem]">
+          <Button variant={"outline"} textSize={"title2"}>
+            전체 강좌 둘러보기
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
