@@ -22,7 +22,7 @@ public class VideoProgress extends BaseTimeEntity {
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "vedio_id", nullable = false)
+    @JoinColumn(name = "video_id", nullable = false)
     private Video video;
 
     @Column(name = "video_progress_current_time", nullable = false)
