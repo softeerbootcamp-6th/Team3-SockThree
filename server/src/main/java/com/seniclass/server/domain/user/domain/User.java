@@ -4,12 +4,14 @@ import com.seniclass.server.domain.auth.enums.UserRole;
 import com.seniclass.server.domain.common.model.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @Entity
 @Table(name = "users")
+@EqualsAndHashCode(of = "email")
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class User extends BaseTimeEntity {

@@ -45,7 +45,7 @@ public class WidgetSetting extends BaseTimeEntity {
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public WidgetSetting(
+    private WidgetSetting(
             WidgetType widgetType,
             Integer row,
             Integer column,

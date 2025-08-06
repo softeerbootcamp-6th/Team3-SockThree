@@ -3,8 +3,6 @@ package com.seniclass.server.domain.lecture.domain;
 import com.seniclass.server.domain.common.model.BaseTimeEntity;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
-import java.time.DayOfWeek;
-import java.time.LocalTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,17 +13,14 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class UploadTime extends BaseTimeEntity {
+public class Chapter extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "upload_time_id", nullable = false)
+    @Column(name = "chapter_id", nullable = false)
     private Long id;
 
-    @Column(name = "upload_time_day_of_week", nullable = false)
-    private DayOfWeek dayOfWeek;
-
-    @Column(name = "upload_time_scheduled_at")
-    private LocalTime scheduledAt;
+    @Column(name = "chapter_name", nullable = false)
+    private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "lecture_id", nullable = false)
@@ -33,13 +28,12 @@ public class UploadTime extends BaseTimeEntity {
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt, Lecture lecture) {
-        this.dayOfWeek = dayOfWeek;
-        this.scheduledAt = scheduledAt;
+    private Chapter(String name, Lecture lecture) {
+        this.name = name;
         this.lecture = lecture;
     }
 
-    public static UploadTime createUploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt) {
-        return UploadTime.builder().dayOfWeek(dayOfWeek).scheduledAt(scheduledAt).build();
+    public static Chapter createChapter(String name, Lecture lecture) {
+        return Chapter.builder().name(name).lecture(lecture).build();
     }
 }

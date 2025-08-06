@@ -34,12 +34,12 @@ public class Assignment extends BaseTimeEntity {
     private LocalDateTime dueDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lecture_id")
+    @JoinColumn(name = "lecture_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public Assignment(
+    private Assignment(
             String name,
             String instruction,
             String fileLink,
