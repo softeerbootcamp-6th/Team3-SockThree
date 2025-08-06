@@ -16,18 +16,7 @@ export default function QuestionWidget({
   resentQuestionList,
   frequentQuestionList,
 }: QuestionWidgetProps) {
-  const renderQuestions = (questionList: Question[]) => {
-    return questionList.slice(0, 6).map(({ questionID, questionTitle }) => (
-      <li
-        key={questionID}
-        className={"flex h-[21px] items-center justify-between"}
-      >
-        <div className="h-[.625rem] w-[.625rem] rounded-full bg-main-500" />
-        <span className="typo-body-6 w-[16.375rem]">{questionTitle}</span>
-        <button className="typo-label-3 cursor-pointer text-gray-500">{`보기 >`}</button>
-      </li>
-    ));
-  };
+
 
   if (size === "small") {
     return (
@@ -100,3 +89,16 @@ export default function QuestionWidget({
 
   return null;
 }
+
+const renderQuestions = (questionList: Question[]) => {
+  return questionList.slice(0, 6).map(({ questionID, questionTitle }) => (
+    <li
+      key={questionID}
+      className={"flex h-[21px] items-center justify-between"}
+    >
+      <div className="h-[.625rem] w-[.625rem] rounded-full bg-main-500" />
+      <span className="typo-body-6 w-[16.375rem]">{questionTitle}</span>
+      <button className="typo-label-3 cursor-pointer text-gray-500">{`보기 >`}</button>
+    </li>
+  ));
+};
