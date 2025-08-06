@@ -16,9 +16,8 @@ import {
   type FunnelFormSchema,
 } from "@/domain/instructor/schema/funnelSchema.ts";
 import { useFunnel } from "@/domain/instructor/hook/useFunnel.ts";
-import Button from "@/shared/component/Button.tsx";
 
-import CheckIcon from "@/assets/icons/default/check.svg?react";
+import { FunnelSideBar } from "@/domain/instructor/component/FunnelSideBar.tsx";
 
 // 타입 정의
 type Context = {
@@ -41,21 +40,21 @@ type Context = {
   imageUrl?: string;
 };
 
+const steps = [
+  { key: "category", label: "대분류" },
+  { key: "subCategory", label: "소분류" },
+  { key: "level", label: "난이도" },
+  { key: "duration", label: "강의기간" },
+  { key: "maxHeadCount", label: "최대 인원" },
+  { key: "uploadTimes", label: "업로드 일정" },
+  { key: "price", label: "수강료" },
+  { key: "introduction", label: "강좌 소개" },
+  { key: "curriculum", label: "커리큘럼" },
+  { key: "imageUrl", label: "사진" },
+] as const;
+
 // 상위 컴포넌트
 const FunnelForm = () => {
-  const steps = [
-    { key: "category", label: "대분류" },
-    { key: "subCategory", label: "소분류" },
-    { key: "level", label: "난이도" },
-    { key: "duration", label: "강의기간" },
-    { key: "maxHeadCount", label: "최대 인원" },
-    { key: "uploadTimes", label: "업로드 일정" },
-    { key: "price", label: "수강료" },
-    { key: "introduction", label: "강좌 소개" },
-    { key: "curriculum", label: "커리큘럼" },
-    { key: "imageUrl", label: "사진" },
-  ] as const;
-
   const stepComponentMap: Record<
     (typeof steps)[number]["key"],
     (props: { onNext: () => void }) => JSX.Element
@@ -77,7 +76,9 @@ const FunnelForm = () => {
     mode: "onChange",
   });
 
-  const { goNextStep } = useFunnel<Context>(steps.map((s) => s.key));
+  const { goNextStep, currentIndex, goToStep } = useFunnel<Context>(
+    steps.map((s) => s.key)
+  );
 
   return (
     <FormProvider {...methods}>
@@ -93,27 +94,12 @@ const FunnelForm = () => {
             );
           })}
         </div>
-        <aside className="sticky top-0 flex h-[50rem] w-[19rem] flex-col justify-between rounded-[var(--radius-20)] bg-white p-[1.7rem]">
-          <ul className="space-y-2">
-            {steps.map((s) => (
-              <li key={s.key}>
-                <a
-                  href={`#step-${s.key}`}
-                  className="flex w-[16.125rem] items-center justify-between gap-2 py-0.5"
-                >
-                  <span className="flex items-center gap-1">
-                    <CheckIcon />
-                    <span className="typo-label-0">{s.label}</span>
-                  </span>
-                  <span className="typo-title-5">curState</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-          <Button variant="default" size="md">
-            강좌 생성하기
-          </Button>
-        </aside>
+
+        <FunnelSideBar<Context>
+          goToStep={goToStep}
+          steps={steps}
+          currentIndex={currentIndex}
+        />
       </div>
     </FormProvider>
   );
