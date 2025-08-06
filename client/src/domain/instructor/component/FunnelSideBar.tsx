@@ -23,7 +23,7 @@ export function FunnelSideBar<T>({
   const stepRenderData = steps.map((step, index) => {
     const value = values?.[step.key];
     const error = formState.errors?.[step.key];
-    const isRendered = index <= currentIndex;
+    const isRendered = index < currentIndex;
     const isError = isRendered && !!error;
 
     return {
