@@ -1,33 +1,48 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Chips from "@/shared/components/Chips.tsx";
+import { useFormContext } from "react-hook-form";
 
 interface StepPriceProps {
-  onNextStep: (context: { price: number }) => void;
+  onNext: () => void;
 }
 
-const StepPrice = ({ onNextStep }: StepPriceProps) => {
-  const [price, setPrice] = useState<number | null>(null);
+const StepPrice = ({ onNext }: StepPriceProps) => {
   const [customPrice, setCustomPrice] = useState("");
+
+  const { watch, setValue, trigger } = useFormContext();
+
+  const price = watch("price");
 
   const predefinedPrices = [0, 10000, 30000, 50000, 100000];
 
   const handlePredefinedClick = (selectedPrice: number) => {
-    setPrice(selectedPrice);
-    setCustomPrice("");
-    onNextStep({ price: selectedPrice });
+    setValue("price", selectedPrice);
   };
 
   const handleCustomSubmit = () => {
     const parsedPrice = parseInt(customPrice);
     if (parsedPrice >= 0) {
-      setPrice(parsedPrice);
-      onNextStep({ price: parsedPrice });
+      setValue("price", parsedPrice);
     }
   };
 
   const formatPrice = (price: number) => {
     return price === 0 ? "무료" : `${price.toLocaleString()}원`;
   };
+
+  // 유효한 price일 경우, onNext 호출 (trigger 사용)
+  useEffect(() => {
+    const validatePrice = async () => {
+      const isValid = await trigger("price");
+      if (isValid) {
+        onNext();
+      }
+    };
+
+    if (price !== undefined) {
+      validatePrice();
+    }
+  }, [price, onNext, trigger]);
 
   return (
     <div className="border- flex w-[71rem] flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">

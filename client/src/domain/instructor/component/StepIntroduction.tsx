@@ -1,30 +1,30 @@
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 interface StepIntroductionProps {
-  onNextStep: (context: {
-    introduction: {
-      name: string;
-      description: string;
-      simpleDescription: string;
-    };
-  }) => void;
+  onNext: () => void;
 }
 
-const StepIntroduction = ({ onNextStep }: StepIntroductionProps) => {
+const StepIntroduction = ({ onNext }: StepIntroductionProps) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [simpleDescription, setSimpleDescription] = useState("");
 
+  const { setValue, trigger } = useFormContext();
+
   const handleSubmit = () => {
-    if (name && description && simpleDescription) {
-      onNextStep({
-        introduction: {
-          name,
-          description,
-          simpleDescription,
-        },
-      });
-    }
+    setValue("introduction", {
+      name: name.trim(),
+      description: description.trim(),
+      simpleDescription: simpleDescription.trim(),
+    });
+
+    // 유효성 검사 후 다음 단계로 이동
+    trigger("introduction").then((isValid) => {
+      if (isValid) {
+        onNext();
+      }
+    });
   };
 
   const isFormValid =

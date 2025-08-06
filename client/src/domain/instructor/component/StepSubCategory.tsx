@@ -1,9 +1,8 @@
-import { useState } from "react";
 import Chips from "@/shared/components/Chips.tsx";
+import { useFormContext } from "react-hook-form";
 
 interface StepSubCategoryProps {
-  category: string;
-  onNextStep: (context: { subCategory: string }) => void;
+  onNext: () => void;
 }
 
 const subCategoryOptions: Record<string, string[]> = {
@@ -23,14 +22,28 @@ const subCategoryOptions: Record<string, string[]> = {
   // ...카테고리별 하위 항목 추가 가능
 };
 
-const StepSubCategory = ({ category, onNextStep }: StepSubCategoryProps) => {
-  const [selected, setSelected] = useState<string | null>(null);
+const StepSubCategory = ({ onNext }: StepSubCategoryProps) => {
+  const {
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = useFormContext();
+
+  const category = watch("category"); // 상위 단계에서 선택된 값
+  const selected = watch("subCategory");
 
   const options = subCategoryOptions[category] ?? ["직접 입력"];
 
-  const handleClick = (subCategory: string) => {
-    setSelected(subCategory);
-    onNextStep({ subCategory });
+  const handleClick = (value: string) => {
+    setValue("subCategory", value);
+  };
+
+  const handleNext = async () => {
+    const isValid = await trigger("subCategory");
+    if (isValid) {
+      onNext();
+    }
   };
 
   return (
@@ -46,6 +59,22 @@ const StepSubCategory = ({ category, onNextStep }: StepSubCategoryProps) => {
             onClick={() => handleClick(option)}
           />
         ))}
+      </div>
+
+      {errors.subCategory && (
+        <p className="text-sm text-red-500">
+          {errors.subCategory.message as string}
+        </p>
+      )}
+
+      <div className="mt-6 flex justify-end">
+        <button
+          type="button"
+          className="rounded bg-blue-500 px-4 py-2 text-white"
+          onClick={handleNext}
+        >
+          다음
+        </button>
       </div>
     </div>
   );

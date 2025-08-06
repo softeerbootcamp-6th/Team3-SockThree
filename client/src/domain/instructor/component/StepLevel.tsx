@@ -1,9 +1,8 @@
-import { useState } from "react";
 import Chips from "@/shared/components/Chips.tsx";
+import { useFormContext } from "react-hook-form";
 
 interface StepLevelProps {
-  subCategory: string;
-  onNextStep: (context: { level: string }) => void;
+  onNext: () => void;
 }
 
 const levelOptions = [
@@ -29,12 +28,26 @@ const levelOptions = [
   },
 ];
 
-const StepLevel = ({ onNextStep, subCategory }: StepLevelProps) => {
-  const [selected, setSelected] = useState("");
+const StepLevel = ({ onNext }: StepLevelProps) => {
+  const {
+    watch,
+    setValue,
+    trigger,
+    formState: { errors },
+  } = useFormContext();
 
-  const handleClick = (level: string) => {
-    setSelected(level);
-    onNextStep({ level });
+  const subCategory = watch("subCategory"); // 상위 단계에서 선택된 값
+  const selected = watch("level");
+
+  const handleClick = (value: string) => {
+    setValue("level", value);
+  };
+
+  const handleNext = async () => {
+    const isValid = await trigger("subCategory");
+    if (isValid) {
+      onNext();
+    }
   };
 
   return (
@@ -53,6 +66,21 @@ const StepLevel = ({ onNextStep, subCategory }: StepLevelProps) => {
             onClick={() => handleClick(title)}
           />
         ))}
+      </div>
+      {errors.subCategory && (
+        <p className="text-sm text-red-500">
+          {errors.subCategory.message as string}
+        </p>
+      )}
+
+      <div className="mt-6 flex justify-end">
+        <button
+          type="button"
+          className="rounded bg-blue-500 px-4 py-2 text-white"
+          onClick={handleNext}
+        >
+          다음
+        </button>
       </div>
     </div>
   );

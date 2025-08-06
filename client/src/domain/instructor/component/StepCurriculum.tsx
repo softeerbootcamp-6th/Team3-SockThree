@@ -1,16 +1,24 @@
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 interface StepCurriculumProps {
-  onNextStep: (context: { curriculum: string }) => void;
+  onNext: () => void;
 }
 
-const StepCurriculum = ({ onNextStep }: StepCurriculumProps) => {
+const StepCurriculum = ({ onNext }: StepCurriculumProps) => {
   const [curriculum, setCurriculum] = useState("");
 
+  const { setValue, trigger } = useFormContext();
+
   const handleSubmit = () => {
-    if (curriculum.trim()) {
-      onNextStep({ curriculum });
-    }
+    setValue("curriculum", curriculum.trim());
+
+    // 유효성 검사 후 다음 단계로 이동
+    trigger("curriculum").then((isValid) => {
+      if (isValid) {
+        onNext();
+      }
+    });
   };
 
   return (

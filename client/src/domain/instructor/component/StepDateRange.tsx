@@ -1,20 +1,28 @@
-import { useState } from "react";
 import { DatePicker } from "@/domain/instructor/component/DatePicker.tsx";
+import { useFormContext } from "react-hook-form";
 
 interface StepDateRangeProps {
-  onNextStep: (context: { startDate: string; endDate: string }) => void;
+  onNext: () => void;
 }
 
-const StepDateRange = ({ onNextStep }: StepDateRangeProps) => {
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
+const StepDateRange = ({ onNext }: StepDateRangeProps) => {
+  const { watch, setValue, trigger } = useFormContext();
 
-  const handleSubmit = () => {
-    if (startDate && endDate) {
-      onNextStep({
-        startDate: startDate.toISOString(),
-        endDate: endDate.toISOString(),
-      });
+  const startDate = watch("startDate");
+  const endDate = watch("endDate");
+
+  const handleClickStart = (value: Date) => {
+    setValue("startDate", value.toDateString());
+  };
+
+  const handleClickEnd = (value: Date) => {
+    setValue("endDate", value.toDateString());
+  };
+
+  const handleNext = async () => {
+    const isValid = await trigger(["startDate", "endDate"]);
+    if (isValid) {
+      onNext();
     }
   };
 
@@ -26,21 +34,21 @@ const StepDateRange = ({ onNextStep }: StepDateRangeProps) => {
           id="start-date"
           placeholder="강좌 시작일을 선택하세요"
           value={startDate}
-          onChange={setStartDate}
+          onChange={handleClickStart}
         />
         <p>~</p>
         <DatePicker
           id="end-date"
           placeholder="강좌 종료일을 선택하세요"
           value={endDate}
-          onChange={setEndDate}
+          onChange={handleClickEnd}
         />
         <button
-          onClick={handleSubmit}
+          onClick={handleNext}
           disabled={!startDate || !endDate}
           className="rounded-2xl border border-blue-500 px-8 py-4 text-gray-900"
         >
-          다음 단계로
+          다음
         </button>
       </div>
     </div>

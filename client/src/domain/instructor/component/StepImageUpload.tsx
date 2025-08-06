@@ -1,12 +1,16 @@
 import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 
 interface StepImageUploadProps {
-  onNextStep: (context: { imageUrl: string }) => void;
+  onNext: () => void;
 }
 
-const StepImageUpload = ({ onNextStep }: StepImageUploadProps) => {
+const StepImageUpload = ({ onNext }: StepImageUploadProps) => {
   const [imageUrl, setImageUrl] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
+
+  const { watch } = useFormContext();
+  console.log(watch);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -26,7 +30,7 @@ const StepImageUpload = ({ onNextStep }: StepImageUploadProps) => {
 
   const handleSubmit = () => {
     if (imageUrl) {
-      onNextStep({ imageUrl });
+      onNext();
     }
   };
 

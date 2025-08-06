@@ -1,18 +1,26 @@
-import { useState } from "react";
 import MaxHeadCountSlider from "@/domain/instructor/component/Slider.tsx";
+import { useFormContext } from "react-hook-form";
 
 interface StepMaxHeadCountProps {
-  onNextStep: (context: { maxHeadCount: number }) => void;
+  onNext: () => void;
 }
 
-const StepMaxHeadCount = ({ onNextStep }: StepMaxHeadCountProps) => {
+const StepMaxHeadCount = ({ onNext }: StepMaxHeadCountProps) => {
   // 초기 최대 인원수 (서버에서 fetch 해올 값)
   const INIT_COUNT = 35;
+  const { watch, setValue, trigger } = useFormContext();
 
-  const [maxHeadCount, setMaxHeadCount] = useState(INIT_COUNT);
+  const maxHeadCount = watch("maxHeadCount") || INIT_COUNT;
 
-  const handleCustomSubmit = () => {
-    onNextStep({ maxHeadCount });
+  const handleChange = (value: number) => {
+    setValue("maxHeadCount", value);
+  };
+
+  const handleNext = async () => {
+    const isValid = await trigger("maxHeadCount");
+    if (isValid) {
+      onNext();
+    }
   };
 
   return (
@@ -21,13 +29,10 @@ const StepMaxHeadCount = ({ onNextStep }: StepMaxHeadCountProps) => {
       <div className="flex flex-col gap-6">
         <div className="w-full max-w-xl space-y-4">
           <div className="flex items-end gap-2"></div>
-          <MaxHeadCountSlider
-            value={maxHeadCount}
-            onChange={(val) => setMaxHeadCount(val)}
-          />
+          <MaxHeadCountSlider value={maxHeadCount} onChange={handleChange} />
         </div>
         <button
-          onClick={handleCustomSubmit}
+          onClick={handleNext}
           disabled={!maxHeadCount || maxHeadCount <= 0}
           className="rounded-lg bg-blue-500 px-4 py-2 text-white disabled:bg-gray-300"
         >

@@ -20,10 +20,10 @@ const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
 }));
 
 interface StepUploadTimesProps {
-  onNextStep: (context: { uploadTimes: string[] }) => void;
+  onNext: () => void;
 }
 
-export default function StepUploadTimes({ onNextStep }: StepUploadTimesProps) {
+export default function StepUploadTimes({ onNext }: StepUploadTimesProps) {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [uploadTimes, setUploadTimes] = useState<string[]>([]);
   const [selectedHour, setSelectedHour] = useState<string>("20");
@@ -36,13 +36,6 @@ export default function StepUploadTimes({ onNextStep }: StepUploadTimesProps) {
       setUploadTimes([...uploadTimes, newEntry]);
     }
   };
-
-  useEffect(() => {
-    if (uploadTimes.length > 0) {
-      onNextStep({ uploadTimes });
-    }
-  }, [uploadTimes]);
-
   const handleRemoveTime = (entry: string) => {
     setUploadTimes(uploadTimes.filter((t) => t !== entry));
   };

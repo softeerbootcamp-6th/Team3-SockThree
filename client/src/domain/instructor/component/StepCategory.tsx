@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useFormContext } from "react-hook-form";
 import Chips from "@/shared/components/Chips.tsx";
 
-const StepCategory = ({
-  onNextStep,
-}: {
-  onNextStep: (context: { category: string }) => void;
-}) => {
+interface StepCategoryProps {
+  onNext: () => void;
+}
+
+const StepCategory = ({ onNext }: StepCategoryProps) => {
   const options = [
     "운동",
     "미술",
@@ -16,11 +16,31 @@ const StepCategory = ({
     "자격증",
     "기타",
   ];
-  const [selected, setSelected] = useState<string | null>(null);
 
-  const handleClick = (category: string) => {
-    setSelected(category);
-    onNextStep({ category });
+  const {
+    register,
+    trigger,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useFormContext();
+
+  const category = watch("category");
+
+  // 디버깅용 코드
+  console.log("🔍 StepCategory Debug Info:", {
+    currentCategory: category,
+    errors: errors,
+    formValues: watch(),
+    timestamp: new Date().toLocaleTimeString(),
+  });
+
+  const handleClick = (option: string) => {
+    console.log("🎯 Category clicked:", option);
+    setValue("category", option);
+    trigger("category");
+    console.log("✅ Category set and validated");
+    onNext();
   };
 
   return (
@@ -32,11 +52,20 @@ const StepCategory = ({
             key={option}
             type="field"
             title={option}
-            selected={selected === option}
+            selected={category === option}
             onClick={() => handleClick(option)}
           />
         ))}
       </div>
+
+      {/* Hidden input for react-hook-form registration */}
+      <input
+        {...register("category", { required: "카테고리를 선택해주세요" })}
+        type="hidden"
+        value={category || ""}
+      />
+
+      {errors.category && <p className="text-sm text-red-500">문제문제</p>}
     </div>
   );
 };
