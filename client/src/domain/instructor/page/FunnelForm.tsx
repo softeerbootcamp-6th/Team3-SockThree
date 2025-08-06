@@ -76,7 +76,7 @@ const FunnelForm = () => {
     mode: "onChange",
   });
 
-  const { goNextStep, currentIndex, goToStep } = useFunnel<Context>(
+  const { goNextStep, currentIndex } = useFunnel<Context>(
     steps.map((s) => s.key)
   );
 
@@ -96,11 +96,7 @@ const FunnelForm = () => {
           })}
         </div>
 
-        <FunnelSideBar<Context>
-          goToStep={goToStep}
-          steps={steps}
-          currentIndex={currentIndex}
-        />
+        <FunnelSideBar<Context> steps={steps} currentIndex={currentIndex} />
       </div>
     </FormProvider>
   );

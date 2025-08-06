@@ -14,7 +14,6 @@ interface FunnelSideBarProps<T> {
 export function FunnelSideBar<T>({
   steps,
   currentIndex,
-  goToStep,
 }: FunnelSideBarProps<T>) {
   const { control, formState } = useFormContext();
   const values = useWatch({ control });
@@ -45,13 +44,6 @@ export function FunnelSideBar<T>({
           <li key={step.key as string}>
             <a
               href={step.isDisabled ? undefined : `#step-${step.key}`}
-              onClick={(e) => {
-                if (step.isDisabled) {
-                  e.preventDefault();
-                  return;
-                }
-                goToStep(step.key);
-              }}
               className={`... ${step.isDisabled ? "cursor-not-allowed" : ""}`}
             >
               <div className="flex items-center justify-between">
