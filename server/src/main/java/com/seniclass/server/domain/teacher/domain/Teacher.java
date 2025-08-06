@@ -29,7 +29,13 @@ public class Teacher extends User {
     private String instruction;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Teacher(String name, String email, Integer age, Gender gender, String password, String instruction) {
+    private Teacher(
+            String name,
+            String email,
+            Integer age,
+            Gender gender,
+            String password,
+            String instruction) {
         super(email, password, UserRole.TEACHER);
         this.name = name;
         this.age = age;
@@ -38,7 +44,12 @@ public class Teacher extends User {
     }
 
     public static Teacher createTeacher(
-            String name, String email, Integer age, Gender gender, String password, String instruction) {
+            String name,
+            String email,
+            Integer age,
+            Gender gender,
+            String password,
+            String instruction) {
         return Teacher.builder()
                 .name(name)
                 .email(email)
