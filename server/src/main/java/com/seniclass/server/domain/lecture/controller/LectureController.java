@@ -1,0 +1,45 @@
+package com.seniclass.server.domain.lecture.controller;
+
+import com.seniclass.server.domain.auth.domain.RequireAuth;
+import com.seniclass.server.domain.auth.enums.UserRole;
+import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
+import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
+import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
+import com.seniclass.server.domain.lecture.service.LectureService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/lectures")
+@RequiredArgsConstructor
+public class LectureController {
+
+    private final LectureService lectureService;
+
+    @PostMapping
+    @RequireAuth(roles = {UserRole.TEACHER})
+    public LectureResponse createLecture(@Valid @RequestBody LectureCreateRequest request) {
+        return lectureService.createLecture(request);
+    }
+
+    @GetMapping("/{lectureId}")
+    public LectureResponse getLecture(@PathVariable Long lectureId) {
+        return lectureService.getLecture(lectureId);
+    }
+
+    @PutMapping("/{lectureId}")
+    @RequireAuth(roles = {UserRole.TEACHER})
+    public LectureResponse updateLecture(
+            @PathVariable Long lectureId, @Valid @RequestBody LectureUpdateRequest request) {
+        return lectureService.updateLecture(lectureId, request);
+    }
+
+    @DeleteMapping("/{lectureId}")
+    @RequireAuth(roles = {UserRole.TEACHER})
+    public ResponseEntity<Void> deleteLecture(@PathVariable Long lectureId) {
+        lectureService.deleteLecture(lectureId);
+        return ResponseEntity.ok().build();
+    }
+}

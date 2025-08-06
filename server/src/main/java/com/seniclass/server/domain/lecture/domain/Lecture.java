@@ -101,4 +101,21 @@ public class Lecture extends BaseTimeEntity {
                 .description(description)
                 .build();
     }
+
+    public void updateLecture(
+            SubCategory subCategory,
+            Level level,
+            LocalDate startDate,
+            LocalDate endDate,
+            Integer maxStudent,
+            String instruction,
+            String description) {
+        this.subCategory = subCategory;
+        this.level = level;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.maxStudent = maxStudent;
+        this.instruction = instruction;
+        this.description = description;
+    }
 }
