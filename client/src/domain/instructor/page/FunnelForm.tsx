@@ -84,7 +84,8 @@ const FunnelForm = () => {
     <FormProvider {...methods}>
       <div className="flex justify-center gap-7">
         <div className="flex flex-col items-center justify-center gap-[30px]">
-          {steps.map((s) => {
+          {steps.map((s, index) => {
+            if (index > currentIndex) return null;
             const StepComponent = stepComponentMap[s.key]; // 아래 참고
 
             return (
