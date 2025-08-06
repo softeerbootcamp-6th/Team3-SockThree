@@ -1,7 +1,9 @@
+import FunnelForm from "@/domain/instructor/page/FunnelForm.tsx";
+
 function App() {
   return (
     <>
-      <h1>App</h1>
+      <FunnelForm />
     </>
   );
 }
