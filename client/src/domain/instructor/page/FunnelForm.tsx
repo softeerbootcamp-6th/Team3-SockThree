@@ -40,40 +40,54 @@ type Context = {
 
 // 상위 컴포넌트
 const FunnelForm = () => {
-  const steps: Array<keyof Context> = [
-    "category",
-    "subCategory",
-    "level",
-    "startDate",
-    // "endDate",
-    "maxHeadCount",
-    "uploadTimes",
-    "price",
-    "introduction",
-    "curriculum",
-    "imageUrl",
-  ];
+  const steps = [
+    { key: "category", label: "카테고리 선택" },
+    { key: "subCategory", label: "세부 카테고리 선택" },
+    { key: "level", label: "난이도 선택" },
+    { key: "duration", label: "강의 기간 설정" },
+    { key: "maxHeadCount", label: "최대 인원 설정" },
+    { key: "uploadTimes", label: "업로드 일정 선택" },
+    { key: "price", label: "가격 설정" },
+    { key: "introduction", label: "소개 작성" },
+    { key: "curriculum", label: "커리큘럼 작성" },
+    { key: "imageUrl", label: "썸네일 업로드" },
+  ] as const;
+
+  const stepComponentMap: Record<
+    (typeof steps)[number]["key"],
+    (props: { onNext: () => void }) => JSX.Element
+  > = {
+    category: StepCategory,
+    subCategory: StepSubCategory,
+    level: StepLevel,
+    duration: StepDateRange,
+    maxHeadCount: StepMaxHeadCount,
+    uploadTimes: StepUploadTimes,
+    price: StepPrice,
+    introduction: StepIntroduction,
+    curriculum: StepCurriculum,
+    imageUrl: StepImageUpload,
+  };
 
   const methods = useForm<FunnelFormSchema>({
     resolver: zodResolver(funnelSchema),
     mode: "onChange",
   });
 
-  const { goNextStep, step } = useFunnel<Context>(steps);
+  const { goNextStep, step } = useFunnel<Context>(steps.map((s) => s.key));
 
   return (
     <FormProvider {...methods}>
       <div className="flex flex-col items-center justify-center gap-[30px]">
-        {step === "category" && <StepCategory onNext={goNextStep} />}
-        {step === "subCategory" && <StepSubCategory onNext={goNextStep} />}
-        {step === "level" && <StepLevel onNext={goNextStep} />}
-        {step === "startDate" && <StepDateRange onNext={goNextStep} />}
-        {step === "maxHeadCount" && <StepMaxHeadCount onNext={goNextStep} />}
-        {step === "uploadTimes" && <StepUploadTimes onNext={goNextStep} />}
-        {step === "price" && <StepPrice onNext={goNextStep} />}
-        {step === "introduction" && <StepIntroduction onNext={goNextStep} />}
-        {step === "curriculum" && <StepCurriculum onNext={goNextStep} />}
-        {step === "imageUrl" && <StepImageUpload onNext={goNextStep} />}
+        {steps.map((s) => {
+          const StepComponent = stepComponentMap[s.key]; // 아래 참고
+
+          return (
+            <div id={`step-${s.key}`}>
+              <StepComponent key={s.key} onNext={goNextStep} />
+            </div>
+          );
+        })}
       </div>
     </FormProvider>
   );
