@@ -49,7 +49,7 @@ public class Lecture extends BaseTimeEntity {
     private String description;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public Lecture(
+    private Lecture(
             String name,
             Integer cohort,
             Level level,
