@@ -27,19 +27,9 @@ const StepCategory = ({ onNext }: StepCategoryProps) => {
 
   const category = watch("category");
 
-  // 디버깅용 코드
-  console.log("🔍 StepCategory Debug Info:", {
-    currentCategory: category,
-    errors: errors,
-    formValues: watch(),
-    timestamp: new Date().toLocaleTimeString(),
-  });
-
   const handleClick = (option: string) => {
-    console.log("🎯 Category clicked:", option);
     setValue("category", option);
     trigger("category");
-    console.log("✅ Category set and validated");
     onNext();
   };
 
