@@ -16,6 +16,9 @@ import {
   type FunnelFormSchema,
 } from "@/domain/instructor/schema/funnelSchema.ts";
 import { useFunnel } from "@/domain/instructor/hook/useFunnel.ts";
+import Button from "@/shared/component/Button.tsx";
+
+import CheckIcon from "@/assets/icons/default/check.svg?react";
 
 // 타입 정의
 type Context = {
@@ -78,7 +81,7 @@ const FunnelForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <div className="flex justify-center">
+      <div className="flex justify-center gap-7">
         <div className="flex flex-col items-center justify-center gap-[30px]">
           {steps.map((s) => {
             const StepComponent = stepComponentMap[s.key]; // 아래 참고
@@ -90,19 +93,26 @@ const FunnelForm = () => {
             );
           })}
         </div>
-        <aside className="sticky top-0 h-1/2 w-48 p-4">
+        <aside className="sticky top-0 flex h-[50rem] w-[19rem] flex-col justify-between rounded-[var(--radius-20)] bg-white p-[1.7rem]">
           <ul className="space-y-2">
             {steps.map((s) => (
               <li key={s.key}>
                 <a
                   href={`#step-${s.key}`}
-                  className="text-sm text-blue-600 hover:underline"
+                  className="flex w-[16.125rem] items-center justify-between gap-2 py-0.5"
                 >
-                  {s.label}
+                  <span className="flex items-center gap-1">
+                    <CheckIcon />
+                    <span className="typo-label-0">{s.label}</span>
+                  </span>
+                  <span className="typo-title-5">curState</span>
                 </a>
               </li>
             ))}
           </ul>
+          <Button variant="default" size="md">
+            강좌 생성하기
+          </Button>
         </aside>
       </div>
     </FormProvider>
