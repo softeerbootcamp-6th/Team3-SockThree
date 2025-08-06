@@ -12,9 +12,8 @@ public enum LectureErrorCode implements BaseErrorCode {
     SUB_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 서브 카테고리입니다."),
     ;
 
-
-    private HttpStatus httpStatus;
-    private String message;
+    private final HttpStatus httpStatus;
+    private final String message;
 
     @Override
     public String errorClassName() {
