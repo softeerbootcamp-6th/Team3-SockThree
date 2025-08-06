@@ -5,7 +5,7 @@ import RecommendedCourseListView from "../view/RecommendedCourseListView";
 import CheckIcon from "@/assets/icons/default/check.svg?react";
 import Button from "@/shared/components/Button";
 
-const StudentHomePage = () => {
+const HomePage = () => {
   return (
     <div className="h-[100%] w-[100%] pt-[4rem] pr-[3.5625rem] pb-[3.75rem] pl-[2.8125rem]">
       <div className="flex w-full items-center justify-between pb-[2.6875rem]">
@@ -34,4 +34,4 @@ const StudentHomePage = () => {
   );
 };
 
-export default StudentHomePage;
+export default HomePage;
