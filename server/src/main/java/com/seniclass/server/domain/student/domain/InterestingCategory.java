@@ -21,7 +21,7 @@ public class InterestingCategory {
     private Student student;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "interesting_category_id", nullable = false)
+    @JoinColumn(name = "sub_category_id", nullable = false)
     private SubCategory subCategory;
 
     @Builder(access = AccessLevel.PRIVATE)
