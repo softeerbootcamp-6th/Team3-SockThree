@@ -44,16 +44,16 @@ type Context = {
 // 상위 컴포넌트
 const FunnelForm = () => {
   const steps = [
-    { key: "category", label: "카테고리 선택" },
-    { key: "subCategory", label: "세부 카테고리 선택" },
-    { key: "level", label: "난이도 선택" },
-    { key: "duration", label: "강의 기간 설정" },
-    { key: "maxHeadCount", label: "최대 인원 설정" },
-    { key: "uploadTimes", label: "업로드 일정 선택" },
-    { key: "price", label: "가격 설정" },
-    { key: "introduction", label: "소개 작성" },
-    { key: "curriculum", label: "커리큘럼 작성" },
-    { key: "imageUrl", label: "썸네일 업로드" },
+    { key: "category", label: "대분류" },
+    { key: "subCategory", label: "소분류" },
+    { key: "level", label: "난이도" },
+    { key: "duration", label: "강의기간" },
+    { key: "maxHeadCount", label: "최대 인원" },
+    { key: "uploadTimes", label: "업로드 일정" },
+    { key: "price", label: "수강료" },
+    { key: "introduction", label: "강좌 소개" },
+    { key: "curriculum", label: "커리큘럼" },
+    { key: "imageUrl", label: "사진" },
   ] as const;
 
   const stepComponentMap: Record<
