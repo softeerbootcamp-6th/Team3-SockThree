@@ -20,15 +20,13 @@ public class LectureController {
 
     @PostMapping
     @RequireAuth(roles = {UserRole.TEACHER})
-    public ResponseEntity<Void> createLecture(@Valid @RequestBody LectureCreateRequest request) {
-        request.validateDateOrder();
-        lectureService.createLecture(request);
-        return ResponseEntity.ok().build();
+    public LectureResponse createLecture(@Valid @RequestBody LectureCreateRequest request) {
+        return lectureService.createLecture(request);
     }
 
     @GetMapping("/{lectureId}")
     public LectureResponse getLecture(@PathVariable Long lectureId) {
-        return LectureResponse.from(lectureService.getLecture(lectureId));
+        return lectureService.getLecture(lectureId);
     }
 
     @PutMapping("/{lectureId}")
