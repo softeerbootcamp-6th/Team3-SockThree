@@ -27,7 +27,7 @@ const StudentHomePage = () => {
       <div className="flex h-[21.5rem] w-[92.1875rem] flex-row items-end justify-between">
         <RecommendedCourseListView />
         <Button variant={"outline"} textSize={"title2"}>
-          전체 강좌 둘러보기
+          추천 강좌 둘러보기
         </Button>
       </div>
     </div>
