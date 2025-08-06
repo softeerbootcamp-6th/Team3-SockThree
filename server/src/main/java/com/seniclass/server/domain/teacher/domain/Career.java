@@ -38,12 +38,7 @@ public class Career {
         this.teacher = teacher;
     }
 
-    public static Career createCareer(
-            String name, Type type, Teacher teacher) {
-        return Career.builder()
-                .name(name)
-                .type(type)
-                .teacher(teacher)
-                .build();
+    public static Career createCareer(String name, Type type, Teacher teacher) {
+        return Career.builder().name(name).type(type).teacher(teacher).build();
     }
 }
