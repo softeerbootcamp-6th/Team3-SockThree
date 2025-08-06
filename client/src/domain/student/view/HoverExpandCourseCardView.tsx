@@ -31,7 +31,7 @@ const HoverExpandCourseCardView = () => {
   const [activeId, setActiveId] = useState<number>(expandedCardIndex);
 
   return (
-    <div className="flex items-center gap-2 px-4">
+    <div className="flex h-[21.3125rem] w-[92.1875rem] flex-row items-center gap-2 px-4">
       {cards.map((card, index) => (
         <div key={index} onMouseEnter={() => setActiveId(index)}>
           <HoverExpandCourseCard
