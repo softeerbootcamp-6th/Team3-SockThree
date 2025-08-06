@@ -9,7 +9,7 @@ const createRandomCards = () => {
     title: faker.helpers.arrayElement([
       "운동으로 스트레스 해소하기",
       "골프 배우기",
-      "1개월 동안의 요가 클래스",
+      "요가 클래스",
     ]),
     description: faker.helpers.arrayElement([
       "이 코스는 운동을 통해 스트레스를 해소하는 방법을 배웁니다.",
