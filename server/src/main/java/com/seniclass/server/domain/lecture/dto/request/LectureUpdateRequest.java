@@ -4,7 +4,6 @@ import com.seniclass.server.domain.lecture.enums.Level;
 import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import jakarta.validation.constraints.*;
-
 import java.time.LocalDate;
 
 public record LectureUpdateRequest(
@@ -22,5 +21,3 @@ public record LectureUpdateRequest(
         }
     }
 }
-
-
