@@ -49,7 +49,7 @@ const closedCardContainer = (cardData: CardData) => {
 const expandedCardContainer = (cardData: CardData) => {
   return (
     <div
-      className="relative h-[21.3125rem] w-[5rem] rounded-[3.125rem] bg-cover bg-center opacity-60 transition-all duration-600"
+      className="relative mx-[.8125rem] h-[21.3125rem] w-[5rem] rounded-[3.125rem] bg-cover bg-center opacity-60 transition-all duration-600"
       style={{ backgroundImage: `url(${cardData.courseImg})` }}
     >
       <div className="absolute inset-0 rounded-[3.125rem] bg-black/50 py-[1.375rem]">
