@@ -28,14 +28,15 @@ public class UploadTime extends BaseTimeEntity {
     private LocalTime scheduledAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lecture_id")
+    @JoinColumn(name = "lecture_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public UploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt) {
+    private UploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt, Lecture lecture) {
         this.dayOfWeek = dayOfWeek;
         this.scheduledAt = scheduledAt;
+        this.lecture = lecture;
     }
 
     public static UploadTime createUploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt) {

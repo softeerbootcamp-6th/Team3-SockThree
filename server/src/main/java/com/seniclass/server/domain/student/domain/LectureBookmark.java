@@ -30,7 +30,7 @@ public class LectureBookmark extends BaseTimeEntity {
     private Lecture lecture;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public LectureBookmark(Student student, Lecture lecture) {
+    private LectureBookmark(Student student, Lecture lecture) {
         this.student = student;
         this.lecture = lecture;
     }
