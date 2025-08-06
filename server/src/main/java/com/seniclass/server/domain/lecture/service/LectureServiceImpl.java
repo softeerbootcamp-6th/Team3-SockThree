@@ -23,6 +23,7 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public LectureResponse createLecture(LectureCreateRequest request) {
+        request.validateDateOrder();
 
         SubCategory subCategory =
                 subCategoryRepository
@@ -60,6 +61,8 @@ public class LectureServiceImpl implements LectureService {
 
     @Override
     public LectureResponse updateLecture(Long lectureId, LectureUpdateRequest request) {
+        request.validateDateOrder();
+
         Lecture lecture = getLectureEntity(lectureId);
         SubCategory subCategory =
                 subCategoryRepository
