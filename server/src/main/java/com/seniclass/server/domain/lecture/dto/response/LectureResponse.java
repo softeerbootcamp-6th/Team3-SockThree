@@ -14,8 +14,7 @@ public record LectureResponse(
         Integer maxStudent,
         Integer fee,
         String instruction,
-        String description
-) {
+        String description) {
     public static LectureResponse from(Lecture lecture) {
         return new LectureResponse(
                 lecture.getId(),
@@ -27,7 +26,6 @@ public record LectureResponse(
                 lecture.getMaxStudent(),
                 lecture.getFee(),
                 lecture.getInstruction(),
-                lecture.getDescription()
-        );
+                lecture.getDescription());
     }
 }

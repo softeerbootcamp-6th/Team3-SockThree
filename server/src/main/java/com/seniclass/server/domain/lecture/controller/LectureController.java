@@ -33,7 +33,8 @@ public class LectureController {
 
     @PutMapping("/{lectureId}")
     @RequireAuth(roles = {UserRole.TEACHER})
-    public void updateLecture(@PathVariable Long lectureId, @RequestBody LectureUpdateRequest request) {
+    public void updateLecture(
+            @PathVariable Long lectureId, @RequestBody LectureUpdateRequest request) {
         lectureService.updateLecture(lectureId, request);
     }
 

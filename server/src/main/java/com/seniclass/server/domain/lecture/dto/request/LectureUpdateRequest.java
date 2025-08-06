@@ -13,6 +13,4 @@ public record LectureUpdateRequest(
         Integer maxStudent,
         Integer fee,
         String instruction,
-        String description
-) {
-}
+        String description) {}

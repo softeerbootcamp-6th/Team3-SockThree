@@ -22,38 +22,47 @@ public class LectureService {
 
     public void createLecture(LectureCreateRequest request) {
 
-        SubCategory subCategory = subCategoryRepository.findById(request.subCategoryId())
-                .orElseThrow(() -> new CommonException(LectureErrorCode.SUB_CATEGORY_NOT_FOUND));
-        Integer cohort = lectureRepository.findTopByNameOrderByCohortDesc(request.name())
-                .map(lecture -> lecture.getCohort() + 1)
-                .orElse(1);
+        SubCategory subCategory =
+                subCategoryRepository
+                        .findById(request.subCategoryId())
+                        .orElseThrow(
+                                () -> new CommonException(LectureErrorCode.SUB_CATEGORY_NOT_FOUND));
+        Integer cohort =
+                lectureRepository
+                        .findTopByNameOrderByCohortDesc(request.name())
+                        .map(lecture -> lecture.getCohort() + 1)
+                        .orElse(1);
 
-        Lecture lecture = Lecture.createLecture(
-                subCategory,
-                request.name(),
-                cohort,
-                request.level(),
-                request.startDate(),
-                request.endDate(),
-                request.maxStudent(),
-                request.fee(),
-                request.instruction(),
-                request.description()
-        );
+        Lecture lecture =
+                Lecture.createLecture(
+                        subCategory,
+                        request.name(),
+                        cohort,
+                        request.level(),
+                        request.startDate(),
+                        request.endDate(),
+                        request.maxStudent(),
+                        request.fee(),
+                        request.instruction(),
+                        request.description());
 
         lectureRepository.save(lecture);
     }
 
     @Transactional(readOnly = true)
     public Lecture getLecture(Long lectureId) {
-        return lectureRepository.findById(lectureId)
+        return lectureRepository
+                .findById(lectureId)
                 .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
     }
 
     public void updateLecture(Long lectureId, LectureUpdateRequest request) {
         Lecture lecture = getLecture(lectureId);
-        SubCategory subCategory = subCategoryRepository.findById(request.subCategoryId())
-                .orElseThrow(() -> new CommonException(LectureErrorCode.SUB_CATEGORY_NOT_FOUND));
+        SubCategory subCategory =
+                subCategoryRepository
+                        .findById(request.subCategoryId())
+                        .orElseThrow(
+                                () -> new CommonException(LectureErrorCode.SUB_CATEGORY_NOT_FOUND));
         lecture.updateLecture(
                 subCategory,
                 request.name(),
@@ -64,8 +73,7 @@ public class LectureService {
                 request.maxStudent(),
                 request.fee(),
                 request.instruction(),
-                request.description()
-        );
+                request.description());
     }
 
     public void deleteLecture(Long lectureId) {
