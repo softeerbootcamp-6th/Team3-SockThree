@@ -5,7 +5,7 @@ import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
 import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
 
 public interface LectureService {
-    public LectureResponse createLecture(LectureCreateRequest request);
+    public LectureResponse createLecture(Long UserId, LectureCreateRequest request);
 
     public LectureResponse getLecture(Long lectureId);
 

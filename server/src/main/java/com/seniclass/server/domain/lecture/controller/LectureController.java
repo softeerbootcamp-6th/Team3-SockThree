@@ -20,8 +20,10 @@ public class LectureController {
 
     @PostMapping
     @RequireAuth(roles = {UserRole.TEACHER})
-    public LectureResponse createLecture(@Valid @RequestBody LectureCreateRequest request) {
-        return lectureService.createLecture(request);
+    public LectureResponse createLecture(
+            @Valid @RequestBody LectureCreateRequest request,
+            @RequestAttribute("userId") Long userId) {
+        return lectureService.createLecture(userId, request);
     }
 
     @GetMapping("/{lectureId}")

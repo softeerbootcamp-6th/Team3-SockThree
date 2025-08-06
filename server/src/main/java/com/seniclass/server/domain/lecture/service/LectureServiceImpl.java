@@ -7,8 +7,11 @@ import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
 import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
+import com.seniclass.server.domain.teacher.domain.Teacher;
+import com.seniclass.server.domain.teacher.repository.TeacherRepository;
 import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
+import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +23,10 @@ public class LectureServiceImpl implements LectureService {
 
     private final LectureRepository lectureRepository;
     private final SubCategoryRepository subCategoryRepository;
+    private final TeacherRepository teacherRepository;
 
     @Override
-    public LectureResponse createLecture(LectureCreateRequest request) {
+    public LectureResponse createLecture(Long userId, LectureCreateRequest request) {
         request.validateDateOrder();
 
         SubCategory subCategory =
@@ -36,6 +40,11 @@ public class LectureServiceImpl implements LectureService {
                         .map(lecture -> lecture.getCohort() + 1)
                         .orElse(1);
 
+        Teacher teacher =
+                teacherRepository
+                        .findById(userId)
+                        .orElseThrow(() -> new CommonException(UserErrorCode.USER_NOT_FOUND));
+
         Lecture lecture =
                 Lecture.createLecture(
                         subCategory,
@@ -47,7 +56,8 @@ public class LectureServiceImpl implements LectureService {
                         request.maxStudent(),
                         request.fee(),
                         request.instruction(),
-                        request.description());
+                        request.description(),
+                        teacher);
 
         return LectureResponse.from(lectureRepository.save(lecture));
     }
