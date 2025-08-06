@@ -22,8 +22,10 @@ type Context = {
   category?: string;
   subCategory?: string;
   level?: string;
-  startDate?: string;
-  endDate?: string;
+  duration?: {
+    startDate?: string;
+    endDate?: string;
+  };
   maxHeadCount?: number;
   uploadTimes?: string[]; // 강좌 업로드 날짜, 시간
   price?: number;
