@@ -10,15 +10,5 @@ export function useFunnel<T>(steps: Array<keyof T>) {
     if (nextStep) setStep(nextStep);
   };
 
-  const goToStep = (target: keyof T) => {
-    if (steps.includes(target)) {
-      setStep(target);
-      const el = document.getElementById(`step-${String(target)}`);
-      if (el) {
-        el.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-  };
-
-  return { step, goNextStep, goToStep, currentIndex };
+  return { step, goNextStep, currentIndex };
 }
