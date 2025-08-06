@@ -40,7 +40,7 @@ const StudentLayout = () => {
   ));
 
   return (
-    <div className="flex h-screen flex-row justify-between">
+    <div className="flex flex-row justify-between">
       <Navbar>{navbarItems}</Navbar>
       <Outlet />
     </div>

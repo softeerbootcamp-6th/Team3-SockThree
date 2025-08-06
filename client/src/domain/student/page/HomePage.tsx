@@ -7,7 +7,7 @@ import Button from "@/shared/components/Button";
 
 const HomePage = () => {
   return (
-    <div className="h-[100%] w-[100%] pt-[4rem] pr-[3.5625rem] pb-[3.75rem] pl-[2.8125rem]">
+    <div className="ml-[2.8125rem] h-full w-full pt-[4rem] pr-[3.5625rem] pb-[3.75rem]">
       <div className="flex w-full items-center justify-between pb-[2.6875rem]">
         <div>
           <div className="flex items-center gap-[1.1875rem]">
@@ -18,7 +18,7 @@ const HomePage = () => {
             얼마 남지 않았어요!
           </span>
         </div>
-        <div className="flex flex-col items-center gap-[1.1875rem]">
+        <div className="flex w-full flex-col items-center gap-[1.1875rem]">
           <ExpandSearchBar />
         </div>
       </div>
