@@ -6,6 +6,8 @@ import com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode;
 import com.seniclass.server.domain.student.domain.Student;
 import com.seniclass.server.domain.student.enums.Gender;
 import com.seniclass.server.domain.student.repository.StudentRepository;
+import com.seniclass.server.domain.teacher.domain.Teacher;
+import com.seniclass.server.domain.teacher.repository.TeacherRepository;
 import com.seniclass.server.domain.user.domain.User;
 import com.seniclass.server.domain.user.repository.UserRepository;
 import com.seniclass.server.global.exception.CommonException;
@@ -18,6 +20,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
+    private final TeacherRepository teacherRepository;
     private final PasswordService passwordService;
 
     @Override
@@ -60,7 +63,20 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
             String name, String email, Integer age, Gender gender, String encodedPassword) {
         Student student = Student.createStudent(name, email, age, gender, encodedPassword);
         Student savedStudent = studentRepository.save(student);
-        return savedStudent.getRole().name() + "_" + savedStudent.getId();
+        return savedStudent.getId().toString();
+    }
+
+    @Override
+    public Teacher createTeacher(
+            String name,
+            String email,
+            Integer age,
+            Gender gender,
+            String encodedPassword,
+            String instruction) {
+        Teacher teacher =
+                Teacher.createTeacher(name, email, age, gender, encodedPassword, instruction);
+        return teacherRepository.save(teacher);
     }
 
     @Override

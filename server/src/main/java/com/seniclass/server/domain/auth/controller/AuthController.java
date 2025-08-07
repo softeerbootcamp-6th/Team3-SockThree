@@ -23,6 +23,12 @@ public class AuthController {
         return authService.registerStudent(request);
     }
 
+    @PostMapping("/register/teacher")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RegisterResponse registerTeacher(@Valid @RequestBody TeacherRegisterRequest request) {
+        return authService.registerTeacher(request);
+    }
+
     @PostMapping("/login")
     public LoginResponse login(@Valid @RequestBody LoginRequest request) {
         return authService.login(request);

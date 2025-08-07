@@ -3,6 +3,8 @@ package com.seniclass.server.domain.auth.service;
 import com.seniclass.server.domain.auth.domain.AuthenticatedUser;
 import com.seniclass.server.domain.auth.dto.*;
 import com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode;
+import com.seniclass.server.domain.teacher.domain.Teacher;
+import com.seniclass.server.domain.teacher.service.CareerService;
 import com.seniclass.server.global.exception.CommonException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,7 @@ public class AuthService {
     private final PasswordService passwordService;
     private final TokenManagementService tokenManagementService;
     private final UserAuthenticationService userAuthenticationService;
+    private final CareerService careerService;
 
     @Transactional
     public LoginResponse login(LoginRequest request) {
@@ -101,5 +104,39 @@ public class AuthService {
         log.info("Student registered successfully: {} ({})", request.name(), request.email());
         return new RegisterResponse(
                 userId, request.name(), request.email(), "STUDENT", "회원가입이 완료되었습니다");
+    }
+
+    @Transactional
+    public RegisterResponse registerTeacher(TeacherRegisterRequest request) {
+        if (!request.isPasswordMatching()) {
+            throw new CommonException(AuthErrorCode.PASSWORD_MISMATCH);
+        }
+        if (userAuthenticationService.existsByEmail(request.email())) {
+            throw new CommonException(AuthErrorCode.EMAIL_ALREADY_EXISTS);
+        }
+        String encodedPassword = passwordService.encodePassword(request.password());
+        Teacher savedTeacher =
+                userAuthenticationService.createTeacher(
+                        request.name(),
+                        request.email(),
+                        request.age(),
+                        request.gender(),
+                        encodedPassword,
+                        request.instruction());
+
+        for (CareerRegisterRequest registerRequest : request.careerList()) {
+            careerService.createCareer(registerRequest, savedTeacher);
+        }
+
+        log.info(
+                "Teacher registered successfully: {} ({})",
+                savedTeacher.getName(),
+                savedTeacher.getEmail());
+        return new RegisterResponse(
+                savedTeacher.getId().toString(),
+                savedTeacher.getName(),
+                savedTeacher.getEmail(),
+                "TEACHER",
+                "회원가입이 완료되었습니다");
     }
 }
