@@ -85,7 +85,7 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 
         @Override
         public String getId() {
-            return user.getId().toString();
+            return user.getRole().name() + "_" + user.getId();
         }
 
         @Override

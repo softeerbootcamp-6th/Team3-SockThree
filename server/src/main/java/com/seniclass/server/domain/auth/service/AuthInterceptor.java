@@ -82,7 +82,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
             // 요청에 사용자 정보 저장
             request.setAttribute("currentUser", currentUser);
-            request.setAttribute("userId", Long.parseLong(currentUser.getId()));
+            request.setAttribute("userId", Long.parseLong(currentUser.getId().split("_")[1]));
             request.setAttribute("userRole", currentUser.getRole());
 
             return true;
