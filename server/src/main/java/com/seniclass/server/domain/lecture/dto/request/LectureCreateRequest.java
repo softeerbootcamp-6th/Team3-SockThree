@@ -6,6 +6,7 @@ import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import jakarta.validation.constraints.*;
 import jakarta.validation.constraints.NotBlank;
 import java.time.LocalDate;
+import java.util.List;
 
 public record LectureCreateRequest(
         Long subCategoryId,
@@ -16,7 +17,8 @@ public record LectureCreateRequest(
         @NotNull @Min(0) Integer fee,
         @NotBlank String name,
         @NotBlank @Size(max = 255) String instruction,
-        @NotBlank String description) {
+        @NotBlank String description,
+        @NotNull @NotEmpty List<UploadTimeCreateRequest> uploadTimeList) {
 
     public void validateDateOrder() {
         if (startDate != null && endDate != null && !startDate.isBefore(endDate)) {

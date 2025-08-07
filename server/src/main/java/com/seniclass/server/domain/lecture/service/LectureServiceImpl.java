@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LectureServiceImpl implements LectureService {
 
+    private final UploadTimeService uploadTimeService;
     private final LectureRepository lectureRepository;
     private final SubCategoryRepository subCategoryRepository;
     private final TeacherRepository teacherRepository;
@@ -59,7 +60,15 @@ public class LectureServiceImpl implements LectureService {
                         request.description(),
                         teacher);
 
-        return LectureResponse.from(lectureRepository.save(lecture));
+        LectureResponse savedLecture = LectureResponse.from(lectureRepository.save(lecture));
+
+        request.uploadTimeList()
+                .forEach(
+                        uploadTime -> {
+                            uploadTimeService.createUploadTime(uploadTime, lecture);
+                        });
+
+        return savedLecture;
     }
 
     @Override
