@@ -3,7 +3,6 @@ import { Outlet } from "react-router";
 
 import HomeIcon from "@/assets/icons/default/home.svg?react";
 import SearchIcon from "@/assets/icons/default/search.svg?react";
-import CourseIcon from "@/assets/icons/default/course.svg?react";
 
 import { useState } from "react";
 import NavbarItem from "@/shared/components/Navbar/NavbarItem";
@@ -17,9 +16,8 @@ const StudentLayout = () => {
     {
       icon: SearchIcon,
       label: "강의 검색",
-      routePath: "/student/course-search",
+      routePath: "/student/course/search",
     },
-    { icon: CourseIcon, label: "???", routePath: "/student/course" },
   ];
 
   const location = useLocation();
