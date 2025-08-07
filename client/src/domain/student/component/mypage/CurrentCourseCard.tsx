@@ -10,7 +10,7 @@ const CurrentCourseCard = ({
   currentCourseThumbnail,
 }: CurrentCourseCardProps) => {
   return (
-    <div className="flex h-[36.9375rem] w-[43.9375rem] flex-col gap-[1.0625rem]">
+    <div className="flex h-[36.9375rem] w-[43.9375rem] flex-col justify-end gap-[1.0625rem]">
       <div
         className="relative flex h-[30.3125rem] w-full rounded-[1.25rem] bg-cover bg-center object-cover"
         style={{ backgroundImage: `url(${currentCourseThumbnail})` }}
