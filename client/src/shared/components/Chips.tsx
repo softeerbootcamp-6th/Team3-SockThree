@@ -7,7 +7,7 @@ const chipsVariant = tv({
     border:
       "p-px bg-gray-400 text-gray-600 " +
       "transition-all hover:translate-y-[-12px] hover:shadow-md",
-    base: "flex justify-center items-start",
+    base: "flex justify-center items-start bg-white",
     textContainer:
       "flex flex-col items-start justify-start gap-[2.5rem] text-gray-600",
     title: "",
