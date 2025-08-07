@@ -25,10 +25,8 @@ const Navbar = ({ myPageItem, children }: NavbarProps) => {
       {/* 하단 마이페이지 및 로그아웃 */}
       <div className="flex flex-col items-center gap-2">
         {/* 마이페이지 아이템 */}
-        <ul className="flex flex-col items-center">
-        {myPageItem}
-        </ul>
-        
+        <ul className="flex flex-col items-center">{myPageItem}</ul>
+
         {/* 로그아웃 버튼 */}
         <Button variant={"ghost"} size={"xs"}>
           로그아웃
