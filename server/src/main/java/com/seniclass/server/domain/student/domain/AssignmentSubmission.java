@@ -1,5 +1,6 @@
 package com.seniclass.server.domain.student.domain;
 
+import com.seniclass.server.domain.common.model.BaseTimeEntity;
 import com.seniclass.server.domain.lecture.domain.Assignment;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class AssignmentSubmission {
+public class AssignmentSubmission extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -1,6 +1,7 @@
 package com.seniclass.server.domain.student.domain;
 
 import com.seniclass.server.domain.category.domain.SubCategory;
+import com.seniclass.server.domain.common.model.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class InterestingCategory {
+public class InterestingCategory extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
