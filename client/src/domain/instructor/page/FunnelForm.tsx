@@ -18,6 +18,7 @@ import {
 import { useFunnel } from "@/domain/instructor/hook/useFunnel.ts";
 
 import { FunnelSideBar } from "@/domain/instructor/component/FunnelSideBar.tsx";
+import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll.ts";
 
 // 타입 정의
 type Context = {
@@ -80,16 +81,26 @@ const FunnelForm = () => {
     steps.map((s) => s.key)
   );
 
+  const { containerRef, stepRef } = useFunnelScroll({
+    stepIndex: currentIndex,
+  });
+
   return (
     <FormProvider {...methods}>
       <div className="flex justify-center gap-7">
-        <div className="flex flex-col items-center justify-center gap-[30px]">
-          {steps.map((s, index) => {
-            if (index > currentIndex) return null;
-            const StepComponent = stepComponentMap[s.key]; // 아래 참고
-
+        <div
+          ref={containerRef}
+          className="scroll-snap-y h-screen snap-mandatory overflow-y-auto scroll-smooth pt-[160px] pb-[300px]"
+        >
+          {steps.map((s, i) => {
+            if (i > currentIndex) return null;
+            const StepComponent = stepComponentMap[s.key];
             return (
-              <div id={`step-${s.key}`}>
+              <div
+                id={`step-${s.key}`}
+                ref={i === currentIndex ? stepRef : undefined}
+                className="scroll-snap-start my-20 scroll-mt-[150px]"
+              >
                 <StepComponent key={s.key} onNext={goNextStep} />
               </div>
             );
