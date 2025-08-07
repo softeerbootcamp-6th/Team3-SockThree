@@ -8,7 +8,7 @@ interface FunnelHeaderProps {
 
 const FunnerHeader = ({ currentIndex, totalSteps }: FunnelHeaderProps) => {
   return (
-    <header className="sticky top-0 z-20 flex items-center gap-[2rem] bg-bg px-10 py-[4rem]">
+    <header className="sticky top-0 z-20 flex items-center gap-[2rem] bg-bg py-[4rem] pr-10">
       <div className="flex items-center gap-2.5">
         <h1 className="typo-title-0">강좌 만들기</h1>
         <CheckIcon />
