@@ -1,29 +1,30 @@
-import { DatePicker } from "@/domain/instructor/component/DatePicker.tsx";
-import { useFormContext } from "react-hook-form";
+import { useState } from 'react';
+import { DatePicker } from '@/domain/instructor/component/DatePicker.tsx';
 
 interface StepDateRangeProps {
-  onNext: () => void;
+  value?: {
+    startDate?: Date;
+    endDate?: Date;
+  };
+  onValidSubmit: (value: { startDate: Date; endDate: Date }) => void;
 }
 
-const StepDateRange = ({ onNext }: StepDateRangeProps) => {
-  const {
-    watch,
-    setValue,
-    trigger,
-    register,
-    formState: { errors },
-  } = useFormContext();
+const StepDateRange = ({ value, onValidSubmit }: StepDateRangeProps) => {
+  const [startDate, setStartDate] = useState<Date | undefined>(value?.startDate);
+  const [endDate, setEndDate] = useState<Date | undefined>(value?.endDate);
 
-  const startDate = watch("startDate");
-  const endDate = watch("endDate");
+  const handleSelect = (field: 'startDate' | 'endDate', date: Date) => {
+    if (field === 'startDate') {
+      setStartDate(date);
+    } else {
+      setEndDate(date);
+    }
 
-  const handleSelect = async (field: "startDate" | "endDate", value: Date) => {
-    setValue(field, value.toDateString());
-    const isValid = await trigger(["startDate", "endDate"]);
-    const bothSelected = !!watch("startDate") && !!watch("endDate");
+    const nextStart = field === 'startDate' ? date : startDate;
+    const nextEnd = field === 'endDate' ? date : endDate;
 
-    if (isValid && bothSelected) {
-      onNext();
+    if (nextStart && nextEnd) {
+      onValidSubmit({ startDate: nextStart, endDate: nextEnd });
     }
   };
 
@@ -35,36 +36,16 @@ const StepDateRange = ({ onNext }: StepDateRangeProps) => {
           id="start-date"
           placeholder="강좌 시작일을 선택하세요"
           value={startDate}
-          onChange={(date) => handleSelect("startDate", date)}
+          onChange={(date) => handleSelect('startDate', date)}
         />
         <p>~</p>
         <DatePicker
           id="end-date"
           placeholder="강좌 종료일을 선택하세요"
           value={endDate}
-          onChange={(date) => handleSelect("endDate", date)}
+          onChange={(date) => handleSelect('endDate', date)}
         />
       </div>
-
-      {/* RHF 등록 */}
-      <input
-        {...register("startDate", { required: "시작일을 선택해주세요" })}
-        type="hidden"
-        value={startDate || ""}
-      />
-      <input
-        {...register("endDate", { required: "종료일을 선택해주세요" })}
-        type="hidden"
-        value={endDate || ""}
-      />
-
-      {/* 에러 메시지 */}
-      {(errors.startDate || errors.endDate) && (
-        <p className="mt-2 text-sm text-red-500">
-          {(errors.startDate?.message as string) ||
-            (errors.endDate?.message as string)}
-        </p>
-      )}
     </div>
   );
 };

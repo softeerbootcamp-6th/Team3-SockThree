@@ -1,46 +1,25 @@
-import { useEffect, useRef, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 
 interface StepCurriculumProps {
-  onNext: () => void;
+  value?: string;
+  onValidSubmit: (curriculum: string) => void;
 }
 
-const StepCurriculum = ({ onNext }: StepCurriculumProps) => {
-  const [curriculum, setCurriculum] = useState("");
+const StepCurriculum = ({ value, onValidSubmit }: StepCurriculumProps) => {
+  const [curriculum, setCurriculum] = useState(value ?? '');
+  const [error, setError] = useState<string | null>(null);
 
-  const {
-    setValue,
-    trigger,
-    register,
-    formState: { errors },
-  } = useFormContext();
-
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const updateAndValidate = () => {
+  const handleBlur = () => {
     const trimmed = curriculum.trim();
-    if (!trimmed) return;
 
-    setValue("curriculum", trimmed, { shouldValidate: true });
+    if (trimmed.length === 0) {
+      setError("커리큘럼을 작성해주세요");
+      return;
+    }
 
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(async () => {
-      const isValid = await trigger("curriculum");
-      if (isValid) {
-        onNext();
-      }
-    }, 300);
+    setError(null);
+    onValidSubmit(trimmed);
   };
-
-  useEffect(() => {
-    updateAndValidate();
-  }, [curriculum]);
-
-  useEffect(() => {
-    register("curriculum", {
-      required: "커리큘럼을 작성해주세요",
-    });
-  }, [register]);
 
   return (
     <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
@@ -52,6 +31,7 @@ const StepCurriculum = ({ onNext }: StepCurriculumProps) => {
           <textarea
             value={curriculum}
             onChange={(e) => setCurriculum(e.target.value)}
+            onBlur={handleBlur}
             placeholder={`강좌의 커리큘럼을 상세히 작성해주세요\n예:\n1주차: 기초 이론 학습\n2주차: 실습 과정\n3주차: 프로젝트 진행`}
             className="resize-vertical min-h-40 rounded-lg border px-4 py-3"
             maxLength={1000}
@@ -61,11 +41,7 @@ const StepCurriculum = ({ onNext }: StepCurriculumProps) => {
           </span>
         </div>
 
-        {errors.curriculum && (
-          <p className="text-sm text-red-500">
-            {errors.curriculum.message as string}
-          </p>
-        )}
+        {error && <p className="text-sm text-red-500">{error}</p>}
       </div>
     </div>
   );

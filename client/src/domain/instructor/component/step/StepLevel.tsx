@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Chips from "@/shared/components/Chips.tsx";
-import { useFormContext } from "react-hook-form";
 
 interface StepLevelProps {
-  onNext: () => void;
+  value?: string;
+  subCategory?: string;
+  onValidSubmit: (level: string) => void;
 }
 
 const levelOptions = [
@@ -28,24 +30,16 @@ const levelOptions = [
   },
 ];
 
-const StepLevel = ({ onNext }: StepLevelProps) => {
-  const {
-    watch,
-    setValue,
-    trigger,
-    register,
-    formState: { errors },
-  } = useFormContext();
+export const StepLevel = ({
+  value,
+  subCategory = "",
+  onValidSubmit,
+}: StepLevelProps) => {
+  const [selected, setSelected] = useState(value ?? "");
 
-  const subCategory = watch("subCategory");
-  const selected = watch("level");
-
-  const handleClick = async (value: string) => {
-    setValue("level", value);
-    const isValid = await trigger("level");
-    if (isValid) {
-      onNext();
-    }
+  const handleClick = (val: string) => {
+    setSelected(val);
+    onValidSubmit(val);
   };
 
   return (
@@ -66,19 +60,6 @@ const StepLevel = ({ onNext }: StepLevelProps) => {
           />
         ))}
       </div>
-
-      {/* Hidden input for RHF registration */}
-      <input
-        {...register("level", {
-          required: "난이도를 선택해주세요",
-        })}
-        type="hidden"
-        value={selected || ""}
-      />
-
-      {errors.level && (
-        <p className="text-sm text-red-500">{errors.level.message as string}</p>
-      )}
     </div>
   );
 };

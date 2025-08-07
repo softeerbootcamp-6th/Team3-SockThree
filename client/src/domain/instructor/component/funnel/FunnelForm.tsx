@@ -9,20 +9,55 @@ import StepIntroduction from "@/domain/instructor/component/step/StepIntroductio
 import StepCurriculum from "@/domain/instructor/component/step/StepCurriculum.tsx";
 import StepImageUpload from "@/domain/instructor/component/step/StepImageUpload.tsx";
 
-import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll.ts";
 import * as React from "react";
-import { useCallback } from "react";
+import type { FunnelContext } from "@/domain/instructor/types/funnel";
+import type { StepKey } from "@/domain/instructor/hook/useFunnelState.ts";
 
-interface FunnelFormProps<T> {
-  steps: readonly {
-    key: keyof T;
-    label: string;
-  }[];
-  currentStepIndex: number;
-  goNextStep: (key: keyof T) => void;
+interface FunnelFormProps {
+  context: FunnelContext;
+  curStep: number;
+  stepKeys: readonly StepKey[];
+  handleValidChange: <K extends StepKey>(
+    key: K,
+    value: FunnelContext[K]
+  ) => void;
 }
 
-const stepComponentMap = {
+export const FunnelForm = ({
+  context,
+  curStep,
+  stepKeys,
+  handleValidChange,
+}: FunnelFormProps) => {
+  return (
+    <section className="funnel-form">
+      {stepKeys.map((stepKey, i) => {
+        if (i > curStep) return null;
+
+        return (
+          <StepRenderer
+            key={stepKey}
+            stepKey={stepKey}
+            stepIndex={i}
+            value={context[stepKey]}
+            onValidSubmit={(val) => handleValidChange(stepKey, val)}
+          />
+        );
+      })}
+    </section>
+  );
+};
+
+export default FunnelForm;
+
+type StepProps<K extends StepKey> = {
+  value?: FunnelContext[K];
+  onValidSubmit: (value: FunnelContext[K]) => void;
+};
+
+const stepComponentMap: {
+  [K in StepKey]: React.FC<StepProps<K>>;
+} = {
   category: StepCategory,
   subCategory: StepSubCategory,
   level: StepLevel,
@@ -33,55 +68,21 @@ const stepComponentMap = {
   introduction: StepIntroduction,
   curriculum: StepCurriculum,
   imageUrl: StepImageUpload,
-} as const; // as const로 정확한 타입 추론
+};
 
-// 상위 컴포넌트
-export function FunnelForm<T>({
-  steps,
-  currentStepIndex,
-  goNextStep,
-}: FunnelFormProps<T>) {
-  const { containerRef, stepRef } = useFunnelScroll({
-    stepIndex: currentStepIndex,
-  });
-
-  const onNext = useCallback(
-    (key: keyof T) => () => {
-      goNextStep(key);
-    },
-    [goNextStep]
-  );
-
-  return (
-    <div className="flex w-[71rem] justify-start">
-      <div
-        ref={containerRef}
-        className="scroll-snap-y h-screen snap-mandatory overflow-y-auto scroll-smooth pb-[300px]"
-      >
-        {steps.map((s, i) => {
-          if (i > currentStepIndex) return null;
-          const stepKey = String(s.key) as keyof typeof stepComponentMap;
-          const StepComponent = stepComponentMap[stepKey];
-          if (!StepComponent) return null;
-
-          return (
-            <div
-              key={String(s.key)}
-              id={`step-${String(s.key)}`}
-              ref={
-                i === currentStepIndex
-                  ? (stepRef as React.RefObject<HTMLDivElement>)
-                  : undefined
-              }
-              className="scroll-snap-start mb-5 w-[71rem] scroll-mb-[150px]"
-            >
-              <StepComponent onNext={onNext(s.key)} />
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
+interface StepRendererProps<K extends StepKey = StepKey> {
+  stepKey: K;
+  stepIndex: number;
+  value?: FunnelContext[K];
+  onValidSubmit: (value: FunnelContext[K]) => void;
 }
 
-export default FunnelForm;
+const StepRenderer = <K extends StepKey>({
+  stepKey,
+  value,
+  onValidSubmit,
+}: StepRendererProps<K>) => {
+  const StepComponent = stepComponentMap[stepKey] as React.FC<StepProps<K>>;
+
+  return <StepComponent value={value} onValidSubmit={onValidSubmit} />;
+};

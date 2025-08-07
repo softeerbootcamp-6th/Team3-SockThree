@@ -1,22 +1,22 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface StepImageUploadProps {
-  onNext: () => void;
+  value?: string;
+  onValidSubmit: (imageUrl: string) => void;
 }
 
-const StepImageUpload = ({ onNext }: StepImageUploadProps) => {
-  const [imageUrl, setImageUrl] = useState("");
-  const [previewUrl, setPreviewUrl] = useState("");
-  const [isCompleted, setIsCompleted] = useState(false);
-
-  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+const StepImageUpload = ({ value, onValidSubmit }: StepImageUploadProps) => {
+  const [imageUrl, setImageUrl] = useState(value ?? "");
+  const [previewUrl, setPreviewUrl] = useState(value ?? "");
+  const [isCompleted, setIsCompleted] = useState(!!value);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
-      setImageUrl(`uploaded_${file.name}`);
+      const finalUrl = `uploaded_${file.name}`;
+      setImageUrl(finalUrl);
     }
   };
 
@@ -31,16 +31,12 @@ const StepImageUpload = ({ onNext }: StepImageUploadProps) => {
     setIsCompleted(false);
   };
 
-  // ✅ imageUrl이 유효할 경우 자동 제출
   useEffect(() => {
-    if (!imageUrl) return;
+    if (!imageUrl || isCompleted) return;
 
-    if (debounceRef.current) clearTimeout(debounceRef.current);
-    debounceRef.current = setTimeout(() => {
-      onNext();
+     onValidSubmit(imageUrl);
       setIsCompleted(true);
-    }, 300);
-  }, [imageUrl, onNext]);
+  }, [imageUrl, onValidSubmit, isCompleted]);
 
   return (
     <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
@@ -96,7 +92,7 @@ const StepImageUpload = ({ onNext }: StepImageUploadProps) => {
           </div>
         )}
 
-        {/* ✅ 최종 완료 메시지 */}
+        {/* 최종 완료 메시지 */}
         {isCompleted && (
           <p className="mt-6 text-base font-medium text-blue-600">
             강좌 생성에 필요한 모든 과정을 완료했습니다. <br />

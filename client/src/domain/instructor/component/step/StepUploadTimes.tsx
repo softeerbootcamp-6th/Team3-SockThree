@@ -1,41 +1,36 @@
-import { useFormContext } from "react-hook-form";
-import { useEffect, useState } from "react";
-import { XIcon } from "lucide-react";
-import Chips from "@/shared/components/Chips.tsx";
-import { Button } from "@/shared/shadcn/ui/button.tsx";
-import Select from "@/shared/components/Select.tsx";
+import { useEffect, useState } from 'react';
+import { XIcon } from 'lucide-react';
+import Chips from '@/shared/components/Chips.tsx';
+import { Button } from '@/shared/shadcn/ui/button.tsx';
+import Select from '@/shared/components/Select.tsx';
 
 interface StepUploadTimesProps {
-  onNext: () => void;
+  value?: string[];
+  onValidSubmit: (val: string[]) => void;
 }
 
 const formatHourToKoreanTime = (hour: number): string => {
-  if (hour === 0) return "오전 12시";
+  if (hour === 0) return '오전 12시';
   if (hour < 12) return `오전 ${hour}시`;
-  if (hour === 12) return "오후 12시";
+  if (hour === 12) return '오후 12시';
   return `오후 ${hour - 12}시`;
 };
 
-const DAYS = ["월", "화", "수", "목", "금", "토", "일"];
+const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
 
 const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
   value: i.toString(),
   label: formatHourToKoreanTime(i),
 }));
 
-export default function StepUploadTimes({ onNext }: StepUploadTimesProps) {
-  const {
-    setValue,
-    trigger,
-    register,
-    watch,
-    formState: { errors },
-  } = useFormContext();
-
+export default function StepUploadTimes({
+                                          value,
+                                          onValidSubmit,
+                                        }: StepUploadTimesProps) {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
-  const [selectedHour, setSelectedHour] = useState<string>("20");
-
-  const uploadTimes: string[] = watch("uploadTimes") || [];
+  const [selectedHour, setSelectedHour] = useState<string>('20');
+  const [uploadTimes, setUploadTimes] = useState<string[]>(value ?? []);
+  const [error, setError] = useState<string | null>(null);
 
   const handleAddTime = () => {
     if (!selectedDay || !selectedHour) return;
@@ -43,33 +38,30 @@ export default function StepUploadTimes({ onNext }: StepUploadTimesProps) {
     const newEntry = `${selectedDay}요일 ${timeString}`;
     if (!uploadTimes.includes(newEntry)) {
       const updated = [...uploadTimes, newEntry];
-      setValue("uploadTimes", updated, { shouldValidate: true });
+      setUploadTimes(updated);
     }
   };
 
   const handleRemoveTime = (entry: string) => {
     const updated = uploadTimes.filter((t) => t !== entry);
-    setValue("uploadTimes", updated, { shouldValidate: true });
+    setUploadTimes(updated);
   };
 
-  const handleNext = async () => {
-    const isValid = await trigger("uploadTimes");
-    if (isValid) {
-      onNext();
+  const handleNext = () => {
+    if (uploadTimes.length === 0) {
+      setError('최소 1개 이상 시간을 추가해주세요');
+      return;
     }
+    onValidSubmit(uploadTimes);
   };
 
-  // RHF에 uploadTimes 등록
   useEffect(() => {
-    register("uploadTimes", {
-      validate: (val: string[]) =>
-        val && val.length > 0 ? true : "최소 1개 이상 시간을 추가해주세요",
-    });
-  }, [register]);
+    if (uploadTimes.length > 0) setError(null);
+  }, [uploadTimes]);
 
   return (
     <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
-      <p className="typo-title-5">[subcategory] 강좌 업로드는 언제 하시나요?</p>
+      <p className="typo-title-5">강좌 업로드는 언제 하시나요?</p>
 
       <div className="flex gap-36">
         <div className="flex gap-2">
@@ -120,14 +112,10 @@ export default function StepUploadTimes({ onNext }: StepUploadTimesProps) {
         ))}
       </div>
 
-      {/* 에러 메시지 */}
-      {errors.uploadTimes && (
-        <p className="mt-2 text-sm text-red-500">
-          {errors.uploadTimes.message as string}
-        </p>
+      {error && (
+        <p className="mt-2 text-sm text-red-500">{error}</p>
       )}
 
-      {/* ✅ 업로드 시간이 1개 이상일 때만 표시 */}
       {uploadTimes.length > 0 && (
         <div className="mt-6 flex justify-end">
           <Button

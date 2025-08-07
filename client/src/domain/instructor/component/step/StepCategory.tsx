@@ -1,38 +1,29 @@
-import { useFormContext } from "react-hook-form";
 import Chips from "@/shared/components/Chips.tsx";
+import { useState } from "react";
+
+const options = [
+  "운동",
+  "미술",
+  "재테크",
+  "디지털 정보화",
+  "음악",
+  "생활",
+  "자격증",
+  "기타",
+];
 
 interface StepCategoryProps {
-  onNext: () => void;
+  value?: string;
+  onValidSubmit: (value: string) => void;
 }
 
-const StepCategory = ({ onNext }: StepCategoryProps) => {
-  const options = [
-    "운동",
-    "미술",
-    "재테크",
-    "디지털 정보화",
-    "음악",
-    "생활",
-    "자격증",
-    "기타",
-  ];
-
-  const {
-    register,
-    trigger,
-    formState: { errors },
-    watch,
-    setValue,
-  } = useFormContext();
-
-  const category = watch("category");
+const StepCategory = ({ value, onValidSubmit }: StepCategoryProps) => {
+  const [localValue, setLocalValue] = useState(value ?? "");
 
   const handleClick = (option: string) => {
-    setValue("category", option);
-    trigger("category");
-    onNext();
+    setLocalValue(option);
+    onValidSubmit(option); // 직접 클릭한 값을 넘김
   };
-
   return (
     <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">어떤 강좌를 만들까요?</p>
@@ -42,20 +33,11 @@ const StepCategory = ({ onNext }: StepCategoryProps) => {
             key={option}
             type="field"
             title={option}
-            selected={category === option}
+            selected={localValue === option}
             onClick={() => handleClick(option)}
           />
         ))}
       </div>
-
-      {/* Hidden input for react-hook-form registration */}
-      <input
-        {...register("category", { required: "카테고리를 선택해주세요" })}
-        type="hidden"
-        value={category || ""}
-      />
-
-      {errors.category && <p className="text-sm text-red-500">문제문제</p>}
     </div>
   );
 };

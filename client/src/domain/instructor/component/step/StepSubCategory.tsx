@@ -1,11 +1,13 @@
-import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 import Chips from "@/shared/components/Chips.tsx";
 
 interface StepSubCategoryProps {
-  onNext: () => void;
+  category?: string;
+  value?: string;
+  onValidSubmit: (subCategory: string) => void;
 }
 
-const subCategoryOptions: Record<string, string[]> = {
+const options: Record<string, string[]> = {
   운동: [
     "요가",
     "필라테스",
@@ -19,36 +21,27 @@ const subCategoryOptions: Record<string, string[]> = {
   ],
   미술: ["수채화", "유화", "캘리그라피", "색연필화"],
   음악: ["합창", "오카리나", "우쿨렐레", "통기타"],
-  // 다른 카테고리들...
 };
 
-const StepSubCategory = ({ onNext }: StepSubCategoryProps) => {
-  const {
-    watch,
-    setValue,
-    trigger,
-    register,
-    formState: { errors },
-  } = useFormContext();
+const StepSubCategory = ({
+  category = "운동",
+  value,
+  onValidSubmit,
+}: StepSubCategoryProps) => {
+  const [selected, setSelected] = useState(value ?? "");
 
-  const category = watch("category");
-  const selected = watch("subCategory");
+  const subOptions = options[category] ?? [];
 
-  const options = subCategoryOptions[category] ?? ["직접 입력"];
-
-  const handleClick = async (option: string) => {
-    setValue("subCategory", option);
-    const isValid = await trigger("subCategory");
-    if (isValid) {
-      onNext();
-    }
+  const handleClick = (option: string) => {
+    setSelected(option);
+    onValidSubmit(option);
   };
 
   return (
     <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">어떤 [{category}] 강좌를 만들까요?</p>
       <div className="flex flex-wrap gap-2">
-        {options.map((option) => (
+        {subOptions.map((option) => (
           <Chips
             key={option}
             type="field"
@@ -58,21 +51,6 @@ const StepSubCategory = ({ onNext }: StepSubCategoryProps) => {
           />
         ))}
       </div>
-
-      {/* Hidden input for RHF */}
-      <input
-        {...register("subCategory", {
-          required: "하위 카테고리를 선택해주세요",
-        })}
-        type="hidden"
-        value={selected || ""}
-      />
-
-      {errors.subCategory && (
-        <p className="text-sm text-red-500">
-          {errors.subCategory.message as string}
-        </p>
-      )}
     </div>
   );
 };
