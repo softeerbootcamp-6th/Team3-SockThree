@@ -17,23 +17,22 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Review extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "review_id", nullable = false)
     private Long id;
 
-    @Column(name = "review_content", nullable = false)
+    @Column(nullable = false)
     @Lob
     private String content;
 
-    @Column(name = "review_rating", nullable = false)
+    @Column(nullable = false)
     private Double rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "lecture_id", nullable = false)
+    @JoinColumn(nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(nullable = false)
     private Student student;
 
     @Builder(access = AccessLevel.PRIVATE)
