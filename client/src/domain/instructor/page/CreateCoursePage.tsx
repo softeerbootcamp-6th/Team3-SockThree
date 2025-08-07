@@ -52,8 +52,6 @@ const CreateCoursePage = () => {
     steps.map((s) => s.key)
   );
 
-  console.log(currentIndex, steps.length);
-
   return (
     <div className="flex min-h-screen flex-col pr-[5rem] pl-[10rem]">
       <FormProvider {...methods}>
