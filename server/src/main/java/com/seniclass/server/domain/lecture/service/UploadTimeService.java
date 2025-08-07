@@ -16,7 +16,8 @@ public class UploadTimeService {
 
     @Transactional
     public void createUploadTime(UploadTimeCreateRequest request, Lecture lecture) {
-        UploadTime uploadTime = UploadTime.create(request.dayOfWeek(), request.scheduledAt(), lecture);
+        UploadTime uploadTime =
+                UploadTime.create(request.dayOfWeek(), request.scheduledAt(), lecture);
         uploadTimeRepository.save(uploadTime);
     }
 }

@@ -62,9 +62,11 @@ public class LectureServiceImpl implements LectureService {
 
         LectureResponse savedLecture = LectureResponse.from(lectureRepository.save(lecture));
 
-        request.uploadTimeList().forEach(uploadTime -> {
-            uploadTimeService.createUploadTime(uploadTime, lecture);
-        });
+        request.uploadTimeList()
+                .forEach(
+                        uploadTime -> {
+                            uploadTimeService.createUploadTime(uploadTime, lecture);
+                        });
 
         return savedLecture;
     }
