@@ -1,18 +1,18 @@
 import ExpandSearchBar from "@/domain/student/component/ExpandSearchBar";
-import HoverExpandCourseCardView from "../view/HoverExpandCourseCardView";
-import RecommendedCourseListView from "../view/RecommendedCourseListView";
+import HoverExpandCourseCardView from "@/domain/student/view/HoverExpandCourseCardView";
+import RecommendedCourseListView from "@/domain/student/view/RecommendedCourseListView";
 
-import CheckIcon from "@/assets/icons/default/check.svg?react";
+import RotatedCheckIcon from "@/assets/icons/default/rotated-check.svg?react";
 import Button from "@/shared/components/Button";
 
 const HomePage = () => {
   return (
-    <div className="flex h-full w-full flex-col pt-[4rem] pr-[3.5625rem] pb-[3.75rem] pl-[2.8125rem]">
+    <div className="flex h-full w-full flex-col overflow-y-auto pt-[4rem] pr-[3.5625rem] pb-[3.75rem] pl-[2.8125rem]">
       <div className="flex w-full items-end justify-between pb-[2.6875rem]">
         <div>
           <div className="flex items-center gap-[1.1875rem]">
             <span className="typo-title-0 whitespace-nowrap">마감까지</span>
-            <CheckIcon className="h-[4.0625rem]" />
+            <RotatedCheckIcon className="h-[4.0625rem]" />
           </div>
           <span className="typo-title-0 whitespace-nowrap">
             얼마 남지 않았어요!

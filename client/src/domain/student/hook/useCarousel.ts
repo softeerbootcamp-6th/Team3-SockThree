@@ -65,7 +65,7 @@ const useCarousel = <T>({
     return () => stopAutoSlide();
   }, [startAutoSlide, stopAutoSlide]);
 
-  const offsetY = index * itemHeight * itemsPerPage;
+  const offsetY = index * itemHeight;
 
   return {
     carouselListItems,
