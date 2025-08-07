@@ -16,7 +16,6 @@ import org.hibernate.annotations.OnDeleteAction;
 public class LectureQna extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lecture_question_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,11 +29,10 @@ public class LectureQna extends BaseTimeEntity {
     private Lecture lecture;
 
     @Lob
-    @Column(name = "lecture_qna_question", nullable = false)
+    @Column(nullable = false)
     private String question;
 
     @Lob
-    @Column(name = "lecture_qna_answer")
     private String answer;
 
     @Builder(access = AccessLevel.PRIVATE)

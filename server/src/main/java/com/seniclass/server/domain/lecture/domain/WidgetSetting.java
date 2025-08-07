@@ -17,26 +17,25 @@ import org.hibernate.annotations.OnDeleteAction;
 public class WidgetSetting extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "widget_setting_id", nullable = false)
     private Long id;
 
-    @Column(name = "widget_setting_type", nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private WidgetType widgetType;
 
-    @Column(name = "widget_setting_row", nullable = false)
+    @Column(nullable = false)
     private Integer row;
 
-    @Column(name = "widget_setting_column", nullable = false)
+    @Column(nullable = false)
     private Integer column;
 
-    @Column(name = "widget_setting_width", nullable = false)
+    @Column(nullable = false)
     private Integer width;
 
-    @Column(name = "widget_setting_height", nullable = false)
+    @Column(nullable = false)
     private Integer height;
 
-    @Column(name = "widget_setting_visible", nullable = false)
+    @Column(nullable = false)
     private Boolean visible;
 
     @ManyToOne(fetch = FetchType.LAZY)
