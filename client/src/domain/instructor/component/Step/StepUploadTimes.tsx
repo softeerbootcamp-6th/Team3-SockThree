@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { XIcon } from "lucide-react";
-import Button from "@/shared/component/Button";
-import Chips from "@/shared/components/Chips";
-import Select from "@/shared/component/Select";
+import Button from "@/shared/component/Button.tsx";
+import Chips from "@/shared/components/Chips.tsx";
+import Select from "@/shared/component/Select.tsx";
 
 const formatHourToKoreanTime = (hour: number): string => {
   if (hour === 0) return "오전 12시";
