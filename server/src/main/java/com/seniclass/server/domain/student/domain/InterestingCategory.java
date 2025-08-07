@@ -30,8 +30,7 @@ public class InterestingCategory extends BaseTimeEntity {
         this.subCategory = subCategory;
     }
 
-    public static InterestingCategory createInterestingCategory(
-            Student student, SubCategory subCategory) {
+    public static InterestingCategory create(Student student, SubCategory subCategory) {
         return InterestingCategory.builder().student(student).subCategory(subCategory).build();
     }
 }

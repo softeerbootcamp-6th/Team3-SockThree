@@ -49,7 +49,7 @@ public class Assignment extends BaseTimeEntity {
         this.lecture = lecture;
     }
 
-    public static Assignment createAssignment(
+    public static Assignment create(
             String name,
             String instruction,
             String fileLink,

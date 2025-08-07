@@ -34,7 +34,7 @@ public class AssignmentSubmission extends BaseTimeEntity {
         this.submissionLink = submissionLink;
     }
 
-    public static AssignmentSubmission createAssignmentSubmission(
+    public static AssignmentSubmission create(
             Student student, Assignment assignment, String submissionLink) {
         return AssignmentSubmission.builder()
                 .student(student)

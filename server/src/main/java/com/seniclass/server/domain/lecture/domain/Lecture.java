@@ -85,7 +85,7 @@ public class Lecture extends BaseTimeEntity {
         this.teacher = teacher;
     }
 
-    public static Lecture createLecture(
+    public static Lecture create(
             SubCategory subCategory,
             String name,
             Integer cohort,

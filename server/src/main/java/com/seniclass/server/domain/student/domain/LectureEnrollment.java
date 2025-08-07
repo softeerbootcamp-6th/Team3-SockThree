@@ -34,7 +34,7 @@ public class LectureEnrollment extends BaseTimeEntity {
         this.lecture = lecture;
     }
 
-    public static LectureEnrollment createLectureEnrollment(Student student, Lecture lecture) {
+    public static LectureEnrollment create(Student student, Lecture lecture) {
         return LectureEnrollment.builder().student(student).lecture(lecture).build();
     }
 }

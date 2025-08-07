@@ -56,7 +56,7 @@ public class Video extends BaseTimeEntity {
         this.chapter = chapter;
     }
 
-    public static Video createVideo(
+    public static Video create(
             String name, String uploadPath, LocalDateTime publicationDateTime, Chapter chapter) {
         return Video.builder()
                 .name(name)

@@ -37,7 +37,7 @@ public class UploadTime extends BaseTimeEntity {
         this.lecture = lecture;
     }
 
-    public static UploadTime createUploadTime(DayOfWeek dayOfWeek, LocalTime scheduledAt) {
+    public static UploadTime create(DayOfWeek dayOfWeek, LocalTime scheduledAt) {
         return UploadTime.builder().dayOfWeek(dayOfWeek).scheduledAt(scheduledAt).build();
     }
 }

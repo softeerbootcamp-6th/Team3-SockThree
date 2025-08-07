@@ -34,7 +34,7 @@ public class Student extends User {
         this.gender = gender;
     }
 
-    public static Student createStudent(
+    public static Student create(
             String name, String email, Integer age, Gender gender, String password) {
         return Student.builder()
                 .name(name)

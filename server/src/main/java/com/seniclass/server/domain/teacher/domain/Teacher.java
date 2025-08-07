@@ -43,7 +43,7 @@ public class Teacher extends User {
         this.instruction = instruction;
     }
 
-    public static Teacher createTeacher(
+    public static Teacher create(
             String name,
             String email,
             Integer age,

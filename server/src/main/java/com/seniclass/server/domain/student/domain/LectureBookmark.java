@@ -34,7 +34,7 @@ public class LectureBookmark extends BaseTimeEntity {
         this.lecture = lecture;
     }
 
-    public static LectureBookmark createLectureBookmark(Student student, Lecture lecture) {
+    public static LectureBookmark create(Student student, Lecture lecture) {
         return LectureBookmark.builder().student(student).lecture(lecture).build();
     }
 }

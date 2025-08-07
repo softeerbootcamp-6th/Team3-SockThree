@@ -61,7 +61,7 @@ public class WidgetSetting extends BaseTimeEntity {
         this.lecture = lecture;
     }
 
-    public static WidgetSetting createWidgetSetting(
+    public static WidgetSetting create(
             WidgetType widgetType,
             Integer rowPosition,
             Integer colPosition,
