@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useFunnel } from "@/domain/instructor/hook/useFunnel.ts";
 import { FunnelSideBar } from "@/domain/instructor/component/FunnelSideBar.tsx";
 import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll.ts";
+import CheckIcon from "@/assets/icons/default/rotated-check.svg?react";
+import ProgressBar from "@/shared/components/ProgressBar.tsx";
 
 type Context = {
   category?: string;
@@ -56,19 +58,29 @@ const CreateCoursePage = () => {
     stepIndex: currentIndex,
   });
 
+  console.log(currentIndex, steps.length);
+
   return (
     <div className="flex min-h-screen flex-col pr-[5rem] pl-[10rem]">
       <FormProvider {...methods}>
-        <header className="sticky top-0 z-20 border-gray-200 bg-bg px-10 py-6">
-          <h1 className="text-2xl font-semibold">강좌 만들기</h1>
-          <p className="mt-1 text-sm text-blue-500">
-            모임 개설까지 거의 다 왔어요
-          </p>
-          <div className="mt-4 h-2 overflow-hidden rounded-full bg-gray-100">
-            <div
-              className="h-full bg-blue-500 transition-all"
-              style={{ width: `${(currentIndex / steps.length) * 100}%` }}
-            />
+        <header className="sticky top-0 z-20 flex items-center gap-[2rem] bg-bg px-10 py-[4rem]">
+          <div className="flex items-center gap-2.5">
+            <h1 className="typo-title-0">강좌 만들기</h1>
+            <CheckIcon />
+          </div>
+          <ProgressBar
+            current={currentIndex}
+            max={steps.length}
+            type="percent"
+            size="md"
+          />
+          <div className="flex h-fit items-center gap-2.5 rounded-full bg-gradient-to-r from-[#A0EACF] to-[#7DA7F9] px-2 py-2">
+            <span className="flex h-6 w-6 justify-center rounded-full bg-white text-[#0066FF]">
+              !
+            </span>
+            <span className="typo-label-3 text-white">
+              강좌 개설까지 거의 다 왔어요
+            </span>
           </div>
         </header>
         <main className="flex flex-row gap-7">
