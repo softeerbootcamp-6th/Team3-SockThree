@@ -41,8 +41,6 @@ export function FunnelForm<T>({
   currentStepIndex,
   goNextStep,
 }: FunnelFormProps<T>) {
-  // 타입 명시 제거하고 추론하도록 변경
-
   const { containerRef, stepRef } = useFunnelScroll({
     stepIndex: currentStepIndex,
   });
@@ -55,7 +53,7 @@ export function FunnelForm<T>({
   );
 
   return (
-    <div className="flex justify-center">
+    <div className="flex w-[71rem] justify-start">
       <div
         ref={containerRef}
         className="scroll-snap-y h-screen snap-mandatory overflow-y-auto scroll-smooth pb-[300px]"
@@ -75,7 +73,7 @@ export function FunnelForm<T>({
                   ? (stepRef as React.RefObject<HTMLDivElement>)
                   : undefined
               }
-              className="scroll-snap-start mb-5 scroll-mb-[150px]"
+              className="scroll-snap-start mb-5 w-[71rem] scroll-mb-[150px]"
             >
               <StepComponent onNext={onNext(s.key)} />
             </div>

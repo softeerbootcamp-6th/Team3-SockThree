@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface StepImageUploadProps {
   onNext: () => void;
@@ -7,14 +7,15 @@ interface StepImageUploadProps {
 const StepImageUpload = ({ onNext }: StepImageUploadProps) => {
   const [imageUrl, setImageUrl] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
+  const [isCompleted, setIsCompleted] = useState(false);
+
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // 파일을 URL로 변환하여 미리보기 생성
       const url = URL.createObjectURL(file);
       setPreviewUrl(url);
-      // 실제로는 서버에 업로드하고 URL을 받아와야 하지만, 여기서는 임시로 파일 이름 사용
       setImageUrl(`uploaded_${file.name}`);
     }
   };
@@ -24,47 +25,58 @@ const StepImageUpload = ({ onNext }: StepImageUploadProps) => {
     setPreviewUrl(url);
   };
 
-  const handleSubmit = () => {
-    if (imageUrl) {
-      onNext();
-    }
-  };
-
   const removeImage = () => {
     setImageUrl("");
     setPreviewUrl("");
+    setIsCompleted(false);
   };
 
+  // ✅ imageUrl이 유효할 경우 자동 제출
+  useEffect(() => {
+    if (!imageUrl) return;
+
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      onNext();
+      setIsCompleted(true);
+    }, 300);
+  }, [imageUrl, onNext]);
+
   return (
-    <div className="border- flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">강좌 대표 이미지를 업로드해주세요</p>
+
       <div className="flex flex-col gap-6">
-        {/* 파일 업로드 섹션 */}
-        <div className="flex flex-col gap-4">
-          <label className="font-medium">파일 업로드</label>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-            className="rounded-lg border px-4 py-2"
-          />
-        </div>
+        {!isCompleted && (
+          <>
+            {/* 파일 업로드 */}
+            <div className="flex flex-col gap-4">
+              <label className="font-medium">파일 업로드</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="rounded-lg border px-4 py-2"
+              />
+            </div>
 
-        {/* URL 입력 섹션 */}
-        <div className="flex flex-col gap-4">
-          <label className="font-medium">또는 이미지 URL 입력</label>
-          <div className="flex gap-2">
-            <input
-              type="url"
-              value={imageUrl}
-              onChange={(e) => handleUrlInput(e.target.value)}
-              placeholder="https://example.com/image.jpg"
-              className="flex-1 rounded-lg border px-4 py-2"
-            />
-          </div>
-        </div>
+            {/* URL 입력 */}
+            <div className="flex flex-col gap-4">
+              <label className="font-medium">또는 이미지 URL 입력</label>
+              <div className="flex gap-2">
+                <input
+                  type="url"
+                  value={imageUrl}
+                  onChange={(e) => handleUrlInput(e.target.value)}
+                  placeholder="https://example.com/image.jpg"
+                  className="flex-1 rounded-lg border px-4 py-2"
+                />
+              </div>
+            </div>
+          </>
+        )}
 
-        {/* 이미지 미리보기 */}
+        {/* 미리보기 */}
         {previewUrl && (
           <div className="flex flex-col gap-2">
             <label className="font-medium">미리보기</label>
@@ -84,13 +96,13 @@ const StepImageUpload = ({ onNext }: StepImageUploadProps) => {
           </div>
         )}
 
-        <button
-          onClick={handleSubmit}
-          disabled={!imageUrl}
-          className="mt-4 rounded-lg bg-blue-500 px-6 py-3 text-white disabled:bg-gray-300"
-        >
-          강좌 생성 완료
-        </button>
+        {/* ✅ 최종 완료 메시지 */}
+        {isCompleted && (
+          <p className="mt-6 text-base font-medium text-blue-600">
+            강좌 생성에 필요한 모든 과정을 완료했습니다. <br />
+            <strong>사이드바에서 "강좌 생성하기" 버튼</strong>을 눌러주세요.
+          </p>
+        )}
       </div>
     </div>
   );

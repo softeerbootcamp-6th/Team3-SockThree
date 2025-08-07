@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface StepIntroductionProps {
@@ -10,30 +10,61 @@ const StepIntroduction = ({ onNext }: StepIntroductionProps) => {
   const [description, setDescription] = useState("");
   const [simpleDescription, setSimpleDescription] = useState("");
 
-  const { setValue, trigger } = useFormContext();
+  const {
+    setValue,
+    trigger,
+    register,
+    formState: { errors },
+  } = useFormContext();
 
-  const handleSubmit = () => {
-    setValue("introduction", {
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const updateAndValidate = () => {
+    const trimmed = {
       name: name.trim(),
       description: description.trim(),
       simpleDescription: simpleDescription.trim(),
-    });
+    };
 
-    // 유효성 검사 후 다음 단계로 이동
-    trigger("introduction").then((isValid) => {
+    const isAllFilled = Object.values(trimmed).every((v) => v.length > 0);
+    if (!isAllFilled) return;
+
+    setValue("introduction", trimmed, { shouldValidate: true });
+
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(async () => {
+      const isValid = await trigger("introduction");
       if (isValid) {
         onNext();
       }
-    });
+    }, 300);
   };
 
-  const isFormValid =
-    name.trim() && description.trim() && simpleDescription.trim();
+  useEffect(() => {
+    updateAndValidate();
+  }, [name, description, simpleDescription]);
+
+  useEffect(() => {
+    register("introduction", {
+      validate: (value) => {
+        if (
+          !value?.name?.trim() ||
+          !value?.simpleDescription?.trim() ||
+          !value?.description?.trim()
+        ) {
+          return "모든 항목을 입력해주세요";
+        }
+        return true;
+      },
+    });
+  }, [register]);
 
   return (
-    <div className="border- flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">강좌를 소개해주세요</p>
+
       <div className="flex flex-col gap-6">
+        {/* 강좌명 */}
         <div className="flex flex-col gap-2">
           <label className="font-medium">강좌명</label>
           <input
@@ -47,6 +78,7 @@ const StepIntroduction = ({ onNext }: StepIntroductionProps) => {
           <span className="text-sm text-gray-500">{name.length}/50</span>
         </div>
 
+        {/* 간단한 설명 */}
         <div className="flex flex-col gap-2">
           <label className="font-medium">간단한 설명</label>
           <input
@@ -62,6 +94,7 @@ const StepIntroduction = ({ onNext }: StepIntroductionProps) => {
           </span>
         </div>
 
+        {/* 상세 설명 */}
         <div className="flex flex-col gap-2">
           <label className="font-medium">상세 설명</label>
           <textarea
@@ -76,13 +109,12 @@ const StepIntroduction = ({ onNext }: StepIntroductionProps) => {
           </span>
         </div>
 
-        <button
-          onClick={handleSubmit}
-          disabled={!isFormValid}
-          className="mt-4 rounded-lg bg-blue-500 px-6 py-3 text-white disabled:bg-gray-300"
-        >
-          next
-        </button>
+        {/* 에러 메시지 */}
+        {errors.introduction && (
+          <p className="text-sm text-red-500">
+            {errors.introduction.message as string}
+          </p>
+        )}
       </div>
     </div>
   );

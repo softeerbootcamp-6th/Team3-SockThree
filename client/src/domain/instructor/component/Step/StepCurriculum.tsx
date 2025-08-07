@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 interface StepCurriculumProps {
@@ -8,29 +8,51 @@ interface StepCurriculumProps {
 const StepCurriculum = ({ onNext }: StepCurriculumProps) => {
   const [curriculum, setCurriculum] = useState("");
 
-  const { setValue, trigger } = useFormContext();
+  const {
+    setValue,
+    trigger,
+    register,
+    formState: { errors },
+  } = useFormContext();
 
-  const handleSubmit = () => {
-    setValue("curriculum", curriculum.trim());
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // 유효성 검사 후 다음 단계로 이동
-    trigger("curriculum").then((isValid) => {
+  const updateAndValidate = () => {
+    const trimmed = curriculum.trim();
+    if (!trimmed) return;
+
+    setValue("curriculum", trimmed, { shouldValidate: true });
+
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(async () => {
+      const isValid = await trigger("curriculum");
       if (isValid) {
         onNext();
       }
-    });
+    }, 300);
   };
 
+  useEffect(() => {
+    updateAndValidate();
+  }, [curriculum]);
+
+  useEffect(() => {
+    register("curriculum", {
+      required: "커리큘럼을 작성해주세요",
+    });
+  }, [register]);
+
   return (
-    <div className="border- flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">강좌 커리큘럼을 작성해주세요</p>
+
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <label className="font-medium">커리큘럼</label>
           <textarea
             value={curriculum}
             onChange={(e) => setCurriculum(e.target.value)}
-            placeholder="강좌의 커리큘럼을 상세히 작성해주세요&#10;예:&#10;1주차: 기초 이론 학습&#10;2주차: 실습 과정&#10;3주차: 프로젝트 진행"
+            placeholder={`강좌의 커리큘럼을 상세히 작성해주세요\n예:\n1주차: 기초 이론 학습\n2주차: 실습 과정\n3주차: 프로젝트 진행`}
             className="resize-vertical min-h-40 rounded-lg border px-4 py-3"
             maxLength={1000}
           />
@@ -39,13 +61,11 @@ const StepCurriculum = ({ onNext }: StepCurriculumProps) => {
           </span>
         </div>
 
-        <button
-          onClick={handleSubmit}
-          disabled={!curriculum.trim()}
-          className="mt-4 rounded-lg bg-blue-500 px-6 py-3 text-white disabled:bg-gray-300"
-        >
-          다음 단계로
-        </button>
+        {errors.curriculum && (
+          <p className="text-sm text-red-500">
+            {errors.curriculum.message as string}
+          </p>
+        )}
       </div>
     </div>
   );

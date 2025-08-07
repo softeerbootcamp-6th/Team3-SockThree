@@ -1,5 +1,5 @@
-import Chips from "@/shared/components/Chips.tsx";
 import { useFormContext } from "react-hook-form";
+import Chips from "@/shared/components/Chips.tsx";
 
 interface StepSubCategoryProps {
   onNext: () => void;
@@ -19,7 +19,7 @@ const subCategoryOptions: Record<string, string[]> = {
   ],
   미술: ["수채화", "유화", "캘리그라피", "색연필화"],
   음악: ["합창", "오카리나", "우쿨렐레", "통기타"],
-  // ...카테고리별 하위 항목 추가 가능
+  // 다른 카테고리들...
 };
 
 const StepSubCategory = ({ onNext }: StepSubCategoryProps) => {
@@ -27,19 +27,17 @@ const StepSubCategory = ({ onNext }: StepSubCategoryProps) => {
     watch,
     setValue,
     trigger,
+    register,
     formState: { errors },
   } = useFormContext();
 
-  const category = watch("category"); // 상위 단계에서 선택된 값
+  const category = watch("category");
   const selected = watch("subCategory");
 
   const options = subCategoryOptions[category] ?? ["직접 입력"];
 
-  const handleClick = (value: string) => {
-    setValue("subCategory", value);
-  };
-
-  const handleNext = async () => {
+  const handleClick = async (option: string) => {
+    setValue("subCategory", option);
     const isValid = await trigger("subCategory");
     if (isValid) {
       onNext();
@@ -61,21 +59,20 @@ const StepSubCategory = ({ onNext }: StepSubCategoryProps) => {
         ))}
       </div>
 
+      {/* Hidden input for RHF */}
+      <input
+        {...register("subCategory", {
+          required: "하위 카테고리를 선택해주세요",
+        })}
+        type="hidden"
+        value={selected || ""}
+      />
+
       {errors.subCategory && (
         <p className="text-sm text-red-500">
           {errors.subCategory.message as string}
         </p>
       )}
-
-      <div className="mt-6 flex justify-end">
-        <button
-          type="button"
-          className="rounded bg-blue-500 px-4 py-2 text-white"
-          onClick={handleNext}
-        >
-          다음
-        </button>
-      </div>
     </div>
   );
 };

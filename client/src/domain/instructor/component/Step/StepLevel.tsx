@@ -33,28 +33,27 @@ const StepLevel = ({ onNext }: StepLevelProps) => {
     watch,
     setValue,
     trigger,
+    register,
     formState: { errors },
   } = useFormContext();
 
-  const subCategory = watch("subCategory"); // 상위 단계에서 선택된 값
+  const subCategory = watch("subCategory");
   const selected = watch("level");
 
-  const handleClick = (value: string) => {
+  const handleClick = async (value: string) => {
     setValue("level", value);
-  };
-
-  const handleNext = async () => {
-    const isValid = await trigger("subCategory");
+    const isValid = await trigger("level");
     if (isValid) {
       onNext();
     }
   };
 
   return (
-    <div className="border- flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">
         [{subCategory}] 강좌의 난이도를 선택해주세요
       </p>
+
       <div className="flex flex-wrap gap-4">
         {levelOptions.map(({ title, description }) => (
           <Chips
@@ -67,21 +66,19 @@ const StepLevel = ({ onNext }: StepLevelProps) => {
           />
         ))}
       </div>
-      {errors.subCategory && (
-        <p className="text-sm text-red-500">
-          {errors.subCategory.message as string}
-        </p>
-      )}
 
-      <div className="mt-6 flex justify-end">
-        <button
-          type="button"
-          className="rounded bg-blue-500 px-4 py-2 text-white"
-          onClick={handleNext}
-        >
-          다음
-        </button>
-      </div>
+      {/* Hidden input for RHF registration */}
+      <input
+        {...register("level", {
+          required: "난이도를 선택해주세요",
+        })}
+        type="hidden"
+        value={selected || ""}
+      />
+
+      {errors.level && (
+        <p className="text-sm text-red-500">{errors.level.message as string}</p>
+      )}
     </div>
   );
 };
