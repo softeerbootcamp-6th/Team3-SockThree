@@ -12,6 +12,7 @@ import StepImageUpload from "@/domain/instructor/component/step/StepImageUpload.
 import * as React from "react";
 import type { FunnelContext } from "@/domain/instructor/types/funnel";
 import type { StepKey } from "@/domain/instructor/hook/useFunnelState.ts";
+import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll.ts";
 
 interface FunnelFormProps {
   context: FunnelContext;
@@ -29,12 +30,19 @@ export const FunnelForm = ({
   stepKeys,
   handleValidChange,
 }: FunnelFormProps) => {
+  const { containerRef, stepRef } = useFunnelScroll({
+    stepIndex: curStep,
+  });
   return (
-    <section className="funnel-form">
+    <div
+      ref={containerRef}
+      className="scroll-snap-y h-screen snap-mandatory overflow-y-auto scroll-smooth pb-[300px]"
+    >
       {stepKeys.map((stepKey, i) => {
         if (i > curStep) return null;
 
         return (
+          <div ref={i === curStep ? stepRef : undefined} key={stepKey} className="scroll-snap-start mb-5 w-[71rem] scroll-mb-[150px]">
           <StepRenderer
             key={stepKey}
             stepKey={stepKey}
@@ -42,9 +50,10 @@ export const FunnelForm = ({
             value={context[stepKey]}
             onValidSubmit={(val) => handleValidChange(stepKey, val)}
           />
+          </div>
         );
       })}
-    </section>
+    </div>
   );
 };
 
@@ -75,6 +84,7 @@ interface StepRendererProps<K extends StepKey = StepKey> {
   stepIndex: number;
   value?: FunnelContext[K];
   onValidSubmit: (value: FunnelContext[K]) => void;
+  ref?: React.RefObject<HTMLElement | null> | null;
 }
 
 const StepRenderer = <K extends StepKey>({

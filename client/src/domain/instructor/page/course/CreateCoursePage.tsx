@@ -18,7 +18,6 @@ const CreateCoursePage = () => {
             stepKeys={stepKeys}
             handleValidChange={handleValidChange}
           />
-          {/*step key만 변경하도록 수정*/}
           <FunnelSideBar stepKeys={stepKeys} curStep={curStep}
             funnelState={funnelState} isStepValid={isStepValid}
           />
