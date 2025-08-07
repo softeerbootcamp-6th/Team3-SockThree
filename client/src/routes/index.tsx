@@ -2,7 +2,7 @@ import StudentLayout from "@/domain/student/layout/StudentLayout";
 import InstructorLayout from "@/domain/instructor/layout/InstructorLayout";
 import NoNavbarLayout from "@/shared/layout/NoNavbarLayout";
 
-import { StudentHomePage, CourseSearchPage } from "@/domain/student/page";
+import * as S from "@/domain/student/page";
 import { InstructorHomePage, CourseCreatePage } from "@/domain/instructor/page";
 
 import { Route, Routes } from "react-router";
@@ -14,13 +14,19 @@ const Router = () => {
     <Routes>
       {/* 시니어 (학생) */}
       <Route path="/student">
-        <Route element={<NoNavbarLayout />}>
-          <Route path="course-search" element={<CourseSearchPage />} />
-        </Route>
+        <Route element={<NoNavbarLayout />}></Route>
 
         <Route element={<StudentLayout />}>
-          <Route path="home" element={<StudentHomePage />} />
-          <Route path="course" element={<StudentHomePage />} />
+          <Route path="home" element={<S.HomePage />} />
+
+          <Route path="mypage">
+            <Route path="" element={<S.HomePage />} />
+            <Route path="heart" element={<S.SearchResultPage />} />
+          </Route>
+          <Route path="course">
+            <Route path="search" element={<S.SearchResultPage />} />
+            <Route path="course" element={<S.HomePage />} />
+          </Route>
         </Route>
       </Route>
 
@@ -35,7 +41,7 @@ const Router = () => {
 
       {/* 초기 진입 시 학생 페이지 기본 - 추후 수정 */}
       <Route path="/" element={<StudentLayout />}>
-        <Route index element={<StudentHomePage />} />
+        <Route index element={<S.HomePage />} />
       </Route>
     </Routes>
   );

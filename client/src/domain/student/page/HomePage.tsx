@@ -1,7 +1,7 @@
 import HoverExpandCourseCardView from "../view/HoverExpandCourseCardView";
 import RecommendedCourseListView from "../view/RecommendedCourseListView";
 
-const StudentHomePage = () => {
+const HomePage = () => {
   return (
     <div className="w-full pt-[4rem] pl-[2.8125rem]">
       <div className="flex w-full items-center justify-between">
@@ -17,4 +17,4 @@ const StudentHomePage = () => {
   );
 };
 
-export default StudentHomePage;
+export default HomePage;
