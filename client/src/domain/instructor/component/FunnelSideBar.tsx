@@ -38,7 +38,7 @@ export function FunnelSideBar<T>({
   });
 
   return (
-    <aside className="sticky top-0 flex h-[50rem] w-[19rem] flex-col justify-between rounded-[var(--radius-20)] bg-white p-[1.7rem]">
+    <aside className="sticky top-[8.5rem] flex h-[50rem] w-[19rem] flex-col justify-between self-start rounded-[var(--radius-20)] bg-white p-[1.7rem]">
       <ul className="space-y-2">
         {stepRenderData.map((step) => (
           <li key={step.key as string}>
