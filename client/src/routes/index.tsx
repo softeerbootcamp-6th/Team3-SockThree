@@ -24,13 +24,13 @@ const Router = () => {
           <Route path="home" element={<S.HomePage />} />
 
           <Route path="mypage">
-            <Route path="" element={<S.HomePage />} />
-            <Route path="heart" element={<S.SearchResultPage />} />
+            <Route path="" element={<S.MyPage />} />
+            <Route path="heart" element={<S.HeartPage />} />
+            <Route path="my-course" element={<S.MyCoursePage />} />
           </Route>
 
           <Route path="course">
             <Route path="search" element={<S.SearchResultPage />} />
-            <Route path="course" element={<S.HomePage />} />
           </Route>
         </Route>
       </Route>
