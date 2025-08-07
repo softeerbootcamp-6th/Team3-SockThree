@@ -11,6 +11,7 @@ import StepImageUpload from "@/domain/instructor/component/Step/StepImageUpload.
 
 import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll.ts";
 import * as React from "react";
+import { useCallback } from "react";
 
 interface FunnelFormProps<T> {
   steps: readonly {
@@ -21,6 +22,19 @@ interface FunnelFormProps<T> {
   goNextStep: (key: keyof T) => void;
 }
 
+const stepComponentMap = {
+  category: StepCategory,
+  subCategory: StepSubCategory,
+  level: StepLevel,
+  duration: StepDateRange,
+  maxHeadCount: StepMaxHeadCount,
+  uploadTimes: StepUploadTimes,
+  price: StepPrice,
+  introduction: StepIntroduction,
+  curriculum: StepCurriculum,
+  imageUrl: StepImageUpload,
+} as const; // as const로 정확한 타입 추론
+
 // 상위 컴포넌트
 export function FunnelForm<T>({
   steps,
@@ -28,22 +42,17 @@ export function FunnelForm<T>({
   goNextStep,
 }: FunnelFormProps<T>) {
   // 타입 명시 제거하고 추론하도록 변경
-  const stepComponentMap = {
-    category: StepCategory,
-    subCategory: StepSubCategory,
-    level: StepLevel,
-    duration: StepDateRange,
-    maxHeadCount: StepMaxHeadCount,
-    uploadTimes: StepUploadTimes,
-    price: StepPrice,
-    introduction: StepIntroduction,
-    curriculum: StepCurriculum,
-    imageUrl: StepImageUpload,
-  } as const; // as const로 정확한 타입 추론
 
   const { containerRef, stepRef } = useFunnelScroll({
     stepIndex: currentStepIndex,
   });
+
+  const onNext = useCallback(
+    (key: keyof T) => () => {
+      goNextStep(key);
+    },
+    [goNextStep]
+  );
 
   return (
     <div className="flex justify-center">
@@ -55,12 +64,7 @@ export function FunnelForm<T>({
           if (i > currentStepIndex) return null;
           const stepKey = String(s.key) as keyof typeof stepComponentMap;
           const StepComponent = stepComponentMap[stepKey];
-
-          // StepComponent가 존재하는지 체크
-          if (!StepComponent) {
-            console.warn(`Step component not found for key: ${stepKey}`);
-            return null;
-          }
+          if (!StepComponent) return null;
 
           return (
             <div
@@ -73,7 +77,7 @@ export function FunnelForm<T>({
               }
               className="scroll-snap-start mb-5 scroll-mb-[150px]"
             >
-              <StepComponent onNext={() => goNextStep(s.key)} />
+              <StepComponent onNext={onNext(s.key)} />
             </div>
           );
         })}

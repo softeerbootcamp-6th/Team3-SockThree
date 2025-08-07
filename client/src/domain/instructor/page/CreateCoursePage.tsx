@@ -25,7 +25,8 @@ const CreateCoursePage = () => {
     mode: "onChange",
   });
 
-  const { goNextStep, currentIndex } = useFunnel(steps.map((s) => s.key));
+  const stepKeys = steps.map((s) => s.key);
+  const { goNextStep, currentIndex } = useFunnel(stepKeys);
 
   return (
     <FormProvider {...methods}>
