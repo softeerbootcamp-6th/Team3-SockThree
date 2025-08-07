@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { XIcon } from "lucide-react";
-import Button from "@/shared/component/Button.tsx";
 import Chips from "@/shared/components/Chips.tsx";
-import Select from "@/shared/component/Select.tsx";
+import { Button } from "@/shared/shadcn/ui/button.tsx";
+import Select from "@/shared/components/Select.tsx";
 
 const formatHourToKoreanTime = (hour: number): string => {
   if (hour === 0) return "오전 12시";
@@ -19,11 +19,7 @@ const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
   label: formatHourToKoreanTime(i),
 }));
 
-interface StepUploadTimesProps {
-  onNext: () => void;
-}
-
-export default function StepUploadTimes({ onNext }: StepUploadTimesProps) {
+export default function StepUploadTimes() {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [uploadTimes, setUploadTimes] = useState<string[]>([]);
   const [selectedHour, setSelectedHour] = useState<string>("20");
