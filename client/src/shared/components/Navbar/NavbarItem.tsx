@@ -1,7 +1,8 @@
 import { Link } from "react-router";
 
 interface NavbarItemProps {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  icon?: React.FC<React.SVGProps<SVGSVGElement>>;
+  imgUrl?: string;
   label: string;
   routePath: string;
   isSelected?: boolean;
@@ -10,6 +11,7 @@ interface NavbarItemProps {
 
 const NavbarItem = ({
   icon: Icon,
+  imgUrl,
   label,
   routePath,
   isSelected,
@@ -26,11 +28,20 @@ const NavbarItem = ({
             isSelected ? "bg-white" : "bg-transparent"
           }`}
         >
-          <Icon
-            className={`h-[2rem] transition-colors duration-300 ${
-              isSelected ? "text-black" : "text-gray-500"
-            }`}
-          />
+          {Icon && (
+            <Icon
+              className={`h-[2rem] stroke-2 transition-colors duration-300 ${
+                isSelected ? "text-black" : "text-gray-500"
+              }`}
+            />
+          )}
+          {imgUrl && (
+            <img
+              src={imgUrl}
+              alt="Profile"
+              className="h-[2.75rem] w-[2.75rem] rounded-full object-cover"
+            />
+          )}
         </div>
 
         <span

@@ -100,13 +100,15 @@
 
 /* like reset.css */
 @layer base {
+  html,
   body {
     font-family: var(--font-pretendard);
-    background-color: var(--color-bg);
     background-color: var(--color-bg);
   }
   html {
     scroll-behavior: smooth;
+    height: 100%;
+    width: 100%;
   }
 }
 
@@ -130,6 +132,9 @@
   }
   .typo-title-5 {
     @apply text-[1.5rem] leading-none font-bold;
+  }
+  .typo-title-6 {
+    @apply text-[1rem] leading-none font-bold;
   }
 
   /* Body */

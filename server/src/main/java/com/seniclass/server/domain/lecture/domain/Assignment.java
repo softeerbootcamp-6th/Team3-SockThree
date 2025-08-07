@@ -17,20 +17,17 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Assignment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "assignment_id", nullable = false)
     private Long id;
 
-    @Column(name = "assignment_name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "assignment_instruction", nullable = false)
     @Lob
+    @Column(nullable = false)
     private String instruction;
 
-    @Column(name = "assignment_file_link")
     private String fileLink;
 
-    @Column(name = "assignment_due_date_time")
     private LocalDateTime dueDateTime;
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -21,6 +21,12 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public RegisterResponse registerStudent(@Valid @RequestBody StudentRegisterRequest request) {
         return authService.registerStudent(request);
+    }
+
+    @PostMapping("/register/teacher")
+    @ResponseStatus(HttpStatus.CREATED)
+    public RegisterResponse registerTeacher(@Valid @RequestBody TeacherRegisterRequest request) {
+        return authService.registerTeacher(request);
     }
 
     @PostMapping("/login")

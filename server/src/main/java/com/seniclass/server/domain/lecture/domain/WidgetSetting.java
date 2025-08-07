@@ -17,26 +17,25 @@ import org.hibernate.annotations.OnDeleteAction;
 public class WidgetSetting extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "widget_setting_id", nullable = false)
     private Long id;
 
-    @Column(name = "widget_setting_type", nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private WidgetType widgetType;
 
-    @Column(name = "widget_setting_row", nullable = false)
-    private Integer row;
+    @Column(nullable = false)
+    private Integer rowPosition;
 
-    @Column(name = "widget_setting_column", nullable = false)
-    private Integer column;
+    @Column(nullable = false)
+    private Integer colPosition;
 
-    @Column(name = "widget_setting_width", nullable = false)
+    @Column(nullable = false)
     private Integer width;
 
-    @Column(name = "widget_setting_height", nullable = false)
+    @Column(nullable = false)
     private Integer height;
 
-    @Column(name = "widget_setting_visible", nullable = false)
+    @Column(nullable = false)
     private Boolean visible;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -47,15 +46,15 @@ public class WidgetSetting extends BaseTimeEntity {
     @Builder(access = AccessLevel.PRIVATE)
     private WidgetSetting(
             WidgetType widgetType,
-            Integer row,
-            Integer column,
+            Integer rowPosition,
+            Integer colPosition,
             Integer width,
             Integer height,
             Boolean visible,
             Lecture lecture) {
         this.widgetType = widgetType;
-        this.row = row;
-        this.column = column;
+        this.rowPosition = rowPosition;
+        this.colPosition = colPosition;
         this.width = width;
         this.height = height;
         this.visible = visible;
@@ -64,18 +63,20 @@ public class WidgetSetting extends BaseTimeEntity {
 
     public static WidgetSetting createWidgetSetting(
             WidgetType widgetType,
-            Integer row,
-            Integer column,
+            Integer rowPosition,
+            Integer colPosition,
             Integer width,
             Integer height,
-            Boolean visible) {
+            Boolean visible,
+            Lecture lecture) {
         return WidgetSetting.builder()
                 .widgetType(widgetType)
-                .row(row)
-                .column(column)
+                .rowPosition(rowPosition)
+                .colPosition(colPosition)
                 .width(width)
                 .height(height)
                 .visible(visible)
+                .lecture(lecture)
                 .build();
     }
 }

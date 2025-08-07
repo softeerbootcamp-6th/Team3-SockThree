@@ -18,22 +18,21 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Video extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "video_id", nullable = false)
+    @Column(nullable = false)
     private Long id;
 
-    @Column(name = "video_name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "video_upload_path", nullable = false)
+    @Column(nullable = false)
     private String uploadPath;
 
-    @Column(name = "video_streaming_path")
     private String streamingPath;
 
-    @Column(name = "video_publication_date_time", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime publicationDateTime;
 
-    @Column(name = "video_streamable", nullable = false)
+    @Column(nullable = false)
     private Boolean streamable;
 
     @ManyToOne(fetch = FetchType.LAZY)
