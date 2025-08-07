@@ -127,6 +127,9 @@
   .typo-title-5 {
     @apply text-[1.5rem] leading-none font-bold;
   }
+  .typo-title-6 {
+    @apply text-[1rem] leading-none font-bold;
+  }
 
   /* Body */
   .typo-body-0 {
