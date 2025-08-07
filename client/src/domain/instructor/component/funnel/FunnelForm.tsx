@@ -42,7 +42,7 @@ export const FunnelForm = ({
         if (i > curStep) return null;
 
         return (
-          <div ref={i === curStep ? stepRef : undefined} key={stepKey} className="scroll-snap-start mb-5 w-[71rem] scroll-mb-[150px]">
+          <div id={`step-${String(stepKey)}`} ref={i === curStep ? stepRef : undefined} key={stepKey} className="scroll-snap-start mb-5 w-[71rem] scroll-mb-[150px]">
           <StepRenderer
             key={stepKey}
             stepKey={stepKey}
