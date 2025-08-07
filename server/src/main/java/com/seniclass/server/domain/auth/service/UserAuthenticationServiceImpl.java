@@ -85,7 +85,6 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 
         @Override
         public String getId() {
-            // Prefix role to ID for compatibility, e.g., "STUDENT_1"
             return user.getRole().name() + "_" + user.getId();
         }
 

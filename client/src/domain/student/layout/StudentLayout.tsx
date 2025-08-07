@@ -1,12 +1,11 @@
 import Navbar from "@/shared/components/Navbar/Navbar";
-import { Outlet } from "react-router";
+import NavbarItem from "@/shared/components/Navbar/NavbarItem";
 
 import HomeIcon from "@/assets/icons/default/home.svg?react";
 import SearchIcon from "@/assets/icons/default/search.svg?react";
 
 import { useState } from "react";
-import NavbarItem from "@/shared/components/Navbar/NavbarItem";
-
+import { Outlet } from "react-router";
 import { useLocation } from "react-router";
 import { fakerKO as faker } from "@faker-js/faker";
 

@@ -20,12 +20,12 @@ public class AuthContext {
         return (AuthenticatedUser) request.getAttribute(CURRENT_USER_ATTRIBUTE);
     }
 
-    public static String getCurrentUserId() {
+    public static Long getCurrentUserId() {
         HttpServletRequest request = getCurrentRequest();
         if (request == null) {
             return null;
         }
-        return (String) request.getAttribute(USER_ID_ATTRIBUTE);
+        return (Long) request.getAttribute(USER_ID_ATTRIBUTE);
     }
 
     public static UserRole getCurrentUserRole() {
