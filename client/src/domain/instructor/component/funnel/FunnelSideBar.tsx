@@ -21,7 +21,7 @@ export function FunnelSideBar<T>({
   const stepRenderData = steps.map((step, index) => {
     const value = values?.[step.key as keyof Context];
     const error = formState.errors?.[step.key as keyof Context];
-    const isRendered = index < currentStepIndex;
+    const isRendered = index < currentStepIndex && value !== undefined;
     const isError = isRendered && !!error;
 
     return {
@@ -50,10 +50,8 @@ export function FunnelSideBar<T>({
                   <CheckIcon className={step.iconColor} />
                   <span>{step.label}</span>
                 </span>
-                <span className="typo-body-4">
-                  {typeof step.curState === "object" && step.curState !== null
-                    ? JSON.stringify(step.curState)
-                    : String(step.curState || "")}
+                <span className="text-gray-500">
+                  {step.curState ? "완료" : ""}
                 </span>
               </div>
             </a>
