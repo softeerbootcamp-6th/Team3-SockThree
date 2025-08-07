@@ -3,6 +3,7 @@ package com.seniclass.server.domain.lecture.domain;
 import com.seniclass.server.domain.category.domain.SubCategory;
 import com.seniclass.server.domain.common.model.BaseTimeEntity;
 import com.seniclass.server.domain.lecture.enums.Level;
+import com.seniclass.server.domain.teacher.domain.Teacher;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
 import java.time.LocalDate;
@@ -10,6 +11,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Getter
@@ -17,7 +20,6 @@ import lombok.NoArgsConstructor;
 public class Lecture extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lecture_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -53,6 +55,11 @@ public class Lecture extends BaseTimeEntity {
     @Column(name = "lecture_description", nullable = false)
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id", nullable = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Teacher teacher;
+
     @Builder(access = AccessLevel.PRIVATE)
     private Lecture(
             SubCategory subCategory,
@@ -64,7 +71,8 @@ public class Lecture extends BaseTimeEntity {
             Integer maxStudent,
             Integer fee,
             String instruction,
-            String description) {
+            String description,
+            Teacher teacher) {
         this.subCategory = subCategory;
         this.name = name;
         this.cohort = cohort;
@@ -75,6 +83,7 @@ public class Lecture extends BaseTimeEntity {
         this.fee = fee;
         this.instruction = instruction;
         this.description = description;
+        this.teacher = teacher;
     }
 
     public static Lecture createLecture(
@@ -87,7 +96,8 @@ public class Lecture extends BaseTimeEntity {
             Integer maxStudent,
             Integer fee,
             String instruction,
-            String description) {
+            String description,
+            Teacher teacher) {
         return Lecture.builder()
                 .subCategory(subCategory)
                 .name(name)
@@ -99,6 +109,7 @@ public class Lecture extends BaseTimeEntity {
                 .fee(fee)
                 .instruction(instruction)
                 .description(description)
+                .teacher(teacher)
                 .build();
     }
 
