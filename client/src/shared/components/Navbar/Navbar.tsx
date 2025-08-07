@@ -8,7 +8,7 @@ interface NavbarProps {
 
 const Navbar = ({ userImg, children }: NavbarProps) => {
   return (
-    <aside className="ml-[2.625rem] flex h-screen w-[6.8125rem] flex-col items-center justify-between bg-transparent pt-[4.5625rem] pb-[5.9431rem]">
+    <aside className="sticky top-0 ml-[2.625rem] flex h-screen w-[6.8125rem] flex-col items-center justify-between bg-transparent pt-[4.5625rem] pb-[5.9431rem]">
       {/* 로고 */}
 
       <div className="flex flex-col items-center justify-between gap-[2.25rem]">

@@ -42,7 +42,9 @@ const StudentLayout = () => {
   return (
     <div className="flex flex-row justify-between">
       <Navbar>{navbarItems}</Navbar>
-      <Outlet />
+      <div className="flex w-full flex-col overflow-y-auto">
+        <Outlet />
+      </div>
     </div>
   );
 };
