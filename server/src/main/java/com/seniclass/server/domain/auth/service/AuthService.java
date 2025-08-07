@@ -122,7 +122,7 @@ public class AuthService {
                         request.age(),
                         request.gender(),
                         encodedPassword,
-                        request.password());
+                        request.instruction());
 
         for (CareerRegisterRequest registerRequest : request.careerList()) {
             careerService.createCareer(registerRequest, savedTeacher);
