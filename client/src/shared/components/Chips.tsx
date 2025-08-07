@@ -3,11 +3,11 @@ import * as React from "react";
 
 const chipsVariant = tv({
   slots: {
-    borderBase: "flex items-center justify-center bg-white cursor-pointer",
+    borderBase: "flex items-center justify-center cursor-pointer",
     border:
       "p-px bg-gray-400 text-gray-600 " +
       "transition-all hover:translate-y-[-12px] hover:shadow-md",
-    base: "flex justify-center items-start bg-white",
+    base: "flex justify-center items-start",
     textContainer:
       "flex flex-col items-start justify-start gap-[2.5rem] text-gray-600",
     title: "",
@@ -44,9 +44,20 @@ const chipsVariant = tv({
         description: "text-gray-500 typo-label-2",
       },
     },
+    interactive: {
+      true: "",
+      false: {
+        borderBase: "bg-transparent",
+        border: "bg-transparent hover:translate-y-0 hover:shadow-none",
+        base: "bg-white/30",
+        textContainer: "text-white",
+        title: "text-white",
+      },
+    },
   },
   defaultVariants: {
     selected: false,
+    interactive: true,
   },
 });
 
@@ -54,6 +65,7 @@ interface ChipsBaseProps
   extends Omit<React.HTMLAttributes<HTMLButtonElement>, "type"> {
   title: string;
   selected?: boolean;
+  interactive?: boolean;
 }
 
 interface LevelChipsProps extends ChipsBaseProps {
@@ -71,6 +83,7 @@ export type ChipsProps = LevelChipsProps | NonLevelChipsProps;
 const Chips = ({
   type,
   selected,
+  interactive,
   title,
   description,
   ...props
@@ -85,6 +98,7 @@ const Chips = ({
   } = chipsVariant({
     type,
     selected,
+    interactive,
   });
 
   return (

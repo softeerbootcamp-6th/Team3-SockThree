@@ -1,7 +1,8 @@
 package com.seniclass.server.domain.student.domain;
 
-import com.seniclass.server.domain.common.model.BaseTimeEntity;
+import com.seniclass.server.domain.auth.enums.UserRole;
 import com.seniclass.server.domain.student.enums.Gender;
+import com.seniclass.server.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,45 +12,35 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Student extends BaseTimeEntity {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "student_id", nullable = false)
-  private Long id;
+@Table(name = "students")
+public class Student extends User {
 
-  @Column(name = "student_name", nullable = false)
-  private String name;
+    @Column(nullable = false)
+    private String name;
 
-  @Column(name = "student_email", nullable = false, unique = true)
-  private String email;
+    @Column(nullable = false)
+    private Integer age;
 
-  @Column(name = "student_age", nullable = false)
-  private Integer age;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
 
-  @Column(name = "student_gender", nullable = false)
-  @Enumerated(EnumType.STRING)
-  private Gender gender;
+    @Builder(access = AccessLevel.PRIVATE)
+    private Student(String name, String email, Integer age, Gender gender, String password) {
+        super(email, password, UserRole.STUDENT);
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+    }
 
-  @Column(name = "student_password", nullable = false)
-  private String password;
-
-  @Builder(access = AccessLevel.PRIVATE)
-  private Student(String name, String email, Integer age, Gender gender, String password) {
-    this.name = name;
-    this.email = email;
-    this.age = age;
-    this.gender = gender;
-    this.password = password;
-  }
-
-  public static Student createStudent(
-      String name, String email, Integer age, Gender gender, String password) {
-    return Student.builder()
-        .name(name)
-        .email(email)
-        .age(age)
-        .gender(gender)
-        .password(password)
-        .build();
-  }
+    public static Student createStudent(
+            String name, String email, Integer age, Gender gender, String password) {
+        return Student.builder()
+                .name(name)
+                .email(email)
+                .age(age)
+                .gender(gender)
+                .password(password)
+                .build();
+    }
 }

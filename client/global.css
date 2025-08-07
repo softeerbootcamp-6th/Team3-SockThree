@@ -9,7 +9,7 @@
 
 @theme {
   /* ========================= */
-  /*        FONT FAMILY       */
+  /*        FONT FAMILY        */
   /* ========================= */
   --font-pretendard: "Pretendard", sans-serif;
 
@@ -102,6 +102,7 @@
 @layer base {
   body {
     font-family: var(--font-pretendard);
+    background-color: var(--color-bg);
     background-color: var(--color-bg);
   }
   html {

@@ -1,9 +1,9 @@
-import FunnelForm from "@/domain/instructor/page/FunnelForm.tsx";
+import Router from "@/routes";
 
 function App() {
   return (
     <>
-      <FunnelForm />
+      <Router />
     </>
   );
 }

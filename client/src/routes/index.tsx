@@ -1,0 +1,46 @@
+import StudentLayout from "@/domain/student/layout/StudentLayout";
+import InstructorLayout from "@/domain/instructor/layout/InstructorLayout";
+import NoNavbarLayout from "@/shared/layout/NoNavbarLayout";
+
+import { StudentHomePage, CourseSearchPage } from "@/domain/student/page";
+import { InstructorHomePage, CourseCreatePage } from "@/domain/instructor/page";
+
+import { BrowserRouter, Route, Routes } from "react-router";
+
+// HyFive 팀 코드 참고했습니다
+
+const Router = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* 시니어 (학생) */}
+        <Route path="/student">
+          <Route element={<NoNavbarLayout />}>
+            <Route path="course-search" element={<CourseSearchPage />} />
+          </Route>
+
+          <Route element={<StudentLayout />}>
+            <Route path="home" element={<StudentHomePage />} />
+            <Route path="course" element={<StudentHomePage />} />
+          </Route>
+        </Route>
+
+        {/* 강사 */}
+        <Route path="/instructor">
+          <Route element={<InstructorLayout />}>
+            <Route index element={<InstructorHomePage />} />
+            <Route path="course-create" element={<CourseCreatePage />} />
+          </Route>
+          <Route element={<NoNavbarLayout />}></Route>
+        </Route>
+
+        {/* 초기 진입 시 학생 페이지 기본 - 추후 수정 */}
+        <Route path="/" element={<StudentLayout />}>
+          <Route index element={<StudentHomePage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default Router;

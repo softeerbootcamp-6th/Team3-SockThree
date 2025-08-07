@@ -1,8 +1,23 @@
 version: '3.8'
 
 services:
+  nginx:
+    image: nginx:latest
+    container_name: ssockthree-nginx
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/cert:/etc/ssl
+    depends_on:
+      - app
+    networks:
+      - app-network
+    restart: always
+
   app:
-    # 빌드하지 않고 GitHub Packages에서 이미지 가져오기
+
     image: ghcr.io/softeerbootcamp-6th/team3-sockthree/backend:${IMAGE_TAG:-latest}
     container_name: ssockthree-server
     ports:
@@ -12,7 +27,12 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME:-senicle_db}
       - SPRING_PROFILES_ACTIVE=prod
-      # GitHub Container Registry 인증 정보
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-}
+      - JWT_SECRET=${JWT_SECRET:-seniclass-production-jwt-secret-key-change-this-in-production}
+      - JWT_ACCESS_TOKEN_VALIDITY=${JWT_ACCESS_TOKEN_VALIDITY:-3600000}
+      - JWT_REFRESH_TOKEN_VALIDITY=${JWT_REFRESH_TOKEN_VALIDITY:-2592000000}
       - GITHUB_TOKEN=${GITHUB_TOKEN}
       - GITHUB_USERNAME=${GITHUB_USERNAME}
     restart: always
@@ -22,8 +42,30 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+    depends_on:
+      - redis
     networks:
       - app-network
+
+  redis:
+    image: redis:7.2-alpine
+    container_name: ssockthree-redis
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    restart: always
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - app-network
+
+volumes:
+  redis_data:
 
 networks:
   app-network:

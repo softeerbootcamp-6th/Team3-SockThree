@@ -3,9 +3,9 @@ package com.seniclass.server.global.exception.errorcode;
 import org.springframework.http.HttpStatus;
 
 public interface BaseErrorCode {
-  HttpStatus getHttpStatus();
+    HttpStatus getHttpStatus();
 
-  String getMessage();
+    String getMessage();
 
-  String errorClassName();
+    String errorClassName();
 }
