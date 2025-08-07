@@ -14,7 +14,11 @@ const Router = () => {
     <Routes>
       {/* 시니어 (학생) */}
       <Route path="/student">
-        <Route element={<NoNavbarLayout />}></Route>
+        <Route element={<NoNavbarLayout />}>
+          <Route path="course">
+            <Route path="detail" element={<S.CourseDetailPage />} />
+          </Route>
+        </Route>
 
         <Route element={<StudentLayout />}>
           <Route path="home" element={<S.HomePage />} />
@@ -27,7 +31,6 @@ const Router = () => {
           <Route path="course">
             <Route path="search" element={<S.SearchResultPage />} />
             <Route path="course" element={<S.HomePage />} />
-            <Route path="detail" element={<S.CourseDetailPage />} />
           </Route>
         </Route>
       </Route>
