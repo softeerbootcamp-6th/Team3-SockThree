@@ -24,7 +24,7 @@ const StepMaxHeadCount = ({ onNext }: StepMaxHeadCountProps) => {
   };
 
   return (
-    <div className="border- flex w-[71rem] flex-col gap-[90px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="border- flex w-full flex-col gap-[90px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">최대 몇 명까지 수강할 수 있나요?</p>
       <div className="flex flex-col gap-6">
         <div className="w-full max-w-xl space-y-4">

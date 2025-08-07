@@ -41,7 +41,7 @@ export default function StepUploadTimes({ onNext }: StepUploadTimesProps) {
   };
 
   return (
-    <div className="border- flex w-[71rem] flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="border- flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">[subcategory] 강좌 업로드는 언제 하시나요?</p>
       <div className="flex gap-36">
         <div className="flex gap-2">

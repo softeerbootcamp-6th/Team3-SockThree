@@ -45,7 +45,7 @@ const StepPrice = ({ onNext }: StepPriceProps) => {
   }, [price, onNext, trigger]);
 
   return (
-    <div className="border- flex w-[71rem] flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="border- flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">강좌 가격을 설정해주세요</p>
       <div className="flex flex-col gap-6">
         <div className="flex flex-wrap gap-4">
