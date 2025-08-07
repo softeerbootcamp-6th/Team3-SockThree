@@ -22,23 +22,30 @@ export const useFunnelState = () => {
     "imageUrl",
   ] as const;
 
-  const validators = {
-    category: (value: string) => !!value,
-    subCategory: (value: string) => !!value,
-    level: (value: string) => !!value,
-    duration: (value: { startDate?: string; endDate?: string }) =>
-      !!value.startDate && !!value.endDate,
-    maxHeadCount: (value: number) => value > 0,
-    uploadTimes: (value: string[]) => value.length > 0,
-    price: (value: number) => value >= 0,
-    introduction: (value: {
-      name: string;
-      description: string;
-      simpleDescription: string;
-    }) => !!value.name && !!value.description && !!value.simpleDescription,
-    curriculum: (value: string) => !!value,
-    imageUrl: (value: string) => !!value,
+  const validators: {
+    [K in StepKey]: (value: FunnelContext[K]) => boolean;
+  } = {
+    category: (value) => !!value,
+    subCategory: (value) => !!value,
+    level: (value) => !!value,
+    duration: (value) => !!value?.startDate && !!value?.endDate,
+    maxHeadCount: (value) => value > 0,
+    uploadTimes: (value) => value?.length > 0,
+    price: (value) => value >= 0,
+    introduction: (value) => !!value?.name && !!value?.description && !!value?.simpleDescription,
+    curriculum: (value) => !!value,
+    imageUrl: (value) => !!value,
   };
+
+  const isStepValid = useCallback(
+    <K extends StepKey>(key: K): boolean => {
+      const validator = validators[key];
+      const value = funnelState[key];
+      return validator(value);
+    },
+    [funnelState]
+  );
+
 
   const onValidChange = useCallback(
     <K extends StepKey>(key: K, value: FunnelContext[K]) => {
@@ -65,5 +72,6 @@ export const useFunnelState = () => {
     setCurStep,
     stepKeys,
     handleValidChange,
+    isStepValid,
   };
 };
