@@ -57,7 +57,7 @@ public class Lecture extends BaseTimeEntity {
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "teachers_id", nullable = false)
+    @JoinColumn(name = "teacher_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Teacher teacher;
 
