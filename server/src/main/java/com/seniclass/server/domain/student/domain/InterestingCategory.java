@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class InterestingCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "interesting_category_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

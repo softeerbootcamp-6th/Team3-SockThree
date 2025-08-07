@@ -18,13 +18,11 @@ import org.hibernate.annotations.OnDeleteAction;
 public class UploadTime extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "upload_time_id", nullable = false)
     private Long id;
 
-    @Column(name = "upload_time_day_of_week", nullable = false)
+    @Column(nullable = false)
     private DayOfWeek dayOfWeek;
 
-    @Column(name = "upload_time_scheduled_at")
     private LocalTime scheduledAt;
 
     @ManyToOne(fetch = FetchType.LAZY)

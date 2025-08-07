@@ -16,7 +16,6 @@ import org.hibernate.annotations.OnDeleteAction;
 public class LectureEnrollment extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "lecture_enrollment_id", nullable = false)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)

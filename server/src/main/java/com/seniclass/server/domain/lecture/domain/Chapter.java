@@ -16,10 +16,9 @@ import org.hibernate.annotations.OnDeleteAction;
 public class Chapter extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chapter_id", nullable = false)
     private Long id;
 
-    @Column(name = "chapter_name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne(fetch = FetchType.LAZY)

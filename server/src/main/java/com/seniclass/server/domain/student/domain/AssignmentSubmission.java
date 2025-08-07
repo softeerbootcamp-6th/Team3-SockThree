@@ -13,10 +13,9 @@ import lombok.NoArgsConstructor;
 public class AssignmentSubmission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "assignment_submission_id", nullable = false)
     private Long id;
 
-    @Column(name = "assignment_submission_link", nullable = false)
+    @Column(nullable = false)
     private String submissionLink;
 
     @ManyToOne(fetch = FetchType.LAZY)
