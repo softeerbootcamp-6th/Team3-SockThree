@@ -82,10 +82,7 @@ const ProgressBar = ({
 export default ProgressBar;
 
 const computeValue = (value: number, current?: number, max?: number) => {
-  if (value !== undefined) {
-    return value;
-  } else if (current !== undefined && max !== undefined && max !== 0) {
-    return (current / max) * 100;
-  }
-  return 0;
+  if (value) return value;
+  if (!current || !max) return 0;
+  return (current / max) * 100;
 };
