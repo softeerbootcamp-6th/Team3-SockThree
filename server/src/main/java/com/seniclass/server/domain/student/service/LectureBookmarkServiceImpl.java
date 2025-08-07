@@ -7,6 +7,7 @@ import com.seniclass.server.domain.student.domain.LectureBookmark;
 import com.seniclass.server.domain.student.domain.Student;
 import com.seniclass.server.domain.student.dto.LectureBookmarkRequest;
 import com.seniclass.server.domain.student.dto.LectureBookmarkResponse;
+import com.seniclass.server.domain.student.exception.errorcode.LectureBookmarkErrorCode;
 import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
 import com.seniclass.server.domain.student.repository.LectureBookmarkRepository;
 import com.seniclass.server.domain.student.repository.StudentRepository;
@@ -63,7 +64,7 @@ public class LectureBookmarkServiceImpl implements LectureBookmarkService {
         // 이미 북마크한 강의인지 확인
         if (lectureBookmarkRepository.existsByStudentIdAndLectureId(
                 studentId, request.lectureId())) {
-            throw new CommonException(StudentErrorCode.LECTURE_BOOKMARK_ALREADY_EXISTS);
+            throw new CommonException(LectureBookmarkErrorCode.LECTURE_BOOKMARK_ALREADY_EXISTS);
         }
 
         LectureBookmark bookmark = LectureBookmark.createLectureBookmark(student, lecture);
@@ -102,7 +103,11 @@ public class LectureBookmarkServiceImpl implements LectureBookmarkService {
         LectureBookmark bookmark =
                 lectureBookmarkRepository
                         .findByStudentIdAndLectureId(studentId, lectureId)
-                        .orElseThrow(() -> new CommonException(StudentErrorCode.STUDENT_NOT_FOUND));
+                        .orElseThrow(
+                                () ->
+                                        new CommonException(
+                                                LectureBookmarkErrorCode
+                                                        .LECTURE_BOOKMARK_NOT_FOUND));
 
         lectureBookmarkRepository.delete(bookmark);
         log.info(

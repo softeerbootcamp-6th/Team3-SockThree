@@ -7,6 +7,7 @@ import com.seniclass.server.domain.student.domain.LectureEnrollment;
 import com.seniclass.server.domain.student.domain.Student;
 import com.seniclass.server.domain.student.dto.LectureEnrollmentRequest;
 import com.seniclass.server.domain.student.dto.LectureEnrollmentResponse;
+import com.seniclass.server.domain.student.exception.errorcode.LectureEnrollmentErrorCode;
 import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
 import com.seniclass.server.domain.student.repository.LectureEnrollmentRepository;
 import com.seniclass.server.domain.student.repository.StudentRepository;
@@ -64,7 +65,7 @@ public class LectureEnrollmentServiceImpl implements LectureEnrollmentService {
         // 이미 수강 등록한 강의인지 확인
         if (lectureEnrollmentRepository.existsByStudentIdAndLectureId(
                 studentId, request.lectureId())) {
-            throw new CommonException(StudentErrorCode.LECTURE_ENROLLMENT_ALREADY_EXISTS);
+            throw new CommonException(LectureEnrollmentErrorCode.LECTURE_ENROLLMENT_ALREADY_EXISTS);
         }
 
         // TODO: 수강 정원 확인, 수강 가능 조건 확인 등 비즈니스 로직 추가
@@ -106,7 +107,11 @@ public class LectureEnrollmentServiceImpl implements LectureEnrollmentService {
         LectureEnrollment enrollment =
                 lectureEnrollmentRepository
                         .findByStudentIdAndLectureId(studentId, lectureId)
-                        .orElseThrow(() -> new CommonException(StudentErrorCode.STUDENT_NOT_FOUND));
+                        .orElseThrow(
+                                () ->
+                                        new CommonException(
+                                                LectureEnrollmentErrorCode
+                                                        .LECTURE_ENROLLMENT_NOT_FOUND));
 
         lectureEnrollmentRepository.delete(enrollment);
         log.info(

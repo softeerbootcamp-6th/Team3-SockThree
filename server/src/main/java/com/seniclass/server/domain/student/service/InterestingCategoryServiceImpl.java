@@ -8,6 +8,7 @@ import com.seniclass.server.domain.student.domain.InterestingCategory;
 import com.seniclass.server.domain.student.domain.Student;
 import com.seniclass.server.domain.student.dto.InterestingCategoryRequest;
 import com.seniclass.server.domain.student.dto.InterestingCategoryResponse;
+import com.seniclass.server.domain.student.exception.errorcode.InterestingCategoryErrorCode;
 import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
 import com.seniclass.server.domain.student.repository.InterestingCategoryRepository;
 import com.seniclass.server.domain.student.repository.StudentRepository;
@@ -61,7 +62,8 @@ public class InterestingCategoryServiceImpl implements InterestingCategoryServic
         // 이미 등록된 관심 카테고리인지 확인
         if (interestingCategoryRepository.existsByStudentIdAndSubCategoryId(
                 studentId, request.subCategoryId())) {
-            throw new CommonException(StudentErrorCode.INTERESTING_CATEGORY_ALREADY_EXISTS);
+            throw new CommonException(
+                    InterestingCategoryErrorCode.INTERESTING_CATEGORY_ALREADY_EXISTS);
         }
 
         InterestingCategory interestingCategory =
@@ -107,7 +109,11 @@ public class InterestingCategoryServiceImpl implements InterestingCategoryServic
         InterestingCategory interestingCategory =
                 interestingCategoryRepository
                         .findByStudentIdAndSubCategoryId(studentId, subCategoryId)
-                        .orElseThrow(() -> new CommonException(StudentErrorCode.STUDENT_NOT_FOUND));
+                        .orElseThrow(
+                                () ->
+                                        new CommonException(
+                                                InterestingCategoryErrorCode
+                                                        .INTERESTING_CATEGORY_NOT_FOUND));
 
         interestingCategoryRepository.delete(interestingCategory);
         log.info(
