@@ -46,6 +46,13 @@ public class InterestingCategoryServiceImpl implements InterestingCategoryServic
     public InterestingCategoryResponse addInterestingCategory(InterestingCategoryRequest request) {
         Long studentId = AuthContext.getCurrentUserId();
 
+        // 이미 등록된 관심 카테고리인지 확인
+        if (interestingCategoryRepository.existsByStudentIdAndSubCategoryId(
+                studentId, request.subCategoryId())) {
+            throw new CommonException(
+                    InterestingCategoryErrorCode.INTERESTING_CATEGORY_ALREADY_EXISTS);
+        }
+
         Student student =
                 studentRepository
                         .findById(studentId)
@@ -58,13 +65,6 @@ public class InterestingCategoryServiceImpl implements InterestingCategoryServic
                                 () ->
                                         new CommonException(
                                                 CategoryErrorCode.SUB_CATEGORY_NOT_FOUND));
-
-        // 이미 등록된 관심 카테고리인지 확인
-        if (interestingCategoryRepository.existsByStudentIdAndSubCategoryId(
-                studentId, request.subCategoryId())) {
-            throw new CommonException(
-                    InterestingCategoryErrorCode.INTERESTING_CATEGORY_ALREADY_EXISTS);
-        }
 
         InterestingCategory interestingCategory =
                 InterestingCategory.createInterestingCategory(student, subCategory);
@@ -134,7 +134,6 @@ public class InterestingCategoryServiceImpl implements InterestingCategoryServic
     private InterestingCategoryResponse toResponse(InterestingCategory interestingCategory) {
         return new InterestingCategoryResponse(
                 interestingCategory.getId(),
-                interestingCategory.getStudent().getId(),
                 interestingCategory.getSubCategory().getId(),
                 interestingCategory.getSubCategory().getName(),
                 interestingCategory.getSubCategory().getMainCategory().getId(),

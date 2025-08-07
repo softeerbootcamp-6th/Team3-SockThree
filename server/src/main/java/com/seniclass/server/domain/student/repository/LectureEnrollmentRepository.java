@@ -22,12 +22,6 @@ public interface LectureEnrollmentRepository extends JpaRepository<LectureEnroll
     /** 학생 ID와 강의 ID로 수강 등록 존재 여부 확인 */
     boolean existsByStudentIdAndLectureId(Long studentId, Long lectureId);
 
-    /** 학생 ID로 모든 수강 등록 삭제 */
-    void deleteByStudentId(Long studentId);
-
-    /** 강의 ID로 모든 수강 등록 삭제 */
-    void deleteByLectureId(Long lectureId);
-
     /** 학생 ID로 수강 강의 개수 조회 */
     long countByStudentId(Long studentId);
 

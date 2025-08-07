@@ -46,6 +46,12 @@ public class LectureBookmarkServiceImpl implements LectureBookmarkService {
     public LectureBookmarkResponse addBookmark(LectureBookmarkRequest request) {
         Long studentId = AuthContext.getCurrentUserId();
 
+        // 이미 북마크한 강의인지 확인
+        if (lectureBookmarkRepository.existsByStudentIdAndLectureId(
+                studentId, request.lectureId())) {
+            throw new CommonException(LectureBookmarkErrorCode.LECTURE_BOOKMARK_ALREADY_EXISTS);
+        }
+
         Student student =
                 studentRepository
                         .findById(studentId)
@@ -60,12 +66,6 @@ public class LectureBookmarkServiceImpl implements LectureBookmarkService {
                                                 StudentErrorCode
                                                         .INTERNAL_ERROR)); // 추후 LectureErrorCode로
         // 변경 필요
-
-        // 이미 북마크한 강의인지 확인
-        if (lectureBookmarkRepository.existsByStudentIdAndLectureId(
-                studentId, request.lectureId())) {
-            throw new CommonException(LectureBookmarkErrorCode.LECTURE_BOOKMARK_ALREADY_EXISTS);
-        }
 
         LectureBookmark bookmark = LectureBookmark.createLectureBookmark(student, lecture);
         LectureBookmark saved = lectureBookmarkRepository.save(bookmark);

@@ -58,11 +58,6 @@ public class StudentServiceImpl implements StudentService {
                         .findById(currentUserId)
                         .orElseThrow(() -> new CommonException(StudentErrorCode.STUDENT_NOT_FOUND));
 
-        // 나이 유효성 검사
-        if (request.age() != null && (request.age() < 1 || request.age() > 150)) {
-            throw new CommonException(StudentErrorCode.INVALID_AGE);
-        }
-
         student.updateInfo(request);
 
         Student saved = studentRepository.save(student);

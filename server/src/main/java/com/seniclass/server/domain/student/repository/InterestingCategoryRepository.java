@@ -18,10 +18,4 @@ public interface InterestingCategoryRepository extends JpaRepository<Interesting
 
     /** 학생 ID와 서브 카테고리 ID로 존재 여부 확인 */
     boolean existsByStudentIdAndSubCategoryId(Long studentId, Long subCategoryId);
-
-    /** 학생 ID로 모든 관심 카테고리 삭제 */
-    void deleteByStudentId(Long studentId);
-
-    /** 서브 카테고리 ID로 모든 관심 카테고리 삭제 */
-    void deleteBySubCategoryId(Long subCategoryId);
 }
