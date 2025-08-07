@@ -7,10 +7,9 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFunnel } from "@/domain/instructor/hook/useFunnel.ts";
 import { FunnelSideBar } from "@/domain/instructor/component/funnel/FunnelSideBar.tsx";
-import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll.ts";
 import FunnelHeader from "@/domain/instructor/component/funnel/FunnelHeader.tsx";
 
-type Context = {
+export type Context = {
   category?: string;
   subCategory?: string;
   level?: string;
@@ -49,13 +48,9 @@ const CreateCoursePage = () => {
     mode: "onChange",
   });
 
-  const { step, goNextStep, currentIndex } = useFunnel<Context>(
+  const { goNextStep, currentIndex } = useFunnel<Context>(
     steps.map((s) => s.key)
   );
-
-  const { containerRef, stepRef } = useFunnelScroll({
-    stepIndex: currentIndex,
-  });
 
   console.log(currentIndex, steps.length);
 
@@ -68,10 +63,11 @@ const CreateCoursePage = () => {
             steps={steps}
             currentStepIndex={currentIndex}
             goNextStep={goNextStep}
-            containerRef={containerRef}
-            stepRef={stepRef}
           />
-          <FunnelSideBar<Context> steps={steps} currentStep={step} />
+          <FunnelSideBar<Context>
+            steps={steps}
+            currentStepIndex={currentIndex}
+          />
         </main>
       </FormProvider>
     </div>

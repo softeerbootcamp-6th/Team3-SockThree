@@ -1,28 +1,27 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import Button from "@/shared/component/Button.tsx";
 import CheckIcon from "@/assets/icons/default/check.svg?react";
+import type { Context } from "@/domain/instructor/page/CreateCoursePage.tsx";
 
 interface FunnelSideBarProps<T> {
-  steps: Array<{
+  steps: readonly {
     key: keyof T;
     label: string;
-  }>;
-  currentIndex: number;
-  goToStep: (key: keyof T) => void;
+  }[];
+  currentStepIndex: number;
 }
 
 export function FunnelSideBar<T>({
   steps,
-  currentIndex,
+  currentStepIndex,
 }: FunnelSideBarProps<T>) {
-  const { control, formState } = useFormContext();
-  const values = useWatch({ control });
+  const { control, formState } = useFormContext<Context>();
+  const values = useWatch<Context>({ control });
 
-  // ✅ 외부에서 가공해둠 (map 이전)
   const stepRenderData = steps.map((step, index) => {
-    const value = values?.[step.key];
-    const error = formState.errors?.[step.key];
-    const isRendered = index < currentIndex;
+    const value = values?.[step.key as keyof Context];
+    const error = formState.errors?.[step.key as keyof Context];
+    const isRendered = index < currentStepIndex;
     const isError = isRendered && !!error;
 
     return {
@@ -43,7 +42,7 @@ export function FunnelSideBar<T>({
         {stepRenderData.map((step) => (
           <li key={step.key as string}>
             <a
-              href={step.isDisabled ? undefined : `#step-${step.key}`}
+              href={step.isDisabled ? undefined : `#step-${String(step.key)}`}
               className={`... ${step.isDisabled ? "cursor-not-allowed" : ""}`}
             >
               <div className="flex items-center justify-between">
@@ -51,7 +50,11 @@ export function FunnelSideBar<T>({
                   <CheckIcon className={step.iconColor} />
                   <span>{step.label}</span>
                 </span>
-                <span className="typo-body-4">{step.curState}</span>
+                <span className="typo-body-4">
+                  {typeof step.curState === "object" && step.curState !== null
+                    ? JSON.stringify(step.curState)
+                    : String(step.curState || "")}
+                </span>
               </div>
             </a>
           </li>

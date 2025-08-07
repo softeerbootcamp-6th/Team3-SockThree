@@ -10,12 +10,13 @@ import StepCurriculum from "@/domain/instructor/component/Step/StepCurriculum.ts
 import StepImageUpload from "@/domain/instructor/component/Step/StepImageUpload.tsx";
 
 import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll.ts";
+import * as React from "react";
 
 interface FunnelFormProps<T> {
-  steps: Array<{
+  steps: readonly {
     key: keyof T;
     label: string;
-  }>;
+  }[];
   currentStepIndex: number;
   goNextStep: (key: keyof T) => void;
 }
@@ -26,10 +27,8 @@ export function FunnelForm<T>({
   currentStepIndex,
   goNextStep,
 }: FunnelFormProps<T>) {
-  const stepComponentMap: Record<
-    (typeof steps)[number]["key"],
-    (props: { onNext: () => void }) => JSX.Element
-  > = {
+  // 타입 명시 제거하고 추론하도록 변경
+  const stepComponentMap = {
     category: StepCategory,
     subCategory: StepSubCategory,
     level: StepLevel,
@@ -40,7 +39,7 @@ export function FunnelForm<T>({
     introduction: StepIntroduction,
     curriculum: StepCurriculum,
     imageUrl: StepImageUpload,
-  };
+  } as const; // as const로 정확한 타입 추론
 
   const { containerRef, stepRef } = useFunnelScroll({
     stepIndex: currentStepIndex,
@@ -54,15 +53,27 @@ export function FunnelForm<T>({
       >
         {steps.map((s, i) => {
           if (i > currentStepIndex) return null;
-          const StepComponent = stepComponentMap[s.key];
+          const stepKey = String(s.key) as keyof typeof stepComponentMap;
+          const StepComponent = stepComponentMap[stepKey];
+
+          // StepComponent가 존재하는지 체크
+          if (!StepComponent) {
+            console.warn(`Step component not found for key: ${stepKey}`);
+            return null;
+          }
+
           return (
             <div
-              key={s.key}
-              id={`step-${s.key}`}
-              ref={i === currentStepIndex ? stepRef : undefined}
+              key={String(s.key)}
+              id={`step-${String(s.key)}`}
+              ref={
+                i === currentStepIndex
+                  ? (stepRef as React.RefObject<HTMLDivElement>)
+                  : undefined
+              }
               className="scroll-snap-start mb-5 scroll-mb-[150px]"
             >
-              <StepComponent onNext={goNextStep} />
+              <StepComponent onNext={() => goNextStep(s.key)} />
             </div>
           );
         })}
