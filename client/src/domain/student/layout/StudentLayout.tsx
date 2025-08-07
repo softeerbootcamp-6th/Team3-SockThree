@@ -9,6 +9,7 @@ import { useState } from "react";
 import NavbarItem from "@/shared/components/Navbar/NavbarItem";
 
 import { useLocation } from "react-router";
+import { fakerKO as faker } from "@faker-js/faker";
 
 const StudentLayout = () => {
   const navbarMenus = [
@@ -39,9 +40,19 @@ const StudentLayout = () => {
     />
   ));
 
+  const myPageItem = (
+    <NavbarItem
+      imgUrl={faker.image.avatar()}
+      label="마이페이지"
+      routePath="/student/mypage"
+      isSelected={selectedPath === "/student/mypage"}
+      onClick={() => handleItemClick("/student/mypage")}
+    />
+  );
+
   return (
     <div className="flex h-screen flex-row justify-between">
-      <Navbar>{navbarItems}</Navbar>
+      <Navbar myPageItem={myPageItem}>{navbarItems}</Navbar>
       <Outlet />
     </div>
   );
