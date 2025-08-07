@@ -25,25 +25,25 @@ public class VideoProgress extends BaseTimeEntity {
     private Video video;
 
     @Column(nullable = false)
-    private Long currentTime;
+    private Long playedTime;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private VideoProgress(Student student, Video video, Long currentTime) {
+    private VideoProgress(Student student, Video video, Long playedTime) {
         this.student = student;
         this.video = video;
-        this.currentTime = currentTime;
+        this.playedTime = playedTime;
     }
 
     public static VideoProgress createVideoProgress(
-            Student student, Video video, Long currentTime) {
+            Student student, Video video, Long playedTime) {
         return VideoProgress.builder()
                 .student(student)
                 .video(video)
-                .currentTime(currentTime)
+                .playedTime(playedTime)
                 .build();
     }
 
-    public void updateCurrentTime(Long currentTime) {
-        this.currentTime = currentTime;
+    public void updatePlayedTime(Long playedTime) {
+        this.playedTime = playedTime;
     }
 }
