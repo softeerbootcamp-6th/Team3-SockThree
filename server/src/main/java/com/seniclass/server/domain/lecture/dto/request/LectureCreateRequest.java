@@ -18,7 +18,7 @@ public record LectureCreateRequest(
         @NotBlank String name,
         @NotBlank @Size(max = 255) String instruction,
         @NotBlank String description,
-        @NotNull List<UploadTimeCreateRequest> uploadTimeList) {
+        @NotNull @NotEmpty List<UploadTimeCreateRequest> uploadTimeList) {
 
     public void validateDateOrder() {
         if (startDate != null && endDate != null && !startDate.isBefore(endDate)) {
