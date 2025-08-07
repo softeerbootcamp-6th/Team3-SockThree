@@ -26,33 +26,32 @@ public class Lecture extends BaseTimeEntity {
     @JoinColumn(name = "sub_category_id", nullable = false)
     private SubCategory subCategory;
 
-    @Column(name = "lecture_name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "lecture_cohort")
     private Integer cohort;
 
-    @Column(name = "lecture_level", nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    @Column(name = "lecture_start_date", nullable = false)
+    @Column(nullable = false)
     private LocalDate startDate;
 
-    @Column(name = "lecture_end_date", nullable = false)
+    @Column(nullable = false)
     private LocalDate endDate;
 
-    @Column(name = "lecture_max_student", nullable = false)
+    @Column(nullable = false)
     private Integer maxStudent;
 
-    @Column(name = "lecture_fee", nullable = false)
+    @Column(nullable = false)
     private Integer fee;
 
-    @Column(name = "lecture_instruction", nullable = false)
+    @Column(nullable = false)
     private String instruction;
 
     @Lob
-    @Column(name = "lecture_description", nullable = false)
+    @Column(nullable = false)
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY)
