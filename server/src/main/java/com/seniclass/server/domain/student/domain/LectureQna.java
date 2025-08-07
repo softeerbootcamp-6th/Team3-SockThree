@@ -32,8 +32,7 @@ public class LectureQna extends BaseTimeEntity {
     @Column(nullable = false)
     private String question;
 
-    @Lob
-    private String answer;
+    @Lob private String answer;
 
     @Builder(access = AccessLevel.PRIVATE)
     private LectureQna(Student student, Lecture lecture, String question, String answer) {

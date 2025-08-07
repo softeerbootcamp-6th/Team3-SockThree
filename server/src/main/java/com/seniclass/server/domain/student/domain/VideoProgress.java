@@ -34,13 +34,8 @@ public class VideoProgress extends BaseTimeEntity {
         this.playedTime = playedTime;
     }
 
-    public static VideoProgress createVideoProgress(
-            Student student, Video video, Long playedTime) {
-        return VideoProgress.builder()
-                .student(student)
-                .video(video)
-                .playedTime(playedTime)
-                .build();
+    public static VideoProgress createVideoProgress(Student student, Video video, Long playedTime) {
+        return VideoProgress.builder().student(student).video(video).playedTime(playedTime).build();
     }
 
     public void updatePlayedTime(Long playedTime) {
