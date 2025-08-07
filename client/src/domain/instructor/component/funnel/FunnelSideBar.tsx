@@ -1,7 +1,7 @@
 import { useFormContext, useWatch } from "react-hook-form";
 import Button from "@/shared/components/Button.tsx";
 import CheckIcon from "@/assets/icons/default/check.svg?react";
-import type { Context } from "@/domain/instructor/page/CreateCoursePage.tsx";
+import type { Context } from "@/domain/instructor/page/course/CreateCoursePage.tsx";
 
 interface FunnelSideBarProps<T> {
   steps: readonly {
