@@ -24,10 +24,10 @@ public class WidgetSetting extends BaseTimeEntity {
     private WidgetType widgetType;
 
     @Column(nullable = false)
-    private Integer row;
+    private Integer rowPosition;
 
     @Column(nullable = false)
-    private Integer column;
+    private Integer colPosition;
 
     @Column(nullable = false)
     private Integer width;
@@ -46,15 +46,15 @@ public class WidgetSetting extends BaseTimeEntity {
     @Builder(access = AccessLevel.PRIVATE)
     private WidgetSetting(
             WidgetType widgetType,
-            Integer row,
-            Integer column,
+            Integer rowPosition,
+            Integer colPosition,
             Integer width,
             Integer height,
             Boolean visible,
             Lecture lecture) {
         this.widgetType = widgetType;
-        this.row = row;
-        this.column = column;
+        this.rowPosition = rowPosition;
+        this.colPosition = colPosition;
         this.width = width;
         this.height = height;
         this.visible = visible;
@@ -63,18 +63,20 @@ public class WidgetSetting extends BaseTimeEntity {
 
     public static WidgetSetting createWidgetSetting(
             WidgetType widgetType,
-            Integer row,
-            Integer column,
+            Integer rowPosition,
+            Integer colPosition,
             Integer width,
             Integer height,
-            Boolean visible) {
+            Boolean visible,
+            Lecture lecture) {
         return WidgetSetting.builder()
                 .widgetType(widgetType)
-                .row(row)
-                .column(column)
+                .rowPosition(rowPosition)
+                .colPosition(colPosition)
                 .width(width)
                 .height(height)
                 .visible(visible)
+                .lecture(lecture)
                 .build();
     }
 }
