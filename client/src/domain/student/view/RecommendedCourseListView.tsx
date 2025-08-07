@@ -28,7 +28,7 @@ const recommendLength = originalListItems.length;
 
 const RecommendedCourseListView = () => {
   return (
-    <div className="flex flex-col items-start gap-[1.1875rem]">
+    <div className="flex flex-col items-start gap-[3.9375rem]">
       <div className="flex flex-row items-end justify-end gap-[1.0625rem]">
         <p className="typo-title-0">
           {userName}님을 위한 <br /> 추천 강좌 리스트예요
