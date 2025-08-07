@@ -17,6 +17,12 @@ public enum StudentErrorCode implements BaseErrorCode {
 
     // 409 Conflict
     EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 등록된 이메일입니다."),
+    INTERESTING_CATEGORY_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 등록된 관심 카테고리입니다."),
+    LECTURE_BOOKMARK_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 북마크된 강의입니다."),
+    LECTURE_ENROLLMENT_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 수강 등록된 강의입니다."),
+
+    // 403 Forbidden
+    ACCESS_DENIED(HttpStatus.FORBIDDEN, "접근 권한이 없습니다."),
 
     // 기타
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "알 수 없는 오류가 발생했습니다.");
