@@ -3,8 +3,8 @@ export type FunnelContext = {
   subCategory: string;
   level: string;
   duration: {
-    startDate: string;
-    endDate: string;
+    startDate: Date;
+    endDate: Date;
   };
   maxHeadCount: number;
   uploadTimes: string[];
