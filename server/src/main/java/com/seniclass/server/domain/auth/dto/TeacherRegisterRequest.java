@@ -38,7 +38,7 @@ public record TeacherRegisterRequest(
                 String passwordConfirm,
         @Schema(description = "강사 소개", example = "같이 골프 배워보아요!")
                 @NotBlank(message = "강사 소개는 필수입니다")
-                @Size(max = 50, message = "강사 소개는 최대 80자입니다")
+                @Size(max = 50, message = "강사 소개는 최대 50자입니다")
                 String instruction,
         @Schema(description = "강사 이력") List<CareerRegisterRequest> careerList) {
 
