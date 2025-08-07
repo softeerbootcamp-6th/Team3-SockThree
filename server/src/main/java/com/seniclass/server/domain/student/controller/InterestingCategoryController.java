@@ -40,7 +40,7 @@ public class InterestingCategoryController {
 
     @Operation(summary = "관심 카테고리 삭제", description = "관심 카테고리를 삭제합니다.")
     @DeleteMapping("/{interestingCategoryId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @RequireAuth(roles = {UserRole.STUDENT})
     public void removeInterestingCategory(
             @Parameter(description = "관심 카테고리 ID") @PathVariable Long interestingCategoryId) {
@@ -49,7 +49,7 @@ public class InterestingCategoryController {
 
     @Operation(summary = "서브 카테고리로 관심 카테고리 삭제", description = "서브 카테고리 ID로 관심 카테고리를 삭제합니다.")
     @DeleteMapping("/subcategory/{subCategoryId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @RequireAuth(roles = {UserRole.STUDENT})
     public void removeInterestingCategoryBySubCategory(
             @Parameter(description = "서브 카테고리 ID") @PathVariable Long subCategoryId) {

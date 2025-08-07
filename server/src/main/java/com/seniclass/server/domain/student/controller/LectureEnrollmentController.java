@@ -46,7 +46,7 @@ public class LectureEnrollmentController {
 
     @Operation(summary = "수강 취소", description = "수강을 취소합니다.")
     @DeleteMapping("/{enrollmentId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @RequireAuth(roles = {UserRole.STUDENT})
     public void cancelEnrollment(
             @Parameter(description = "수강 등록 ID") @PathVariable Long enrollmentId) {
@@ -55,7 +55,7 @@ public class LectureEnrollmentController {
 
     @Operation(summary = "강의로 수강 취소", description = "강의 ID로 수강을 취소합니다.")
     @DeleteMapping("/lecture/{lectureId}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @ResponseStatus(HttpStatus.OK)
     @RequireAuth(roles = {UserRole.STUDENT})
     public void cancelEnrollmentByLecture(
             @Parameter(description = "강의 ID") @PathVariable Long lectureId) {
