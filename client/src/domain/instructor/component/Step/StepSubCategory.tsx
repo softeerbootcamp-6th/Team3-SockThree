@@ -47,7 +47,7 @@ const StepSubCategory = ({ onNext }: StepSubCategoryProps) => {
   };
 
   return (
-    <div className="border- flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
+    <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">어떤 [{category}] 강좌를 만들까요?</p>
       <div className="flex flex-wrap gap-2">
         {options.map((option) => (
