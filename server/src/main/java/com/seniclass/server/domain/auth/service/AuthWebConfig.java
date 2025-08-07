@@ -14,12 +14,12 @@ public class AuthWebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/api/**")
+                .addPathPatterns("/**")
                 .excludePathPatterns(
-                        "/api/auth/login",
-                        "/api/auth/refresh",
-                        "/api/health",
-                        "/api/docs/**",
+                        "/auth/login",
+                        "/auth/refresh",
+                        "/health",
+                        "/docs/**",
                         "/swagger-ui/**",
                         "/v3/api-docs/**");
     }
