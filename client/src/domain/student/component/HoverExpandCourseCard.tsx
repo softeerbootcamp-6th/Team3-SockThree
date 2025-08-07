@@ -20,20 +20,20 @@ type HoverExpandCourseCardProps = {
 
 type CardData = HoverExpandCourseCardProps["cardData"];
 
-export default function HoverExpandCourseCard({
+const HoverExpandCourseCard = ({
   cardData,
   isActive,
-}: HoverExpandCourseCardProps) {
+}: HoverExpandCourseCardProps) => {
   const resultCard = isActive
-    ? closedCardContainer(cardData)
-    : expandedCardContainer(cardData);
+    ? expandedCardContainer(cardData)
+    : closedCardContainer(cardData);
   return resultCard;
-}
+};
 
-const closedCardContainer = (cardData: CardData) => {
+const expandedCardContainer = (cardData: CardData) => {
   return (
     <div
-      className="relative h-[21.3125rem] w-[54.375rem] cursor-pointer rounded-[1.875rem] bg-cover bg-center transition-all duration-600"
+      className="relative mx-[.8125rem] h-[21.3125rem] w-[54.375rem] cursor-pointer rounded-[1.875rem] bg-cover bg-center transition-all duration-600"
       style={{ backgroundImage: `url(${cardData.courseImg})` }}
     >
       <div className="absolute inset-0 overflow-hidden rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
@@ -46,7 +46,7 @@ const closedCardContainer = (cardData: CardData) => {
   );
 };
 
-const expandedCardContainer = (cardData: CardData) => {
+const closedCardContainer = (cardData: CardData) => {
   return (
     <div
       className="relative h-[21.3125rem] w-[5rem] rounded-[3.125rem] bg-cover bg-center opacity-60 transition-all duration-600"
@@ -87,11 +87,11 @@ const cardTopContainer = (cardData: CardData) => {
 const cardBottomContainer = (cardData: CardData) => {
   return (
     <div className="flex w-full flex-row items-center justify-between gap-2">
-      <div className="flex h-[4.8125rem] w-[13.75rem] flex-col gap-[.5rem]">
-        <p className="typo-body-6 h-[1.3125rem] truncate text-white/60">
+      <div className="flex w-[18.75rem] flex-col gap-[.5rem]">
+        <p className="typo-body-6 truncate text-white/60">
           {cardData.description}
         </p>
-        <p className="typo-title-1 h-[3rem] truncate">{cardData.title}</p>
+        <p className="typo-title-1 truncate">{cardData.title}</p>
       </div>
       <div className="W-[32.0625rem] flex flex-col items-center gap-y-[.25rem]">
         <RoundTooltip
@@ -109,3 +109,5 @@ const cardBottomContainer = (cardData: CardData) => {
     </div>
   );
 };
+
+export default HoverExpandCourseCard;

@@ -1,13 +1,12 @@
 import Navbar from "@/shared/components/Navbar/Navbar";
-import { Outlet } from "react-router";
+import NavbarItem from "@/shared/components/Navbar/NavbarItem";
 
 import HomeIcon from "@/assets/icons/default/home.svg?react";
 import SearchIcon from "@/assets/icons/default/search.svg?react";
 import CourseIcon from "@/assets/icons/default/course.svg?react";
 
 import { useState } from "react";
-import NavbarItem from "@/shared/components/Navbar/NavbarItem";
-
+import { Outlet } from "react-router";
 import { useLocation } from "react-router";
 
 const StudentLayout = () => {
@@ -40,10 +39,14 @@ const StudentLayout = () => {
   ));
 
   return (
-    <div className="flex h-screen flex-row justify-between">
-      <Navbar>{navbarItems}</Navbar>
-      <Outlet />
-    </div>
+    <>
+      <div className="flex flex-row justify-between">
+        <Navbar>{navbarItems}</Navbar>
+        <div className="flex w-full flex-col overflow-y-auto">
+          <Outlet />
+        </div>
+      </div>
+    </>
   );
 };
 

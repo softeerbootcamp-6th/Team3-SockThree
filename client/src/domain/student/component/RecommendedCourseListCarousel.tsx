@@ -48,7 +48,7 @@ const RecommendedCourseListCarousel = ({
     : `transition-none`;
 
   return (
-    <div className="h-[10.4375rem] w-full overflow-hidden">
+    <div className="z-0 h-[10.4375rem] w-full overflow-hidden">
       <ul
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

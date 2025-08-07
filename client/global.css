@@ -100,9 +100,12 @@
 
 /* like reset.css */
 @layer base {
+  html,
   body {
     font-family: var(--font-pretendard);
     background-color: var(--color-bg);
+    height: 100%;
+    width: 100%;
   }
 }
 
