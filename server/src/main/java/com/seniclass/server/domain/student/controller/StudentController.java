@@ -2,53 +2,36 @@ package com.seniclass.server.domain.student.controller;
 
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.auth.service.AuthContext;
-import com.seniclass.server.domain.student.domain.Student;
-import com.seniclass.server.domain.student.repository.StudentRepository;
-import java.util.List;
-import java.util.Map;
+import com.seniclass.server.domain.student.dto.StudentInfoResponse;
+import com.seniclass.server.domain.student.dto.StudentUpdateRequest;
+import com.seniclass.server.domain.student.service.StudentService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Student", description = "학생 관리 API")
 @RestController
 @RequestMapping("/api/students")
 @RequiredArgsConstructor
 public class StudentController {
 
-    private final StudentRepository studentRepository;
+    private final StudentService studentService;
 
-    @GetMapping("/profile")
+    // === 학생 본인 관리 API ===
+
+    @Operation(summary = "내 정보 조회", description = "현재 로그인한 학생의 정보를 조회합니다.")
+    @GetMapping("/my-info")
     @RequireAuth(roles = {UserRole.STUDENT})
-    public String getMyProfile() {
-        // AuthInterceptor에서 이미 학생 역할인지 검증했으므로, 바로 비즈니스 로직 처리
-        return "학생 프로필 정보";
+    public StudentInfoResponse getMyInfo() {
+        return studentService.getCurrentStudentInfo();
     }
 
-    @GetMapping("/my-courses")
+    @Operation(summary = "내 정보 수정", description = "현재 로그인한 학생의 정보를 수정합니다.")
+    @PutMapping("/my-info")
     @RequireAuth(roles = {UserRole.STUDENT})
-    public String getMyCourses() {
-        return "학생의 수강 과목 목록";
-    }
-
-    @GetMapping("/all")
-    @RequireAuth(roles = {UserRole.ADMIN})
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
-    }
-
-    @GetMapping("/public-info")
-    public String getPublicInfo() {
-        return "공개 정보";
-    }
-
-    @GetMapping("/me")
-    @RequireAuth
-    public Map<String, Object> getCurrentUserInfo() {
-        return Map.of(
-                "userId", AuthContext.getCurrentUserId(),
-                "role", AuthContext.getCurrentUserRole(),
-                "isStudent", AuthContext.hasRole(UserRole.STUDENT));
+    public StudentInfoResponse updateMyInfo(@Valid @RequestBody StudentUpdateRequest request) {
+        return studentService.updateCurrentStudentInfo(request);
     }
 }
