@@ -2,7 +2,7 @@ import { useState } from "react";
 import Chips from "@/shared/components/Chips.tsx";
 
 interface StepSubCategoryProps {
-  category?: string;
+  category: string;
   value?: string;
   onValidSubmit: (subCategory: string) => void;
 }
@@ -24,7 +24,7 @@ const options: Record<string, string[]> = {
 };
 
 const StepSubCategory = ({
-  category = "운동",
+  category,
   value,
   onValidSubmit,
 }: StepSubCategoryProps) => {

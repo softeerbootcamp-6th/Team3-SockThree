@@ -54,6 +54,7 @@ export const FunnelForm = ({
               stepIndex={i}
               value={context[stepKey]}
               onValidSubmit={(val) => handleValidChange(stepKey, val)}
+              context={context}
             />
           </div>
         );
@@ -69,8 +70,15 @@ type StepProps<K extends StepKey> = {
   onValidSubmit: (value: FunnelContext[K]) => void;
 };
 
+interface SubCategoryProps extends StepProps<"subCategory"> {
+  category: string; // 반드시 받아야 하는 추가 prop
+}
+
 const stepComponentMap: {
-  [K in StepKey]: React.FC<StepProps<K>>;
+  // 기본: 대부분 StepProps<K>
+  [K in Exclude<StepKey, "subCategory">]: React.FC<StepProps<K>>;
+} & {
+  subCategory: React.FC<SubCategoryProps>; // subCategory만 확장 타입
 } = {
   category: StepCategory,
   subCategory: StepSubCategory,
@@ -90,14 +98,27 @@ interface StepRendererProps<K extends StepKey = StepKey> {
   value?: FunnelContext[K];
   onValidSubmit: (value: FunnelContext[K]) => void;
   ref?: React.RefObject<HTMLElement | null> | null;
+  category?: K extends "subCategory" ? string : never;
+  context: FunnelContext;
 }
 
 const StepRenderer = <K extends StepKey>({
   stepKey,
   value,
   onValidSubmit,
+  context,
 }: StepRendererProps<K>) => {
   const StepComponent = stepComponentMap[stepKey] as React.FC<StepProps<K>>;
+
+  if (stepKey === "subCategory") {
+    return (
+      <StepComponent
+        value={value}
+        onValidSubmit={onValidSubmit}
+        {...(stepKey === "subCategory" ? { category: context.category } : {})}
+      />
+    );
+  }
 
   return <StepComponent value={value} onValidSubmit={onValidSubmit} />;
 };

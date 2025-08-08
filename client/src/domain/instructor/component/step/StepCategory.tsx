@@ -1,5 +1,6 @@
 import Chips from "@/shared/components/Chips.tsx";
 import { useState } from "react";
+import * as React from "react";
 
 const options = [
   "운동",
@@ -20,10 +21,14 @@ interface StepCategoryProps {
 const StepCategory = ({ value, onValidSubmit }: StepCategoryProps) => {
   const [localValue, setLocalValue] = useState(value ?? "");
 
-  const handleClick = (option: string) => {
-    setLocalValue(option);
-    onValidSubmit(option); // 직접 클릭한 값을 넘김
-  };
+  const handleClick = React.useCallback(
+    (option: string) => {
+      setLocalValue(option);
+      onValidSubmit(option);
+    },
+    [onValidSubmit]
+  );
+
   return (
     <div className="flex w-full flex-col gap-[50px] rounded-[var(--radius-20)] bg-white px-[40px] py-[36px]">
       <p className="typo-title-5">어떤 강좌를 만들까요?</p>
@@ -42,4 +47,4 @@ const StepCategory = ({ value, onValidSubmit }: StepCategoryProps) => {
   );
 };
 
-export default StepCategory;
+export default React.memo(StepCategory);
