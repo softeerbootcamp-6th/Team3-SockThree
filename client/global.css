@@ -104,6 +104,9 @@
   body {
     font-family: var(--font-pretendard);
     background-color: var(--color-bg);
+  }
+  html {
+    scroll-behavior: smooth;
     height: 100%;
     width: 100%;
   }

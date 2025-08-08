@@ -46,11 +46,8 @@ const Router = () => {
             <Route path="detail" element={<I.CourseDetailPage />} />
           </Route>
         </Route>
-
-        <Route element={<NoNavbarLayout />}>
-          <Route path="course">
-            <Route path="create" element={<I.CreateCoursePage />} />
-          </Route>
+        <Route path="course">
+          <Route path="create" element={<I.CreateCoursePage />} />
         </Route>
       </Route>
 
