@@ -25,6 +25,7 @@ public class LectureServiceImpl implements LectureService {
     private final LectureRepository lectureRepository;
     private final SubCategoryRepository subCategoryRepository;
     private final TeacherRepository teacherRepository;
+    private final WidgetSettingService widgetSettingService;
 
     @Override
     public LectureResponse createLecture(Long userId, LectureCreateRequest request) {
@@ -67,6 +68,8 @@ public class LectureServiceImpl implements LectureService {
                         uploadTime -> {
                             uploadTimeService.createUploadTime(uploadTime, lecture);
                         });
+
+        widgetSettingService.createDefaultWidgetSettings(lecture);
 
         return savedLecture;
     }
