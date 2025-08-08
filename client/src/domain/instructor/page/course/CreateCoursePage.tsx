@@ -8,9 +8,9 @@ const CreateCoursePage = () => {
     useFunnelState();
 
   return (
-    <div className="flex min-h-screen flex-col pr-[5rem] pl-[10rem]">
+    <div className="w-100vw flex min-h-screen flex-col pr-[5rem] pl-[10rem]">
       <FunnelHeader currentIndex={curStep} totalSteps={stepKeys.length} />
-      <main className="flex flex-row gap-7">
+      <main className="flex flex-1 gap-[2rem]">
         <FunnelForm
           context={funnelState}
           curStep={curStep}
