@@ -1,5 +1,5 @@
-import Navbar from "@/shared/components/Navbar/Navbar";
-import NavbarItem from "@/shared/components/Navbar/NavbarItem";
+import Navbar from "@/shared/components/Navbar/Navbar.tsx";
+import NavbarItem from "@/shared/components/Navbar/NavbarItem.tsx";
 
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router";

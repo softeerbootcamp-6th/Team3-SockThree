@@ -1,5 +1,5 @@
-import StudentLayout from "@/domain/student/layout/StudentLayout";
-import InstructorLayout from "@/domain/instructor/layout/InstructorLayout";
+import StudentLayout from "@/shared/layout/StudentLayout.tsx";
+import InstructorLayout from "@/shared/layout/InstructorLayout.tsx";
 import NoNavbarLayout from "@/shared/layout/NoNavbarLayout";
 
 import * as S from "@/domain/student/page";
