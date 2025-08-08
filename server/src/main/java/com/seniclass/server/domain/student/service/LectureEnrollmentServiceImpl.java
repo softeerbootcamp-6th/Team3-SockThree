@@ -12,6 +12,7 @@ import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
 import com.seniclass.server.domain.student.repository.LectureEnrollmentRepository;
 import com.seniclass.server.domain.student.repository.StudentRepository;
 import com.seniclass.server.global.exception.CommonException;
+import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -55,11 +56,7 @@ public class LectureEnrollmentServiceImpl implements LectureEnrollmentService {
         Lecture lecture =
                 lectureRepository
                         .findById(request.lectureId())
-                        .orElseThrow(
-                                () ->
-                                        new CommonException(
-                                                StudentErrorCode
-                                                        .INTERNAL_ERROR)); // 추후 LectureErrorCode로
+                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
         // 변경 필요
 
         // 이미 수강 등록한 강의인지 확인
