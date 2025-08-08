@@ -32,7 +32,8 @@ export const useFunnelState = () => {
     maxHeadCount: (value) => value > 0,
     uploadTimes: (value) => value?.length > 0,
     price: (value) => value >= 0,
-    introduction: (value) => !!value?.name && !!value?.description && !!value?.simpleDescription,
+    introduction: (value) =>
+      !!value?.name && !!value?.description && !!value?.simpleDescription,
     curriculum: (value) => !!value,
     imageUrl: (value) => !!value,
   };
@@ -45,7 +46,6 @@ export const useFunnelState = () => {
     },
     [funnelState]
   );
-
 
   const onValidChange = useCallback(
     <K extends StepKey>(key: K, value: FunnelContext[K]) => {

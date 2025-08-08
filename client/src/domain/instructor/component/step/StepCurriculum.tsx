@@ -6,7 +6,7 @@ interface StepCurriculumProps {
 }
 
 const StepCurriculum = ({ value, onValidSubmit }: StepCurriculumProps) => {
-  const [curriculum, setCurriculum] = useState(value ?? '');
+  const [curriculum, setCurriculum] = useState(value ?? "");
   const [error, setError] = useState<string | null>(null);
 
   const handleBlur = () => {

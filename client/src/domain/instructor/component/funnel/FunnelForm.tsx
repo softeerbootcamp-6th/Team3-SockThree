@@ -42,14 +42,19 @@ export const FunnelForm = ({
         if (i > curStep) return null;
 
         return (
-          <div id={`step-${String(stepKey)}`} ref={i === curStep ? stepRef : undefined} key={stepKey} className="scroll-snap-start mb-5 w-[71rem] scroll-mb-[150px]">
-          <StepRenderer
+          <div
+            id={`step-${String(stepKey)}`}
+            ref={i === curStep ? stepRef : undefined}
             key={stepKey}
-            stepKey={stepKey}
-            stepIndex={i}
-            value={context[stepKey]}
-            onValidSubmit={(val) => handleValidChange(stepKey, val)}
-          />
+            className="scroll-snap-start mb-5 w-[71rem] scroll-mb-[150px]"
+          >
+            <StepRenderer
+              key={stepKey}
+              stepKey={stepKey}
+              stepIndex={i}
+              value={context[stepKey]}
+              onValidSubmit={(val) => handleValidChange(stepKey, val)}
+            />
           </div>
         );
       })}

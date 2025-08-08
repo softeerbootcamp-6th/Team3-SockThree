@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { XIcon } from 'lucide-react';
-import Chips from '@/shared/components/Chips.tsx';
-import { Button } from '@/shared/shadcn/ui/button.tsx';
-import Select from '@/shared/components/Select.tsx';
+import { useEffect, useState } from "react";
+import { XIcon } from "lucide-react";
+import Chips from "@/shared/components/Chips.tsx";
+import { Button } from "@/shared/shadcn/ui/button.tsx";
+import Select from "@/shared/components/Select.tsx";
 
 interface StepUploadTimesProps {
   value?: string[];
@@ -10,13 +10,13 @@ interface StepUploadTimesProps {
 }
 
 const formatHourToKoreanTime = (hour: number): string => {
-  if (hour === 0) return '오전 12시';
+  if (hour === 0) return "오전 12시";
   if (hour < 12) return `오전 ${hour}시`;
-  if (hour === 12) return '오후 12시';
+  if (hour === 12) return "오후 12시";
   return `오후 ${hour - 12}시`;
 };
 
-const DAYS = ['월', '화', '수', '목', '금', '토', '일'];
+const DAYS = ["월", "화", "수", "목", "금", "토", "일"];
 
 const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
   value: i.toString(),
@@ -24,11 +24,11 @@ const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
 }));
 
 export default function StepUploadTimes({
-                                          value,
-                                          onValidSubmit,
-                                        }: StepUploadTimesProps) {
+  value,
+  onValidSubmit,
+}: StepUploadTimesProps) {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
-  const [selectedHour, setSelectedHour] = useState<string>('20');
+  const [selectedHour, setSelectedHour] = useState<string>("20");
   const [uploadTimes, setUploadTimes] = useState<string[]>(value ?? []);
   const [error, setError] = useState<string | null>(null);
 
@@ -49,7 +49,7 @@ export default function StepUploadTimes({
 
   const handleNext = () => {
     if (uploadTimes.length === 0) {
-      setError('최소 1개 이상 시간을 추가해주세요');
+      setError("최소 1개 이상 시간을 추가해주세요");
       return;
     }
     onValidSubmit(uploadTimes);
@@ -112,9 +112,7 @@ export default function StepUploadTimes({
         ))}
       </div>
 
-      {error && (
-        <p className="mt-2 text-sm text-red-500">{error}</p>
-      )}
+      {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
       {uploadTimes.length > 0 && (
         <div className="mt-6 flex justify-end">

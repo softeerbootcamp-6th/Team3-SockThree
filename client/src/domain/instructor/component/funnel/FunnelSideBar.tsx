@@ -1,8 +1,8 @@
 import CheckIcon from "@/assets/icons/default/check.svg?react";
 // import { cn } from '@/lib/utils'; // 없으면 className 직접 조건부 처리
 import Button from "@/shared/components/Button.tsx";
-import type { StepKey } from '@/domain/instructor/hook/useFunnelController';
-import type { FunnelContext } from '@/domain/instructor/types/funnel';
+import type { StepKey } from "@/domain/instructor/hook/useFunnelController";
+import type { FunnelContext } from "@/domain/instructor/types/funnel";
 import { useCallback } from "react";
 
 interface FunnelSideBarProps {
@@ -16,9 +16,8 @@ export const FunnelSideBar = ({
   stepKeys,
   curStep,
   funnelState,
-  isStepValid
+  isStepValid,
 }: FunnelSideBarProps) => {
-
   const renderSummary = useCallback(
     (key: StepKey): string => {
       const val = funnelState[key];
@@ -59,36 +58,33 @@ export const FunnelSideBar = ({
 
   return (
     <aside className="sticky top-[8.5rem] flex h-[50rem] w-[19rem] flex-col justify-between self-start rounded-[var(--radius-20)] bg-white p-[1.7rem]">
-      <ul className='space-y-2'>
-      {stepKeys.map((key, i) => {
-        const isDisabled = i >= curStep;
-        const summary = renderSummary(key);
-        const isValid = isStepValid(key) ?? false;
-        return (
-          <li
-            key={key}
-          >
-            <a
-              href={isDisabled ? undefined : `#step-${String(key)}`}
-              className={`... ${isDisabled ? "cursor-not-allowed" : ""}`}
-            />
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2">
-              <CheckIcon />
-              <span>{stepLabelMap[key]}</span>
-              </span>
-                {!isDisabled && (
-                  <span>
-                  {isValid ? summary : "수정 필요"}
+      <ul className="space-y-2">
+        {stepKeys.map((key, i) => {
+          const isDisabled = i >= curStep;
+          const summary = renderSummary(key);
+          const isValid = isStepValid(key) ?? false;
+          return (
+            <li key={key}>
+              <a
+                href={isDisabled ? undefined : `#step-${String(key)}`}
+                className={`... ${isDisabled ? "cursor-not-allowed" : ""}`}
+              />
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <CheckIcon />
+                  <span>{stepLabelMap[key]}</span>
                 </span>
-                )}
-            </div>
-          </li>
-        );
-      })}
+                {!isDisabled && <span>{isValid ? summary : "수정 필요"}</span>}
+              </div>
+            </li>
+          );
+        })}
       </ul>
-      <Button variant="default" size="md" disabled={
-        stepKeys.length !== curStep}>
+      <Button
+        variant="default"
+        size="md"
+        disabled={stepKeys.length !== curStep}
+      >
         강좌 생성하기
       </Button>
     </aside>
@@ -107,4 +103,3 @@ const stepLabelMap: Record<StepKey, string> = {
   curriculum: "커리큘럼",
   imageUrl: "썸네일",
 };
-

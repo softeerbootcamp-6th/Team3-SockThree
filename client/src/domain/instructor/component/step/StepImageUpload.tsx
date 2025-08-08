@@ -34,8 +34,8 @@ const StepImageUpload = ({ value, onValidSubmit }: StepImageUploadProps) => {
   useEffect(() => {
     if (!imageUrl || isCompleted) return;
 
-     onValidSubmit(imageUrl);
-      setIsCompleted(true);
+    onValidSubmit(imageUrl);
+    setIsCompleted(true);
   }, [imageUrl, onValidSubmit, isCompleted]);
 
   return (
