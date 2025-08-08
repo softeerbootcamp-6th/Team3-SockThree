@@ -16,7 +16,13 @@ public record LectureCreateRequest(
         @Schema(
                         description = "난이도",
                         example = "BEGINNER",
-                        allowableValues = {"BEGINNER", "INTERMEDIATE", "ADVANCED"})
+                        allowableValues = {
+                            "BEGINNER",
+                            "NOVICE",
+                            "INTERMEDIATE",
+                            "ADVANCED",
+                            "EXPERT"
+                        })
                 @NotNull(message = "난이도는 필수입니다.")
                 Level level,
         @Schema(description = "강의 시작일", example = "2024-08-01")
