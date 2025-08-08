@@ -20,6 +20,24 @@ export default tseslint.config([
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      sourceType: "module",
+    },
+    rules: {
+      "prefer-arrow-callback": "error",
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: ["../*", "./*", "*.ts", "**/*.ts", "*.tsx", "**/*.tsx"],
+        },
+      ],
+    },
+    settings: {
+      "import/resolver": {
+        alias: {
+          map: [["@", "./src"]],
+          extensions: [".ts", ".tsx"],
+        },
+      },
     },
   },
 ]);
