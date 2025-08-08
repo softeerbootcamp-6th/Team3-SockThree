@@ -50,7 +50,7 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
                                                 s.col(),
                                                 s.width(),
                                                 s.height(),
-                                                true,
+                                                s.visible(),
                                                 lecture))
                         .toList();
 
