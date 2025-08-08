@@ -1,18 +1,3 @@
-<svg viewBox="0 0 80 79" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g filter="url(#filter0_d_2001_3992)">
-<rect x="25.8008" y="4.01172" width="41.4316" height="41.4316" rx="5" transform="rotate(15.4704 25.8008 4.01172)" fill="#26CABA"/>
-<path d="M50.1687 24.8081L36.5019 35.4339L31.189 28.6005" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-</g>
-<defs>
-<filter id="filter0_d_2001_3992" x="0.902344" y="0.164062" width="78.6758" height="78.6797" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="10"/>
-<feGaussianBlur stdDeviation="7.5"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0.14902 0 0 0 0 0.792157 0 0 0 0 0.729412 0 0 0 0.3 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_2001_3992"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_2001_3992" result="shape"/>
-</filter>
-</defs>
+<svg width="18" height="13" viewBox="0 0 18 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M1 5.55277L6.66745 11.2202L16.1074 1.78027" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
