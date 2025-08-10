@@ -12,50 +12,58 @@ import {
   PolarGrid,
 } from "recharts";
 
-const data = [
-  { name: "2회", value: 100 },
-  { name: "3회", value: 50 },
-  { name: "4회", value: 60 },
-  { name: "5회", value: 60 },
-  { name: "6회", value: 20 },
-];
-
-const ageData = [
-  { subject: "50세", male: 10, female: 15, fullMark: 40 },
-  { subject: "55세", male: 18, female: 20, fullMark: 40 },
-  { subject: "60세", male: 20, female: 8, fullMark: 40 },
-  { subject: "65세", male: 15, female: 10, fullMark: 40 },
-  { subject: "70세", male: 12, female: 2, fullMark: 40 },
-  { subject: "75세", male: 5, female: 1, fullMark: 40 },
-];
-
-type CountMetric = {
-  label: string; // 예: "D+50 기준"
-  value: string; // 예: "7강"
+export type CountMetric = {
+  label: string;
+  value: string;
 };
 
-export interface StudentStatsWidgetProps {
-  size: "small" | "large";
-  title?: string; // 카드 제목
-  // ⬇️ count형(스샷의 좌측 2개 카드 형태)
-  countTop?: CountMetric; // 위 박스
-  countBottom?: CountMetric; // 아래 박스
-  countCaption?: string; // 하단 캡션 예: "평균 수강 강좌"
+type SmallProps = {
+  size: "small";
+  countTop?: CountMetric;
+  countBottom?: CountMetric;
+  ageData?: never;
+  homeworkData?: never;
+};
 
-  // ⬇️ large 전용: 차트 카드 2종(라인, 레이더) 캡션
-  lineChartCaption?: string; // 예: "평균 과제 제출률"
-  radarChartCaption?: string; // 예: "평균 수강 연령"
-}
+type LargeProps = {
+  size: "large";
+  countTop?: CountMetric;
+  countBottom?: CountMetric;
+  ageData: {
+    subject: string;
+    male: number;
+    female: number;
+    fullMark: number;
+  }[];
+  homeworkData: { name: string; value: number }[];
+};
+
+export type StudentStatsWidgetProps = SmallProps | LargeProps;
 
 const StudentStatsWidget = ({
   size,
-  title = "전체 수강생 현황",
   countTop = { label: "D+50 기준", value: "7강" },
   countBottom = { label: "D+70 기준", value: "10강" },
-  countCaption = "평균 수강 강좌",
-  lineChartCaption = "평균 과제 제출률",
-  radarChartCaption = "평균 수강 연령",
+  homeworkData = [
+    { name: "2회", value: 100 },
+    { name: "3회", value: 50 },
+    { name: "4회", value: 60 },
+    { name: "5회", value: 60 },
+    { name: "6회", value: 20 },
+  ],
+  ageData = [
+    { subject: "50세", male: 10, female: 15, fullMark: 40 },
+    { subject: "55세", male: 18, female: 20, fullMark: 40 },
+    { subject: "60세", male: 20, female: 8, fullMark: 40 },
+    { subject: "65세", male: 15, female: 10, fullMark: 40 },
+    { subject: "70세", male: 12, female: 2, fullMark: 40 },
+    { subject: "75세", male: 5, female: 1, fullMark: 40 },
+  ],
 }: StudentStatsWidgetProps) => {
+  const title = "전체 수강생 현황";
+  const lineChartCaption = "평균 과제 제출률";
+  const radarChartCaption = "평균 수강 연령";
+
   if (size === "small") {
     return (
       <div className="flex h-[20.5rem] w-[20.5rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white p-[1.5rem]">
@@ -96,7 +104,7 @@ const StudentStatsWidget = ({
             <div className="flex h-full w-full flex-col items-center justify-between pb-[1.5rem]">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart
-                  data={data}
+                  data={homeworkData}
                   margin={{ top: 30, left: 30, right: 30, bottom: 10 }}
                 >
                   <CartesianGrid vertical horizontal={false} />
