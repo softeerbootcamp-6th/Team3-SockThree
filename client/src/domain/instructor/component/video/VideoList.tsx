@@ -9,8 +9,8 @@ import DeleteIcon from "@/assets/icons/default/delete.svg?react";
 interface VideoData {
   id: number;
   videoTitle: string;
-  duration: string;
-  updatedAt: string;
+  duration: number;
+  updatedDate: Date;
 }
 
 interface VideoListProps {
@@ -65,7 +65,7 @@ const VideoList = ({ contentsTitle, videos }: VideoListProps) => {
               index={idx + 1}
               title={video.videoTitle}
               duration={video.duration}
-              updatedAt={video.updatedAt}
+              updatedDate={video.updatedDate}
             />
           ))}
         </div>
