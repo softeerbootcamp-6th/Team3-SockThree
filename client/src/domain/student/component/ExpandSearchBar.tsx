@@ -5,7 +5,6 @@ const ExpandSearchBar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
   const searchBarRef = useRef<HTMLDivElement>(null);
 
-  // 외부 클릭 감지
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -25,7 +24,7 @@ const ExpandSearchBar = () => {
   return (
     <div
       ref={searchBarRef}
-      className="relative flex w-[48.4375rem] items-center justify-end"
+      className="relative flex w-[48.4375rem] items-end justify-end"
     >
       {/* 검색 아이콘 버튼 */}
       {!isExpanded && (

@@ -12,7 +12,7 @@ const Navbar = ({ myPageItem, children }: NavbarProps) => {
       <div className="flex flex-col items-center justify-between gap-[2.25rem]">
         {/* 로고 */}
         <div className="flex flex-col items-center gap-4">
-          <Logo />
+          <Logo className="w-[6.8125rem]" />
         </div>
 
         {/* 메뉴 리스트 (중앙 정렬) */}
