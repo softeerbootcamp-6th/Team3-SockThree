@@ -24,7 +24,7 @@ const HomePage = () => {
       <div className="mt-[3.8125rem] mb-[2.8125rem] flex h-[.0625rem] w-full bg-gray-500" />
       <div className="flex w-[92.1875rem] flex-row items-end justify-between">
         <RecommendedCourseListView />
-        <Button variant={"outline"} textSize={"title2"}>
+        <Button variant="outline" textSize="title2">
           추천 강좌 둘러보기
         </Button>
       </div>

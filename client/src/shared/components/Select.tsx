@@ -38,17 +38,13 @@ const Select = ({
       onValueChange={onValueChange}
       disabled={disabled}
     >
-      <SelectTrigger
-        className={`min-w-[6rem] cursor-pointer border border-gray-600 px-3`}
-      >
+      <SelectTrigger className="min-w-[6rem] cursor-pointer border border-gray-600 px-3">
         <SelectValue
           placeholder={placeholder}
           className="typo-body-5 min-w-max truncate border border-gray-600"
         />
       </SelectTrigger>
-      <SelectContent
-        className={`max-h-[200px] min-w-max overflow-y-auto border border-gray-600 bg-white text-gray-600`}
-      >
+      <SelectContent className="max-h-[200px] min-w-max overflow-y-auto border border-gray-600 bg-white text-gray-600">
         {options.map((option) => (
           <SelectItem
             key={option.value}

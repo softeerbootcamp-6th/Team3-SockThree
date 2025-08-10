@@ -1,4 +1,4 @@
-import { Slider } from "@/shared/shadcn/ui/slider.tsx";
+import { Slider } from "@/shared/shadcn/ui/slider";
 import BalloonIcon from "@/assets/icons/gradient/balloon-tooltip.svg?react";
 
 interface MaxHeadCountSliderProps {

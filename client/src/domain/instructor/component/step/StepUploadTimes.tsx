@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { XIcon } from "lucide-react";
-import Chips from "@/shared/components/Chips.tsx";
-import { Button } from "@/shared/shadcn/ui/button.tsx";
-import Select from "@/shared/components/Select.tsx";
+import Chips from "@/shared/components/Chips";
+import { Button } from "@/shared/shadcn/ui/button";
+import Select from "@/shared/components/Select";
 
 interface StepUploadTimesProps {
   value?: string[];

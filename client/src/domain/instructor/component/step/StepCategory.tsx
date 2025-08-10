@@ -1,4 +1,4 @@
-import Chips from "@/shared/components/Chips.tsx";
+import Chips from "@/shared/components/Chips";
 import { useState } from "react";
 import * as React from "react";
 

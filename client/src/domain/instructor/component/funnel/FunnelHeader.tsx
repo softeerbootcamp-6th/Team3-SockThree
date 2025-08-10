@@ -1,4 +1,4 @@
-import ProgressBar from "@/shared/components/ProgressBar.tsx";
+import ProgressBar from "@/shared/components/ProgressBar";
 import CheckIcon from "@/assets/icons/default/rotated-check.svg?react";
 
 interface FunnelHeaderProps {

@@ -77,7 +77,7 @@ const QuestionWidget = ({
             placeholder="질문을 입력해주세요."
             className="h-[11.5rem] resize-none rounded-[.9375rem] bg-gray-100 px-[1rem] py-[.75rem] placeholder:text-gray-500 focus:outline-none"
           />
-          <Button variant={"outline"} size={"lgFlexible"} textSize={"title5"}>
+          <Button variant="outline" size="lgFlexible" textSize="title5">
             질문 등록하기
           </Button>
         </div>
@@ -90,10 +90,7 @@ const QuestionWidget = ({
 
 const renderQuestions = (questionList: Question[]) => {
   return questionList.slice(0, 6).map(({ questionID, questionTitle }) => (
-    <li
-      key={questionID}
-      className={"flex h-[21px] items-center justify-between"}
-    >
+    <li key={questionID} className="flex h-[21px] items-center justify-between">
       <div className="h-[.625rem] w-[.625rem] rounded-full bg-main-500" />
       <span className="typo-body-6 w-[16.375rem]">{questionTitle}</span>
       <button className="typo-label-3 cursor-pointer text-gray-500">{`보기 >`}</button>

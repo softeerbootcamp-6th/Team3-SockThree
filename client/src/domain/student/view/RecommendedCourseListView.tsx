@@ -37,7 +37,7 @@ const RecommendedCourseListView = () => {
           추천 강좌 TOP{recommendLength}
         </span>
       </div>
-      <div className={"relative h-[10.4375rem] w-[51.6875rem]"}>
+      <div className="relative h-[10.4375rem] w-[51.6875rem]">
         <RecommendedCourseListCarousel originalListItems={originalListItems} />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent to-bg" />
       </div>
