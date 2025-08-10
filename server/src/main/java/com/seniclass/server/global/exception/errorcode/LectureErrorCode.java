@@ -11,7 +11,6 @@ public enum LectureErrorCode implements BaseErrorCode {
     LECTURE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 강좌 정보입니다."),
     SUB_CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 서브 카테고리입니다."),
     ASSIGNMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 과제입니다."),
-
     ;
 
     private final HttpStatus httpStatus;

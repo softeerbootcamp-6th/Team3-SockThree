@@ -10,11 +10,10 @@ import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.global.exception.errorcode.UserErrorCode;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Objects;
 
 @Service
 @Transactional
@@ -26,17 +25,20 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public AssignmentResponse createAssignment(Long userId, AssignmentCreateRequest request) {
-        Lecture lecture = lectureRepository.findById(request.lectureId())
-                .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
+        Lecture lecture =
+                lectureRepository
+                        .findById(request.lectureId())
+                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
 
         validateTeacherOwnership(userId, lecture);
 
-        Assignment assignment = Assignment.createAssignment(
-                request.title(),
-                request.content(),
-                request.fileLink(),
-                request.dueDateTime(),
-                lecture);
+        Assignment assignment =
+                Assignment.createAssignment(
+                        request.title(),
+                        request.content(),
+                        request.fileLink(),
+                        request.dueDateTime(),
+                        lecture);
         Assignment savedAssignment = assignmentRepository.save(assignment);
 
         return AssignmentResponse.from(savedAssignment);
@@ -50,15 +52,13 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     @Override
-    public AssignmentResponse updateAssignment(Long userId, Long assignmentId, AssignmentUpdateRequest request) {
+    public AssignmentResponse updateAssignment(
+            Long userId, Long assignmentId, AssignmentUpdateRequest request) {
         Assignment assignment = getAssignmentEntity(assignmentId);
         validateTeacherOwnership(userId, assignment.getLecture());
 
         assignment.updateAssignment(
-                request.title(),
-                request.content(),
-                request.fileLink(),
-                request.dueDateTime());
+                request.title(), request.content(), request.fileLink(), request.dueDateTime());
 
         return AssignmentResponse.from(assignment);
     }
@@ -72,7 +72,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     private Assignment getAssignmentEntity(Long assignmentId) {
-        return assignmentRepository.findById(assignmentId)
+        return assignmentRepository
+                .findById(assignmentId)
                 .orElseThrow(() -> new CommonException(LectureErrorCode.ASSIGNMENT_NOT_FOUND));
     }
 

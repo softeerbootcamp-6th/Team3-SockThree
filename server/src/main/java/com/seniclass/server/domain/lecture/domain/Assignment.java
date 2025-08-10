@@ -65,10 +65,7 @@ public class Assignment extends BaseTimeEntity {
     }
 
     public void updateAssignment(
-            String name,
-            String instruction,
-            String fileLink,
-            LocalDateTime dueDateTime) {
+            String name, String instruction, String fileLink, LocalDateTime dueDateTime) {
         this.name = name;
         this.instruction = instruction;
         this.fileLink = fileLink;

@@ -6,13 +6,7 @@ import lombok.Builder;
 
 @Builder
 public record AssignmentResponse(
-        Long id,
-        String title,
-        String content,
-        String fileLink,
-        LocalDate dueDate,
-        Long lectureId
-) {
+        Long id, String title, String content, String fileLink, LocalDate dueDate, Long lectureId) {
     public static AssignmentResponse from(Assignment assignment) {
         return AssignmentResponse.builder()
                 .id(assignment.getId())
