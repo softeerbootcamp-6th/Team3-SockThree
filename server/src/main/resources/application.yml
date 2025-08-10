@@ -57,3 +57,10 @@ logging:
     com.seniclass.server.domain.auth: DEBUG
     org.springframework.data.redis: DEBUG
     root: INFO
+    org.springframework.boot.context.config: DEBUG
+
+# AWS S3 설정
+aws:
+  region: ap-northeast-2
+  s3:
+    bucket: senicle-bucket
