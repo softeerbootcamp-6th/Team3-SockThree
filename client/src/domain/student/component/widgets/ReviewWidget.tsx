@@ -5,7 +5,7 @@ import GradationChip from "@/shared/components/GradationChip";
 type Review = {
   id: number;
   author: string;
-  rating: number; // 0~5
+  rating: number; // 0~5 (0.5 단위 지원)
   text: string;
   verifiedPercent?: number; // ex) 88 -> "88% 수강"
 };
@@ -34,14 +34,14 @@ const ReviewWidgets = ({
     {
       id: 2,
       author: "김철수",
-      rating: 4,
+      rating: 2.5,
       text: "오프라인이 아닌 온라인 수업이어서 걱정했는데 텍스트 더미입니다.",
       verifiedPercent: 80,
     },
     {
       id: 3,
       author: "이영희",
-      rating: 3,
+      rating: 3.5,
       text: "오프라인이 아닌 온라인 수업이어서 걱정했는데 텍스트 더미입니다. 어쩌고고고고고고고",
       verifiedPercent: 50,
     },
@@ -74,6 +74,7 @@ const ReviewWidgets = ({
             아직 리뷰가 없습니다.
           </div>
         )}
+
         <div className="flex w-full justify-end">
           <button
             type="button"
@@ -180,7 +181,7 @@ const ReviewCard = ({
   verifiedPercent = 0,
 }: {
   author: string;
-  rating: number;
+  rating: number; // 0~5 (0.5 단위 지원)
   text: string;
   verifiedPercent?: number;
 }) => {
@@ -214,18 +215,36 @@ const ReviewCard = ({
 };
 
 const StarRating = ({ value }: { value: number }) => {
-  // 정수부만 채워진 별. 퍼블리싱 단계라 간단히 5개 고정으로 표현
-  const stars = Array.from({ length: 5 });
+  // 안전 범위 보정
+  const v = Math.max(0, Math.min(5, value ?? 0));
+
   return (
-    <span className="inline-flex items-center gap-[2px]">
-      {stars.map((_, i) => (
-        <StarIcon
-          key={i}
-          className={`h-[0.875rem] w-[0.875rem] ${
-            i < Math.round(value) ? "" : "opacity-30"
-          }`}
-        />
-      ))}
+    <span
+      className="inline-flex items-center gap-[2px]"
+      aria-label={`별점 ${v}점 (5점 만점)`}
+    >
+      {Array.from({ length: 5 }).map((_, i) => {
+        // 현재 칸의 채움 비율(0~100)
+        const fill = Math.max(0, Math.min(100, (v - i) * 100));
+        // 1칸을 넘어가면 100, 음수면 0으로 자동 보정
+        const pct = fill >= 100 ? 100 : fill <= 0 ? 0 : fill;
+
+        return (
+          <span
+            key={i}
+            className="relative inline-block h-[0.875rem] w-[0.875rem]"
+            aria-hidden="true"
+          >
+            <StarIcon className="absolute inset-0 h-[0.875rem] w-[0.875rem] opacity-30" />
+            <span
+              className="absolute inset-0 overflow-hidden"
+              style={{ width: `${pct}%` }}
+            >
+              <StarIcon className="h-[0.875rem] w-[0.875rem]" />
+            </span>
+          </span>
+        );
+      })}
     </span>
   );
 };
