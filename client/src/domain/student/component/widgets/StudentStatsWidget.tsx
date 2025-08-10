@@ -6,6 +6,10 @@ import {
   XAxis,
   CartesianGrid,
   ResponsiveContainer,
+  Radar,
+  RadarChart,
+  PolarAngleAxis,
+  PolarGrid,
 } from "recharts";
 
 const data = [
@@ -14,6 +18,15 @@ const data = [
   { name: "4회", value: 60 },
   { name: "5회", value: 60 },
   { name: "6회", value: 20 },
+];
+
+const ageData = [
+  { subject: "50세", male: 10, female: 15, fullMark: 40 },
+  { subject: "55세", male: 18, female: 20, fullMark: 40 },
+  { subject: "60세", male: 20, female: 8, fullMark: 40 },
+  { subject: "65세", male: 15, female: 10, fullMark: 40 },
+  { subject: "70세", male: 12, female: 2, fullMark: 40 },
+  { subject: "75세", male: 5, female: 1, fullMark: 40 },
 ];
 
 type CountMetric = {
@@ -111,7 +124,6 @@ const StudentStatsWidget = ({
                             strokeWidth={2}
                             fill="#fff"
                           />
-                          {/* activeDot에 라벨을 붙이고 싶으면 여기서 */}
                           <text
                             x={cx}
                             y={cy - 10}
@@ -144,9 +156,69 @@ const StudentStatsWidget = ({
           </FramedBox>
 
           <FramedBox>
-            <span className="typo-label-3 mt-3 mb-2 text-center text-gray-700">
-              {radarChartCaption}
-            </span>
+            <div className="flex h-full w-full flex-col items-center justify-between pb-[1rem]">
+              <ResponsiveContainer width="100%" height="100%">
+                <RadarChart
+                  cx="50%"
+                  cy="57%"
+                  outerRadius="75%"
+                  data={ageData}
+                  startAngle={60}
+                  endAngle={-300}
+                >
+                  <PolarGrid radialLines={false} />
+                  <PolarAngleAxis dataKey="subject" />
+                  <Radar
+                    name="남성"
+                    dataKey="male"
+                    stroke="#00bfae"
+                    fill="url(#maleGradient)"
+                    fillOpacity={0.6}
+                  />
+                  <Radar
+                    name="여성"
+                    dataKey="female"
+                    stroke="#ff6b81"
+                    fill="url(#femaleGradient)"
+                    fillOpacity={0.6}
+                  />
+                  <defs>
+                    <linearGradient
+                      id="maleGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#00bfae" stopOpacity={0.7} />
+                      <stop
+                        offset="100%"
+                        stopColor="#00bfae"
+                        stopOpacity={0.3}
+                      />
+                    </linearGradient>
+                    <linearGradient
+                      id="femaleGradient"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
+                      <stop offset="0%" stopColor="#ff6b81" stopOpacity={0.7} />
+                      <stop
+                        offset="100%"
+                        stopColor="#ff6b81"
+                        stopOpacity={0.3}
+                      />
+                    </linearGradient>
+                  </defs>
+                </RadarChart>
+              </ResponsiveContainer>
+
+              <span className="typo-label-3 mt-3 mb-2 text-center text-gray-700">
+                {radarChartCaption}
+              </span>
+            </div>
           </FramedBox>
         </div>
       </div>
