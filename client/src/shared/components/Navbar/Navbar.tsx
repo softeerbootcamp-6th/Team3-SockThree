@@ -27,7 +27,7 @@ const Navbar = ({ myPageItem, children }: NavbarProps) => {
         <ul className="flex flex-col items-center">{myPageItem}</ul>
 
         {/* 로그아웃 버튼 */}
-        <Button variant={"ghost"} size={"xs"}>
+        <Button variant="ghost" size="xs">
           로그아웃
         </Button>
       </div>

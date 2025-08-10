@@ -1,6 +1,6 @@
 import CheckIcon from "@/assets/icons/default/check.svg?react";
 // import { cn } from '@/lib/utils'; // 없으면 className 직접 조건부 처리
-import Button from "@/shared/components/Button.tsx";
+import Button from "@/shared/components/Button";
 import type { StepKey } from "@/domain/instructor/hook/useFunnelController";
 import type { FunnelContext } from "@/domain/instructor/types/funnel";
 import { useCallback } from "react";

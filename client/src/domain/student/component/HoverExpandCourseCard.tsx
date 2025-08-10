@@ -100,7 +100,7 @@ const cardBottomContainer = (cardData: CardData) => {
         <div className="flex flex-row gap-[.9375rem]">
           <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
           <ProgressBar
-            type={"ratio"}
+            type="ratio"
             current={cardData.nowStudents}
             max={cardData.maxStudents}
           />

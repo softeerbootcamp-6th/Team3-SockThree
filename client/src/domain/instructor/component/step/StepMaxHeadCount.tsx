@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import MaxHeadCountSlider from "@/domain/instructor/component/Slider.tsx";
+import MaxHeadCountSlider from "@/domain/instructor/component/Slider";
 
 interface StepMaxHeadCountProps {
   value?: number;

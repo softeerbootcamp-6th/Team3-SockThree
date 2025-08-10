@@ -1,18 +1,18 @@
-import StepCategory from "@/domain/instructor/component/step/StepCategory.tsx";
-import StepSubCategory from "@/domain/instructor/component/step/StepSubCategory.tsx";
-import StepLevel from "@/domain/instructor/component/step/StepLevel.tsx";
-import StepDateRange from "@/domain/instructor/component/step/StepDateRange.tsx";
-import StepMaxHeadCount from "@/domain/instructor/component/step/StepMaxHeadCount.tsx";
-import StepUploadTimes from "@/domain/instructor/component/step/StepUploadTimes.tsx";
-import StepPrice from "@/domain/instructor/component/step/StepPrice.tsx";
-import StepIntroduction from "@/domain/instructor/component/step/StepIntroduction.tsx";
-import StepCurriculum from "@/domain/instructor/component/step/StepCurriculum.tsx";
-import StepImageUpload from "@/domain/instructor/component/step/StepImageUpload.tsx";
+import StepCategory from "@/domain/instructor/component/step/StepCategory";
+import StepSubCategory from "@/domain/instructor/component/step/StepSubCategory";
+import StepLevel from "@/domain/instructor/component/step/StepLevel";
+import StepDateRange from "@/domain/instructor/component/step/StepDateRange";
+import StepMaxHeadCount from "@/domain/instructor/component/step/StepMaxHeadCount";
+import StepUploadTimes from "@/domain/instructor/component/step/StepUploadTimes";
+import StepPrice from "@/domain/instructor/component/step/StepPrice";
+import StepIntroduction from "@/domain/instructor/component/step/StepIntroduction";
+import StepCurriculum from "@/domain/instructor/component/step/StepCurriculum";
+import StepImageUpload from "@/domain/instructor/component/step/StepImageUpload";
 
 import * as React from "react";
 import type { FunnelContext } from "@/domain/instructor/types/funnel";
-import type { StepKey } from "@/domain/instructor/hook/useFunnelState.ts";
-import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll.ts";
+import type { StepKey } from "@/domain/instructor/hook/useFunnelState";
+import { useFunnelScroll } from "@/domain/instructor/hook/useFunnellScroll";
 
 interface FunnelFormProps {
   context: FunnelContext;
