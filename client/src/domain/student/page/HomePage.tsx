@@ -18,12 +18,11 @@ const HomePage = () => {
             얼마 남지 않았어요!
           </span>
         </div>
-
         <ExpandSearchBar />
       </div>
       <HoverExpandCourseCardView />
-      <div className="mt-[3.8125rem] mb-[2.8125rem] flex h-[.0625rem] w-full bg-gray-500" />
-      <div className="flex w-full flex-row items-end justify-between">
+      <hr className="my-[3.375rem] h-[.0625rem] w-full text-gray-500" />
+      <div className="flex h-[21.5rem] w-full flex-row items-end justify-between">
         <RecommendedCourseListView />
         <Button variant={"outline"} textSize={"title2"}>
           추천 강좌 둘러보기
