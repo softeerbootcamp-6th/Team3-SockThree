@@ -7,7 +7,8 @@ const CourseDetailPage = () => {
         courseInfo={{
           id: 1,
           title: "골프 기초부터 마스터하기",
-          description: "골프의 기초부터 고급 기술까지 배울 수 있는 종합 과정입니다.",
+          description:
+            "골프의 기초부터 고급 기술까지 배울 수 있는 종합 과정입니다.",
           heartCount: 100,
           tags: ["운동", "골프", "월/수/금", "D-7"],
           teacherName: "강사 이름",
