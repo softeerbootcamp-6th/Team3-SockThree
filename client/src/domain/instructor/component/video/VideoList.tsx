@@ -62,7 +62,7 @@ const VideoList = ({ contentsTitle, videos }: VideoListProps) => {
           {videos.map((video, idx) => (
             <VideoListItem
               key={video.id}
-              index={idx}
+              index={idx + 1}
               title={video.videoTitle}
               duration={video.duration}
               updatedAt={video.updatedAt}
