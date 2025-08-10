@@ -125,11 +125,10 @@ const StudentStatsWidget = ({
                             fill="#fff"
                           />
                           <text
+                            className="typo-label-3"
+                            fill="var(--color-gray-600)"
                             x={cx}
                             y={cy - 10}
-                            textAnchor="middle"
-                            fill="#222"
-                            fontWeight="bold"
                           >
                             {payload.value}%
                           </text>
