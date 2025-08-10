@@ -52,7 +52,10 @@ function Button({
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, textSize, className }))}
+      className={cn(
+        buttonVariants({ variant, size, textSize }),
+        className // 외부에서 주입한 override 클래스
+      )}
       {...props}
     />
   );
