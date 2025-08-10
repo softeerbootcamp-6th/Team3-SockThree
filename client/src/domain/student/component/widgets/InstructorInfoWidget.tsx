@@ -54,7 +54,7 @@ const InstructorWidget = ({
 }: InstructorInfoWidgetProps) => {
   if (size === "small") {
     return (
-      <div className="flex min-h-[20rem] min-w-[20rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white px-[1.5625rem] py-[1.9063rem]">
+      <div className="flex h-[20.5rem] w-[20.5rem] flex-col justify-center gap-[1rem] rounded-[1.25rem] bg-white p-[1.5rem]">
         {/* 프로필 영역 */}
         <div className="flex items-center gap-[.75rem]">
           <Avatar src={avatarUrl} />
@@ -97,56 +97,57 @@ const InstructorWidget = ({
 
   if (size === "large") {
     return (
-      <div className="flex h-[23.875rem] w-[74.9375rem] flex-col rounded-[1.25rem] bg-white px-[2rem] py-[1.75rem]">
+      <div className="flex h-[20.5rem] w-[63.5rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white p-[1.5rem]">
         {/* 상단 영역 */}
-        <div className="flex flex-1 items-start gap-[2rem]">
+        <div className="flex w-full flex-1/4 items-center justify-start gap-[4rem]">
           {/* 프로필 영역 */}
-          <section className="flex w-[40%] items-start gap-[1.25rem]">
+          <section className="flex items-center gap-[1.25rem]">
+            {/* 프로필 이미지 */}
             <Avatar src={avatarUrl} size="lg" />
-            <div className="flex flex-col">
+            {/* 텍스트 영역 */}
+            <div className="flex flex-col gap-[0.75rem]">
+              {/* 이름 영역 */}
               <div className="flex items-center gap-[.5rem]">
-                <span className="typo-title-3 text-gray-900">{name}</span>
-                {title ? (
-                  <span className="typo-label-2 text-gray-500">{title}</span>
-                ) : null}
+                <span className="typo-title-4 text-gray-900">{name}</span>
+                <span className="typo-label-2 text-gray-500">
+                  {title ?? ""}
+                </span>
               </div>
-
-              <div className="mt-[.75rem] flex items-center gap-[.75rem]">
-                <div className="typo-label-3 rounded-full bg-main-100 px-[.75rem] py-[.375rem] text-main-700">
-                  신뢰도 {trustPercent}%
-                </div>
-                <div className="flex items-center gap-[.375rem]">
-                  <span className="typo-label-3">★</span>
-                  <span className="typo-label-3">{rating}</span>
+              {/* 인기도 영역 */}
+              <div className="flex items-center justify-start gap-[.75rem]">
+                <GradationChip>
+                  <div className="typo-label-4 flex items-center gap-1">
+                    <span className="text-gray-600">신뢰도</span>
+                    <span className="typo-label-3">{trustPercent}%</span>
+                  </div>
+                </GradationChip>
+                <div className="flex items-end justify-center gap-1">
+                  <StarIcon className="w-[1rem]" />
+                  <span className="typo-label-0">{rating}</span>
                 </div>
               </div>
-
-              {tagline ? (
-                <p className="typo-body-6 mt-[.875rem] text-gray-700">
-                  “{tagline}”
-                </p>
-              ) : null}
+              {/* 태그라인 영역 */}
+              <p className="typo-body-6 text-gray-700">{tagline}</p>
             </div>
           </section>
-
           {/* 세로 구분선 */}
-          <div className="h-[6.5rem] w-px self-start bg-gray-300" />
+          <div className="h-full w-px self-start bg-gray-300" />
 
           {/* 강사 정보(우측 2열) */}
-          <section className="flex w-[60%] flex-col">
+          <section className="flex flex-col gap-[1rem]">
             <span className="typo-label-2 text-gray-500">강사 정보</span>
-            <ul className="mt-[.75rem] grid grid-cols-2 gap-x-[3rem] gap-y-[.75rem] text-gray-700">
+            <ul className="grid grid-cols-2 gap-x-[4rem] gap-y-[.75rem] text-gray-700">
               {renderBullets([...leftBullets, ...rightBullets])}
             </ul>
           </section>
         </div>
 
         {/* 하단 구분선 */}
-        <div className="mt-[1.25rem] h-px w-full bg-gray-300" />
+        <div className="h-px w-full bg-gray-300" />
 
         {/* 하단 지표 6칸 */}
         {stats.length > 0 ? (
-          <section className="mt-[1rem] grid grid-cols-6 gap-[.75rem]">
+          <section className="grid grid-cols-6 gap-[.75rem]">
             {stats.map((s) => (
               <StatBox key={s.key} label={s.label} value={s.value} />
             ))}
@@ -166,7 +167,7 @@ const Avatar = ({
   src?: string | null;
   size?: "md" | "lg";
 }) => {
-  const box = size === "lg" ? "h-[4.5rem] w-[4.5rem]" : "h-[3.5rem] w-[3.5rem]";
+  const box = size === "lg" ? "h-[6.5rem] w-[6.5rem]" : "h-[3.5rem] w-[3.5rem]";
   return src ? (
     <img
       src={src}
@@ -179,7 +180,7 @@ const Avatar = ({
 };
 
 const StatBox = ({ label, value }: { label: string; value: string }) => (
-  <div className="flex h-[4.25rem] flex-col items-center justify-center rounded-[.75rem] bg-gray-50">
+  <div className="flex h-[4.25rem] flex-col items-center justify-center gap-[0.25rem] rounded-[.75rem] bg-gray-50">
     <span className="typo-label-3 text-gray-500">{label}</span>
     <span className="typo-title-6 text-gray-900">{value}</span>
   </div>
