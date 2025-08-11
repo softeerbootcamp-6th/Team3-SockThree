@@ -12,7 +12,7 @@ const CourseDetailPage = () => {
           heartCount: 100,
           tags: ["운동", "골프", "월/수/금", "D-7"],
           teacherName: "강사 이름",
-          nowStudents: 10,
+          nowStudents: 30,
           maxStudents: 30,
           courseImg:
             "https://t4.ftcdn.net/jpg/02/42/33/71/360_F_242337142_2rtf0nXrG4N1MGs8gKGswtg5si1TfPEX.jpg",

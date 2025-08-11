@@ -70,7 +70,13 @@ const cardBottomContainer = ({
         <p className="typo-title-0 truncate">{title}</p>
       </div>
       <div className="W-[32.0625rem] flex flex-col items-center gap-y-[.25rem]">
-        <RoundTooltip text={`${maxStudents - nowStudents}명 남았어요`} />
+        <RoundTooltip
+          text={
+            maxStudents - nowStudents !== 0
+              ? `${maxStudents - nowStudents}명 남았어요`
+              : "정원이 모두 찼어요"
+          }
+        />
         <div className="flex flex-row gap-[.9375rem]">
           <PersonIcon className="w-[1.625rem] text-white" />
           <ProgressBar
