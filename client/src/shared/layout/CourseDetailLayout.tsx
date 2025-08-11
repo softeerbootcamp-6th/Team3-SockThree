@@ -1,25 +1,11 @@
 import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
 import { CourseInfoCardDefault } from "@/domain/student/component/course/CourseInfoCardDefault";
-import { Outlet, NavLink, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
+import CourseDetailTabBar from "@/shared/components/course/CourseDetailTabBar";
 
 const CourseDetailLayout = () => {
   const { courseId } = useParams(); // 이 id를 통해 렌더링 불러옴
-  const isEnrolled = false;
   console.log(courseId);
-  const baseTabs = [
-    { to: "curriculum", label: "커리큘럼" },
-    { to: "reviews", label: "리뷰" },
-  ];
-  const extraTabs = [
-    { to: "dashboard", label: "대시보드", gated: true },
-    { to: "assignments", label: "과제" },
-    { to: "questions", label: "질문" },
-  ];
-
-  const tabs = [
-    ...baseTabs,
-    ...(isEnrolled ? extraTabs : extraTabs.filter((t) => !t.gated)),
-  ];
 
   return (
     <main className="mx-auto w-full max-w-screen-2xl px-4 sm:px-6 lg:px-8">
@@ -49,29 +35,7 @@ const CourseDetailLayout = () => {
               </span>
             </div>
           </div>
-          <nav className="sticky top-[5rem] z-100 border-b border-gray-200 bg-white/80 backdrop-blur">
-            <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
-              <div role="tablist" className="flex h-12 items-center gap-6">
-                {tabs.map(({ to, label }) => (
-                  <NavLink
-                    key={to}
-                    to={to}
-                    end
-                    className={({ isActive }) =>
-                      [
-                        "inline-flex h-12 items-center border-b-2 text-sm font-medium",
-                        isActive
-                          ? "border-gray-900 text-gray-900"
-                          : "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-900",
-                      ].join(" ")
-                    }
-                  >
-                    {label}
-                  </NavLink>
-                ))}
-              </div>
-            </div>
-          </nav>
+          <CourseDetailTabBar isEnrolled={true} />
           <div className="flex-1">
             <Outlet />
           </div>
