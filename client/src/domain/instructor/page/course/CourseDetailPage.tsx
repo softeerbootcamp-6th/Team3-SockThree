@@ -2,7 +2,7 @@ import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
 
 const CourseDetailPage = () => {
   return (
-    <div className="flex h-full w-full flex-col overflow-y-auto pt-[4rem] pr-[3.5625rem] pb-[3.75rem] pl-[2.8125rem]">
+    <div className="flex h-full w-[75rem] flex-col overflow-y-auto pt-[4rem] pr-[3.5625rem] pb-[3.75rem] pl-[2.8125rem]">
       <CourseInfoCard
         courseInfo={{
           id: 1,

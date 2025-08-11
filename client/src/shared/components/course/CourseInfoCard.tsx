@@ -26,7 +26,7 @@ const CourseInfoCard = (cardData: CourseInfoCardProps) => {
 
   return (
     <div
-      className="relative h-[21.3125rem] w-[75rem] rounded-[1.25rem] bg-cover bg-center"
+      className="relative h-[21.3125rem] w-full rounded-[1.25rem] bg-cover bg-center"
       style={{ backgroundImage: `url(${courseImg})` }}
     >
       <div className="absolute inset-0 overflow-hidden rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.5625rem] py-[1.25rem]">
