@@ -29,7 +29,7 @@ const CourseDetailTabBar = ({
   }
 
   return (
-    <nav className="sticky top-[5rem] z-100 w-full bg-bg backdrop-blur">
+    <nav className="sticky top-[5rem] z-100 w-full bg-bg py-[1rem] backdrop-blur">
       <div className="mx-auto max-w-screen-2xl border-b border-gray-300 px-4 sm:px-6 lg:px-8">
         <div role="tablist" className="flex h-16 items-end gap-8">
           {tabs.map(({ to, label }) => (
