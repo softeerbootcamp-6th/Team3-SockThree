@@ -26,6 +26,11 @@ spring:
           max-active: 8
           max-idle: 8
           min-idle: 0
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+      file-size-threshold: 2KB
 
 # Actuator 헬스체크 설정
 management:
@@ -57,7 +62,11 @@ logging:
     com.seniclass.server.domain.auth: DEBUG
     org.springframework.data.redis: DEBUG
     root: INFO
-    org.springframework.boot.context.config: DEBUG
+
+# 파일 저장 설정
+file:
+  upload-dir: ./uploads/assignments
+  max-file-size: 50MB
 
 aws:
   region: ap-northeast-2
