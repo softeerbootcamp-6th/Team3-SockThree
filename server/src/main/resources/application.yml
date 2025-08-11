@@ -58,3 +58,8 @@ logging:
     org.springframework.data.redis: DEBUG
     root: INFO
     org.springframework.boot.context.config: DEBUG
+
+aws:
+  region: ap-northeast-2
+  s3:
+    bucket: senicle-bucket
