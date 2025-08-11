@@ -1,18 +1,19 @@
 package com.seniclass.server.domain.student.service;
 
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionRequest;
+import com.seniclass.server.domain.student.dto.AssignmentSubmissionFileRequest;
 import com.seniclass.server.domain.student.dto.AssignmentSubmissionResponse;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface AssignmentSubmissionService {
 
-    /** 과제 제출 */
-    AssignmentSubmissionResponse submitAssignment(AssignmentSubmissionRequest request);
+    /** 과제 제출 (파일 업로드) */
+    AssignmentSubmissionResponse submitAssignmentWithFile(AssignmentSubmissionFileRequest request);
 
-    /** 과제 제출 수정 */
-    AssignmentSubmissionResponse updateSubmission(
-            Long submissionId, AssignmentSubmissionRequest request);
+    /** 과제 제출 수정 (파일 업로드) */
+    AssignmentSubmissionResponse updateSubmissionWithFile(
+            Long submissionId, AssignmentSubmissionFileRequest request);
 
     /** 과제 제출 삭제 */
     void deleteSubmission(Long submissionId);
@@ -32,4 +33,7 @@ public interface AssignmentSubmissionService {
 
     /** 현재 학생의 총 과제 제출 수 조회 */
     long getCurrentStudentSubmissionCount();
+
+    /** 제출된 파일 다운로드 */
+    Resource downloadSubmissionFile(Long submissionId);
 }

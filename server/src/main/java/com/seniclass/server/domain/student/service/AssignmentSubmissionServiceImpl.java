@@ -1,11 +1,12 @@
 package com.seniclass.server.domain.student.service;
 
+import com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode;
 import com.seniclass.server.domain.auth.service.AuthContext;
 import com.seniclass.server.domain.lecture.domain.Assignment;
 import com.seniclass.server.domain.lecture.repository.AssignmentRepository;
 import com.seniclass.server.domain.student.domain.AssignmentSubmission;
 import com.seniclass.server.domain.student.domain.Student;
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionRequest;
+import com.seniclass.server.domain.student.dto.AssignmentSubmissionFileRequest;
 import com.seniclass.server.domain.student.dto.AssignmentSubmissionResponse;
 import com.seniclass.server.domain.student.exception.errorcode.AssignmentSubmissionErrorCode;
 import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
@@ -13,9 +14,11 @@ import com.seniclass.server.domain.student.repository.AssignmentSubmissionReposi
 import com.seniclass.server.domain.student.repository.StudentRepository;
 import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
+import com.seniclass.server.global.service.FileStorageService;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,12 +33,15 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
     private final AssignmentSubmissionRepository assignmentSubmissionRepository;
     private final StudentRepository studentRepository;
     private final AssignmentRepository assignmentRepository;
+    private final FileStorageService fileStorageService;
 
-    /** 과제 제출 */
+    /** 파일로 과제 제출 */
     @Transactional
     @Override
-    public AssignmentSubmissionResponse submitAssignment(AssignmentSubmissionRequest request) {
+    public AssignmentSubmissionResponse submitAssignmentWithFile(
+            AssignmentSubmissionFileRequest request) {
         Long studentId = AuthContext.getCurrentUserId();
+        log.info("학생 {}가 과제 {}에 파일로 제출합니다", studentId, request.assignmentId());
 
         Student student =
                 studentRepository
@@ -45,11 +51,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
         Assignment assignment =
                 assignmentRepository
                         .findById(request.assignmentId())
-                        .orElseThrow(
-                                () ->
-                                        new CommonException(
-                                                LectureErrorCode.LECTURE_NOT_FOUND)); // 추후
-        // AssignmentErrorCode로 변경
+                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
 
         // 이미 제출한 과제인지 확인
         if (assignmentSubmissionRepository.existsByStudentIdAndAssignmentId(
@@ -58,31 +60,28 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
                     AssignmentSubmissionErrorCode.ASSIGNMENT_SUBMISSION_ALREADY_EXISTS);
         }
 
-        // 제출 기한 확인
+        // 마감일 체크
         if (assignment.getDueDateTime() != null
-                && LocalDateTime.now().isAfter(assignment.getDueDateTime())) {
+                && assignment.getDueDateTime().isBefore(LocalDateTime.now())) {
             throw new CommonException(AssignmentSubmissionErrorCode.ASSIGNMENT_DEADLINE_PASSED);
         }
 
+        String fileName = fileStorageService.storeFile(request.file(), "assignments");
+
         AssignmentSubmission submission =
-                AssignmentSubmission.createAssignmentSubmission(
-                        student, assignment, request.submissionLink());
+                AssignmentSubmission.createAssignmentSubmissionWithFile(
+                        student, assignment, request.content(), fileName);
 
-        AssignmentSubmission saved = assignmentSubmissionRepository.save(submission);
-
-        log.info(
-                "Assignment submitted: student={}, assignment={}",
-                studentId,
-                request.assignmentId());
-        return AssignmentSubmissionResponse.from(saved);
+        return AssignmentSubmissionResponse.from(assignmentSubmissionRepository.save(submission));
     }
 
-    /** 과제 제출 수정 */
+    /** 파일로 과제 수정 */
     @Transactional
     @Override
-    public AssignmentSubmissionResponse updateSubmission(
-            Long submissionId, AssignmentSubmissionRequest request) {
+    public AssignmentSubmissionResponse updateSubmissionWithFile(
+            Long submissionId, AssignmentSubmissionFileRequest request) {
         Long studentId = AuthContext.getCurrentUserId();
+        log.info("학생 {}가 과제 제출 {}를 파일로 수정합니다", studentId, submissionId);
 
         AssignmentSubmission submission =
                 assignmentSubmissionRepository
@@ -93,25 +92,55 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
                                                 AssignmentSubmissionErrorCode
                                                         .ASSIGNMENT_SUBMISSION_NOT_FOUND));
 
-        // 본인의 제출인지 확인
         if (!submission.getStudent().getId().equals(studentId)) {
-            throw new CommonException(StudentErrorCode.ACCESS_DENIED);
+            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
         }
 
-        // 제출 기한 확인
-        Assignment assignment = submission.getAssignment();
-        if (assignment.getDueDateTime() != null
-                && LocalDateTime.now().isAfter(assignment.getDueDateTime())) {
-            throw new CommonException(AssignmentSubmissionErrorCode.ASSIGNMENT_DEADLINE_PASSED);
+        String oldFilePath = submission.getFilePath();
+        String newFileName = fileStorageService.storeFile(request.file(), "assignments");
+
+        submission.updateContent(request.content());
+        submission.updateFilePath(newFileName);
+
+        AssignmentSubmission updatedSubmission = assignmentSubmissionRepository.save(submission);
+
+        // 기존 파일이 있으면 삭제
+        if (oldFilePath != null && !oldFilePath.isEmpty()) {
+            try {
+                fileStorageService.deleteFile(oldFilePath);
+            } catch (Exception e) {
+                log.warn("기존 파일 삭제 중 오류 발생: {}", oldFilePath, e);
+            }
         }
 
-        submission.updateSubmissionLink(request.submissionLink());
+        return AssignmentSubmissionResponse.from(updatedSubmission);
+    }
 
-        log.info(
-                "Assignment submission updated: submissionId={}, student={}",
-                submissionId,
-                studentId);
-        return AssignmentSubmissionResponse.from(submission);
+    /** 제출된 파일 다운로드 */
+    @Override
+    public Resource downloadSubmissionFile(Long submissionId) {
+        Long studentId = AuthContext.getCurrentUserId();
+        log.info("사용자 {}가 과제 제출 {}의 파일을 다운로드합니다", studentId, submissionId);
+
+        AssignmentSubmission submission =
+                assignmentSubmissionRepository
+                        .findById(submissionId)
+                        .orElseThrow(
+                                () ->
+                                        new CommonException(
+                                                AssignmentSubmissionErrorCode
+                                                        .ASSIGNMENT_SUBMISSION_NOT_FOUND));
+
+        // 본인만 접근 가능 (추후 강사도 접근 가능하도록 확장 필요)
+        if (!submission.getStudent().getId().equals(studentId)) {
+            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
+        }
+
+        if (submission.getFilePath() == null || submission.getFilePath().isEmpty()) {
+            throw new CommonException(AssignmentSubmissionErrorCode.ASSIGNMENT_FILE_NOT_FOUND);
+        }
+
+        return fileStorageService.loadAsResource(submission.getFilePath());
     }
 
     /** 과제 제출 삭제 */
@@ -131,11 +160,18 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
 
         // 본인의 제출인지 확인
         if (!submission.getStudent().getId().equals(studentId)) {
-            throw new CommonException(StudentErrorCode.ACCESS_DENIED);
+            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
         }
 
         assignmentSubmissionRepository.delete(submission);
-
+        // 파일 삭제
+        if (submission.getFilePath() != null && !submission.getFilePath().isEmpty()) {
+            try {
+                fileStorageService.deleteFile(submission.getFilePath());
+            } catch (Exception e) {
+                log.warn("과제 제출 파일 삭제 중 오류 발생: {}", submission.getFilePath(), e);
+            }
+        }
         log.info(
                 "Assignment submission deleted: submissionId={}, student={}",
                 submissionId,

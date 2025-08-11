@@ -13,8 +13,8 @@ public record AssignmentSubmissionResponse(
         @Schema(description = "과제 이름", example = "Java 기초 과제") String assignmentName,
         @Schema(description = "강의 ID", example = "1") Long lectureId,
         @Schema(description = "강의 이름", example = "Java 프로그래밍 기초") String lectureName,
-        @Schema(description = "제출 파일 링크", example = "https://example.com/submission.pdf")
-                String submissionLink,
+        @Schema(description = "제출 파일 경로", example = "assignment_12345_file.pdf") String filePath,
+        @Schema(description = "과제 내용", example = "과제 설명입니다.") String content,
         @Schema(description = "제출일시", example = "2023-12-01T10:00:00") LocalDateTime submittedAt) {
     public static AssignmentSubmissionResponse from(AssignmentSubmission submission) {
         return new AssignmentSubmissionResponse(
@@ -25,7 +25,8 @@ public record AssignmentSubmissionResponse(
                 submission.getAssignment().getName(),
                 submission.getAssignment().getLecture().getId(),
                 submission.getAssignment().getLecture().getName(),
-                submission.getSubmissionLink(),
+                submission.getFilePath(),
+                submission.getContent(),
                 submission.getCreatedDt());
     }
 }

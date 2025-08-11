@@ -2,21 +2,24 @@ package com.seniclass.server.domain.student.controller;
 
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionRequest;
+import com.seniclass.server.domain.student.dto.AssignmentSubmissionFileRequest;
 import com.seniclass.server.domain.student.dto.AssignmentSubmissionResponse;
 import com.seniclass.server.domain.student.service.AssignmentSubmissionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "Student Assignment Submission", description = "학생 과제 제출 관리 API")
 @RestController
@@ -26,22 +29,29 @@ public class AssignmentSubmissionController {
 
     private final AssignmentSubmissionService assignmentSubmissionService;
 
-    @Operation(summary = "과제 제출", description = "학생이 과제를 제출합니다.")
-    @PostMapping("/submissions")
+    @Operation(summary = "파일로 과제 제출", description = "학생이 파일을 업로드하여 과제를 제출합니다.")
+    @PostMapping("/submissions/file")
     @RequireAuth(roles = {UserRole.STUDENT})
     @ResponseStatus(HttpStatus.CREATED)
-    public AssignmentSubmissionResponse submitAssignment(
-            @Valid @RequestBody AssignmentSubmissionRequest request) {
-        return assignmentSubmissionService.submitAssignment(request);
+    public AssignmentSubmissionResponse submitAssignmentWithFile(
+            @Parameter(description = "과제 ID") @RequestParam Long assignmentId,
+            @Parameter(description = "과제 설명") @RequestParam(required = false) String content,
+            @Parameter(description = "업로드할 파일") @RequestParam("file") MultipartFile file) {
+        AssignmentSubmissionFileRequest request =
+                new AssignmentSubmissionFileRequest(assignmentId, content, file);
+        return assignmentSubmissionService.submitAssignmentWithFile(request);
     }
 
-    @Operation(summary = "과제 제출 수정", description = "학생이 제출한 과제를 수정합니다.")
-    @PutMapping("/submissions/{submissionId}")
+    @Operation(summary = "파일로 과제 제출 수정", description = "학생이 제출한 과제를 파일로 수정합니다.")
+    @PutMapping("/submissions/{submissionId}/file")
     @RequireAuth(roles = {UserRole.STUDENT})
-    public AssignmentSubmissionResponse updateSubmission(
+    public AssignmentSubmissionResponse updateSubmissionWithFile(
             @Parameter(description = "제출 ID") @PathVariable Long submissionId,
-            @Valid @RequestBody AssignmentSubmissionRequest request) {
-        return assignmentSubmissionService.updateSubmission(submissionId, request);
+            @Parameter(description = "과제 설명") @RequestParam(required = false) String content,
+            @Parameter(description = "업로드할 파일") @RequestParam("file") MultipartFile file) {
+        AssignmentSubmissionFileRequest request =
+                new AssignmentSubmissionFileRequest(null, content, file);
+        return assignmentSubmissionService.updateSubmissionWithFile(submissionId, request);
     }
 
     @Operation(summary = "과제 제출 삭제", description = "학생이 제출한 과제를 삭제합니다.")
@@ -94,5 +104,19 @@ public class AssignmentSubmissionController {
     public Map<String, Long> getCurrentStudentSubmissionCount() {
         long count = assignmentSubmissionService.getCurrentStudentSubmissionCount();
         return Map.of("count", count);
+    }
+
+    @Operation(summary = "제출 파일 다운로드", description = "제출된 과제 파일을 다운로드합니다.")
+    @GetMapping("/submissions/{submissionId}/download")
+    @RequireAuth(roles = {UserRole.STUDENT, UserRole.TEACHER})
+    public ResponseEntity<Resource> downloadSubmissionFile(
+            @Parameter(description = "제출 ID") @PathVariable Long submissionId) {
+        Resource file = assignmentSubmissionService.downloadSubmissionFile(submissionId);
+
+        return ResponseEntity.ok()
+                .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + file.getFilename() + "\"")
+                .body(file);
     }
 }
