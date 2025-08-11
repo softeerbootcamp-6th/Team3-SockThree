@@ -56,7 +56,7 @@ class AssignmentSubmissionServiceTest {
 
     @Test
     @DisplayName("과제 제출 성공 - 파일 업로드")
-    void submitAssignmentWithFile_Success() {
+    void createSubmission_Success() {
         // given
         // 테스트용 가상 데이터
         Long studentId = 1L;
@@ -104,7 +104,7 @@ class AssignmentSubmissionServiceTest {
 
         // when
         AssignmentSubmissionResponse response =
-                assignmentSubmissionService.submitAssignmentWithFile(request);
+                assignmentSubmissionService.createSubmission(request);
 
         // then
         assertNotNull(response);
@@ -117,7 +117,7 @@ class AssignmentSubmissionServiceTest {
     // (DeadlinePassed 테스트는 이전과 동일)
     @Test
     @DisplayName("과제 제출 실패 - 마감일 지남")
-    void submitAssignmentWithFile_DeadlinePassed() {
+    void createSubmission_DeadlinePassed() {
         // given
         Long studentId = 1L;
         Long assignmentId = 1L;
@@ -137,13 +137,12 @@ class AssignmentSubmissionServiceTest {
 
         // when & then
         assertThrows(
-                CommonException.class,
-                () -> assignmentSubmissionService.submitAssignmentWithFile(request));
+                CommonException.class, () -> assignmentSubmissionService.createSubmission(request));
     }
 
     @Test
     @DisplayName("과제 수정 성공 - 파일 업로드")
-    void updateSubmissionWithFile_Success() {
+    void updateSubmission_Success() {
         // given: 테스트에 필요한 모든 가상 데이터를 명확하게 정의합니다.
         Long studentId = 1L;
         String studentName = "김학생";
@@ -205,7 +204,7 @@ class AssignmentSubmissionServiceTest {
 
         // when: 실제 테스트 대상인 서비스 메서드를 호출합니다.
         AssignmentSubmissionResponse response =
-                assignmentSubmissionService.updateSubmissionWithFile(submissionId, request);
+                assignmentSubmissionService.updateSubmission(submissionId, request);
 
         // then: 결과가 예상과 일치하는지 검증합니다.
         // 1. 반환된 DTO가 null이 아닌지, 내용은 올바른지 확인합니다.

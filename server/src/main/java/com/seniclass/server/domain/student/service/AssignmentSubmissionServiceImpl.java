@@ -38,8 +38,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
     /** 파일로 과제 제출 */
     @Transactional
     @Override
-    public AssignmentSubmissionResponse submitAssignmentWithFile(
-            AssignmentSubmissionFileRequest request) {
+    public AssignmentSubmissionResponse createSubmission(AssignmentSubmissionFileRequest request) {
         Long studentId = AuthContext.getCurrentUserId();
         log.info("학생 {}가 과제 {}에 파일로 제출합니다", studentId, request.assignmentId());
 
@@ -78,7 +77,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
     /** 파일로 과제 수정 */
     @Transactional
     @Override
-    public AssignmentSubmissionResponse updateSubmissionWithFile(
+    public AssignmentSubmissionResponse updateSubmission(
             Long submissionId, AssignmentSubmissionFileRequest request) {
         Long studentId = AuthContext.getCurrentUserId();
         log.info("학생 {}가 과제 제출 {}를 파일로 수정합니다", studentId, submissionId);

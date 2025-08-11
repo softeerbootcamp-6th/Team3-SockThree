@@ -33,25 +33,25 @@ public class AssignmentSubmissionController {
     @PostMapping("/submissions")
     @RequireAuth(roles = {UserRole.STUDENT})
     @ResponseStatus(HttpStatus.CREATED)
-    public AssignmentSubmissionResponse submitAssignmentWithFile(
+    public AssignmentSubmissionResponse createSubmission(
             @Parameter(description = "과제 ID") @RequestParam Long assignmentId,
             @Parameter(description = "과제 설명") @RequestParam(required = false) String content,
             @Parameter(description = "업로드할 파일") @RequestParam("file") MultipartFile file) {
         AssignmentSubmissionFileRequest request =
                 new AssignmentSubmissionFileRequest(assignmentId, content, file);
-        return assignmentSubmissionService.submitAssignmentWithFile(request);
+        return assignmentSubmissionService.createSubmission(request);
     }
 
     @Operation(summary = "파일로 과제 제출 수정", description = "학생이 제출한 과제를 파일로 수정합니다.")
     @PutMapping("/submissions/{submissionId}")
     @RequireAuth(roles = {UserRole.STUDENT})
-    public AssignmentSubmissionResponse updateSubmissionWithFile(
+    public AssignmentSubmissionResponse updateSubmission(
             @Parameter(description = "제출 ID") @PathVariable Long submissionId,
             @Parameter(description = "과제 설명") @RequestParam(required = false) String content,
             @Parameter(description = "업로드할 파일") @RequestParam("file") MultipartFile file) {
         AssignmentSubmissionFileRequest request =
                 new AssignmentSubmissionFileRequest(null, content, file);
-        return assignmentSubmissionService.updateSubmissionWithFile(submissionId, request);
+        return assignmentSubmissionService.updateSubmission(submissionId, request);
     }
 
     @Operation(summary = "과제 제출 삭제", description = "학생이 제출한 과제를 삭제합니다.")

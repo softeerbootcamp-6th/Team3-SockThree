@@ -9,10 +9,10 @@ import org.springframework.data.domain.Pageable;
 public interface AssignmentSubmissionService {
 
     /** 과제 제출 (파일 업로드) */
-    AssignmentSubmissionResponse submitAssignmentWithFile(AssignmentSubmissionFileRequest request);
+    AssignmentSubmissionResponse createSubmission(AssignmentSubmissionFileRequest request);
 
     /** 과제 제출 수정 (파일 업로드) */
-    AssignmentSubmissionResponse updateSubmissionWithFile(
+    AssignmentSubmissionResponse updateSubmission(
             Long submissionId, AssignmentSubmissionFileRequest request);
 
     /** 과제 제출 삭제 */
