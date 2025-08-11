@@ -79,8 +79,8 @@ public class LectureQnaServiceImpl implements LectureQnaService {
             throw new CommonException(StudentErrorCode.ACCESS_DENIED);
         }
 
-        // 질문 내용 업데이트 (LectureQna 엔티티에 updateQuestion 메서드가 있다고 가정)
-        // qna.updateQuestion(request.question()); // 실제로는 이런 메서드가 엔티티에 있어야 함
+        // 질문 내용 업데이트
+        qna.updateQuestion(request.question());
 
         log.info("Lecture question updated: qnaId={}, student={}", qnaId, studentId);
         return LectureQnaResponse.from(qna);

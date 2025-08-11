@@ -30,7 +30,7 @@ public class AssignmentSubmissionController {
     private final AssignmentSubmissionService assignmentSubmissionService;
 
     @Operation(summary = "파일로 과제 제출", description = "학생이 파일을 업로드하여 과제를 제출합니다.")
-    @PostMapping("/submissions/file")
+    @PostMapping("/submissions")
     @RequireAuth(roles = {UserRole.STUDENT})
     @ResponseStatus(HttpStatus.CREATED)
     public AssignmentSubmissionResponse submitAssignmentWithFile(
@@ -43,7 +43,7 @@ public class AssignmentSubmissionController {
     }
 
     @Operation(summary = "파일로 과제 제출 수정", description = "학생이 제출한 과제를 파일로 수정합니다.")
-    @PutMapping("/submissions/{submissionId}/file")
+    @PutMapping("/submissions/{submissionId}")
     @RequireAuth(roles = {UserRole.STUDENT})
     public AssignmentSubmissionResponse updateSubmissionWithFile(
             @Parameter(description = "제출 ID") @PathVariable Long submissionId,
