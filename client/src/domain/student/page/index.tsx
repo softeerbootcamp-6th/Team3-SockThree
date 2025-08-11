@@ -1,7 +1,6 @@
 export { default as HomePage } from "@/domain/student/page/HomePage";
 
 export { default as SearchResultPage } from "@/domain/student/page/course/SearchResultPage";
-export { default as CourseDetailPage } from "@/domain/student/page/course/CourseDetailPage";
 
 export { default as MyPage } from "@/domain/student/page/mypage/MyPage";
 export { default as HeartPage } from "@/domain/student/page/mypage/HeartPage";

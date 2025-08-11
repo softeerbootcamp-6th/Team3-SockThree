@@ -6,17 +6,29 @@ import * as S from "@/domain/student/page";
 import * as I from "@/domain/instructor/page";
 
 import { Route, Routes } from "react-router";
+import { Navigate } from "react-router-dom";
+import CourseDetailLayout from "@/shared/layout/CourseDetailLayout.tsx";
 
 // HyFive 팀 코드 참고했습니다
 
 const Router = () => {
   return (
     <Routes>
-      {/* 시니어 (학생) */}
       <Route path="/student">
-        <Route element={<NoNavbarLayout />}>
-          <Route path="course">
-            <Route path="detail" element={<S.CourseDetailPage />} />
+        <Route path="course">
+          <Route element={<NoNavbarLayout />}>
+            <Route path="detail/:courseId" element={<CourseDetailLayout />}>
+              <Route index element={<Navigate to="curriculum" replace />} />
+              <Route
+                path="curriculum"
+                element={<div className="h-[100vh] bg-amber-200">커리큘럼</div>}
+              />
+              <Route path="reviews" element={<div>리뷰</div>} />
+              {/* 선택 탭들 */}
+              <Route path="dashboard" element={<div>대시보드</div>} />
+              <Route path="assignments" element={<div>과제</div>} />
+              <Route path="questions" element={<div>질문</div>} />
+            </Route>
           </Route>
         </Route>
 
