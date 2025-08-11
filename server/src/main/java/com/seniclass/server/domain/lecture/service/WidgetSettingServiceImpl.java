@@ -3,6 +3,7 @@ package com.seniclass.server.domain.lecture.service;
 import com.seniclass.server.domain.lecture.domain.Lecture;
 import com.seniclass.server.domain.lecture.domain.WidgetSetting;
 import com.seniclass.server.domain.lecture.dto.WidgetSpec;
+import com.seniclass.server.domain.lecture.enums.WidgetSize;
 import com.seniclass.server.domain.lecture.enums.WidgetType;
 import com.seniclass.server.domain.lecture.exception.errorcode.WidgetSettingErrorCode;
 import com.seniclass.server.domain.lecture.repository.WidgetSettingRepository;
@@ -21,12 +22,12 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
 
     private static final List<WidgetSpec> DEFAULT_SPECS =
             List.of(
-                    new WidgetSpec(WidgetType.TEACHER_INFO, 0, 0, 1, 3, true),
-                    new WidgetSpec(WidgetType.QNA, 0, 3, 1, 1, true),
-                    new WidgetSpec(WidgetType.SUBMISSION, 1, 0, 1, 1, true),
-                    new WidgetSpec(WidgetType.NEXT_LECTURE, 1, 1, 1, 3, true),
-                    new WidgetSpec(WidgetType.STUDENTS_STATUS, 2, 0, 1, 3, true),
-                    new WidgetSpec(WidgetType.REVIEW, 2, 3, 1, 1, true));
+                    new WidgetSpec(WidgetType.TEACHER_INFO, 0, 0, WidgetSize.LARGE, true),
+                    new WidgetSpec(WidgetType.QNA, 0, 3, WidgetSize.SMALL, true),
+                    new WidgetSpec(WidgetType.SUBMISSION, 1, 0, WidgetSize.SMALL, true),
+                    new WidgetSpec(WidgetType.NEXT_LECTURE, 1, 1, WidgetSize.LARGE, true),
+                    new WidgetSpec(WidgetType.STUDENTS_STATUS, 2, 0, WidgetSize.LARGE, true),
+                    new WidgetSpec(WidgetType.REVIEW, 2, 3, WidgetSize.SMALL, true));
 
     private final WidgetSettingRepository widgetSettingRepository;
 
@@ -48,8 +49,7 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
                                                 s.type(),
                                                 s.row(),
                                                 s.col(),
-                                                s.width(),
-                                                s.height(),
+                                                s.widgetSize(),
                                                 s.visible(),
                                                 lecture))
                         .toList();
@@ -62,17 +62,15 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
 
         for (WidgetSpec s : specs) {
 
-            if (s.width() <= 0 || s.height() != 1)
-                throw new CommonException(WidgetSettingErrorCode.INVALID_SIZE);
-
             if (s.row() < 0
                     || s.col() < 0
-                    || s.row() + s.height() > MAX_ROWS
-                    || s.col() + s.width() > MAX_COLS)
+                    || s.row() > MAX_ROWS
+                    || s.col() > MAX_COLS
+                    || s.col() + s.widgetSize().getWidth() > MAX_ROWS)
                 throw new CommonException(WidgetSettingErrorCode.INVALID_POSITION);
 
             if (s.visible()) {
-                for (int i = 0; i < s.width(); i++) {
+                for (int i = 0; i < s.widgetSize().getWidth(); i++) {
                     if (grid[s.row()][s.col() + i] == 1) {
                         throw new CommonException(WidgetSettingErrorCode.INVALID_PLACEMENT);
                     }
