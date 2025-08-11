@@ -3,12 +3,22 @@ package com.seniclass.server.domain.lecture.service;
 import com.seniclass.server.domain.lecture.domain.Lecture;
 import com.seniclass.server.domain.lecture.domain.WidgetSetting;
 import com.seniclass.server.domain.lecture.dto.WidgetSpec;
+import com.seniclass.server.domain.lecture.dto.request.WidgetSettingUpdateRequest;
+import com.seniclass.server.domain.lecture.dto.response.WidgetSettingResponse;
 import com.seniclass.server.domain.lecture.enums.WidgetSize;
 import com.seniclass.server.domain.lecture.enums.WidgetType;
 import com.seniclass.server.domain.lecture.exception.errorcode.WidgetSettingErrorCode;
+import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.lecture.repository.WidgetSettingRepository;
 import com.seniclass.server.global.exception.CommonException;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
+import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +29,7 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
 
     private static final int MAX_ROWS = 3;
     private static final int MAX_COLS = 4;
+    private static final int WIDGETS_COUNT = 6;
 
     private static final List<WidgetSpec> DEFAULT_SPECS =
             List.of(
@@ -30,6 +41,7 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
                     new WidgetSpec(WidgetType.REVIEW, 2, 3, WidgetSize.SMALL, true));
 
     private final WidgetSettingRepository widgetSettingRepository;
+    private final LectureRepository lectureRepository;
 
     @Transactional
     @Override
@@ -55,6 +67,55 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
                         .toList();
 
         widgetSettingRepository.saveAll(entities);
+    }
+
+    @Transactional
+    @Override
+    public List<WidgetSettingResponse> updateWidgetSettings(Long userId, Long lectureId, WidgetSettingUpdateRequest request) {
+
+        // 1) 개수 검증
+        if (request.widgetSettings().size() != WIDGETS_COUNT) {
+            throw new CommonException(WidgetSettingErrorCode.WIDGET_SETTING_COUNT_INVALID);
+        }
+
+        // 2) 강의 조회 + 권한 확인
+        Lecture lecture = lectureRepository.findById(lectureId)
+                .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
+
+        if (!Objects.equals(lecture.getTeacher().getId(), userId)) {
+            throw new CommonException(UserErrorCode.USER_NOT_AUTHORIZED);
+        }
+
+        // 3) DB에서 현재 세팅 전부 조회 (쿼리 1번)
+        List<WidgetSetting> settings = widgetSettingRepository.findAllByLectureId(lectureId);
+
+        // 4) 요청 ID 세트와 DB ID 세트 동일성 검증 (멱등/안전)
+        Set<Long> dbIds = settings.stream().map(WidgetSetting::getId).collect(Collectors.toSet());
+        Set<Long> reqIds = request.widgetSettings().keySet();
+        if (!dbIds.equals(reqIds)) {
+            throw new CommonException(WidgetSettingErrorCode.WIDGET_ID_MISMATCH);
+        }
+
+        // 5) 배치/충돌 검증 (보이는 위젯만 점유로 간주)
+        List<WidgetSpec> visibleSpecs = request.widgetSettings().values().stream()
+                .filter(WidgetSpec::visible)
+                .toList();
+        validateSpecs(visibleSpecs);
+
+        // 6) 루프 내 재조회 제거: Map으로 올려놓고 순서대로 업데이트
+        Map<Long, WidgetSetting> dbMap = settings.stream()
+                .collect(Collectors.toMap(WidgetSetting::getId, ws -> ws));
+
+        // 요청은 LinkedHashMap이니 keySet() 순회 = 클라이언트 지정 순서
+        for (Long id : reqIds) {
+            WidgetSetting setting = dbMap.get(id);
+            WidgetSpec spec = request.widgetSettings().get(id);
+            setting.updateWidgetSettingFromSpec(spec);
+        }
+
+        return dbMap.values().stream()
+                .map(WidgetSettingResponse::from)
+                .toList();
     }
 
     private void validateSpecs(List<WidgetSpec> specs) {

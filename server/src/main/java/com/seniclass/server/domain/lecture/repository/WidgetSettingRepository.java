@@ -10,4 +10,6 @@ import java.util.Optional;
 @Repository
 public interface WidgetSettingRepository extends JpaRepository<WidgetSetting, Long> {
     boolean existsByLectureId(Long lectureId);
+
+    List<WidgetSetting> findAllByLectureId(Long lectureId);
 }
