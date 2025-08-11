@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Student Interest Category", description = "학생 관심 카테고리 관리 API")
 @RestController
-@RequestMapping("/students/interests")
+@RequestMapping("/interests")
 @RequiredArgsConstructor
 public class InterestingCategoryController {
 

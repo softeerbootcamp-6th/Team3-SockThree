@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Student Lecture Enrollment", description = "학생 강의 수강 관리 API")
 @RestController
-@RequestMapping("/students/enrollments")
+@RequestMapping("/enrollments")
 @RequiredArgsConstructor
 public class LectureEnrollmentController {
 

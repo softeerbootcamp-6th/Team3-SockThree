@@ -23,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "Student Assignment Submission", description = "학생 과제 제출 관리 API")
 @RestController
-@RequestMapping("/students/assignments")
+@RequestMapping("/assignments")
 @RequiredArgsConstructor
 public class AssignmentSubmissionController {
 
