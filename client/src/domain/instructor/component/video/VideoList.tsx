@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import VideoListItem from "@/domain/instructor/component/video/VideoListItem";
 
 import useModal from "@/shared/hook/useModal";
@@ -23,24 +23,22 @@ interface VideoListProps {
 }
 
 const VideoList = ({ contentsId, contentsTitle, videos }: VideoListProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isListOpen, setIsListOpen] = useState(true);
   const { modalRef, openModal, closeModal } = useModal();
 
   const handleEdit = () => {
-    openModal(); // modal 열기
+    openModal();
   };
 
   const handleClose = () => {
-    closeModal(); // dialog close()
+    closeModal();
   };
 
   return (
     <>
       {/* 모달 */}
-
       <VideoEditModal ref={modalRef} onClose={handleClose} />
-      <div className="flex w-[74.875rem] flex-col gap-4 rounded-xl bg-white px-[1.625rem] py-[1.5rem] transition-all duration-300 ease-in-out">
+      <div id={`${contentsId}`} className="flex w-[74.875rem] flex-col gap-4 rounded-xl bg-white px-[1.625rem] py-[1.5rem] transition-all duration-300 ease-in-out">
         {/* 헤더 */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
@@ -51,10 +49,10 @@ const VideoList = ({ contentsId, contentsTitle, videos }: VideoListProps) => {
                 <span className="text-main-500">{videos.length}</span> 개
               </p>
               <button
-                onClick={() => setIsOpen((prev) => !prev)}
+                onClick={() => setIsListOpen((prev) => !prev)}
                 className="cursor-pointer"
               >
-                {isOpen ? (
+                {isListOpen ? (
                   <TriangleUpIcon className="w-[1.0625rem] text-gray-500" />
                 ) : (
                   <TriangleDownIcon className="w-[1.0625rem] text-gray-500" />
@@ -74,8 +72,8 @@ const VideoList = ({ contentsId, contentsTitle, videos }: VideoListProps) => {
           </div>
         </div>
 
-        {/* VideoListItem 목록 (isOpen일 때만 표시) */}
-        {isOpen && (
+        {/* VideoListItem 목록 (isListOpen일 때만 표시) */}
+        {isListOpen && (
           <div className="flex flex-col gap-[.75rem] pt-[1.125rem] pb-[.75rem]">
             {videos.map((video, idx) => (
               <VideoListItem
