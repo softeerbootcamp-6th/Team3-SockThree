@@ -2,6 +2,7 @@ package com.seniclass.server.domain.aws.service;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.time.Duration;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,12 +14,15 @@ import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.ServerSideEncryption;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
 
 @Service
 @RequiredArgsConstructor
 public class S3Service {
 
     private final S3Client s3Client;
+    private final S3Presigner s3Presigner;
 
     @Getter
     @Value("${aws.region}")
@@ -53,5 +57,22 @@ public class S3Service {
 
     public void delete(String key) {
         s3Client.deleteObject(b -> b.bucket(bucket).key(key));
+    }
+
+    public String generatePresignedUrl(String key) {
+        return generatePresignedUrl(key, Duration.ofHours(1));
+    }
+
+    public String generatePresignedUrl(String key, Duration expiration) {
+        GetObjectRequest getObjectRequest =
+                GetObjectRequest.builder().bucket(bucket).key(key).build();
+
+        GetObjectPresignRequest presignRequest =
+                GetObjectPresignRequest.builder()
+                        .signatureDuration(expiration)
+                        .getObjectRequest(getObjectRequest)
+                        .build();
+
+        return s3Presigner.presignGetObject(presignRequest).url().toString();
     }
 }
