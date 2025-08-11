@@ -45,7 +45,7 @@ const CourseDashboardLayout = () => {
       </div>
 
       <CourseDetailTabBar isEnrolled={true} />
-      <div className="flex-1">
+      <div className="mt-[1rem] flex-1">
         <Outlet />
       </div>
     </main>
