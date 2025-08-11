@@ -8,7 +8,7 @@ const CourseDetailLayout = () => {
   console.log(courseId);
 
   return (
-    <main className="flex w-full flex-col items-center justify-center px-[11rem]">
+    <main className="flex w-full flex-col items-center justify-center px-[15.5rem]">
       <div className="flex w-full flex-col gap-[1rem] py-6 lg:flex-row">
         {/* 메인 영역: 남은 폭 채우기 */}
         <section className="flex min-h-[50vh] min-w-0 flex-1 flex-col gap-[1rem]">

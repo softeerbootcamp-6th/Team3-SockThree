@@ -9,7 +9,7 @@ const CourseDashboardLayout = () => {
   console.log(courseId);
 
   return (
-    <main className="flex w-full flex-col items-center justify-center px-[11rem]">
+    <main className="flex w-full flex-col items-center justify-center px-[15.5rem]">
       {/* 전체 flex 구조 */}
       <div className="flex w-full flex-row items-start justify-between gap-[1rem] pt-[1.5rem]">
         {/* 상단 카드 & 설명 영역 */}
@@ -45,7 +45,7 @@ const CourseDashboardLayout = () => {
       </div>
 
       <CourseDetailTabBar isEnrolled={true} />
-      <div className="mt-[1rem] flex-1">
+      <div className="mt-[1rem] w-full">
         <Outlet />
       </div>
     </main>
