@@ -12,9 +12,6 @@ spring:
         format_sql: true
         show_sql: true
     open-in-view: false
-  config:
-    activate:
-      on-profile: "default"
   data:
     redis:
       host: localhost
@@ -66,9 +63,10 @@ logging:
 # 파일 저장 설정
 file:
   upload-dir: ./uploads/assignments
-  max-file-size: 50MB
+  max-file-size: 52428800  # 50MB in bytes
 
 aws:
-  region: ap-northeast-2
+  region: ${AWS_REGION:ap-northeast-2}
   s3:
-    bucket: senicle-bucket
+    bucket: ${AWS_S3_BUCKET:senicle-bucket}
+    enabled: ${AWS_S3_ENABLED:true}  # S3 사용 여부 (false면 로컬 저장소 사용)

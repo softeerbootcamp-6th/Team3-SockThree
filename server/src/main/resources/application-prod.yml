@@ -49,8 +49,3 @@ logging:
     com.seniclass.server: INFO
     org.hibernate.SQL: ERROR
     org.hibernate.type: ERROR
-
-aws:
-  region: ap-northeast-2
-  s3:
-    bucket: senicle-bucket
