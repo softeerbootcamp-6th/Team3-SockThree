@@ -1,6 +1,7 @@
 package com.seniclass.server.domain.lecture.domain;
 
 import com.seniclass.server.domain.common.model.BaseTimeEntity;
+import com.seniclass.server.domain.lecture.dto.WidgetSpec;
 import com.seniclass.server.domain.lecture.enums.WidgetSize;
 import com.seniclass.server.domain.lecture.enums.WidgetType;
 import jakarta.persistence.*;
@@ -72,5 +73,14 @@ public class WidgetSetting extends BaseTimeEntity {
                 .visible(visible)
                 .lecture(lecture)
                 .build();
+    }
+
+    public void updateWidgetSettingFromSpec(
+            WidgetSpec spec) {
+        this.widgetType = spec.type();
+        this.rowPosition = spec.row();
+        this.colPosition = spec.col();
+        this.widgetSize = spec.widgetSize();
+        this.visible = spec.visible();
     }
 }
