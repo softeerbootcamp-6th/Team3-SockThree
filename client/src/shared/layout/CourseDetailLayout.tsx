@@ -8,10 +8,10 @@ const CourseDetailLayout = () => {
   console.log(courseId);
 
   return (
-    <main className="flex w-full flex-col items-center justify-center px-[15.5rem]">
-      <div className="flex w-full flex-col gap-[1rem] py-6 lg:flex-row">
+    <main className="mx-auto flex max-w-[1720px] min-w-[1280px] flex-col items-center justify-center">
+      <div className="flex w-full flex-row gap-[1rem] py-6">
         {/* 메인 영역: 남은 폭 채우기 */}
-        <section className="flex min-h-[50vh] min-w-0 flex-1 flex-col gap-[1rem]">
+        <section className="flex flex-1 flex-col gap-[1rem]">
           <CourseInfoCard
             courseInfo={{
               id: 1,

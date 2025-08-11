@@ -9,7 +9,7 @@ const CourseDashboardLayout = () => {
   console.log(courseId);
 
   return (
-    <main className="flex w-full flex-col items-center justify-center px-[15.5rem]">
+    <main className="mx-auto flex max-w-[1720px] min-w-[1280px] flex-col items-center justify-center">
       {/* 전체 flex 구조 */}
       <div className="flex w-full flex-row items-start justify-between gap-[1rem] pt-[1.5rem]">
         {/* 상단 카드 & 설명 영역 */}
