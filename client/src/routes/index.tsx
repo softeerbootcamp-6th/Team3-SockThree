@@ -1,13 +1,13 @@
 import StudentLayout from "@/shared/layout/StudentLayout";
 import InstructorLayout from "@/shared/layout/InstructorLayout";
 import NoNavbarLayout from "@/shared/layout/NoNavbarLayout";
+import CourseDetailLayout from "@/shared/layout/CourseDetailLayout";
 
 import * as S from "@/domain/student/page";
 import * as I from "@/domain/instructor/page";
 
 import { Route, Routes } from "react-router";
 import { Navigate } from "react-router-dom";
-import CourseDetailLayout from "@/shared/layout/CourseDetailLayout.tsx";
 
 // HyFive 팀 코드 참고했습니다
 
@@ -25,7 +25,10 @@ const Router = () => {
               />
               <Route path="reviews" element={<div>리뷰</div>} />
               {/* 선택 탭들 */}
-              <Route path="dashboard" element={<div>대시보드</div>} />
+              <Route
+                path="dashboard"
+                element={<S.CourseDetailDashboardPage />}
+              />
               <Route path="assignments" element={<div>과제</div>} />
               <Route path="questions" element={<div>질문</div>} />
             </Route>
