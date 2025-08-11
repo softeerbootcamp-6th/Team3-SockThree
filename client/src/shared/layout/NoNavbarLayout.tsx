@@ -4,7 +4,7 @@ import Logo from "@/assets/logo/logo.svg?react";
 const NoNavbarLayout = () => {
   return (
     <div className="relative flex h-screen w-full flex-col">
-      <header className="sticky top-0 left-[2.625rem] z-50 bg-bg py-[1rem] pl-[1.1rem]">
+      <header className="sticky top-0 left-[2.625rem] z-50 flex h-fit bg-amber-200 py-[1rem] pl-[1rem]">
         <Logo className="h-[3rem] w-[6.8125rem]" />
       </header>
       <Outlet />
