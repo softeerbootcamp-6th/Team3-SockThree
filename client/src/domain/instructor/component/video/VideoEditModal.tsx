@@ -1,6 +1,9 @@
 // VideoEditModal.tsx
+import UploadVideoItem from "@/domain/instructor/component/video/UploadVideoItem";
+import Button from "@/shared/components/Button";
+import GradationChip from "@/shared/components/GradationChip";
 import Modal from "@/shared/components/Modal";
-import { forwardRef } from "react";
+import { forwardRef, useState } from "react";
 
 type VideoEditModalProps = {
   onClose: () => void;
@@ -8,55 +11,67 @@ type VideoEditModalProps = {
 
 const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
   ({ onClose }, ref) => {
+    const [contentsTitle, setContentsTitle] = useState("");
+    const contentsTitleMaxLength = 30;
+
+    const handleContentsTitleChange = (
+      event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+      setContentsTitle(event.target.value);
+    };
     return (
       <Modal ref={ref}>
-        <div className="fixed top-1/2 left-1/2 h-[40.5rem] w-[39.625rem] -translate-x-1/2 -translate-y-1/2 transform overflow-scroll rounded-lg bg-white p-6 shadow-lg">
+        <div className="flex h-[40.5rem] w-[39.625rem] flex-col px-[1.6875rem] py-[2rem]">
           {/* 강좌명 */}
-          <div className="flex w-full flex-col gap-2">
-            <label className="typo-label-1 text-gray-900">강좌명</label>
-            <input
-              type="text"
-              placeholder="강좌명을 입력해주세요"
-              maxLength={10}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2 text-sm placeholder-gray-400 focus:ring-2 focus:ring-main-500 focus:outline-none"
-            />
-            <span className="self-end text-xs text-gray-400">0/10자</span>
-          </div>
-
-          {/* 강의 업로드 */}
-          <div className="mt-6 flex w-full flex-col gap-3">
-            <label className="typo-label-1 text-gray-900">강의 업로드</label>
-            <button className="rounded-lg bg-main-100 px-4 py-2 text-sm font-medium text-main-700 hover:bg-main-200">
-              + 동영상 업로드
-            </button>
-
-            {/* 업로드된 동영상 1 */}
-            <div className="flex flex-col gap-2 rounded-lg border border-gray-200 p-3">
-              <div className="flex items-center justify-between">
-                <span className="text-sm text-gray-700">동영상 이름.mp4</span>
-                <button className="text-gray-400 hover:text-gray-600">✕</button>
-              </div>
+          <div className="flex w-full flex-col gap-[1.375rem]">
+            <label className="typo-body-4">목차명</label>
+            <div className="relative w-full">
               <input
                 type="text"
-                placeholder="강의 제목을 입력해주세요"
-                maxLength={10}
-                className="w-full rounded-lg border border-gray-300 px-4 py-1.5 text-sm placeholder-gray-400 focus:ring-2 focus:ring-main-500 focus:outline-none"
+                placeholder="강좌명을 입력해주세요"
+                value={contentsTitle}
+                onChange={handleContentsTitleChange}
+                maxLength={contentsTitleMaxLength}
+                className="text-body-5 w-full rounded-[.625rem] border border-gray-400 px-[1.3125rem] py-[1.375rem] placeholder-gray-400 focus:ring-2 focus:ring-main-500 focus:outline-none"
               />
-              <span className="self-end text-xs text-gray-400">0/10자</span>
+              <span className="text-body-5 absolute top-1/2 right-[1.4375rem] -translate-y-1/2 text-gray-400">
+                {contentsTitle.length}/{contentsTitleMaxLength}자
+              </span>
+            </div>
+          </div>
+
+          <hr className="mt-[1.4375rem] mb-[1.4375rem] h-[.0625rem] w-full text-gray-400" />
+
+          {/* 강의 업로드 */}
+          <div className="flex w-full flex-col gap-[.8125rem]">
+            <div className="flex w-full flex-row items-center justify-between">
+              <label className="typo-body-4">강의 동영상 업로드</label>
+              <button className="typo-label-0 cursor-pointer">
+                <GradationChip>+ 동영상 업로드</GradationChip>
+              </button>
+            </div>
+            <div className="flex h-[17.4375rem] flex-col gap-[1.125rem] overflow-y-auto">
+              <UploadVideoItem videoName="예시 비디오.mp4" />
             </div>
           </div>
 
           {/* 버튼 영역 */}
-          <div className="mt-6 flex w-full justify-end gap-2">
-            <button
+          <div className="mt-[1.6875rem] flex w-full justify-end gap-[1rem]">
+            <Button
+              variant={"default"}
+              className="typo-body-4 flex-1/2 rounded-[.9375rem] bg-gray-200 px-4 py-2 text-black hover:bg-gray-400"
               onClick={onClose}
-              className="rounded-lg border border-gray-200 bg-gray-50 px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
             >
               닫기
-            </button>
-            <button className="rounded-lg border border-main-500 bg-main-500 px-4 py-2 text-sm text-white hover:bg-main-600">
+            </Button>
+
+            <Button
+              variant={"outline"}
+              className="typo-body-4 flex-1/2 rounded-[.9375rem]"
+              onClick={() => {}}
+            >
               강의 등록 완료
-            </button>
+            </Button>
           </div>
         </div>
       </Modal>
