@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Student Lecture QnA", description = "학생 강의 QnA 관리 API")
 @RestController
-@RequestMapping("/students/qna")
+@RequestMapping("/qna")
 @RequiredArgsConstructor
 public class LectureQnaController {
 

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Student Video Progress", description = "학생 비디오 진행 상황 관리 API")
 @RestController
-@RequestMapping("/students/videos")
+@RequestMapping("/videos")
 @RequiredArgsConstructor
 public class VideoProgressController {
 
