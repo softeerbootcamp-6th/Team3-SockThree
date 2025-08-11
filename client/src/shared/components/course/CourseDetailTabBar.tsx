@@ -39,11 +39,10 @@ const CourseDetailTabBar = ({
               end
               className={({ isActive }) =>
                 [
-                  // 높이와 패딩을 넉넉하게
-                  "-mb-px inline-flex h-full items-center border-b-2 px-5 py-3 transition-colors",
+                  "-mb-px inline-flex h-full items-center border-b-3 px-5 py-3 transition-colors",
                   isActive
-                    ? "border-main-600 text-gray-900"
-                    : "border-transparent text-gray-500 hover:border-gray-400 hover:text-gray-900",
+                    ? "border-main-400 text-gray-900"
+                    : "border-transparent text-gray-500 hover:text-gray-900",
                 ].join(" ")
               }
             >
