@@ -11,14 +11,13 @@ import com.seniclass.server.domain.lecture.exception.errorcode.WidgetSettingErro
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.lecture.repository.WidgetSettingRepository;
 import com.seniclass.server.global.exception.CommonException;
+import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
+import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
-import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +70,8 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
 
     @Transactional
     @Override
-    public List<WidgetSettingResponse> updateWidgetSettings(Long userId, Long lectureId, WidgetSettingUpdateRequest request) {
+    public List<WidgetSettingResponse> updateWidgetSettings(
+            Long userId, Long lectureId, WidgetSettingUpdateRequest request) {
 
         // 1) 개수 검증
         if (request.widgetSettings().size() != WIDGETS_COUNT) {
@@ -79,8 +79,10 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
         }
 
         // 2) 강의 조회 + 권한 확인
-        Lecture lecture = lectureRepository.findById(lectureId)
-                .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
+        Lecture lecture =
+                lectureRepository
+                        .findById(lectureId)
+                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
 
         if (!Objects.equals(lecture.getTeacher().getId(), userId)) {
             throw new CommonException(UserErrorCode.USER_NOT_AUTHORIZED);
@@ -97,14 +99,13 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
         }
 
         // 5) 배치/충돌 검증 (보이는 위젯만 점유로 간주)
-        List<WidgetSpec> visibleSpecs = request.widgetSettings().values().stream()
-                .filter(WidgetSpec::visible)
-                .toList();
+        List<WidgetSpec> visibleSpecs =
+                request.widgetSettings().values().stream().filter(WidgetSpec::visible).toList();
         validateSpecs(visibleSpecs);
 
         // 6) 루프 내 재조회 제거: Map으로 올려놓고 순서대로 업데이트
-        Map<Long, WidgetSetting> dbMap = settings.stream()
-                .collect(Collectors.toMap(WidgetSetting::getId, ws -> ws));
+        Map<Long, WidgetSetting> dbMap =
+                settings.stream().collect(Collectors.toMap(WidgetSetting::getId, ws -> ws));
 
         // 요청은 LinkedHashMap이니 keySet() 순회 = 클라이언트 지정 순서
         for (Long id : reqIds) {
@@ -113,9 +114,7 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
             setting.updateWidgetSettingFromSpec(spec);
         }
 
-        return dbMap.values().stream()
-                .map(WidgetSettingResponse::from)
-                .toList();
+        return dbMap.values().stream().map(WidgetSettingResponse::from).toList();
     }
 
     private void validateSpecs(List<WidgetSpec> specs) {

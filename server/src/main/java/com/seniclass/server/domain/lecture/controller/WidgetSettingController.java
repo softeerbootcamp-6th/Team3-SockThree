@@ -2,20 +2,16 @@ package com.seniclass.server.domain.lecture.controller;
 
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
 import com.seniclass.server.domain.lecture.dto.request.WidgetSettingUpdateRequest;
-import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
 import com.seniclass.server.domain.lecture.dto.response.WidgetSettingResponse;
 import com.seniclass.server.domain.lecture.service.WidgetSettingService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "WidgetSetting", description = "위젯 설정 관리 API")
 @RestController

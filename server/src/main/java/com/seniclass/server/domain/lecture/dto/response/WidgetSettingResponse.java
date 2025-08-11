@@ -8,8 +8,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(description = "위젯 설정 정보 응답 DTO")
 public record WidgetSettingResponse(
         @Schema(description = "위젯 설정 ID", example = "1") Long id,
-        @Schema(description = "위젯 타입", example = "SUBMISSION" +
-                "") WidgetType widgetType,
+        @Schema(description = "위젯 타입", example = "SUBMISSION" + "") WidgetType widgetType,
         @Schema(description = "행 위치", example = "1") Integer rowPosition,
         @Schema(description = "열 위치", example = "1") Integer colPosition,
         @Schema(description = "위젯 크기", example = "SMALL") WidgetSize widgetSize,

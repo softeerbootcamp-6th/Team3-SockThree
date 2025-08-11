@@ -75,8 +75,7 @@ public class WidgetSetting extends BaseTimeEntity {
                 .build();
     }
 
-    public void updateWidgetSettingFromSpec(
-            WidgetSpec spec) {
+    public void updateWidgetSettingFromSpec(WidgetSpec spec) {
         this.widgetType = spec.type();
         this.rowPosition = spec.row();
         this.colPosition = spec.col();
