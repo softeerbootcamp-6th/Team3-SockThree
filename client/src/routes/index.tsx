@@ -1,6 +1,6 @@
 import StudentLayout from "@/shared/layout/StudentLayout";
 import InstructorLayout from "@/shared/layout/InstructorLayout";
-import NoNavbarLayout from "@/shared/layout/NoNavbarLayout";
+import StickyLogoLayout from "@/shared/layout/StickyLogoLayout.tsx";
 import CourseDetailLayout from "@/shared/layout/CourseDetailLayout";
 
 import * as S from "@/domain/student/page";
@@ -17,7 +17,7 @@ const Router = () => {
     <Routes>
       <Route path="/student">
         <Route path="course">
-          <Route element={<NoNavbarLayout />}>
+          <Route element={<StickyLogoLayout />}>
             <Route path="detail/:courseId">
               {/* 대시보드 전용 레이아웃 */}
               <Route element={<CourseDashboardLayout />}>

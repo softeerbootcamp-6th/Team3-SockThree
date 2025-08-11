@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import Logo from "@/assets/logo/logo.svg?react";
 
-const NoNavbarLayout = () => {
+const StickyLogoLayout = () => {
   return (
     <div className="relative flex h-screen w-full flex-col">
       <header className="sticky top-0 left-[2.625rem] z-50 flex h-fit bg-bg py-[1rem] pl-[1rem]">
@@ -12,4 +12,4 @@ const NoNavbarLayout = () => {
   );
 };
 
-export default NoNavbarLayout;
+export default StickyLogoLayout;
