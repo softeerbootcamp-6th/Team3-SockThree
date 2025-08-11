@@ -79,7 +79,7 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     private void validateTeacherOwnership(Long userId, Lecture lecture) {
         if (!Objects.equals(lecture.getTeacher().getId(), userId)) {
-            throw new CommonException(UserErrorCode.HAS_NO_AUTHORITY);
+            throw new CommonException(UserErrorCode.USER_NOT_AUTHORIZED);
         }
     }
 }
