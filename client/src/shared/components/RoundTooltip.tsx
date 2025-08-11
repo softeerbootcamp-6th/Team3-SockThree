@@ -21,11 +21,14 @@ interface RoundTooltipContainerProps {
 
 const RoundTooltipContainer = ({ children }: RoundTooltipContainerProps) => {
   return (
-    <div className="relative inline-block h-auto w-[9.5625rem]">
-      <RoundToolTipSVG className="block" />
-      <div className="absolute inset-0 flex items-center justify-center pt-[0.75rem] pb-[1rem]">
+    <div className="relative inline-flex items-center justify-center">
+      <span className="px-[1.1875rem] pt-[.75rem] pb-[1.0075rem] whitespace-nowrap">
         {children}
-      </div>
+      </span>
+      <RoundToolTipSVG
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        preserveAspectRatio="none"
+      />
     </div>
   );
 };
