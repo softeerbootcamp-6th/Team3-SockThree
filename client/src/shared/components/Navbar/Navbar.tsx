@@ -12,7 +12,7 @@ const Navbar = ({ myPageItem, children }: NavbarProps) => {
       <div className="flex flex-col items-center justify-between gap-[2.25rem]">
         {/* 로고 */}
         <div className="flex flex-col items-center gap-4">
-          <Logo />
+          <Logo className="w-[6.8125rem]" />
         </div>
 
         {/* 메뉴 리스트 (중앙 정렬) */}
@@ -27,7 +27,7 @@ const Navbar = ({ myPageItem, children }: NavbarProps) => {
         <ul className="flex flex-col items-center">{myPageItem}</ul>
 
         {/* 로그아웃 버튼 */}
-        <Button variant={"ghost"} size={"xs"}>
+        <Button variant="ghost" size="xs">
           로그아웃
         </Button>
       </div>

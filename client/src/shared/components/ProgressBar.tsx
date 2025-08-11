@@ -12,7 +12,7 @@ const progressBarVariant = tv({
   variants: {
     size: {
       md: {
-        root: "w-[29.5rem]",
+        root: "w-[20rem]",
       },
       lg: {
         root: "w-[39rem]",

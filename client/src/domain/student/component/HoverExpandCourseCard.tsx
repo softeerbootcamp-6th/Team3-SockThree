@@ -37,7 +37,7 @@ const expandedCardContainer = (cardData: CardData) => {
       style={{ backgroundImage: `url(${cardData.courseImg})` }}
     >
       <div className="absolute inset-0 overflow-hidden rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.4375rem] py-[1.5rem]">
-        <div className="flex h-full flex-col justify-between text-white">
+        <div className="flex h-full w-full flex-col justify-between text-white">
           {cardTopContainer(cardData)}
           {cardBottomContainer(cardData)}
         </div>
@@ -66,7 +66,7 @@ const closedCardContainer = (cardData: CardData) => {
 
 const cardTopContainer = (cardData: CardData) => {
   return (
-    <div className="flex w-[824px] justify-between">
+    <div className="flex w-full justify-between">
       <div className="flex items-center gap-0.5">
         <img
           src={cardData.teacherImg}
@@ -86,8 +86,8 @@ const cardTopContainer = (cardData: CardData) => {
 
 const cardBottomContainer = (cardData: CardData) => {
   return (
-    <div className="flex w-full flex-row items-center justify-between gap-2">
-      <div className="flex w-[18.75rem] flex-col gap-[.5rem]">
+    <div className="flex w-full flex-row items-end justify-between gap-2">
+      <div className="flex w-full flex-col gap-[.5rem]">
         <p className="typo-body-6 truncate text-white/60">
           {cardData.description}
         </p>
@@ -100,7 +100,7 @@ const cardBottomContainer = (cardData: CardData) => {
         <div className="flex flex-row gap-[.9375rem]">
           <PersonIcon className="h-[1.5625rem] w-[1.625rem]" />
           <ProgressBar
-            type={"ratio"}
+            type="ratio"
             current={cardData.nowStudents}
             max={cardData.maxStudents}
           />

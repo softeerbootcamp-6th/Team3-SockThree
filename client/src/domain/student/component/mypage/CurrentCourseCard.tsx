@@ -27,7 +27,7 @@ const CurrentCourseCard = ({
           </div>
         </div>
       </div>
-      <Button variant={"outline"} className="flex w-full">
+      <Button variant="outline" className="flex w-full">
         나의 강좌 목록
       </Button>
     </div>

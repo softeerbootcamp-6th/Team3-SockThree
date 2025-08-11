@@ -213,21 +213,19 @@
   blockquote:after,
   q:before,
   q:after {
-    content: "";
     content: none;
   }
   table {
     border-collapse: collapse;
     border-spacing: 0;
   }
-  ,
   html {
     scroll-behavior: smooth;
     height: 100%;
     width: 100%;
     font-family: var(--font-pretendard), serif;
-    background-color: var(--color-bg);
     font-size: 15px;
+    background-color: var(--color-bg);
   }
 }
 
@@ -278,19 +276,19 @@
 
   /* Label */
   .typo-label-0 {
-    @apply text-[1rem] leading-normal font-medium;
+    @apply text-[1rem] leading-none font-medium;
   }
   .typo-label-1 {
-    @apply text-[1.125rem] leading-normal font-normal;
+    @apply text-[1.125rem] leading-none font-normal;
   }
   .typo-label-2 {
-    @apply text-[1rem] leading-normal font-normal;
+    @apply text-[1rem] leading-none font-normal;
   }
   .typo-label-3 {
-    @apply text-[0.875rem] leading-normal font-medium;
+    @apply text-[0.875rem] leading-none font-medium;
   }
   .typo-label-4 {
-    @apply text-[0.875rem] leading-normal font-normal;
+    @apply text-[0.875rem] leading-none font-normal;
   }
 }
 

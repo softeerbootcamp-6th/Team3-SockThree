@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Chips from "@/shared/components/Chips.tsx";
+import Chips from "@/shared/components/Chips";
 
 interface StepLevelProps {
   value?: string;

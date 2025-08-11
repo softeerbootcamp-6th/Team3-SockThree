@@ -1,5 +1,5 @@
-import Navbar from "@/shared/components/Navbar/Navbar.tsx";
-import NavbarItem from "@/shared/components/Navbar/NavbarItem.tsx";
+import Navbar from "@/shared/components/Navbar/Navbar";
+import NavbarItem from "@/shared/components/Navbar/NavbarItem";
 
 import HomeIcon from "@/assets/icons/default/home.svg?react";
 import SearchIcon from "@/assets/icons/default/search.svg?react";

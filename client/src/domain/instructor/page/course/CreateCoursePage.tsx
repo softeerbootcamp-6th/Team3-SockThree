@@ -1,7 +1,7 @@
-import FunnelForm from "@/domain/instructor/component/funnel/FunnelForm.tsx";
-import { FunnelSideBar } from "@/domain/instructor/component/funnel/FunnelSideBar.tsx";
-import FunnelHeader from "@/domain/instructor/component/funnel/FunnelHeader.tsx";
-import { useFunnelState } from "@/domain/instructor/hook/useFunnelState.ts";
+import FunnelForm from "@/domain/instructor/component/funnel/FunnelForm";
+import { FunnelSideBar } from "@/domain/instructor/component/funnel/FunnelSideBar";
+import FunnelHeader from "@/domain/instructor/component/funnel/FunnelHeader";
+import { useFunnelState } from "@/domain/instructor/hook/useFunnelState";
 
 const CreateCoursePage = () => {
   const { funnelState, curStep, stepKeys, handleValidChange, isStepValid } =

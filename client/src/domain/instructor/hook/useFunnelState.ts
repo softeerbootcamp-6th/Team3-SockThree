@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
-import type { FunnelContext } from "@/domain/instructor/types/funnel.d.ts";
-import { useFunnelController } from "@/domain/instructor/hook/useFunnelController.ts";
+import type { FunnelContext } from "@/domain/instructor/types/funnel";
+import { useFunnelController } from "@/domain/instructor/hook/useFunnelController";
 
 export type StepKey = keyof FunnelContext;
 
