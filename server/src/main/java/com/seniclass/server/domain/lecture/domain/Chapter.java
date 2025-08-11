@@ -35,4 +35,8 @@ public class Chapter extends BaseTimeEntity {
     public static Chapter createChapter(String name, Lecture lecture) {
         return Chapter.builder().name(name).lecture(lecture).build();
     }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
 }

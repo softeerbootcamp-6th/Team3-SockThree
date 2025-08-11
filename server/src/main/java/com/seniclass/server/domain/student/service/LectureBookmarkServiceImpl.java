@@ -12,6 +12,7 @@ import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
 import com.seniclass.server.domain.student.repository.LectureBookmarkRepository;
 import com.seniclass.server.domain.student.repository.StudentRepository;
 import com.seniclass.server.global.exception.CommonException;
+import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -60,12 +61,7 @@ public class LectureBookmarkServiceImpl implements LectureBookmarkService {
         Lecture lecture =
                 lectureRepository
                         .findById(request.lectureId())
-                        .orElseThrow(
-                                () ->
-                                        new CommonException(
-                                                StudentErrorCode
-                                                        .INTERNAL_ERROR)); // 추후 LectureErrorCode로
-        // 변경 필요
+                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
 
         LectureBookmark bookmark = LectureBookmark.createLectureBookmark(student, lecture);
         LectureBookmark saved = lectureBookmarkRepository.save(bookmark);

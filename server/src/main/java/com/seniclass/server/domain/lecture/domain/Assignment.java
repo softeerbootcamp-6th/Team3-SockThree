@@ -63,4 +63,12 @@ public class Assignment extends BaseTimeEntity {
                 .lecture(lecture)
                 .build();
     }
+
+    public void updateAssignment(
+            String name, String instruction, String fileLink, LocalDateTime dueDateTime) {
+        this.name = name;
+        this.instruction = instruction;
+        this.fileLink = fileLink;
+        this.dueDateTime = dueDateTime;
+    }
 }

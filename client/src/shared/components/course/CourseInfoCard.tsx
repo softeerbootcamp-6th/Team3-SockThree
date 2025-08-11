@@ -26,7 +26,7 @@ const CourseInfoCard = (cardData: CourseInfoCardProps) => {
 
   return (
     <div
-      className="relative h-[21.3125rem] w-[75rem] rounded-[1.25rem] bg-cover bg-center"
+      className="relative h-[21.3125rem] w-full rounded-[1.25rem] bg-cover bg-center"
       style={{ backgroundImage: `url(${courseImg})` }}
     >
       <div className="absolute inset-0 overflow-hidden rounded-[1.875rem] bg-gradient-to-t from-black to-transparent px-[1.5625rem] py-[1.25rem]">
@@ -70,7 +70,13 @@ const cardBottomContainer = ({
         <p className="typo-title-0 truncate">{title}</p>
       </div>
       <div className="W-[32.0625rem] flex flex-col items-center gap-y-[.25rem]">
-        <RoundTooltip text={`${maxStudents - nowStudents}명 남았어요`} />
+        <RoundTooltip
+          text={
+            maxStudents - nowStudents !== 0
+              ? `${maxStudents - nowStudents}명 남았어요`
+              : "정원이 모두 찼어요"
+          }
+        />
         <div className="flex flex-row gap-[.9375rem]">
           <PersonIcon className="w-[1.625rem] text-white" />
           <ProgressBar

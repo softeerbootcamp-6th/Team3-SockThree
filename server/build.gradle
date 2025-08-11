@@ -48,6 +48,8 @@ dependencies {
     implementation 'at.favre.lib:bcrypt:0.10.2'  // Spring Security 대신 순수 BCrypt 라이브러리
     // Redis for token management
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    // AWS SDK for S3 Service
+    implementation("software.amazon.awssdk:s3:2.25.66")
 }
 
 tasks.named('test') {

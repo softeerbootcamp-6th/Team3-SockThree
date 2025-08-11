@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Student Lecture Bookmark", description = "학생 강의 북마크 관리 API")
 @RestController
-@RequestMapping("/students/bookmarks")
+@RequestMapping("/bookmarks")
 @RequiredArgsConstructor
 public class LectureBookmarkController {
 

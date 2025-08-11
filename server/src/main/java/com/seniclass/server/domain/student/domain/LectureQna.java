@@ -46,6 +46,10 @@ public class LectureQna extends BaseTimeEntity {
         return LectureQna.builder().student(student).lecture(lecture).question(question).build();
     }
 
+    public void updateQuestion(String question) {
+        this.question = question;
+    }
+
     public void updateAnswer(String answer) {
         this.answer = answer;
     }
