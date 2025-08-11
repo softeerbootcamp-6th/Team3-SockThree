@@ -8,6 +8,7 @@ import * as I from "@/domain/instructor/page";
 
 import { Route, Routes } from "react-router";
 import { Navigate } from "react-router-dom";
+import CourseDashboardLayout from "@/shared/layout/CourseDashboardLayout";
 
 // HyFive 팀 코드 참고했습니다
 
@@ -17,20 +18,29 @@ const Router = () => {
       <Route path="/student">
         <Route path="course">
           <Route element={<NoNavbarLayout />}>
-            <Route path="detail/:courseId" element={<CourseDetailLayout />}>
-              <Route index element={<Navigate to="curriculum" replace />} />
-              <Route
-                path="curriculum"
-                element={<div className="h-[100vh] bg-amber-200">커리큘럼</div>}
-              />
-              <Route path="reviews" element={<div>리뷰</div>} />
-              {/* 선택 탭들 */}
-              <Route
-                path="dashboard"
-                element={<S.CourseDetailDashboardPage />}
-              />
-              <Route path="assignments" element={<div>과제</div>} />
-              <Route path="questions" element={<div>질문</div>} />
+            <Route path="detail/:courseId">
+              {/* 대시보드 전용 레이아웃 */}
+              <Route element={<CourseDashboardLayout />}>
+                <Route
+                  path="dashboard"
+                  element={<S.CourseDetailDashboardPage />}
+                />
+              </Route>
+              {/* 일반 탭 레이아웃 */}
+              <Route element={<CourseDetailLayout />}>
+                <Route index element={<Navigate to="curriculum" replace />} />
+                <Route
+                  path="curriculum"
+                  element={
+                    <div className="h-[100vh] bg-amber-200">커리큘럼</div>
+                  }
+                />
+                <Route path="reviews" element={<div>리뷰</div>} />
+                {/* 선택 탭들 */}
+
+                <Route path="assignments" element={<div>과제</div>} />
+                <Route path="questions" element={<div>질문</div>} />
+              </Route>
             </Route>
           </Route>
         </Route>

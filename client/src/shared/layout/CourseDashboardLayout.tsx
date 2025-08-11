@@ -1,17 +1,19 @@
-import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
-import { CourseInfoCardDefault } from "@/domain/student/component/course/CourseInfoCardDefault";
+// CourseDashboardLayout.tsx  (대시보드: 상단 사이드바 + 메인 전체폭)
 import { Outlet, useParams } from "react-router-dom";
+import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
 import CourseDetailTabBar from "@/shared/components/course/CourseDetailTabBar";
+import CourseInfoCardAttend from "@/domain/student/component/course/CourseInfoCardAttend";
 
-const CourseDetailLayout = () => {
-  const { courseId } = useParams();
+const CourseDashboardLayout = () => {
+  const { courseId } = useParams(); // 이 id를 통해 렌더링 불러옴
   console.log(courseId);
 
   return (
     <main className="flex w-full flex-col items-center justify-center px-[11rem]">
-      <div className="flex w-full flex-col gap-[1rem] py-6 lg:flex-row">
-        {/* 메인 영역: 남은 폭 채우기 */}
-        <section className="flex min-h-[50vh] min-w-0 flex-1 flex-col gap-[1rem]">
+      {/* 전체 flex 구조 */}
+      <div className="flex w-full flex-row items-start justify-between gap-[1rem] pt-[1.5rem]">
+        {/* 상단 카드 & 설명 영역 */}
+        <section className="flex w-full flex-col items-start justify-start gap-[1rem]">
           <CourseInfoCard
             courseInfo={{
               id: 1,
@@ -26,8 +28,8 @@ const CourseDetailLayout = () => {
               courseImg: "",
             }}
           />
-          {/* 강좌 소개 박스 */}
-          <div className="min-h-[10rem] w-full rounded-[1.5rem] bg-white shadow-bg">
+          {/*강좌 설명 박스 */}
+          <div className="mb-[1rem] min-h-[10rem] w-full rounded-[1.5rem] bg-white shadow-bg">
             <div className="flex flex-col gap-[0.5rem] p-[2rem]">
               <h3 className="typo-body-4">강좌 소개</h3>
               <span className="line-clamp-5 max-h-[5rem] min-h-[4rem]">
@@ -35,20 +37,19 @@ const CourseDetailLayout = () => {
               </span>
             </div>
           </div>
-          <CourseDetailTabBar isEnrolled={true} />
-          <div className="flex-1">
-            <Outlet />
-          </div>
         </section>
+        {/* 사이드바 */}
+        <div>
+          <CourseInfoCardAttend />
+        </div>
+      </div>
 
-        <aside>
-          <div className="sticky top-[6rem]">
-            <CourseInfoCardDefault status="recruiting" />
-          </div>
-        </aside>
+      <CourseDetailTabBar isEnrolled={true} />
+      <div className="flex-1">
+        <Outlet />
       </div>
     </main>
   );
 };
 
-export default CourseDetailLayout;
+export default CourseDashboardLayout;
