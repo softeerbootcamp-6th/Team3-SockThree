@@ -11,20 +11,25 @@ const CourseDetailTabBar = ({
     { to: "curriculum", label: "커리큘럼" },
     { to: "reviews", label: "리뷰" },
   ];
+
   const extraTabs = [
     { to: "dashboard", label: "대시보드", gated: true },
     { to: "assignments", label: "과제" },
     { to: "questions", label: "질문" },
   ];
 
-  const tabs = [
-    ...baseTabs,
-    ...(isEnrolled ? extraTabs : extraTabs.filter((t) => !t.gated)),
-  ];
+  let tabs: typeof baseTabs;
+
+  if (isEnrolled) {
+    const dashboardTab = extraTabs.find((t) => t.to === "dashboard")!;
+    const otherExtraTabs = extraTabs.filter((t) => t.to !== "dashboard");
+    tabs = [dashboardTab, ...baseTabs, ...otherExtraTabs];
+  } else {
+    tabs = [...baseTabs, ...extraTabs.filter((t) => !t.gated)];
+  }
 
   return (
     <nav className="sticky top-[5rem] z-100 bg-bg backdrop-blur">
-      {/* 전체 폭 하단 라인 + 수평 패딩 */}
       <div className="mx-auto max-w-screen-2xl border-b border-gray-300 px-4 sm:px-6 lg:px-8">
         <div role="tablist" className="flex h-16 items-end gap-8">
           {tabs.map(({ to, label }) => (
