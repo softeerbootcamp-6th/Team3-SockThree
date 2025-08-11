@@ -1,5 +1,5 @@
-import StudentLayout from "@/domain/student/layout/StudentLayout";
-import InstructorLayout from "@/domain/instructor/layout/InstructorLayout";
+import StudentLayout from "@/shared/layout/StudentLayout";
+import InstructorLayout from "@/shared/layout/InstructorLayout";
 import NoNavbarLayout from "@/shared/layout/NoNavbarLayout";
 
 import * as S from "@/domain/student/page";
@@ -46,11 +46,8 @@ const Router = () => {
             <Route path="detail" element={<I.CourseDetailPage />} />
           </Route>
         </Route>
-
-        <Route element={<NoNavbarLayout />}>
-          <Route path="course">
-            <Route path="create" element={<I.CreateCoursePage />} />
-          </Route>
+        <Route path="course">
+          <Route path="create" element={<I.CreateCoursePage />} />
         </Route>
       </Route>
 

@@ -67,3 +67,8 @@ logging:
 file:
   upload-dir: ./uploads/assignments
   max-file-size: 50MB
+
+aws:
+  region: ap-northeast-2
+  s3:
+    bucket: senicle-bucket

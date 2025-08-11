@@ -42,15 +42,15 @@ const RecommendedCourseListItem = ({
       </div>
 
       {/* 타입 + 요일 + 인원 + 모집 상태*/}
-      <div className="typo-body-5 flex w-[29.1875rem] flex-row items-center justify-between text-gray-600">
-        <span>{listItemData.courseType}</span>
-        <span>{listItemData.courseDays.join(" / ")}</span>
-        <span>
-          <span>
-            {listItemData.nowStudents}/{listItemData.maxStudents}명
-          </span>
+      <div className="typo-body-5 flex w-[29.1875rem] flex-row items-center text-gray-600">
+        <span className="flex flex-1/4">{listItemData.courseType}</span>
+        <span className="flex flex-1/4">
+          {listItemData.courseDays.join(" / ")}
         </span>
-        <span className="typo-body-4 text-black">
+        <span className="flex flex-1/4">
+          {listItemData.nowStudents}/{listItemData.maxStudents}명
+        </span>
+        <span className="typo-body-4 flex flex-1/4 text-black">
           {listItemData.courseStatus}
         </span>
       </div>

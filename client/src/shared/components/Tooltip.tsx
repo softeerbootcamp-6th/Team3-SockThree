@@ -1,4 +1,4 @@
-import SoftStarIcon from "@/assets/icons/soft_star.svg?react";
+import SoftStarIcon from "@/assets/icons/soft-star.svg?react";
 import LeftTopTooltipSVG from "@/assets/icons/tooltip/tooltip_left_top.svg?react";
 import BottomTooltipSVG from "@/assets/icons/tooltip/tooltip_bottom.svg?react";
 import LeftBottomTooltipSVG from "@/assets/icons/tooltip/tooltip_left_bottom.svg?react";
