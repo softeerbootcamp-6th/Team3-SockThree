@@ -26,9 +26,6 @@ public class AwsConfig {
     // Presigned URL 생성용
     @Bean
     public S3Presigner s3Presigner() {
-        return S3Presigner.builder()
-                .region(Region.of(region))
-                .build();
+        return S3Presigner.builder().region(Region.of(region)).build();
     }
 }
-
