@@ -87,7 +87,9 @@ public class LectureServiceImpl implements LectureService {
     @Transactional(readOnly = true)
     public LectureResponse getLecture(Long lectureId) {
         Lecture lecture = getLectureEntity(lectureId);
-        return LectureResponse.from(lecture);
+        String presignedImageURL = fileStorageService.getFileUrl(lecture.getImageKey());
+
+        return LectureResponse.from(lecture, presignedImageURL);
     }
 
     @Override
