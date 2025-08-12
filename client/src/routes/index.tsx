@@ -45,7 +45,6 @@ export const router = createBrowserRouter([
         Component: CourseDashboardLayout,
         children: [
           {
-            index: true,
             Component: S.CourseDetailDashboardPage,
           },
         ],
