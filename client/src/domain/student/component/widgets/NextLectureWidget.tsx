@@ -58,13 +58,13 @@ const NextLessonWidget = ({
 
 export default NextLessonWidget;
 
-function VideoPreview({
+const VideoPreview = ({
   thumbnailUrl,
   onClick,
 }: {
   thumbnailUrl?: string;
   onClick?: () => void;
-}) {
+}) => {
   const [hovered, setHovered] = useState(false);
 
   const frame = "rounded-[0.625rem] bg-gradient-main p-[1px]";
