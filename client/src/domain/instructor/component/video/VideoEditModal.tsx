@@ -79,6 +79,7 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
       } else {
         return uploadVideos.map((video) => (
           <UploadVideoItem
+            key={video.id}
             id={video.id}
             videoName={video.videoName}
             deleteClick={handleVideoDelete}
