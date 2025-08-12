@@ -1,6 +1,8 @@
 import CircleDeleteIcon from "@/assets/icons/default/circle-delete.svg?react";
 import { useState } from "react";
 
+import { truncateToMaxLength } from "@/shared/utils/textUtils";
+
 interface UploadVideoItemProps {
   id: string;
   videoName: string;
@@ -20,18 +22,14 @@ const UploadVideoItem = ({
   const handleVideoTitleChange = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
-    if (target.value.length > videoTitleMaxLength) {
-      target.value = target.value.slice(0, videoTitleMaxLength);
-    }
+    target.value = truncateToMaxLength(target.value, videoTitleMaxLength);
     setVideoTitle(target.value);
   };
 
   const handleVideoDescriptionChange = ({
     target,
   }: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (target.value.length > videoDescriptionMaxLength) {
-      target.value = target.value.slice(0, videoDescriptionMaxLength);
-    }
+    target.value = truncateToMaxLength(target.value, videoDescriptionMaxLength);
     setVideoDescription(target.value);
   };
 

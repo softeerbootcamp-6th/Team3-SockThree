@@ -3,6 +3,7 @@ import Button from "@/shared/components/Button";
 import GradationChip from "@/shared/components/GradationChip";
 import Modal from "@/shared/components/Modal";
 import { forwardRef, useState } from "react";
+import { truncateToMaxLength } from "@/shared/utils/textUtils";
 
 interface VideoEditModalProps {
   onClose: () => void;
@@ -53,9 +54,10 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
     };
 
     const handleContentsTitleChange = (
-      event: React.ChangeEvent<HTMLInputElement>
+      {target}: React.ChangeEvent<HTMLInputElement>
     ) => {
-      setContentsTitle(event.target.value);
+      target.value = truncateToMaxLength(target.value, contentsTitleMaxLength);
+      setContentsTitle(target.value);
     };
 
     const handleCloseClick = () => {
