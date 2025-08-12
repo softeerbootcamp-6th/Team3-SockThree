@@ -5,20 +5,75 @@ import GradationChip from "@/shared/components/GradationChip";
 import Modal from "@/shared/components/Modal";
 import { forwardRef, useState } from "react";
 
-type VideoEditModalProps = {
+interface VideoEditModalProps {
   onClose: () => void;
-};
+}
+
+interface VideoData {
+  videoName: string;
+  videoLength: number;
+  videoTitle: string;
+}
 
 const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
   ({ onClose }, ref) => {
     const [contentsTitle, setContentsTitle] = useState("");
+    const [uploadVideos, setUploadVideos] = useState<VideoData[]>([]);
     const contentsTitleMaxLength = 30;
+
+    const handleVideoAddButtonClick = () => {
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "video/mp4";
+
+      input.onchange = (event) => {
+        const file = (event.target as HTMLInputElement).files?.[0];
+        if (file) {
+          uploadVideos.push({
+            videoName: file.name,
+            videoLength: file.size,
+            videoTitle: "",
+          });
+          setUploadVideos([...uploadVideos]);
+          console.log("선택된 파일:", file);
+        }
+      };
+
+      document.body.appendChild(input);
+      input.click();
+      document.body.removeChild(input);
+    };
+
+
+    const handleVideoDelete = (videoName: string) => {
+      setUploadVideos(uploadVideos.filter(video => video.videoName !== videoName));
+    }
+    
 
     const handleContentsTitleChange = (
       event: React.ChangeEvent<HTMLInputElement>
     ) => {
       setContentsTitle(event.target.value);
     };
+
+    const renderVideoUploadItems = (uploadVideos: VideoData[]) => {
+      if (uploadVideos.length === 0) {
+        return (
+          <div className="flex h-full items-center justify-center text-gray-400">
+            동영상 업로드 버튼을 눌러 동영상을 업로드 해주세요.
+          </div>
+        );
+      } else {
+        return uploadVideos.map((video, index) => (
+          <UploadVideoItem
+            key={index}
+            videoName={video.videoName}
+            deleteClick={handleVideoDelete}
+          />
+        ));
+      }
+    };
+
     return (
       <Modal ref={ref}>
         <div className="flex h-[40.5rem] w-[39.625rem] flex-col px-[1.6875rem] py-[2rem]">
@@ -46,12 +101,12 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
           <div className="flex w-full flex-col gap-[.8125rem]">
             <div className="flex w-full flex-row items-center justify-between">
               <label className="typo-body-4">강의 동영상 업로드</label>
-              <button className="typo-label-0 cursor-pointer">
+              <button className="typo-label-0 cursor-pointer" onClick={handleVideoAddButtonClick}>
                 <GradationChip>+ 동영상 업로드</GradationChip>
               </button>
             </div>
             <div className="flex h-[17.4375rem] flex-col gap-[1.125rem] overflow-y-auto">
-              <UploadVideoItem videoName="예시 비디오.mp4" />
+              {renderVideoUploadItems(uploadVideos)}
             </div>
           </div>
 
@@ -79,6 +134,6 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
   }
 );
 
-VideoEditModal.displayName = "VideoEditModal";
-
 export default VideoEditModal;
+
+
