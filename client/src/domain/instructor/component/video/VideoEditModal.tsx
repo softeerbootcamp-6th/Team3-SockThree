@@ -130,7 +130,7 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
           {/* 버튼 영역 */}
           <div className="mt-[1.6875rem] flex w-full justify-end gap-[1rem]">
             <Button
-              variant={"default"}
+              variant="default"
               className="typo-body-4 flex-1/2 rounded-[.9375rem] bg-gray-200 px-4 py-2 text-black hover:bg-gray-400"
               onClick={handleCloseClick}
             >
@@ -138,7 +138,7 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
             </Button>
 
             <Button
-              variant={"outline"}
+              variant="outline"
               className="typo-body-4 flex-1/2 rounded-[.9375rem]"
               onClick={handleVideoUploadClick}
             >

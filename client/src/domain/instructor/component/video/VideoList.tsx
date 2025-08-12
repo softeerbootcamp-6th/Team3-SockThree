@@ -22,7 +22,11 @@ interface VideoListProps {
   videos?: VideoData[];
 }
 
-const VideoList = ({ contentsId=1, contentsTitle="목차명을 입력하세요.", videos=[] }: VideoListProps) => {
+const VideoList = ({
+  contentsId = 1,
+  contentsTitle = "목차명을 입력하세요.",
+  videos = [],
+}: VideoListProps) => {
   const [isListOpen, setIsListOpen] = useState(true);
   const { modalRef, openModal, closeModal } = useModal();
 
@@ -37,8 +41,15 @@ const VideoList = ({ contentsId=1, contentsTitle="목차명을 입력하세요."
   return (
     <>
       {/* 모달 */}
-      <VideoEditModal ref={modalRef} onClose={handleClose} title={contentsTitle}/>
-      <div id={`${contentsId}`} className="flex w-[74.875rem] flex-col gap-4 rounded-xl bg-white px-[1.625rem] py-[1.5rem] transition-all duration-300 ease-in-out">
+      <VideoEditModal
+        ref={modalRef}
+        onClose={handleClose}
+        title={contentsTitle}
+      />
+      <div
+        id={`${contentsId}`}
+        className="flex w-[74.875rem] flex-col gap-4 rounded-xl bg-white px-[1.625rem] py-[1.5rem] transition-all duration-300 ease-in-out"
+      >
         {/* 헤더 */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
