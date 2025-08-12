@@ -10,6 +10,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ public class AuthService {
     private final UserAuthenticationService userAuthenticationService;
     private final CareerService careerService;
 
+    @Value("${app.cookie.secure:false}")
+    private boolean cookieSecure;
+
     @Transactional
     public LoginResponse login(LoginRequest request, HttpServletResponse response) {
         AuthenticatedUser user =
@@ -34,13 +38,7 @@ public class AuthService {
         tokenManagementService.saveRefreshToken(refreshToken, user.getId());
 
         // Refresh token을 HttpOnly 쿠키로 설정
-        Cookie cookie = new Cookie("refresh_token", refreshToken);
-        cookie.setMaxAge((int) (jwtTokenProvider.getRefreshTokenValidityInMilliseconds() / 1000));
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setAttribute("SameSite", "Strict");
-        response.addCookie(cookie);
+        setRefreshTokenCookie(response, refreshToken);
 
         log.info("User logged in successfully: {}", user.getEmail());
         return new LoginResponse(
@@ -49,6 +47,26 @@ public class AuthService {
                 jwtTokenProvider.getAccessTokenValidityInMilliseconds() / 1000,
                 new LoginResponse.UserInfo(
                         user.getId(), user.getEmail(), user.getRole().getValue()));
+    }
+
+    private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
+        Cookie cookie = new Cookie("refresh_token", refreshToken);
+        cookie.setMaxAge((int) (jwtTokenProvider.getRefreshTokenValidityInMilliseconds() / 1000));
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(cookieSecure); // 환경에 따라 설정
+        cookie.setAttribute("SameSite", cookieSecure ? "None" : "Lax"); // HTTPS면 None, HTTP면 Lax
+        response.addCookie(cookie);
+    }
+
+    public void clearRefreshTokenCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie("refresh_token", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(cookieSecure);
+        cookie.setAttribute("SameSite", cookieSecure ? "None" : "Lax");
+        response.addCookie(cookie);
     }
 
     @Transactional
@@ -70,13 +88,7 @@ public class AuthService {
         tokenManagementService.saveRefreshToken(newRefreshToken, user.getId());
 
         // 새로운 refresh token을 쿠키로 설정
-        Cookie cookie = new Cookie("refresh_token", newRefreshToken);
-        cookie.setMaxAge((int) (jwtTokenProvider.getRefreshTokenValidityInMilliseconds() / 1000));
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setAttribute("SameSite", "Strict");
-        response.addCookie(cookie);
+        setRefreshTokenCookie(response, newRefreshToken);
 
         log.info("Token refreshed for user: {}", user.getEmail());
         return new TokenResponse(

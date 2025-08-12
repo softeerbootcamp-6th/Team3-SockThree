@@ -6,7 +6,6 @@ import com.seniclass.server.domain.auth.service.AuthService;
 import com.seniclass.server.global.exception.CommonException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -58,15 +57,7 @@ public class AuthController {
         if (token != null) {
             authService.logout(token);
         }
-
-        // refresh_token 쿠키 삭제
-        Cookie cookie = new Cookie("refresh_token", null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setAttribute("SameSite", "Strict");
-        response.addCookie(cookie);
+        authService.clearRefreshTokenCookie(response);
     }
 
     @Operation(summary = "토큰 유효성 검사 (공통)")
