@@ -124,9 +124,9 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
 
             if (s.row() < 0
                     || s.col() < 0
-                    || s.row() > MAX_ROWS
-                    || s.col() > MAX_COLS
-                    || s.col() + s.widgetSize().getWidth() > MAX_ROWS)
+                    || s.row() >= MAX_ROWS
+                    || s.col() >= MAX_COLS
+                    || s.col() + s.widgetSize().getWidth() > MAX_COLS)
                 throw new CommonException(WidgetSettingErrorCode.INVALID_POSITION);
 
             if (s.visible()) {
