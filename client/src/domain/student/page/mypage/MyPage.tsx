@@ -60,14 +60,14 @@ const MyPage = () => {
   ];
 
   return (
-    <div className="flex w-full flex-col items-center gap-[2.25rem] overflow-y-auto pt-[4.9375rem] pr-[3.125rem] pb-[9.625rem] pl-[1.875rem]">
+    <div className="flex w-full flex-col items-center gap-[2.25rem] pt-[4.9375rem] pr-[3.125rem] pb-[9.625rem] pl-[1.875rem]">
       <p className="typo-title-0 flex h-[7.125rem] w-full text-left whitespace-pre-line">
         {userName}님의 공간이에요 <br /> 어떤 정보를 확인해볼까요?
       </p>
-      <div className="flex h-[.0625rem] w-full bg-gray-400" />
+      <hr className="flex h-[.0625rem] w-full text-gray-400" />
 
       <div className="flex h-[42.6875rem] w-full flex-col gap-[43px]">
-        <div className="flex h-[36.9375rem] w-full flex-row items-center justify-center gap-[.625rem]">
+        <div className="flex h-[31.25rem] w-full flex-row items-center justify-center gap-[.625rem]">
           {cardsData.map((card, index) => (
             <MyPageCard
               key={index}
