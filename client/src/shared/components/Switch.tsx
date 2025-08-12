@@ -6,10 +6,10 @@ import { cn } from "@/lib/utils";
 import ArrowRight from "@/assets/icons/gradient/arrow_right.svg?react";
 import ArrowLeft from "@/assets/icons/gradient/arrow_left.svg?react";
 
-function Switch({
+const Switch = ({
   className,
   ...props
-}: React.ComponentProps<typeof SwitchPrimitive.Root>) {
+}: React.ComponentProps<typeof SwitchPrimitive.Root>) => {
   const [isChecked, setIsChecked] = useState(false);
 
   return (
@@ -49,6 +49,6 @@ function Switch({
       </SwitchPrimitive.Thumb>
     </SwitchPrimitive.Root>
   );
-}
+};
 
 export { Switch };

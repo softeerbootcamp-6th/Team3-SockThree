@@ -18,7 +18,7 @@ type CourseInfoCardProps = {
   buttonText?: Partial<{ recruiting: string; closed: string }>;
 };
 
-export function CourseInfoCardDefault({
+const CourseInfoCardDefault = ({
   order = 1,
   title = "강좌 제목",
   uploadTimes = [
@@ -32,7 +32,7 @@ export function CourseInfoCardDefault({
   status,
   onAction = () => {},
   buttonText,
-}: CourseInfoCardProps) {
+}: CourseInfoCardProps) => {
   const actionLabel =
     status === "closed"
       ? (buttonText?.recruiting ?? "이 강좌 신청하기")
@@ -113,4 +113,6 @@ export function CourseInfoCardDefault({
       </footer>
     </article>
   );
-}
+};
+
+export default CourseInfoCardDefault;
