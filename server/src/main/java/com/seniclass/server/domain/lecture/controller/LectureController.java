@@ -24,7 +24,7 @@ public class LectureController {
 
     private final LectureService lectureService;
 
-    @Operation(summary = "강의 생성", description = "강사가 새로운 강의를 생성합니다. TEACHER 권한 필요.")
+    @Operation(summary = "강의 생성 (강사)", description = "강사가 새로운 강의를 생성합니다. TEACHER 권한 필요.")
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse createLecture(
@@ -35,14 +35,14 @@ public class LectureController {
         return lectureService.createLecture(userId, request, file);
     }
 
-    @Operation(summary = "강의 단일 조회", description = "강의 ID로 특정 강의의 상세 정보를 조회합니다.")
+    @Operation(summary = "강의 단일 조회 (강사,학생)", description = "강의 ID로 특정 강의의 상세 정보를 조회합니다.")
     @GetMapping("/{lectureId}")
     public LectureResponse getLecture(
             @Parameter(description = "조회할 강의 ID") @PathVariable Long lectureId) {
         return lectureService.getLecture(lectureId);
     }
 
-    @Operation(summary = "강의 수정", description = "강사가 본인의 강의 정보를 수정합니다. TEACHER 권한 필요.")
+    @Operation(summary = "강의 수정 (강사)", description = "강사가 본인의 강의 정보를 수정합니다. TEACHER 권한 필요.")
     @PutMapping(value = "/{lectureId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse updateLecture(
@@ -54,7 +54,7 @@ public class LectureController {
         return lectureService.updateLecture(userId, lectureId, request, file);
     }
 
-    @Operation(summary = "강의 삭제", description = "강사가 본인의 강의를 삭제합니다. TEACHER 권한 필요.")
+    @Operation(summary = "강의 삭제 (강사)", description = "강사가 본인의 강의를 삭제합니다. TEACHER 권한 필요.")
     @DeleteMapping("/{lectureId}")
     @RequireAuth(roles = {UserRole.TEACHER})
     public ResponseEntity<Void> deleteLecture(
