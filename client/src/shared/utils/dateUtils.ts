@@ -17,7 +17,7 @@ export const formatDate = (
   } else {
     sliceIdx = 2;
   }
-  
+
   const yy = String(date.getFullYear()).slice(-sliceIdx);
   const mm = String(date.getMonth() + 1).padStart(2, "0");
   const dd = String(date.getDate()).padStart(2, "0");
