@@ -5,7 +5,7 @@ import Modal from "@/shared/components/Modal";
 import { forwardRef, useState } from "react";
 import { truncateToMaxLength } from "@/shared/utils/textUtils";
 
-interface VideoEditModalProps {
+interface UploadVideoModalProps {
   onClose: () => void;
   title: string;
   id?: number;
@@ -18,7 +18,7 @@ interface VideoData {
   videoDescription: string;
 }
 
-const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
+const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
   ({ onClose, title }, ref) => {
     const [contentsTitle, setContentsTitle] = useState(title);
     const [uploadVideos, setUploadVideos] = useState<VideoData[]>([]);
@@ -53,9 +53,9 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
       setUploadVideos((prev) => prev.filter((v) => v.id !== id));
     };
 
-    const handleContentsTitleChange = (
-      {target}: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleContentsTitleChange = ({
+      target,
+    }: React.ChangeEvent<HTMLInputElement>) => {
       target.value = truncateToMaxLength(target.value, contentsTitleMaxLength);
       setContentsTitle(target.value);
     };
@@ -153,4 +153,4 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
   }
 );
 
-export default VideoEditModal;
+export default UploadVideoModal;

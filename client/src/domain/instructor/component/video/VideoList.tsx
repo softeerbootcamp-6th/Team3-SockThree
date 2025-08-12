@@ -7,7 +7,7 @@ import TriangleUpIcon from "@/assets/icons/default/triangle-up.svg?react";
 import TriangleDownIcon from "@/assets/icons/default/triangle-down.svg?react";
 import EditIcon from "@/assets/icons/default/edit.svg?react";
 import DeleteIcon from "@/assets/icons/default/delete.svg?react";
-import VideoEditModal from "@/domain/instructor/component/video/VideoEditModal";
+import UploadVideoModal from "@/domain/instructor/component/video/UploadVideoModal";
 
 interface VideoData {
   id: number;
@@ -41,7 +41,7 @@ const VideoList = ({
   return (
     <>
       {/* 모달 */}
-      <VideoEditModal
+      <UploadVideoModal
         ref={modalRef}
         onClose={handleClose}
         title={contentsTitle}
