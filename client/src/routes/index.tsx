@@ -1,6 +1,6 @@
 import StudentLayout from "@/shared/layout/StudentLayout";
 import InstructorLayout from "@/shared/layout/InstructorLayout";
-import StickyLogoLayout from "@/shared/layout/StickyLogoLayout.tsx";
+import StickyLogoLayout from "@/shared/layout/StickyLogoLayout";
 import CourseDetailLayout from "@/shared/layout/CourseDetailLayout";
 
 import * as S from "@/domain/student/page";
