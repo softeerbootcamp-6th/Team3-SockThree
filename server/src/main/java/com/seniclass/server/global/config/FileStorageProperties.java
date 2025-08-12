@@ -13,5 +13,5 @@ public class FileStorageProperties {
 
     private String uploadDir = "uploads/assignments";
     private long maxFileSize = 10485760; // 10MB
-    private String[] allowedExtensions = {"pdf", "doc", "docx", "txt", "zip", "hwp"};
+    private String[] allowedExtensions = {"pdf", "doc", "docx", "txt", "zip", "hwp","jpg", "jpeg", "png", "gif"};
 }
