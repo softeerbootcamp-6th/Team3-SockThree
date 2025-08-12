@@ -1,7 +1,8 @@
 // Date 객체 format과 관련한 함수
 export const formatDate = (
   dateInput: Date | string | number,
-  delimiter: "-" | "."
+  delimiter: "-" | ".",
+  fullYear: boolean = false
 ) => {
   const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
 
@@ -9,7 +10,15 @@ export const formatDate = (
     throw new Error("Invalid date");
   }
 
-  const yy = String(date.getFullYear()).slice(-2);
+  let sliceIdx: number;
+
+  if (fullYear) {
+    sliceIdx = 4;
+  } else {
+    sliceIdx = 2;
+  }
+  
+  const yy = String(date.getFullYear()).slice(-sliceIdx);
   const mm = String(date.getMonth() + 1).padStart(2, "0");
   const dd = String(date.getDate()).padStart(2, "0");
 
