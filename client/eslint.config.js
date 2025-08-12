@@ -8,7 +8,7 @@ import { globalIgnores } from "eslint/config";
 import eslintConfigPrettier from "eslint-config-prettier/flat";
 
 export default tseslint.config([
-  globalIgnores(["dist"]),
+  globalIgnores(["dist", "src/shared/shadcn/**", "src/App.tsx"]),
   {
     files: ["**/*.{ts,tsx}"],
     plugins: {
@@ -29,6 +29,13 @@ export default tseslint.config([
     rules: {
       "prefer-arrow-callback": "error",
       "react-refresh/only-export-components": "off",
+      "react/function-component-definition": [
+        "error",
+        {
+          namedComponents: "arrow-function",
+          unnamedComponents: "arrow-function",
+        },
+      ],
       "no-restricted-imports": [
         "error",
         {
