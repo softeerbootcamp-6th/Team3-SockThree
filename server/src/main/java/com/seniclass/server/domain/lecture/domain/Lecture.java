@@ -54,7 +54,7 @@ public class Lecture extends BaseTimeEntity {
     @Column(nullable = false)
     private String description;
 
-    private String thumbnailUrl;
+    private String imageKey;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id", nullable = false)
@@ -73,7 +73,7 @@ public class Lecture extends BaseTimeEntity {
             Integer fee,
             String instruction,
             String description,
-            String thumbnailUrl,
+            String imageKey,
             Teacher teacher) {
         this.subCategory = subCategory;
         this.name = name;
@@ -85,7 +85,7 @@ public class Lecture extends BaseTimeEntity {
         this.fee = fee;
         this.instruction = instruction;
         this.description = description;
-        this.thumbnailUrl = thumbnailUrl;
+        this.imageKey = imageKey;
         this.teacher = teacher;
     }
 
@@ -100,7 +100,7 @@ public class Lecture extends BaseTimeEntity {
             Integer fee,
             String instruction,
             String description,
-            String thumbnailUrl,
+            String imageKey,
             Teacher teacher) {
         return Lecture.builder()
                 .subCategory(subCategory)
@@ -113,7 +113,7 @@ public class Lecture extends BaseTimeEntity {
                 .fee(fee)
                 .instruction(instruction)
                 .description(description)
-                .thumbnailUrl(thumbnailUrl)
+                .imageKey(imageKey)
                 .teacher(teacher)
                 .build();
     }
@@ -126,7 +126,7 @@ public class Lecture extends BaseTimeEntity {
             Integer maxStudent,
             String instruction,
             String description,
-            String thumbnailUrl) {
+            String imageKey) {
         this.subCategory = subCategory;
         this.level = level;
         this.startDate = startDate;
@@ -134,6 +134,6 @@ public class Lecture extends BaseTimeEntity {
         this.maxStudent = maxStudent;
         this.instruction = instruction;
         this.description = description;
-        this.thumbnailUrl = thumbnailUrl;
+        this.imageKey = imageKey;
     }
 }
