@@ -20,12 +20,18 @@ const UploadVideoItem = ({
   const handleVideoTitleChange = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
+    if (target.value.length > videoTitleMaxLength) {
+      target.value = target.value.slice(0, videoTitleMaxLength);
+    }
     setVideoTitle(target.value);
   };
 
   const handleVideoDescriptionChange = ({
     target,
   }: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (target.value.length > videoDescriptionMaxLength) {
+      target.value = target.value.slice(0, videoDescriptionMaxLength);
+    }
     setVideoDescription(target.value);
   };
 
@@ -35,7 +41,7 @@ const UploadVideoItem = ({
         <button className="cursor-pointer" onClick={() => deleteClick(id)}>
           <CircleDeleteIcon className="w-[1.5rem]" />
         </button>
-        <span className="typo-label-0">{videoName}</span>
+        <span className="typo-label-0 truncate">{videoName}</span>
       </div>
       <div className="relative w-full">
         <input
@@ -47,7 +53,7 @@ const UploadVideoItem = ({
           className="text-body-5 w-full rounded-[.625rem] border border-gray-400 px-[1.3125rem] py-[1.375rem] placeholder-gray-400 focus:ring-2 focus:ring-main-500 focus:outline-none"
         />
         <span className="text-body-5 absolute top-1/2 right-[1.4375rem] -translate-y-1/2 text-gray-400">
-          {videoTitle.length}/{videoTitleMaxLength}
+          {videoTitle.length}/{videoTitleMaxLength}자
         </span>
       </div>
 
@@ -57,11 +63,11 @@ const UploadVideoItem = ({
         value={videoDescription}
         maxLength={videoDescriptionMaxLength}
         onChange={handleVideoDescriptionChange}
-        className="text-body-5 w-full rounded-[.625rem] border border-gray-400 px-[1.3125rem] py-[1.375rem] placeholder-gray-400 focus:ring-2 focus:ring-main-500 focus:outline-none"
+        className="text-body-5 w-full resize-none rounded-[.625rem] border border-gray-400 px-[1.3125rem] py-[1.375rem] placeholder-gray-400 focus:ring-2 focus:ring-main-500 focus:outline-none"
       />
 
       <span className="text-body-5 flex justify-end text-gray-400">
-        {videoDescription.length}/{videoDescriptionMaxLength}
+        {videoDescription.length}/{videoDescriptionMaxLength}자
       </span>
     </div>
   );
