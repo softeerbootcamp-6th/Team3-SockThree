@@ -59,7 +59,7 @@ public class AuthService {
                         .sameSite(cookieSecure ? "None" : "Lax")
                         .build(); // HTTPS면 None, HTTP면 Lax
         response.addHeader("Set-Cookie", cookie.toString());
-        log.debug("Set refresh token cookie: {}", cookie.toString());
+        log.info("Set refresh token cookie for user: {}", "***masked***");
     }
 
     public void clearRefreshTokenCookie(HttpServletResponse response) {
@@ -72,7 +72,7 @@ public class AuthService {
                         .sameSite(cookieSecure ? "None" : "Lax")
                         .build();
         response.addHeader("Set-Cookie", cookie.toString());
-        log.debug("Cleared refresh token cookie: {}", cookie.toString());
+        log.info("Cleared refresh token cookie");
     }
 
     @Transactional
