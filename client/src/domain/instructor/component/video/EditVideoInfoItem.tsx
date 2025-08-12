@@ -3,16 +3,16 @@ import { useState } from "react";
 
 import { truncateToMaxLength } from "@/shared/utils/textUtils";
 
-interface UploadVideoItemProps {
+interface EditVideoInfoItemProps {
   id: string;
   videoName: string;
   deleteClick: (videoName: string) => void;
 }
-const UploadVideoItem = ({
+const EditVideoInfoItem = ({
   id,
   videoName,
   deleteClick,
-}: UploadVideoItemProps) => {
+}: EditVideoInfoItemProps) => {
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
 
@@ -71,4 +71,4 @@ const UploadVideoItem = ({
   );
 };
 
-export default UploadVideoItem;
+export default EditVideoInfoItem;

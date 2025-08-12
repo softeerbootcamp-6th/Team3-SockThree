@@ -1,4 +1,4 @@
-import UploadVideoItem from "@/domain/instructor/component/video/UploadVideoItem";
+import EditVideoInfoItem from "@/domain/instructor/component/video/EditVideoInfoItem";
 import Button from "@/shared/components/Button";
 import GradationChip from "@/shared/components/GradationChip";
 import Modal from "@/shared/components/Modal";
@@ -113,7 +113,7 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
         );
       } else {
         return uploadVideos.map((video) => (
-          <UploadVideoItem
+          <EditVideoInfoItem
             key={video.id}
             id={video.id}
             videoName={video.videoName}
