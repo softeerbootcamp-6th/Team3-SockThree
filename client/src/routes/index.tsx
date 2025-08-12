@@ -10,14 +10,13 @@ import { Route, Routes } from "react-router";
 import { Navigate } from "react-router-dom";
 import CourseDashboardLayout from "@/shared/layout/CourseDashboardLayout";
 
-// HyFive 팀 코드 참고했습니다
-
 const Router = () => {
   return (
     <Routes>
       <Route path="/student">
         <Route path="course">
           <Route element={<StickyLogoLayout />}>
+            {/* 강좌 상세 페이지 */}
             <Route path="detail/:courseId">
               {/* 대시보드 전용 레이아웃 */}
               <Route element={<CourseDashboardLayout />}>
@@ -36,8 +35,6 @@ const Router = () => {
                   }
                 />
                 <Route path="reviews" element={<div>리뷰</div>} />
-                {/* 선택 탭들 */}
-
                 <Route path="assignments" element={<div>과제</div>} />
                 <Route path="questions" element={<div>질문</div>} />
               </Route>
