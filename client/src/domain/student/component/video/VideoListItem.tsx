@@ -76,8 +76,8 @@ const VideoListItemVariant = tv({
   variants: {
     isCompleted: {
       true: {
-        container: "border-main-400",
-        playButton: "hover:bg-main-50 border-main-400",
+        container: "border-main-400 border-2",
+        playButton: "hover:bg-main-50 border-main-400 border-2",
         playButtonIcon: "text-main-400",
       },
       false: {
