@@ -1,5 +1,5 @@
 // CourseDashboardLayout.tsx  (대시보드: 상단 사이드바 + 메인 전체폭)
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router";
 import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
 import CourseDetailTabBar from "@/shared/components/course/CourseDetailTabBar";
 import CourseInfoCardAttend from "@/domain/student/component/course/CourseInfoCardAttend";
