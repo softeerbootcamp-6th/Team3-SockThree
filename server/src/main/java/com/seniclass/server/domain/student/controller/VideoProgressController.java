@@ -16,7 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Student Video Progress", description = "학생 비디오 진행 상황 관리 API")
+@Tag(name = "Video Progress", description = "학생 비디오 진행 상황 관리 API")
 @RestController
 @RequestMapping("/videos")
 @RequiredArgsConstructor
@@ -24,21 +24,21 @@ public class VideoProgressController {
 
     private final VideoProgressService videoProgressService;
 
-    @Operation(summary = "비디오 진행 상황 업데이트", description = "학생의 비디오 시청 진행 상황을 업데이트합니다.")
+    @Operation(summary = "비디오 진행 상황 업데이트 (수강생)", description = "학생의 비디오 시청 진행 상황을 업데이트합니다.")
     @PutMapping("/progress")
     @RequireAuth(roles = {UserRole.STUDENT})
     public VideoProgressResponse updateProgress(@Valid @RequestBody VideoProgressRequest request) {
         return videoProgressService.updateProgress(request);
     }
 
-    @Operation(summary = "비디오 진행 상황 삭제", description = "학생의 비디오 진행 상황을 삭제합니다.")
+    @Operation(summary = "비디오 진행 상황 삭제 (수강생)", description = "학생의 비디오 진행 상황을 삭제합니다.")
     @DeleteMapping("/progress/{progressId}")
     @RequireAuth(roles = {UserRole.STUDENT})
     public void deleteProgress(@Parameter(description = "진행 상황 ID") @PathVariable Long progressId) {
         videoProgressService.deleteProgress(progressId);
     }
 
-    @Operation(summary = "내 비디오 진행 상황 목록 조회", description = "현재 학생의 모든 비디오 진행 상황을 조회합니다.")
+    @Operation(summary = "내 비디오 진행 상황 목록 조회 (수강생)", description = "현재 학생의 모든 비디오 진행 상황을 조회합니다.")
     @GetMapping("/progress")
     @RequireAuth(roles = {UserRole.STUDENT})
     public Page<VideoProgressResponse> getCurrentStudentProgress(
@@ -47,7 +47,7 @@ public class VideoProgressController {
         return videoProgressService.getCurrentStudentProgress(pageable);
     }
 
-    @Operation(summary = "강의별 내 비디오 진행 상황 조회", description = "특정 강의의 비디오 진행 상황을 조회합니다.")
+    @Operation(summary = "강의별 내 비디오 진행 상황 조회 (수강생)", description = "특정 강의의 비디오 진행 상황을 조회합니다.")
     @GetMapping("/progress/lectures/{lectureId}")
     @RequireAuth(roles = {UserRole.STUDENT})
     public Page<VideoProgressResponse> getCurrentStudentProgressByLecture(
@@ -57,7 +57,7 @@ public class VideoProgressController {
         return videoProgressService.getCurrentStudentProgressByLecture(lectureId, pageable);
     }
 
-    @Operation(summary = "특정 비디오 진행 상황 조회", description = "특정 비디오의 현재 학생 진행 상황을 조회합니다.")
+    @Operation(summary = "특정 비디오 진행 상황 조회 (수강생)", description = "특정 비디오의 현재 학생 진행 상황을 조회합니다.")
     @GetMapping("/{videoId}/progress/my")
     @RequireAuth(roles = {UserRole.STUDENT})
     public VideoProgressResponse getProgressByVideo(
@@ -65,7 +65,9 @@ public class VideoProgressController {
         return videoProgressService.getProgressByVideo(videoId);
     }
 
-    @Operation(summary = "특정 비디오의 모든 진행 상황 조회", description = "특정 비디오의 모든 학생 진행 상황을 조회합니다. (강사용)")
+    @Operation(
+            summary = "특정 비디오의 모든 진행 상황 조회 (강사)",
+            description = "특정 비디오의 모든 학생 진행 상황을 조회합니다. (강사용)")
     @GetMapping("/{videoId}/progress")
     @RequireAuth(roles = {UserRole.TEACHER})
     public Page<VideoProgressResponse> getProgressByVideoForAll(
