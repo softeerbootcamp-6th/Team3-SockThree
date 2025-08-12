@@ -16,8 +16,8 @@ import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.global.service.FileStorageService;
 import java.time.LocalDateTime;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 @Transactional(readOnly = true)
 public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionService {
@@ -34,6 +33,17 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
     private final StudentRepository studentRepository;
     private final AssignmentRepository assignmentRepository;
     private final FileStorageService fileStorageService;
+
+    public AssignmentSubmissionServiceImpl(
+            AssignmentSubmissionRepository assignmentSubmissionRepository,
+            StudentRepository studentRepository,
+            AssignmentRepository assignmentRepository,
+            @Qualifier("s3FileStorageService") FileStorageService fileStorageService) {
+        this.assignmentSubmissionRepository = assignmentSubmissionRepository;
+        this.studentRepository = studentRepository;
+        this.assignmentRepository = assignmentRepository;
+        this.fileStorageService = fileStorageService;
+    }
 
     /** 파일로 과제 제출 */
     @Transactional
@@ -66,12 +76,18 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
         }
 
         String fileName = fileStorageService.storeFile(request.file(), "assignments");
+        log.info("파일 저장 완료: S3 key = {}", fileName);
 
         AssignmentSubmission submission =
                 AssignmentSubmission.createAssignmentSubmissionWithFile(
                         student, assignment, request.content(), fileName);
 
-        return AssignmentSubmissionResponse.from(assignmentSubmissionRepository.save(submission));
+        AssignmentSubmission savedSubmission = assignmentSubmissionRepository.save(submission);
+        log.info(
+                "과제 제출 저장 완료: submissionId = {}, fileKey = {}",
+                savedSubmission.getId(),
+                savedSubmission.getFileUrl());
+        return convertToResponseWithFileUrl(savedSubmission);
     }
 
     /** 파일로 과제 수정 */
@@ -95,11 +111,11 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
             throw new CommonException(AuthErrorCode.UNAUTHORIZED);
         }
 
-        String oldFilePath = submission.getFilePath();
+        String oldFilePath = submission.getFileUrl();
         String newFileName = fileStorageService.storeFile(request.file(), "assignments");
 
         submission.updateContent(request.content());
-        submission.updateFilePath(newFileName);
+        submission.updateFileUrl(newFileName);
 
         AssignmentSubmission updatedSubmission = assignmentSubmissionRepository.save(submission);
 
@@ -112,7 +128,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
             }
         }
 
-        return AssignmentSubmissionResponse.from(updatedSubmission);
+        return convertToResponseWithFileUrl(updatedSubmission);
     }
 
     /** 제출된 파일 다운로드 */
@@ -135,11 +151,11 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
             throw new CommonException(AuthErrorCode.UNAUTHORIZED);
         }
 
-        if (submission.getFilePath() == null || submission.getFilePath().isEmpty()) {
+        if (submission.getFileUrl() == null || submission.getFileUrl().isEmpty()) {
             throw new CommonException(AssignmentSubmissionErrorCode.ASSIGNMENT_FILE_NOT_FOUND);
         }
 
-        return fileStorageService.loadAsResource(submission.getFilePath());
+        return fileStorageService.loadAsResource(submission.getFileUrl());
     }
 
     /** 과제 제출 삭제 */
@@ -164,11 +180,11 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
 
         assignmentSubmissionRepository.delete(submission);
         // 파일 삭제
-        if (submission.getFilePath() != null && !submission.getFilePath().isEmpty()) {
+        if (submission.getFileUrl() != null && !submission.getFileUrl().isEmpty()) {
             try {
-                fileStorageService.deleteFile(submission.getFilePath());
+                fileStorageService.deleteFile(submission.getFileUrl());
             } catch (Exception e) {
-                log.warn("과제 제출 파일 삭제 중 오류 발생: {}", submission.getFilePath(), e);
+                log.warn("과제 제출 파일 삭제 중 오류 발생: {}", submission.getFileUrl(), e);
             }
         }
         log.info(
@@ -203,7 +219,7 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
                                                 AssignmentSubmissionErrorCode
                                                         .ASSIGNMENT_SUBMISSION_NOT_FOUND));
 
-        return AssignmentSubmissionResponse.from(submission);
+        return convertToResponseWithFileUrl(submission);
     }
 
     /** 특정 과제의 모든 제출 목록 조회 (관리자/강사용) */
@@ -232,5 +248,15 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
         Long studentId = AuthContext.getCurrentUserId();
 
         return assignmentSubmissionRepository.countByStudentId(studentId);
+    }
+
+    /** AssignmentSubmission을 Response로 변환 (파일 URL 포함) */
+    private AssignmentSubmissionResponse convertToResponseWithFileUrl(
+            AssignmentSubmission submission) {
+        String fileUrl = null;
+        if (submission.getFileUrl() != null && !submission.getFileUrl().isEmpty()) {
+            fileUrl = fileStorageService.getFileUrl(submission.getFileUrl());
+        }
+        return AssignmentSubmissionResponse.from(submission, fileUrl);
     }
 }

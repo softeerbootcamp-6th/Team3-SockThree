@@ -16,7 +16,7 @@ public class AssignmentSubmission extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column private String filePath;
+    @Column private String fileUrl;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -31,25 +31,25 @@ public class AssignmentSubmission extends BaseTimeEntity {
 
     @Builder(access = AccessLevel.PRIVATE)
     private AssignmentSubmission(
-            Student student, Assignment assignment, String filePath, String content) {
+            Student student, Assignment assignment, String fileUrl, String content) {
         this.student = student;
         this.assignment = assignment;
-        this.filePath = filePath;
+        this.fileUrl = fileUrl;
         this.content = content;
     }
 
     public static AssignmentSubmission createAssignmentSubmissionWithFile(
-            Student student, Assignment assignment, String content, String filePath) {
+            Student student, Assignment assignment, String content, String fileUrl) {
         return AssignmentSubmission.builder()
                 .student(student)
                 .assignment(assignment)
                 .content(content)
-                .filePath(filePath)
+                .fileUrl(fileUrl)
                 .build();
     }
 
-    public void updateFilePath(String filePath) {
-        this.filePath = filePath;
+    public void updateFileUrl(String fileUrl) {
+        this.fileUrl = fileUrl;
     }
 
     public void updateContent(String content) {
