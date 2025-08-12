@@ -6,8 +6,11 @@ import com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode;
 import com.seniclass.server.domain.teacher.domain.Teacher;
 import com.seniclass.server.domain.teacher.service.CareerService;
 import com.seniclass.server.global.exception.CommonException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,41 +25,80 @@ public class AuthService {
     private final UserAuthenticationService userAuthenticationService;
     private final CareerService careerService;
 
+    @Value("${app.cookie.secure:false}")
+    private boolean cookieSecure;
+
     @Transactional
-    public LoginResponse login(LoginRequest request) {
+    public LoginResponse login(LoginRequest request, HttpServletResponse response) {
         AuthenticatedUser user =
                 userAuthenticationService.authenticate(request.email(), request.password());
         tokenManagementService.revokeAllUserRefreshTokens(user.getId());
         String accessToken = jwtTokenProvider.generateAccessToken(user);
         String refreshToken = jwtTokenProvider.generateRefreshToken(user);
         tokenManagementService.saveRefreshToken(refreshToken, user.getId());
+
+        // Refresh token을 HttpOnly 쿠키로 설정
+        setRefreshTokenCookie(response, refreshToken);
+
         log.info("User logged in successfully: {}", user.getEmail());
         return new LoginResponse(
                 accessToken,
-                refreshToken,
                 "Bearer",
                 jwtTokenProvider.getAccessTokenValidityInMilliseconds() / 1000,
                 new LoginResponse.UserInfo(
                         user.getId(), user.getEmail(), user.getRole().getValue()));
     }
 
+    private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
+        ResponseCookie cookie =
+                ResponseCookie.from("refresh_token", refreshToken)
+                        .maxAge(jwtTokenProvider.getRefreshTokenValidityInMilliseconds() / 1000)
+                        .path("/")
+                        .httpOnly(true)
+                        .secure(cookieSecure) // 환경에 따라 설정
+                        .sameSite(cookieSecure ? "None" : "Lax")
+                        .build(); // HTTPS면 None, HTTP면 Lax
+        response.addHeader("Set-Cookie", cookie.toString());
+        log.info("Set refresh token cookie for user: {}", "***masked***");
+    }
+
+    public void clearRefreshTokenCookie(HttpServletResponse response) {
+        ResponseCookie cookie =
+                ResponseCookie.from("refresh_token", "")
+                        .maxAge(0)
+                        .path("/")
+                        .httpOnly(true)
+                        .secure(cookieSecure) // 환경에 따라 설정
+                        .sameSite(cookieSecure ? "None" : "Lax")
+                        .build();
+        response.addHeader("Set-Cookie", cookie.toString());
+        log.info("Cleared refresh token cookie");
+    }
+
     @Transactional
-    public TokenResponse refreshToken(RefreshTokenRequest request) {
-        String refreshToken = request.refreshToken();
+    public TokenResponse refreshToken(String refreshToken, HttpServletResponse response) {
+        if (refreshToken == null || refreshToken.isEmpty()) {
+            throw new CommonException(AuthErrorCode.INVALID_TOKEN);
+        }
+
         if (!jwtTokenProvider.validateToken(refreshToken)
                 || !tokenManagementService.isValidRefreshToken(refreshToken)) {
             throw new CommonException(AuthErrorCode.INVALID_TOKEN);
         }
+
         String userId = jwtTokenProvider.getUserIdFromToken(refreshToken);
         AuthenticatedUser user = userAuthenticationService.findByIdAndValidate(userId);
         tokenManagementService.revokeRefreshToken(refreshToken);
         String newAccessToken = jwtTokenProvider.generateAccessToken(user);
         String newRefreshToken = jwtTokenProvider.generateRefreshToken(user);
         tokenManagementService.saveRefreshToken(newRefreshToken, user.getId());
+
+        // 새로운 refresh token을 쿠키로 설정
+        setRefreshTokenCookie(response, newRefreshToken);
+
         log.info("Token refreshed for user: {}", user.getEmail());
         return new TokenResponse(
                 newAccessToken,
-                newRefreshToken,
                 "Bearer",
                 jwtTokenProvider.getAccessTokenValidityInMilliseconds() / 1000);
     }

@@ -20,15 +20,18 @@ public class RefreshTokenHash {
 
     @Indexed private String tokenHash;
 
+    @Indexed private String jti; // JWT ID for token rotation detection
+
     private long expiresAt;
 
     @TimeToLive private long ttl; // seconds
 
-    public static RefreshTokenHash create(String userId, String token, long ttlSeconds) {
+    public static RefreshTokenHash create(
+            String userId, String token, String jti, long ttlSeconds) {
         String tokenHash = hashToken(token);
         long expiresAt = System.currentTimeMillis() + (ttlSeconds * 1000);
 
-        return new RefreshTokenHash(userId, tokenHash, expiresAt, ttlSeconds);
+        return new RefreshTokenHash(userId, tokenHash, jti, expiresAt, ttlSeconds);
     }
 
     public boolean isExpired() {
