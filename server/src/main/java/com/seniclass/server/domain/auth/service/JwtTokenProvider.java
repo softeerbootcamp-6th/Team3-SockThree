@@ -77,13 +77,29 @@ public class JwtTokenProvider {
         claims.put("role", user.getRole().getValue());
         claims.put("tokenType", tokenType.getValue());
 
+        // JTI 추가 (refresh token에만)
+        String jti = null;
+        if (tokenType == TokenType.REFRESH) {
+            jti = generateJti(user.getId());
+            claims.put("jti", jti);
+        }
+
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(user.getId())
                 .setIssuedAt(now)
                 .setExpiration(validity)
+                .setId(jti) // JTI 설정
                 .signWith(secretKey, SignatureAlgorithm.HS512)
                 .compact();
+    }
+
+    private String generateJti(String userId) {
+        return userId
+                + "_"
+                + System.currentTimeMillis()
+                + "_"
+                + Long.toHexString(Double.doubleToLongBits(Math.random()));
     }
 
     public Claims getClaimsFromToken(String token) {
@@ -126,14 +142,34 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             Jwts.parser().setSigningKey(secretKey).build().parseClaimsJws(token);
-            return true;
+            return !isTokenExpired(token);
+        } catch (ExpiredJwtException e) {
+            log.debug("JWT token expired: {}", e.getMessage());
+            return false;
         } catch (JwtException | IllegalArgumentException e) {
+            log.debug("JWT token validation failed: {}", e.getMessage());
+            return false;
+        }
+    }
+
+    public boolean isAccessTokenExpired(String token) {
+        try {
+            Claims claims = getClaimsFromToken(token);
+            TokenType tokenType = TokenType.valueOf(claims.get("tokenType", String.class));
+            return tokenType == TokenType.ACCESS && isTokenExpired(token);
+        } catch (ExpiredJwtException e) {
+            return true;
+        } catch (Exception e) {
             return false;
         }
     }
 
     public long getAccessTokenValidityInMilliseconds() {
         return accessTokenValidityInMilliseconds;
+    }
+
+    public String getJtiFromToken(String token) {
+        return getClaimsFromToken(token).getId();
     }
 
     public long getRefreshTokenValidityInMilliseconds() {

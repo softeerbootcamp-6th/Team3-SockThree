@@ -1,13 +1,18 @@
 package com.seniclass.server.domain.auth.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seniclass.server.domain.auth.domain.AuthenticatedUser;
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
+import com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode;
+import com.seniclass.server.global.exception.ErrorResponse;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -18,6 +23,8 @@ import org.springframework.web.servlet.HandlerInterceptor;
 public class AuthInterceptor implements HandlerInterceptor {
 
     private final AuthService authService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final ObjectMapper objectMapper;
 
     @Override
     public boolean preHandle(
@@ -50,16 +57,32 @@ public class AuthInterceptor implements HandlerInterceptor {
         // 토큰 추출
         String token = extractTokenFromRequest(request);
         if (token == null) {
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("{\"error\": \"인증 토큰이 필요합니다\"}");
+            sendErrorResponse(
+                    response,
+                    HttpServletResponse.SC_UNAUTHORIZED,
+                    AuthErrorCode.UNAUTHORIZED,
+                    "인증 토큰이 필요합니다");
             return false;
         }
 
         try {
+            // 토큰 만료 체크를 먼저 수행
+            if (jwtTokenProvider.isAccessTokenExpired(token)) {
+                sendErrorResponse(
+                        response,
+                        HttpServletResponse.SC_UNAUTHORIZED,
+                        AuthErrorCode.ACCESS_TOKEN_EXPIRED,
+                        "액세스 토큰이 만료되었습니다");
+                return false;
+            }
+
             // 토큰 유효성 검증
             if (!authService.isTokenValid(token)) {
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                response.getWriter().write("{\"error\": \"유효하지 않은 토큰입니다\"}");
+                sendErrorResponse(
+                        response,
+                        HttpServletResponse.SC_UNAUTHORIZED,
+                        AuthErrorCode.INVALID_TOKEN,
+                        "유효하지 않은 토큰입니다");
                 return false;
             }
 
@@ -74,8 +97,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                                 .anyMatch(role -> role == currentUser.getRole());
 
                 if (!hasPermission) {
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    response.getWriter().write("{\"error\": \"접근 권한이 없습니다\"}");
+                    sendErrorResponse(
+                            response, HttpServletResponse.SC_FORBIDDEN, null, "접근 권한이 없습니다");
                     return false;
                 }
             }
@@ -87,12 +110,40 @@ public class AuthInterceptor implements HandlerInterceptor {
 
             return true;
 
+        } catch (ExpiredJwtException e) {
+            log.debug("JWT token expired", e);
+            sendErrorResponse(
+                    response,
+                    HttpServletResponse.SC_UNAUTHORIZED,
+                    AuthErrorCode.ACCESS_TOKEN_EXPIRED,
+                    "액세스 토큰이 만료되었습니다");
+            return false;
         } catch (Exception e) {
             log.error("Authentication error: ", e);
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.getWriter().write("{\"error\": \"인증 처리 중 오류가 발생했습니다\"}");
+            sendErrorResponse(
+                    response,
+                    HttpServletResponse.SC_UNAUTHORIZED,
+                    AuthErrorCode.INVALID_TOKEN,
+                    "인증 처리 중 오류가 발생했습니다");
             return false;
         }
+    }
+
+    private void sendErrorResponse(
+            HttpServletResponse response, int status, AuthErrorCode errorCode, String message)
+            throws Exception {
+        response.setStatus(status);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setCharacterEncoding("UTF-8");
+
+        ErrorResponse errorResponse;
+        if (errorCode != null) {
+            errorResponse = ErrorResponse.of(errorCode.errorClassName(), errorCode.getMessage());
+        } else {
+            errorResponse = ErrorResponse.of("AuthError", message);
+        }
+
+        response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
     }
 
     private String extractTokenFromRequest(HttpServletRequest request) {
