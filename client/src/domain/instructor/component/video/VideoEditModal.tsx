@@ -8,8 +8,8 @@ import { forwardRef, useState } from "react";
 interface VideoEditModalProps {
   onClose: () => void;
 }
-
 interface VideoData {
+  id: string;
   videoName: string;
   videoLength: number;
   videoTitle: string;
@@ -28,15 +28,17 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
 
       input.onchange = (event) => {
         const file = (event.target as HTMLInputElement).files?.[0];
-        if (file) {
-          uploadVideos.push({
-            videoName: file.name,
-            videoLength: file.size,
-            videoTitle: "",
-          });
-          setUploadVideos([...uploadVideos]);
-          console.log("선택된 파일:", file);
-        }
+        if (!file) return;
+
+        const newItem: VideoData = {
+          id: crypto.randomUUID(),
+          videoName: file.name,
+          videoLength: file.size,
+          videoTitle: "",
+          videoDescription: "",
+        };
+
+        setUploadVideos((prev) => [...prev, newItem]);
       };
 
       document.body.appendChild(input);
@@ -44,11 +46,9 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
       document.body.removeChild(input);
     };
 
-
-    const handleVideoDelete = (videoName: string) => {
-      setUploadVideos(uploadVideos.filter(video => video.videoName !== videoName));
-    }
-    
+    const handleVideoDelete = (id: string) => {
+      setUploadVideos((prev) => prev.filter((v) => v.id !== id));
+    };
 
     const handleContentsTitleChange = (
       event: React.ChangeEvent<HTMLInputElement>
@@ -64,9 +64,10 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
           </div>
         );
       } else {
-        return uploadVideos.map((video, index) => (
+        return uploadVideos.map((video) => (
           <UploadVideoItem
-            key={index}
+            key={video.id}
+            id={video.id}
             videoName={video.videoName}
             deleteClick={handleVideoDelete}
           />
@@ -101,7 +102,10 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
           <div className="flex w-full flex-col gap-[.8125rem]">
             <div className="flex w-full flex-row items-center justify-between">
               <label className="typo-body-4">강의 동영상 업로드</label>
-              <button className="typo-label-0 cursor-pointer" onClick={handleVideoAddButtonClick}>
+              <button
+                className="typo-label-0 cursor-pointer"
+                onClick={handleVideoAddButtonClick}
+              >
                 <GradationChip>+ 동영상 업로드</GradationChip>
               </button>
             </div>
@@ -135,5 +139,3 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
 );
 
 export default VideoEditModal;
-
-

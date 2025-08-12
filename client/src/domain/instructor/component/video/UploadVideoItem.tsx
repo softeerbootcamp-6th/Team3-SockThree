@@ -2,15 +2,21 @@ import CircleDeleteIcon from "@/assets/icons/default/circle-delete.svg?react";
 import { useState } from "react";
 
 interface UploadVideoItemProps {
+  id: string;
   videoName: string;
   deleteClick: (videoName: string) => void;
 }
-const UploadVideoItem = ({ videoName, deleteClick }: UploadVideoItemProps) => {
+const UploadVideoItem = ({
+  id,
+  videoName,
+  deleteClick,
+}: UploadVideoItemProps) => {
   const [videoTitle, setVideoTitle] = useState("");
   const [videoDescription, setVideoDescription] = useState("");
 
   const videoTitleMaxLength = 30;
   const videoDescriptionMaxLength = 100;
+
   const handleVideoTitleChange = ({
     target,
   }: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,11 +31,8 @@ const UploadVideoItem = ({ videoName, deleteClick }: UploadVideoItemProps) => {
 
   return (
     <div className="flex flex-col gap-2 rounded-[.625rem] border border-gray-400 p-3">
-      <div className="flex max-w-[25rem] items-center gap-[.25rem] rounded-[3.125rem] border-[.125rem] border-gray-400 px-[.75rem] py-[.5rem]">
-        <button
-          className="cursor-pointer"
-          onClick={() => deleteClick(videoName)}
-        >
+      <div className="flex w-fit max-w-[18.75rem] items-center gap-[.25rem] rounded-[3.125rem] border-[.125rem] border-gray-400 px-[.75rem] py-[.5rem]">
+        <button className="cursor-pointer" onClick={() => deleteClick(id)}>
           <CircleDeleteIcon className="w-[1.5rem]" />
         </button>
         <span className="typo-label-0">{videoName}</span>
