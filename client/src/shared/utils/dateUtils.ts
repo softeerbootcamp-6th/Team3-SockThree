@@ -1,8 +1,8 @@
 // Date 객체 format과 관련한 함수
-export function formatDate(
+export const formatDate = (
   dateInput: Date | string | number,
   delimiter: "-" | "."
-): string {
+) => {
   const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
 
   if (isNaN(date.getTime())) {
@@ -14,4 +14,4 @@ export function formatDate(
   const dd = String(date.getDate()).padStart(2, "0");
 
   return `${yy}${delimiter}${mm}${delimiter}${dd}`;
-}
+};
