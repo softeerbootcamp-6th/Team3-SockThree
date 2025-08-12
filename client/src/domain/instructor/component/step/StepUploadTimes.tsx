@@ -23,10 +23,7 @@ const TIME_OPTIONS = Array.from({ length: 24 }, (_, i) => ({
   label: formatHourToKoreanTime(i),
 }));
 
-export default function StepUploadTimes({
-  value,
-  onValidSubmit,
-}: StepUploadTimesProps) {
+const StepUploadTimes = ({ value, onValidSubmit }: StepUploadTimesProps) => {
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
   const [selectedHour, setSelectedHour] = useState<string>("20");
   const [uploadTimes, setUploadTimes] = useState<string[]>(value ?? []);
@@ -127,4 +124,6 @@ export default function StepUploadTimes({
       )}
     </div>
   );
-}
+};
+
+export default StepUploadTimes;

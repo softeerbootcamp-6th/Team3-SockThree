@@ -15,7 +15,7 @@ interface CourseInfoCardAttendProps {
   dday?: number; // 남은 기간 D - n
 }
 
-export function CourseInfoCardAttend({
+const CourseInfoCardAttend = ({
   progress = 52,
   totalHoursLabel = 121,
   lectureCountLabel = 9,
@@ -25,7 +25,7 @@ export function CourseInfoCardAttend({
     submitted: true,
   },
   dday = 21,
-}: CourseInfoCardAttendProps) {
+}: CourseInfoCardAttendProps) => {
   return (
     <article className="flex h-fit w-[20.5rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white p-6 shadow-sm">
       {/* 타이틀 */}
@@ -88,7 +88,7 @@ export function CourseInfoCardAttend({
       </div>
     </article>
   );
-}
+};
 
 export default CourseInfoCardAttend;
 

@@ -25,7 +25,7 @@ const circleButtonVariants = cva(
   }
 );
 
-function CircleButton({
+const CircleButton = ({
   className,
   variant,
   size,
@@ -38,7 +38,7 @@ function CircleButton({
     asChild?: boolean;
     icon?: React.ReactNode;
     text?: React.ReactNode;
-  }) {
+  }) => {
   const Comp = asChild ? Slot : "button";
 
   return (
@@ -51,6 +51,6 @@ function CircleButton({
       {text && <span>{text}</span>}
     </Comp>
   );
-}
+};
 
 export default CircleButton;
