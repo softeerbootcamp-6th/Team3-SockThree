@@ -18,7 +18,9 @@ public record LectureResponse(
         @Schema(description = "강의 소개", example = "골프 스윙의 기본부터 응용까지 체계적으로 배워보세요.")
                 String instruction,
         @Schema(description = "강의 상세 설명", example = "본 강의는 초보자를 위한 맞춤형 커리큘럼으로 구성되어 있습니다.")
-                String description) {
+                String description,
+        @Schema(description = "강의 이미지 URL or Key", example = "https://aws.com/lectures/images/lecture1.jpg?signedKey=123") String imageURL) {
+
     public static LectureResponse from(Lecture lecture) {
         return new LectureResponse(
                 lecture.getId(),
@@ -30,6 +32,23 @@ public record LectureResponse(
                 lecture.getMaxStudent(),
                 lecture.getFee(),
                 lecture.getInstruction(),
-                lecture.getDescription());
+                lecture.getDescription(),
+                null);
+    }
+
+    public static LectureResponse from(Lecture lecture, String presignedImageURL) {
+        return new LectureResponse(
+                lecture.getId(),
+                lecture.getName(),
+                lecture.getCohort(),
+                lecture.getLevel(),
+                lecture.getStartDate(),
+                lecture.getEndDate(),
+                lecture.getMaxStudent(),
+                lecture.getFee(),
+                lecture.getInstruction(),
+                lecture.getDescription(),
+                presignedImageURL
+                );
     }
 }
