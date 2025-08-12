@@ -12,13 +12,17 @@ import com.seniclass.server.domain.teacher.repository.TeacherRepository;
 import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.global.exception.errorcode.UserErrorCode;
+import com.seniclass.server.global.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class LectureServiceImpl implements LectureService {
 
     private final UploadTimeService uploadTimeService;
@@ -26,9 +30,10 @@ public class LectureServiceImpl implements LectureService {
     private final SubCategoryRepository subCategoryRepository;
     private final TeacherRepository teacherRepository;
     private final WidgetSettingService widgetSettingService;
+    private final FileStorageService fileStorageService;
 
     @Override
-    public LectureResponse createLecture(Long userId, LectureCreateRequest request) {
+    public LectureResponse createLecture(Long userId, LectureCreateRequest request, MultipartFile file) {
         request.validateDateOrder();
 
         SubCategory subCategory =
@@ -47,6 +52,9 @@ public class LectureServiceImpl implements LectureService {
                         .findById(userId)
                         .orElseThrow(() -> new CommonException(UserErrorCode.USER_NOT_FOUND));
 
+        String imageKey = fileStorageService.storeFile(file, "lectures/images");
+        log.info("파일 저장 완료: S3 key = {}", imageKey);
+
         Lecture lecture =
                 Lecture.createLecture(
                         subCategory,
@@ -59,6 +67,7 @@ public class LectureServiceImpl implements LectureService {
                         request.fee(),
                         request.instruction(),
                         request.description(),
+                        imageKey,
                         teacher);
 
         LectureResponse savedLecture = LectureResponse.from(lectureRepository.save(lecture));
@@ -82,15 +91,24 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public LectureResponse updateLecture(Long lectureId, LectureUpdateRequest request) {
+    public LectureResponse updateLecture(Long lectureId, LectureUpdateRequest request, MultipartFile file) {
         request.validateDateOrder();
 
-        Lecture lecture = getLectureEntity(lectureId);
         SubCategory subCategory =
                 subCategoryRepository
                         .findById(request.subCategoryId())
                         .orElseThrow(
                                 () -> new CommonException(LectureErrorCode.SUB_CATEGORY_NOT_FOUND));
+
+        Lecture lecture = getLectureEntity(lectureId);
+
+        String imageKey = lecture.getImageKey();
+        if (file != null && !file.isEmpty()) {
+            fileStorageService.deleteFile(imageKey);
+            imageKey = fileStorageService.storeFile(file, "lectures/images");
+            log.info("파일 저장 완료: S3 key = {}", imageKey);
+        }
+
         lecture.updateLecture(
                 subCategory,
                 request.level(),
@@ -98,7 +116,8 @@ public class LectureServiceImpl implements LectureService {
                 request.endDate(),
                 request.maxStudent(),
                 request.instruction(),
-                request.description());
+                request.description(),
+                imageKey);
 
         return LectureResponse.from(lecture);
     }
