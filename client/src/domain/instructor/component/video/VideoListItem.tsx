@@ -2,6 +2,8 @@ import TriangleRightIcon from "@/assets/icons/default/triangle-right.svg?react";
 import ClockIcon from "@/assets/icons/default/clock.svg?react";
 import DeleteIcon from "@/assets/icons/default/delete.svg?react";
 
+import { formatDate } from "@/shared/utils/dateUtils";
+
 interface VideoListItemProps {
   index: number;
   title: string;
@@ -15,10 +17,7 @@ const VideoListItem = ({
   duration,
   updatedDate,
 }: VideoListItemProps) => {
-  const formattedDate = updatedDate
-    .toISOString()
-    .split("T")[0]
-    .replace(/-/g, ".");
+  const formattedDate = formatDate(updatedDate, ".", true);
 
   return (
     <div className="flex w-[72.4375rem] items-center justify-between rounded-[.9375rem] border border-gray-400 px-[1.125rem] py-[.9375rem]">
