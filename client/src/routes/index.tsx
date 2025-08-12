@@ -1,22 +1,44 @@
 import StudentLayout from "@/shared/layout/StudentLayout";
 import InstructorLayout from "@/shared/layout/InstructorLayout";
-import NoNavbarLayout from "@/shared/layout/NoNavbarLayout";
+import StickyLogoLayout from "@/shared/layout/StickyLogoLayout";
+import CourseDetailLayout from "@/shared/layout/CourseDetailLayout";
 
 import * as S from "@/domain/student/page";
 import * as I from "@/domain/instructor/page";
 
 import { Route, Routes } from "react-router";
-
-// HyFive 팀 코드 참고했습니다
+import { Navigate } from "react-router-dom";
+import CourseDashboardLayout from "@/shared/layout/CourseDashboardLayout";
 
 const Router = () => {
   return (
     <Routes>
-      {/* 시니어 (학생) */}
       <Route path="/student">
-        <Route element={<NoNavbarLayout />}>
-          <Route path="course">
-            <Route path="detail" element={<S.CourseDetailPage />} />
+        <Route path="course">
+          <Route element={<StickyLogoLayout />}>
+            {/* 강좌 상세 페이지 */}
+            <Route path="detail/:courseId">
+              {/* 대시보드 전용 레이아웃 */}
+              <Route element={<CourseDashboardLayout />}>
+                <Route
+                  path="dashboard"
+                  element={<S.CourseDetailDashboardPage />}
+                />
+              </Route>
+              {/* 일반 탭 레이아웃 */}
+              <Route element={<CourseDetailLayout />}>
+                <Route index element={<Navigate to="curriculum" replace />} />
+                <Route
+                  path="curriculum"
+                  element={
+                    <div className="h-[100vh] bg-amber-200">커리큘럼</div>
+                  }
+                />
+                <Route path="reviews" element={<div>리뷰</div>} />
+                <Route path="assignments" element={<div>과제</div>} />
+                <Route path="questions" element={<div>질문</div>} />
+              </Route>
+            </Route>
           </Route>
         </Route>
 

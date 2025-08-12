@@ -27,7 +27,7 @@ const CourseInfoCardAttend = ({
   dday = 21,
 }: CourseInfoCardAttendProps) => {
   return (
-    <article className="flex h-fit w-[23.875rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white p-6 shadow-sm">
+    <article className="flex h-fit w-[20.5rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white p-6 shadow-sm">
       {/* 타이틀 */}
       <h3 className="text-xl font-extrabold text-gray-900">나의 강좌 현황</h3>
 
