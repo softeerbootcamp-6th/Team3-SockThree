@@ -16,8 +16,8 @@ import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.global.service.FileStorageService;
 import java.time.LocalDateTime;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -26,23 +26,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Slf4j
 @Transactional(readOnly = true)
+@RequiredArgsConstructor
 public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionService {
 
     private final AssignmentSubmissionRepository assignmentSubmissionRepository;
     private final StudentRepository studentRepository;
     private final AssignmentRepository assignmentRepository;
     private final FileStorageService fileStorageService;
-
-    public AssignmentSubmissionServiceImpl(
-            AssignmentSubmissionRepository assignmentSubmissionRepository,
-            StudentRepository studentRepository,
-            AssignmentRepository assignmentRepository,
-            @Qualifier("s3FileStorageService") FileStorageService fileStorageService) {
-        this.assignmentSubmissionRepository = assignmentSubmissionRepository;
-        this.studentRepository = studentRepository;
-        this.assignmentRepository = assignmentRepository;
-        this.fileStorageService = fileStorageService;
-    }
 
     /** 파일로 과제 제출 */
     @Transactional

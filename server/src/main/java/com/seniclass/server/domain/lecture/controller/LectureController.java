@@ -11,8 +11,10 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "Lecture", description = "강의 관리 API")
 @RestController
@@ -23,12 +25,14 @@ public class LectureController {
     private final LectureService lectureService;
 
     @Operation(summary = "강의 생성 (강사)", description = "강사가 새로운 강의를 생성합니다. TEACHER 권한 필요.")
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse createLecture(
-            @Parameter(hidden = true) @Valid @RequestBody LectureCreateRequest request,
-            @Parameter(hidden = true) @RequestAttribute("userId") Long userId) {
-        return lectureService.createLecture(userId, request);
+            @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
+            @Parameter(description = "강좌 생성에 필요한 정보") @Valid @RequestPart("request")
+                    LectureCreateRequest request,
+            @Parameter(description = "강좌 이미지 파일") @RequestPart("file") MultipartFile file) {
+        return lectureService.createLecture(userId, request, file);
     }
 
     @Operation(summary = "강의 단일 조회 (강사, 수강생)", description = "강의 ID로 특정 강의의 상세 정보를 조회합니다.")
@@ -40,12 +44,15 @@ public class LectureController {
     }
 
     @Operation(summary = "강의 수정 (강사)", description = "강사가 본인의 강의 정보를 수정합니다. TEACHER 권한 필요.")
-    @PutMapping("/{lectureId}")
+    @PutMapping(value = "/{lectureId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse updateLecture(
+            @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
             @Parameter(description = "수정할 강의 ID") @PathVariable Long lectureId,
-            @Parameter(hidden = true) @Valid @RequestBody LectureUpdateRequest request) {
-        return lectureService.updateLecture(lectureId, request);
+            @Parameter(description = "수정할 강의 정보") @Valid @RequestPart(value = "request")
+                    LectureUpdateRequest request,
+            @RequestPart(value = "file", required = false) MultipartFile file) {
+        return lectureService.updateLecture(userId, lectureId, request, file);
     }
 
     @Operation(summary = "강의 삭제 (강사)", description = "강사가 본인의 강의를 삭제합니다. TEACHER 권한 필요.")
