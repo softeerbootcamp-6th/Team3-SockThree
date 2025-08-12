@@ -91,16 +91,19 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public LectureResponse updateLecture(Long lectureId, LectureUpdateRequest request, MultipartFile file) {
-        request.validateDateOrder();
+    public LectureResponse updateLecture(Long userId, Long lectureId, LectureUpdateRequest request, MultipartFile file) {
+
+        Lecture lecture = getLectureEntity(lectureId);
+
+        if (!lecture.getTeacher().getId().equals(userId)) {
+            throw new CommonException(UserErrorCode.USER_NOT_AUTHORIZED);
+        }
 
         SubCategory subCategory =
                 subCategoryRepository
                         .findById(request.subCategoryId())
                         .orElseThrow(
                                 () -> new CommonException(LectureErrorCode.SUB_CATEGORY_NOT_FOUND));
-
-        Lecture lecture = getLectureEntity(lectureId);
 
         String imageKey = lecture.getImageKey();
         if (file != null && !file.isEmpty()) {

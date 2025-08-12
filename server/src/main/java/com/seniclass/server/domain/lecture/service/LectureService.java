@@ -11,7 +11,7 @@ public interface LectureService {
 
     public LectureResponse getLecture(Long lectureId);
 
-    public LectureResponse updateLecture(Long lectureId, LectureUpdateRequest request, MultipartFile file);
+    public LectureResponse updateLecture(Long userId, Long lectureId, LectureUpdateRequest request, MultipartFile file);
 
     public void deleteLecture(Long lectureId);
 }

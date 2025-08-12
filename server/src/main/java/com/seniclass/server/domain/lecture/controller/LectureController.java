@@ -45,10 +45,11 @@ public class LectureController {
     @PutMapping(value = "/{lectureId}" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse updateLecture(
+            @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
             @Parameter(description = "수정할 강의 ID") @PathVariable Long lectureId,
             @Parameter(description = "수정할 강의 정보") @Valid @RequestBody LectureUpdateRequest request,
             @RequestPart(value = "file", required = false) MultipartFile file) {
-        return lectureService.updateLecture(lectureId, request, file);
+        return lectureService.updateLecture(userId, lectureId, request, file);
     }
 
     @Operation(summary = "강의 삭제", description = "강사가 본인의 강의를 삭제합니다. TEACHER 권한 필요.")
