@@ -1,8 +1,8 @@
 package com.seniclass.server.domain.student.service;
 
-import com.seniclass.server.domain.student.dto.LectureQnaAnswerRequest;
-import com.seniclass.server.domain.student.dto.LectureQnaRequest;
-import com.seniclass.server.domain.student.dto.LectureQnaResponse;
+import com.seniclass.server.domain.student.dto.request.LectureQnaAnswerRequest;
+import com.seniclass.server.domain.student.dto.request.LectureQnaRequest;
+import com.seniclass.server.domain.student.dto.response.LectureQnaResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

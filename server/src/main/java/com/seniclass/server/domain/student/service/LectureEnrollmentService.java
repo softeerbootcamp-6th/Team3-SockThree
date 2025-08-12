@@ -1,7 +1,7 @@
 package com.seniclass.server.domain.student.service;
 
-import com.seniclass.server.domain.student.dto.LectureEnrollmentRequest;
-import com.seniclass.server.domain.student.dto.LectureEnrollmentResponse;
+import com.seniclass.server.domain.student.dto.request.LectureEnrollmentRequest;
+import com.seniclass.server.domain.student.dto.response.LectureEnrollmentResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
