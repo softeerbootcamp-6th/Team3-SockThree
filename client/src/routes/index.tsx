@@ -6,8 +6,7 @@ import CourseDetailLayout from "@/shared/layout/CourseDetailLayout";
 import * as S from "@/domain/student/page";
 import * as I from "@/domain/instructor/page";
 
-import { Route, Routes } from "react-router";
-import { Navigate } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router";
 import CourseDashboardLayout from "@/shared/layout/CourseDashboardLayout";
 
 const Router = () => {
