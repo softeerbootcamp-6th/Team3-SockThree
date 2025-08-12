@@ -12,6 +12,7 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import javax.crypto.SecretKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,11 +96,7 @@ public class JwtTokenProvider {
     }
 
     private String generateJti(String userId) {
-        return userId
-                + "_"
-                + System.currentTimeMillis()
-                + "_"
-                + Long.toHexString(Double.doubleToLongBits(Math.random()));
+        return userId + "_" + System.currentTimeMillis() + "_" + UUID.randomUUID();
     }
 
     public Claims getClaimsFromToken(String token) {

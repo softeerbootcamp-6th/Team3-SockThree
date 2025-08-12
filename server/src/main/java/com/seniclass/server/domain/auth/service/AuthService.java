@@ -6,11 +6,11 @@ import com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode;
 import com.seniclass.server.domain.teacher.domain.Teacher;
 import com.seniclass.server.domain.teacher.service.CareerService;
 import com.seniclass.server.global.exception.CommonException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,23 +50,29 @@ public class AuthService {
     }
 
     private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
-        Cookie cookie = new Cookie("refresh_token", refreshToken);
-        cookie.setMaxAge((int) (jwtTokenProvider.getRefreshTokenValidityInMilliseconds() / 1000));
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(cookieSecure); // 환경에 따라 설정
-        cookie.setAttribute("SameSite", cookieSecure ? "None" : "Lax"); // HTTPS면 None, HTTP면 Lax
-        response.addCookie(cookie);
+        ResponseCookie cookie =
+                ResponseCookie.from("refresh_token", refreshToken)
+                        .maxAge(jwtTokenProvider.getRefreshTokenValidityInMilliseconds() / 1000)
+                        .path("/")
+                        .httpOnly(true)
+                        .secure(cookieSecure) // 환경에 따라 설정
+                        .sameSite(cookieSecure ? "None" : "Lax")
+                        .build(); // HTTPS면 None, HTTP면 Lax
+        response.addHeader("Set-Cookie", cookie.toString());
+        log.debug("Set refresh token cookie: {}", cookie.toString());
     }
 
     public void clearRefreshTokenCookie(HttpServletResponse response) {
-        Cookie cookie = new Cookie("refresh_token", null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
-        cookie.setHttpOnly(true);
-        cookie.setSecure(cookieSecure);
-        cookie.setAttribute("SameSite", cookieSecure ? "None" : "Lax");
-        response.addCookie(cookie);
+        ResponseCookie cookie =
+                ResponseCookie.from("refresh_token", "")
+                        .maxAge(0)
+                        .path("/")
+                        .httpOnly(true)
+                        .secure(cookieSecure) // 환경에 따라 설정
+                        .sameSite(cookieSecure ? "None" : "Lax")
+                        .build();
+        response.addHeader("Set-Cookie", cookie.toString());
+        log.debug("Cleared refresh token cookie: {}", cookie.toString());
     }
 
     @Transactional
