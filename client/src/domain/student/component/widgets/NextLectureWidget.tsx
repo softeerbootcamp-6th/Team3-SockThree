@@ -1,7 +1,7 @@
 import PlayIcon from "@/assets/icons/gradient/video-play.svg?react";
 import { useState } from "react";
 
-export interface NextLessonWidgetProps {
+export interface NextLectureWidgetProps {
   size: "small" | "large";
   title?: string; // 섹션 타이틀 (ex. "다음 강좌")
   lessonTitle?: string; // 마지막으로 시청하던 강좌명
@@ -10,14 +10,14 @@ export interface NextLessonWidgetProps {
   onClickVideo?: () => void; // 비디오 영역 클릭
 }
 
-const NextLessonWidget = ({
+const NextLectureWidget = ({
   size = "small",
   title = "다음 강좌",
   lessonTitle = "골프의 기초: 두번째 레슨",
   description = `강좌 개요입니다. 개행합니다. \n 텍스트 더미 입니다. 강좌 개요입니다. 강좌 개요입니다. 골프에 대해서 배우는 두번째 시간입니다. 이번에 정말 중요합니다.`,
   thumbnailUrl,
   onClickVideo,
-}: NextLessonWidgetProps) => {
+}: NextLectureWidgetProps) => {
   if (size === "small") {
     return (
       <div className="flex h-[20.5rem] w-[20.5rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white p-[1.5rem]">
@@ -56,7 +56,7 @@ const NextLessonWidget = ({
   return null;
 };
 
-export default NextLessonWidget;
+export default NextLectureWidget;
 
 const VideoPreview = ({
   thumbnailUrl,
@@ -98,4 +98,4 @@ const VideoPreview = ({
       </div>
     </button>
   );
-}
+};
