@@ -12,6 +12,7 @@ import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service("s3FileStorageService")
 @ConditionalOnProperty(name = "aws.s3.enabled", havingValue = "true")
 @RequiredArgsConstructor
+@Primary
 @Slf4j
 public class S3FileStorageService implements FileStorageService {
 
