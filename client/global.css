@@ -61,7 +61,12 @@
     #26caba 100%
   );
   --color-gradient-sub: linear-gradient(90deg, #b6dde6 0%, #26caba 100%);
-  --color-gradient-sub2: linear-gradient(90deg, #73bcfc 0%, #146de1 100%);
+  --color-gradient-sub2: linear-gradient(
+    322deg,
+    rgba(115, 188, 252, 0.15) 0%,
+    rgba(20, 109, 225, 0.31) 46.64%,
+    rgba(115, 188, 252, 0.25) 97.99%
+  );
 
   /* ========================= */
   /*         SHADOW            */
@@ -308,6 +313,18 @@
 
   .hover\:bg-gradient-main-diagonal:hover {
     background-image: var(--color-gradient-main-diagonal);
+  }
+
+  .bg-gradient-sub2 {
+    background-image: var(
+      --color-gradient-sub2,
+      linear-gradient(
+        322deg,
+        rgba(115, 188, 252, 0.15) 0%,
+        rgba(20, 109, 225, 0.31) 46.64%,
+        rgba(115, 188, 252, 0.25) 97.99%
+      )
+    );
   }
 
   .border-gradient-main {
