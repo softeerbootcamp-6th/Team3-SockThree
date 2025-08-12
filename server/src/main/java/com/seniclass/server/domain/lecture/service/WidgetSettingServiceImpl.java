@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class WidgetSettingServiceImpl implements WidgetSettingService {
 
-    private static final int MAX_ROWS = 3;
+    private static final int MAX_ROWS = 6;
     private static final int MAX_COLS = 4;
     private static final int WIDGETS_COUNT = 6;
 
