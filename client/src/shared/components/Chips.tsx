@@ -47,8 +47,8 @@ const chipsVariant = tv({
     interactive: {
       true: "",
       false: {
-        borderBase: "bg-transparent",
-        border: "bg-transparent hover:translate-y-0 hover:shadow-none",
+        borderBase: "bg-transparent pointer-events-none",
+        border: "bg-transparent translate-y-0 shadow-none",
         base: "bg-white/30",
         textContainer: "text-white",
         title: "text-white",

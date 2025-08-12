@@ -40,3 +40,8 @@ logging:
   level:
     org.springframework.security: DEBUG
     com.seniclass.server: DEBUG
+
+aws:
+  region: ap-northeast-2
+  s3:
+    bucket: senicle-bucket

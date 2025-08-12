@@ -27,12 +27,12 @@ public class Review extends BaseTimeEntity {
     private Double rating;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "lecture_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Lecture lecture;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
     @Builder(access = AccessLevel.PRIVATE)
