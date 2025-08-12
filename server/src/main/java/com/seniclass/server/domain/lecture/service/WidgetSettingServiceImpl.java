@@ -16,7 +16,6 @@ import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -73,9 +72,12 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
     public List<WidgetSettingResponse> updateWidgetSettings(
             Long userId, Long lectureId, WidgetSettingUpdateRequest request) {
 
-        // 1) 개수 검증
-        if (request.widgetSettings().size() != WIDGETS_COUNT) {
-            throw new CommonException(WidgetSettingErrorCode.WIDGET_SETTING_COUNT_INVALID);
+        // 1) 요청 위젯 type이 6개인지 확인
+        if (request.widgetSpecs().stream()
+                .map(WidgetSpec::type)
+                .collect(Collectors.toSet())
+                .size() != WIDGETS_COUNT) {
+            throw new CommonException(WidgetSettingErrorCode.WIDGET_ID_MISMATCH);
         }
 
         // 2) 강의 조회 + 권한 확인
@@ -91,26 +93,18 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
         // 3) DB에서 현재 세팅 전부 조회 (쿼리 1번)
         List<WidgetSetting> settings = widgetSettingRepository.findAllByLectureId(lectureId);
 
-        // 4) 요청 ID 세트와 DB ID 세트 동일성 검증 (멱등/안전)
-        Set<Long> dbIds = settings.stream().map(WidgetSetting::getId).collect(Collectors.toSet());
-        Set<Long> reqIds = request.widgetSettings().keySet();
-        if (!dbIds.equals(reqIds)) {
-            throw new CommonException(WidgetSettingErrorCode.WIDGET_ID_MISMATCH);
-        }
-
-        // 5) 배치/충돌 검증 (보이는 위젯만 점유로 간주)
+        // 4) 배치/충돌 검증 (보이는 위젯만 점유로 간주)
         List<WidgetSpec> visibleSpecs =
-                request.widgetSettings().values().stream().filter(WidgetSpec::visible).toList();
+                request.widgetSpecs().stream().filter(WidgetSpec::visible).toList();
         validateSpecs(visibleSpecs);
 
-        // 6) 루프 내 재조회 제거: Map으로 올려놓고 순서대로 업데이트
-        Map<Long, WidgetSetting> dbMap =
-                settings.stream().collect(Collectors.toMap(WidgetSetting::getId, ws -> ws));
+        // 5) 루프 내 재조회 제거: Map으로 올려놓고 순서대로 업데이트
+        Map<WidgetType, WidgetSetting> dbMap =
+                settings.stream().collect(Collectors.toMap(WidgetSetting::getWidgetType, ws -> ws));
 
-        // 요청은 LinkedHashMap이니 keySet() 순회 = 클라이언트 지정 순서
-        for (Long id : reqIds) {
-            WidgetSetting setting = dbMap.get(id);
-            WidgetSpec spec = request.widgetSettings().get(id);
+        // 6) "클라이언트가 보낸 순서대로" 업데이트
+        for (WidgetSpec spec : request.widgetSpecs()) {
+            WidgetSetting setting = dbMap.get(spec.type());
             setting.updateWidgetSettingFromSpec(spec);
         }
 
