@@ -16,13 +16,12 @@ import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import com.seniclass.server.global.service.FileStorageService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Service
 @Transactional
@@ -143,9 +142,7 @@ public class LectureServiceImpl implements LectureService {
 
         List<UploadTime> uploadTimeList = uploadTimeService.getAllUploadTimesEntity(lecture);
         List<UploadTimeResponse> uploadTimeResponses =
-                uploadTimeList.stream()
-                        .map(UploadTimeResponse::from)
-                        .toList();
+                uploadTimeList.stream().map(UploadTimeResponse::from).toList();
 
         return LectureInfoWidgetResponse.from(lecture, uploadTimeResponses);
     }

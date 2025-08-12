@@ -6,11 +6,10 @@ import com.seniclass.server.domain.lecture.dto.request.UploadTimeCreateRequest;
 import com.seniclass.server.domain.lecture.exception.errorcode.UploadTimeErrorCode;
 import com.seniclass.server.domain.lecture.repository.UploadTimeRepository;
 import com.seniclass.server.global.exception.CommonException;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor

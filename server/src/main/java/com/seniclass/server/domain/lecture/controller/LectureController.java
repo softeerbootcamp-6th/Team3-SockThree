@@ -65,7 +65,9 @@ public class LectureController {
         return ResponseEntity.ok().build();
     }
 
-    @Operation(summary = "신청 전 걍좌 상세 화면의 강좌 정보 위젯 (학생)", description = "신청 전 강좌의 강좌 정보 위젯 데이터를 받습니다.")
+    @Operation(
+            summary = "신청 전 걍좌 상세 화면의 강좌 정보 위젯 (학생)",
+            description = "신청 전 강좌의 강좌 정보 위젯 데이터를 받습니다.")
     @GetMapping("/{lectureId}/lecture-info-widget")
     public LectureInfoWidgetResponse getLectureInfoWidget(
             @Parameter(description = "조회할 강좌 id") @PathVariable Long lectureId) {
