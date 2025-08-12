@@ -30,11 +30,15 @@ const VideoList = ({
   const [isListOpen, setIsListOpen] = useState(true);
   const { modalRef, openModal, closeModal } = useModal();
 
-  const handleEdit = () => {
+  const handleToggleClick = () => {
+    setIsListOpen((prev) => !prev);
+  };
+
+  const handleEditClick = () => {
     openModal();
   };
 
-  const handleClose = () => {
+  const handleCloseClick = () => {
     closeModal();
   };
 
@@ -43,7 +47,7 @@ const VideoList = ({
       {/* 모달 */}
       <UploadVideoModal
         ref={modalRef}
-        onClose={handleClose}
+        onClose={handleCloseClick}
         title={contentsTitle}
       />
       <div
@@ -59,10 +63,7 @@ const VideoList = ({
                 총 강의 수{" "}
                 <span className="text-main-500">{videos.length}</span> 개
               </p>
-              <button
-                onClick={() => setIsListOpen((prev) => !prev)}
-                className="cursor-pointer"
-              >
+              <button onClick={handleToggleClick} className="cursor-pointer">
                 {isListOpen ? (
                   <TriangleUpIcon className="w-[1.0625rem] text-gray-500" />
                 ) : (
@@ -74,7 +75,7 @@ const VideoList = ({
 
           {/* 토글 버튼 */}
           <div className="flex items-center gap-[3.625rem]">
-            <button onClick={() => handleEdit()}>
+            <button onClick={handleEditClick}>
               <EditIcon className="w-[1.4375rem] cursor-pointer text-gray-600" />
             </button>
             <button>
