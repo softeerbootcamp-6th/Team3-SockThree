@@ -1,4 +1,3 @@
-// VideoEditModal.tsx
 import UploadVideoItem from "@/domain/instructor/component/video/UploadVideoItem";
 import Button from "@/shared/components/Button";
 import GradationChip from "@/shared/components/GradationChip";
@@ -7,17 +6,20 @@ import { forwardRef, useState } from "react";
 
 interface VideoEditModalProps {
   onClose: () => void;
+  title: string;
+  id?: number;
 }
 interface VideoData {
   id: string;
   videoName: string;
   videoLength: number;
   videoTitle: string;
+  videoDescription: string;
 }
 
 const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
-  ({ onClose }, ref) => {
-    const [contentsTitle, setContentsTitle] = useState("");
+  ({ onClose, title }, ref) => {
+    const [contentsTitle, setContentsTitle] = useState(title);
     const [uploadVideos, setUploadVideos] = useState<VideoData[]>([]);
     const contentsTitleMaxLength = 30;
 
@@ -56,6 +58,17 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
       setContentsTitle(event.target.value);
     };
 
+    const handleCloseClick = () => {
+      setUploadVideos([]);
+      onClose();
+    };
+
+    const handleVideoUploadClick = () => {
+      // 동영상 업로드 로직 추가 예정
+      setUploadVideos([]);
+      onClose();
+    };
+
     const renderVideoUploadItems = (uploadVideos: VideoData[]) => {
       if (uploadVideos.length === 0) {
         return (
@@ -66,7 +79,6 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
       } else {
         return uploadVideos.map((video) => (
           <UploadVideoItem
-            key={video.id}
             id={video.id}
             videoName={video.videoName}
             deleteClick={handleVideoDelete}
@@ -84,7 +96,7 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
             <div className="relative w-full">
               <input
                 type="text"
-                placeholder="강좌명을 입력해주세요"
+                placeholder="목차명을 입력해주세요"
                 value={contentsTitle}
                 onChange={handleContentsTitleChange}
                 maxLength={contentsTitleMaxLength}
@@ -119,7 +131,7 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
             <Button
               variant={"default"}
               className="typo-body-4 flex-1/2 rounded-[.9375rem] bg-gray-200 px-4 py-2 text-black hover:bg-gray-400"
-              onClick={onClose}
+              onClick={handleCloseClick}
             >
               닫기
             </Button>
@@ -127,7 +139,7 @@ const VideoEditModal = forwardRef<HTMLDialogElement, VideoEditModalProps>(
             <Button
               variant={"outline"}
               className="typo-body-4 flex-1/2 rounded-[.9375rem]"
-              onClick={() => {}}
+              onClick={handleVideoUploadClick}
             >
               강의 등록 완료
             </Button>
