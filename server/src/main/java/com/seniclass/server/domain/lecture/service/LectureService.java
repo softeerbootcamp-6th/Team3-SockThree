@@ -6,12 +6,13 @@ import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface LectureService {
-    public LectureResponse createLecture(Long UserId, LectureCreateRequest request,
-                                         MultipartFile file);
+    public LectureResponse createLecture(
+            Long UserId, LectureCreateRequest request, MultipartFile file);
 
     public LectureResponse getLecture(Long lectureId);
 
-    public LectureResponse updateLecture(Long userId, Long lectureId, LectureUpdateRequest request, MultipartFile file);
+    public LectureResponse updateLecture(
+            Long userId, Long lectureId, LectureUpdateRequest request, MultipartFile file);
 
     public void deleteLecture(Long lectureId);
 }

@@ -29,7 +29,8 @@ public class LectureController {
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse createLecture(
             @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
-            @Parameter(description = "강좌 생성에 필요한 정보") @Valid @RequestPart("request") LectureCreateRequest request,
+            @Parameter(description = "강좌 생성에 필요한 정보") @Valid @RequestPart("request")
+                    LectureCreateRequest request,
             @Parameter(description = "강좌 이미지 파일") @RequestPart("file") MultipartFile file) {
         return lectureService.createLecture(userId, request, file);
     }
@@ -42,12 +43,13 @@ public class LectureController {
     }
 
     @Operation(summary = "강의 수정", description = "강사가 본인의 강의 정보를 수정합니다. TEACHER 권한 필요.")
-    @PutMapping(value = "/{lectureId}" , consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = "/{lectureId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse updateLecture(
             @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
             @Parameter(description = "수정할 강의 ID") @PathVariable Long lectureId,
-            @Parameter(description = "수정할 강의 정보") @Valid @RequestPart(value = "request") LectureUpdateRequest request,
+            @Parameter(description = "수정할 강의 정보") @Valid @RequestPart(value = "request")
+                    LectureUpdateRequest request,
             @RequestPart(value = "file", required = false) MultipartFile file) {
         return lectureService.updateLecture(userId, lectureId, request, file);
     }

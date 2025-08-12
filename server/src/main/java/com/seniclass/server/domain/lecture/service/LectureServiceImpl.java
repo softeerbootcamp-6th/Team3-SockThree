@@ -33,7 +33,8 @@ public class LectureServiceImpl implements LectureService {
     private final FileStorageService fileStorageService;
 
     @Override
-    public LectureResponse createLecture(Long userId, LectureCreateRequest request, MultipartFile file) {
+    public LectureResponse createLecture(
+            Long userId, LectureCreateRequest request, MultipartFile file) {
         request.validateDateOrder();
 
         SubCategory subCategory =
@@ -93,7 +94,8 @@ public class LectureServiceImpl implements LectureService {
     }
 
     @Override
-    public LectureResponse updateLecture(Long userId, Long lectureId, LectureUpdateRequest request, MultipartFile file) {
+    public LectureResponse updateLecture(
+            Long userId, Long lectureId, LectureUpdateRequest request, MultipartFile file) {
 
         Lecture lecture = getLectureEntity(lectureId);
 
