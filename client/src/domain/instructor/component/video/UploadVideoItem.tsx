@@ -3,19 +3,33 @@ import { useState } from "react";
 
 interface UploadVideoItemProps {
   videoName: string;
+  deleteClick: (videoName: string) => void;
 }
-const UploadVideoItem = ({ videoName }: UploadVideoItemProps) => {
+const UploadVideoItem = ({ videoName, deleteClick }: UploadVideoItemProps) => {
   const [videoTitle, setVideoTitle] = useState("");
+  const [videoDescription, setVideoDescription] = useState("");
 
   const videoTitleMaxLength = 30;
-
-  const handleVideoTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVideoTitle(e.target.value);
+  const videoDescriptionMaxLength = 100;
+  const handleVideoTitleChange = ({
+    target,
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setVideoTitle(target.value);
   };
+
+  const handleVideoDescriptionChange = ({
+    target,
+  }: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setVideoDescription(target.value);
+  };
+
   return (
     <div className="flex flex-col gap-2 rounded-[.625rem] border border-gray-400 p-3">
       <div className="flex max-w-[25rem] items-center gap-[.25rem] rounded-[3.125rem] border-[.125rem] border-gray-400 px-[.75rem] py-[.5rem]">
-        <button className="cursor-pointer">
+        <button
+          className="cursor-pointer"
+          onClick={() => deleteClick(videoName)}
+        >
           <CircleDeleteIcon className="w-[1.5rem]" />
         </button>
         <span className="typo-label-0">{videoName}</span>
@@ -33,6 +47,19 @@ const UploadVideoItem = ({ videoName }: UploadVideoItemProps) => {
           {videoTitle.length}/{videoTitleMaxLength}
         </span>
       </div>
+
+      <textarea
+        placeholder="강좌에 대한 설명을 입력해주세요"
+        rows={5}
+        value={videoDescription}
+        maxLength={videoDescriptionMaxLength}
+        onChange={handleVideoDescriptionChange}
+        className="text-body-5 w-full rounded-[.625rem] border border-gray-400 px-[1.3125rem] py-[1.375rem] placeholder-gray-400 focus:ring-2 focus:ring-main-500 focus:outline-none"
+      />
+
+      <span className="text-body-5 flex justify-end text-gray-400">
+        {videoDescription.length}/{videoDescriptionMaxLength}
+      </span>
     </div>
   );
 };
