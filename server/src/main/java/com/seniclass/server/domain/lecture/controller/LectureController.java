@@ -29,8 +29,8 @@ public class LectureController {
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse createLecture(
             @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
-            @Parameter(hidden = true) @Valid @RequestPart LectureCreateRequest request,
-            @Parameter(description = "업로드할 파일") @RequestPart("file") MultipartFile file) {
+            @Parameter(description = "강좌 생성에 필요한 정보") @Valid @RequestPart LectureCreateRequest request,
+            @Parameter(description = "강좌 이미지 파일") @RequestPart("file") MultipartFile file) {
         return lectureService.createLecture(userId, request, file);
     }
 
@@ -46,7 +46,7 @@ public class LectureController {
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureResponse updateLecture(
             @Parameter(description = "수정할 강의 ID") @PathVariable Long lectureId,
-            @Parameter(hidden = true) @Valid @RequestBody LectureUpdateRequest request,
+            @Parameter(description = "수정할 강의 정보") @Valid @RequestBody LectureUpdateRequest request,
             @RequestPart(value = "file", required = false) MultipartFile file) {
         return lectureService.updateLecture(lectureId, request, file);
     }
