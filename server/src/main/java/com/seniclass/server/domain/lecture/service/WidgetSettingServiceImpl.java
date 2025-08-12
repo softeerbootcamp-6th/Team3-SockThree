@@ -73,10 +73,8 @@ public class WidgetSettingServiceImpl implements WidgetSettingService {
             Long userId, Long lectureId, WidgetSettingUpdateRequest request) {
 
         // 1) 요청 위젯 type이 6개인지 확인
-        if (request.widgetSpecs().stream()
-                .map(WidgetSpec::type)
-                .collect(Collectors.toSet())
-                .size() != WIDGETS_COUNT) {
+        if (request.widgetSpecs().stream().map(WidgetSpec::type).collect(Collectors.toSet()).size()
+                != WIDGETS_COUNT) {
             throw new CommonException(WidgetSettingErrorCode.WIDGET_ID_MISMATCH);
         }
 

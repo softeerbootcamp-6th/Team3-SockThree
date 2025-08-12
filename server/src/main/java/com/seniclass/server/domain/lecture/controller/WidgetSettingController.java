@@ -27,7 +27,8 @@ public class WidgetSettingController {
     public List<WidgetSettingResponse> updateWidgetSettings(
             @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
             @Parameter(description = "수정할 강의 ID") @PathVariable Long lectureId,
-            @Parameter(description = "수정할 위젯 설정 정보") @Valid @RequestBody WidgetSettingUpdateRequest request) {
+            @Parameter(description = "수정할 위젯 설정 정보") @Valid @RequestBody
+                    WidgetSettingUpdateRequest request) {
         return widgetSettingService.updateWidgetSettings(userId, lectureId, request);
     }
 }
