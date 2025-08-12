@@ -21,7 +21,7 @@ public class WidgetSettingController {
 
     private final WidgetSettingService widgetSettingService;
 
-    @Operation(summary = "위젯 설정 수정", description = "강사가 본인의 강의 위젯 설정을 수정합니다. TEACHER 권한 필요.")
+    @Operation(summary = "위젯 설정 수정 (강사)", description = "강사가 본인의 강의 위젯 설정을 수정합니다. TEACHER 권한 필요.")
     @PutMapping
     @RequireAuth(roles = {UserRole.TEACHER})
     public List<WidgetSettingResponse> updateWidgetSettings(
