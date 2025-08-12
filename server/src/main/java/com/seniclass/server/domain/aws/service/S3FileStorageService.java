@@ -19,7 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service("s3FileStorageService")
-@ConditionalOnProperty(name = "aws.s3.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "aws.s3.enabled", havingValue = "true")
 @RequiredArgsConstructor
 @Slf4j
 public class S3FileStorageService implements FileStorageService {
