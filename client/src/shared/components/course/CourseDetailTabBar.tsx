@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router";
+import { NavLink } from "react-router";
 
 interface CourseDetailTabBarProps {
   isEnrolled: boolean;
@@ -27,12 +27,6 @@ const CourseDetailTabBar = ({
   } else {
     tabs = [...baseTabs, ...extraTabs.filter((t) => !t.gated)];
   }
-  
-  const { courseId } = useParams<{ courseId: string }>();
-
-  const makeAbsolutePath = (to: string) => {
-    return `/student/course/${courseId}/${to}`;
-  }
 
   return (
     <nav className="sticky top-[5rem] z-100 w-full bg-bg py-[1rem] backdrop-blur">
@@ -41,7 +35,7 @@ const CourseDetailTabBar = ({
           {tabs.map(({ to, label }) => (
             <NavLink
               key={to}
-              to={makeAbsolutePath(to)}
+              to={to}
               end
               className={({ isActive }) =>
                 [
