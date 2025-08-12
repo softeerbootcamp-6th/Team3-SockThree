@@ -22,17 +22,35 @@ public class RedisHashRefreshTokenService {
      */
     public void saveRefreshToken(String token, String userId, long ttlSeconds) {
         try {
+            String jti = jwtTokenProvider.getJtiFromToken(token);
+
+            // JTI 재사용 탐지
+            if (refreshTokenRepository.existsByJti(jti)) {
+                log.warn("JTI reuse detected for user: {}, jti: {}", userId, jti);
+                // 재사용 탐지 시 해당 사용자의 모든 토큰 무효화
+                revokeAllUserRefreshTokens(userId);
+                throw new com.seniclass.server.global.exception.CommonException(
+                        com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode
+                                .TOKEN_REUSE_DETECTED);
+            }
+
             // 기존 사용자 토큰이 있다면 삭제 (하나의 사용자는 하나의 refresh token만)
             if (refreshTokenRepository.existsById(userId)) {
                 refreshTokenRepository.deleteById(userId);
                 log.debug("Deleted existing refresh token for user: {}", userId);
             }
 
-            RefreshTokenHash refreshToken = RefreshTokenHash.create(userId, token, ttlSeconds);
+            RefreshTokenHash refreshToken = RefreshTokenHash.create(userId, token, jti, ttlSeconds);
             RefreshTokenHash saved = refreshTokenRepository.save(refreshToken);
 
-            log.debug("Saved refresh token for user: {} with TTL: {} seconds", userId, ttlSeconds);
+            log.debug(
+                    "Saved refresh token for user: {} with TTL: {} seconds, JTI: {}",
+                    userId,
+                    ttlSeconds,
+                    jti);
             log.debug("Token hash: {}", saved.getTokenHash());
+        } catch (com.seniclass.server.global.exception.CommonException e) {
+            throw e; // 재사용 탐지 예외는 그대로 전파
         } catch (Exception e) {
             log.error("Failed to save refresh token for user: {}", userId, e);
             throw new RuntimeException("Failed to save refresh token", e);
@@ -50,6 +68,7 @@ public class RedisHashRefreshTokenService {
 
             String userId = jwtTokenProvider.getUserIdFromToken(token);
             String tokenHash = hashToken(token);
+            String jti = jwtTokenProvider.getJtiFromToken(token);
 
             Optional<RefreshTokenHash> savedToken = refreshTokenRepository.findById(userId);
 
@@ -59,6 +78,14 @@ public class RedisHashRefreshTokenService {
             }
 
             RefreshTokenHash refreshToken = savedToken.get();
+
+            // JTI 검증 (토큰 회전 탐지)
+            if (!refreshToken.getJti().equals(jti)) {
+                log.warn("JTI mismatch for user: {} - possible token rotation attack", userId);
+                // JTI가 다르면 토큰 회전 공격 가능성
+                revokeAllUserRefreshTokens(userId);
+                return false;
+            }
 
             // 토큰 해시 비교
             if (!refreshToken.getTokenHash().equals(tokenHash)) {

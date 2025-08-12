@@ -22,7 +22,7 @@ public class AssignmentController {
 
     private final AssignmentService assignmentService;
 
-    @Operation(summary = "과제 생성", description = "강사가 새로운 과제를 생성합니다. TEACHER 권한 필요.")
+    @Operation(summary = "과제 생성 (강사)", description = "강사가 새로운 과제를 생성합니다. TEACHER 권한 필요.")
     @PostMapping
     @RequireAuth(roles = {UserRole.TEACHER})
     public AssignmentResponse createAssignment(
@@ -31,14 +31,15 @@ public class AssignmentController {
         return assignmentService.createAssignment(userId, request);
     }
 
-    @Operation(summary = "과제 단일 조회", description = "과제 ID로 특정 과제의 상세 정보를 조회합니다.")
+    @Operation(summary = "과제 단일 조회 (강사, 수강생)", description = "과제 ID로 특정 과제의 상세 정보를 조회합니다.")
     @GetMapping("/{assignmentId}")
+    @RequireAuth(roles = {UserRole.TEACHER, UserRole.STUDENT})
     public AssignmentResponse getAssignment(
             @Parameter(description = "조회할 과제 ID") @PathVariable Long assignmentId) {
         return assignmentService.getAssignment(assignmentId);
     }
 
-    @Operation(summary = "과제 수정", description = "강사가 본인의 과제 정보를 수정합니다. TEACHER 권한 필요.")
+    @Operation(summary = "과제 수정 (강사)", description = "강사가 본인의 과제 정보를 수정합니다. TEACHER 권한 필요.")
     @PutMapping("/{assignmentId}")
     @RequireAuth(roles = {UserRole.TEACHER})
     public AssignmentResponse updateAssignment(
@@ -48,7 +49,7 @@ public class AssignmentController {
         return assignmentService.updateAssignment(userId, assignmentId, request);
     }
 
-    @Operation(summary = "과제 삭제", description = "강사가 본인의 과제를 삭제합니다. TEACHER 권한 필요.")
+    @Operation(summary = "과제 삭제 (강사)", description = "강사가 본인의 과제를 삭제합니다. TEACHER 권한 필요.")
     @DeleteMapping("/{assignmentId}")
     @RequireAuth(roles = {UserRole.TEACHER})
     public ResponseEntity<Void> deleteAssignment(

@@ -35,8 +35,9 @@ public class LectureController {
         return lectureService.createLecture(userId, request, file);
     }
 
-    @Operation(summary = "강의 단일 조회 (강사,학생)", description = "강의 ID로 특정 강의의 상세 정보를 조회합니다.")
+    @Operation(summary = "강의 단일 조회 (강사, 수강생)", description = "강의 ID로 특정 강의의 상세 정보를 조회합니다.")
     @GetMapping("/{lectureId}")
+    @RequireAuth(roles = {UserRole.TEACHER, UserRole.STUDENT})
     public LectureResponse getLecture(
             @Parameter(description = "조회할 강의 ID") @PathVariable Long lectureId) {
         return lectureService.getLecture(lectureId);

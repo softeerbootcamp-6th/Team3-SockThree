@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -121,33 +120,6 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
         }
 
         return convertToResponseWithFileUrl(updatedSubmission);
-    }
-
-    /** 제출된 파일 다운로드 */
-    @Override
-    public Resource downloadSubmissionFile(Long submissionId) {
-        Long studentId = AuthContext.getCurrentUserId();
-        log.info("사용자 {}가 과제 제출 {}의 파일을 다운로드합니다", studentId, submissionId);
-
-        AssignmentSubmission submission =
-                assignmentSubmissionRepository
-                        .findById(submissionId)
-                        .orElseThrow(
-                                () ->
-                                        new CommonException(
-                                                AssignmentSubmissionErrorCode
-                                                        .ASSIGNMENT_SUBMISSION_NOT_FOUND));
-
-        // 본인만 접근 가능 (추후 강사도 접근 가능하도록 확장 필요)
-        if (!submission.getStudent().getId().equals(studentId)) {
-            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
-        }
-
-        if (submission.getFileUrl() == null || submission.getFileUrl().isEmpty()) {
-            throw new CommonException(AssignmentSubmissionErrorCode.ASSIGNMENT_FILE_NOT_FOUND);
-        }
-
-        return fileStorageService.loadAsResource(submission.getFileUrl());
     }
 
     /** 과제 제출 삭제 */

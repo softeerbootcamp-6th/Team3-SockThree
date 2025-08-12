@@ -19,7 +19,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Student Lecture QnA", description = "학생 강의 QnA 관리 API")
+@Tag(name = "Lecture QnA", description = "학생 강의 QnA 관리 API")
 @RestController
 @RequestMapping("/qna")
 @RequiredArgsConstructor
@@ -27,7 +27,7 @@ public class LectureQnaController {
 
     private final LectureQnaService lectureQnaService;
 
-    @Operation(summary = "강의 질문 등록", description = "학생이 강의에 대한 질문을 등록합니다.")
+    @Operation(summary = "강의 질문 등록 (수강생)", description = "학생이 강의에 대한 질문을 등록합니다.")
     @PostMapping
     @RequireAuth(roles = {UserRole.STUDENT})
     @ResponseStatus(HttpStatus.CREATED)
@@ -35,7 +35,7 @@ public class LectureQnaController {
         return lectureQnaService.createQuestion(request);
     }
 
-    @Operation(summary = "강의 질문 수정", description = "학생이 등록한 질문을 수정합니다.")
+    @Operation(summary = "강의 질문 수정 (수강생)", description = "학생이 등록한 질문을 수정합니다.")
     @PutMapping("/{qnaId}")
     @RequireAuth(roles = {UserRole.STUDENT})
     public LectureQnaResponse updateQuestion(
@@ -44,14 +44,14 @@ public class LectureQnaController {
         return lectureQnaService.updateQuestion(qnaId, request);
     }
 
-    @Operation(summary = "강의 질문 삭제", description = "학생이 등록한 질문을 삭제합니다.")
+    @Operation(summary = "강의 질문 삭제 (수강생)", description = "학생이 등록한 질문을 삭제합니다.")
     @DeleteMapping("/{qnaId}")
     @RequireAuth(roles = {UserRole.STUDENT})
     public void deleteQuestion(@Parameter(description = "QnA ID") @PathVariable Long qnaId) {
         lectureQnaService.deleteQuestion(qnaId);
     }
 
-    @Operation(summary = "강의 질문 답변", description = "강사가 학생의 질문에 답변합니다.")
+    @Operation(summary = "강의 질문 답변 (강사)", description = "강사가 학생의 질문에 답변합니다.")
     @PutMapping("/{qnaId}/answer")
     @RequireAuth(roles = {UserRole.TEACHER})
     public LectureQnaResponse answerQuestion(
@@ -60,7 +60,7 @@ public class LectureQnaController {
         return lectureQnaService.answerQuestion(qnaId, request);
     }
 
-    @Operation(summary = "내 질문 목록 조회", description = "현재 학생의 질문 목록을 조회합니다.")
+    @Operation(summary = "내 질문 목록 조회 (수강생)", description = "현재 학생의 질문 목록을 조회합니다.")
     @GetMapping("/my")
     @RequireAuth(roles = {UserRole.STUDENT})
     public Page<LectureQnaResponse> getCurrentStudentQuestions(
@@ -69,7 +69,7 @@ public class LectureQnaController {
         return lectureQnaService.getCurrentStudentQuestions(pageable);
     }
 
-    @Operation(summary = "강의별 QnA 목록 조회", description = "특정 강의의 QnA 목록을 조회합니다.")
+    @Operation(summary = "강의별 QnA 목록 조회 (수강생, 강사)", description = "특정 강의의 QnA 목록을 조회합니다.")
     @GetMapping("/lectures/{lectureId}")
     @RequireAuth(roles = {UserRole.STUDENT, UserRole.TEACHER})
     public Page<LectureQnaResponse> getQuestionsByLecture(
@@ -79,7 +79,7 @@ public class LectureQnaController {
         return lectureQnaService.getQuestionsByLecture(lectureId, pageable);
     }
 
-    @Operation(summary = "QnA 상세 조회", description = "특정 QnA의 상세 정보를 조회합니다.")
+    @Operation(summary = "QnA 상세 조회 (수강생, 강사)", description = "특정 QnA의 상세 정보를 조회합니다.")
     @GetMapping("/{qnaId}")
     @RequireAuth(roles = {UserRole.STUDENT, UserRole.TEACHER})
     public LectureQnaResponse getQuestion(
@@ -87,7 +87,7 @@ public class LectureQnaController {
         return lectureQnaService.getQuestion(qnaId);
     }
 
-    @Operation(summary = "내 질문 수 조회", description = "현재 학생의 총 질문 수를 조회합니다.")
+    @Operation(summary = "내 질문 수 조회 (수강생)", description = "현재 학생의 총 질문 수를 조회합니다.")
     @GetMapping("/my/count")
     @RequireAuth(roles = {UserRole.STUDENT})
     public Map<String, Long> getCurrentStudentQuestionCount() {

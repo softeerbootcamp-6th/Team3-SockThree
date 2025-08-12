@@ -238,64 +238,6 @@ class AssignmentSubmissionServiceTest {
     }
 
     @Test
-    @DisplayName("파일 다운로드 성공")
-    void downloadSubmissionFile_Success() {
-        // given
-        Long studentId = 1L;
-        Long submissionId = 1L;
-        String fileName = "test.pdf";
-
-        authContext.when(AuthContext::getCurrentUserId).thenReturn(studentId);
-        AssignmentSubmission submission = mock(AssignmentSubmission.class);
-        Student mockStudent = mock(Student.class);
-
-        when(assignmentSubmissionRepository.findById(submissionId))
-                .thenReturn(Optional.of(submission));
-        when(submission.getStudent()).thenReturn(mockStudent);
-        when(mockStudent.getId()).thenReturn(studentId);
-        when(submission.getFileUrl()).thenReturn(fileName);
-
-        // Mock Resource 생성
-        org.springframework.core.io.Resource mockResource =
-                mock(org.springframework.core.io.Resource.class);
-        when(fileStorageService.loadAsResource(fileName)).thenReturn(mockResource);
-
-        // when
-        org.springframework.core.io.Resource result =
-                assignmentSubmissionService.downloadSubmissionFile(submissionId);
-
-        // then
-        assertNotNull(result);
-        assertEquals(mockResource, result);
-        verify(fileStorageService, times(1)).loadAsResource(fileName);
-    }
-
-    @Test
-    @DisplayName("파일 다운로드 실패 - 권한 없음")
-    void downloadSubmissionFile_Unauthorized() {
-        // given
-        Long studentId = 1L;
-        Long otherStudentId = 2L;
-        Long submissionId = 1L;
-
-        authContext.when(AuthContext::getCurrentUserId).thenReturn(studentId);
-        AssignmentSubmission submission = mock(AssignmentSubmission.class);
-        Student mockStudent = mock(Student.class);
-
-        when(assignmentSubmissionRepository.findById(submissionId))
-                .thenReturn(Optional.of(submission));
-        when(submission.getStudent()).thenReturn(mockStudent);
-        when(mockStudent.getId()).thenReturn(otherStudentId); // 다른 학생의 제출물
-
-        // when & then
-        assertThrows(
-                CommonException.class,
-                () -> assignmentSubmissionService.downloadSubmissionFile(submissionId));
-
-        verify(fileStorageService, never()).loadAsResource(anyString());
-    }
-
-    @Test
     @DisplayName("과제 제출 삭제 성공")
     void deleteSubmission_Success() {
         // given

@@ -21,14 +21,14 @@ public class StudentController {
 
     // === 학생 본인 관리 API ===
 
-    @Operation(summary = "내 정보 조회", description = "현재 로그인한 학생의 정보를 조회합니다.")
+    @Operation(summary = "내 정보 조회 (수강생)", description = "현재 로그인한 학생의 정보를 조회합니다.")
     @GetMapping("/my-info")
     @RequireAuth(roles = {UserRole.STUDENT})
     public StudentInfoResponse getMyInfo() {
         return studentService.getCurrentStudentInfo();
     }
 
-    @Operation(summary = "내 정보 수정", description = "현재 로그인한 학생의 정보를 수정합니다.")
+    @Operation(summary = "내 정보 수정 (수강생)", description = "현재 로그인한 학생의 정보를 수정합니다.")
     @PutMapping("/my-info")
     @RequireAuth(roles = {UserRole.STUDENT})
     public StudentInfoResponse updateMyInfo(@Valid @RequestBody StudentUpdateRequest request) {
