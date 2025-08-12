@@ -90,15 +90,18 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
       setContentsTitle(target.value);
     };
 
-    const handleCloseClick = () => {
+    const handleReset = () => {
       setUploadVideos([]);
+    };
+
+    const handleResetAndClose = () => {
+      handleReset();
       onClose();
     };
 
     const handleVideoUploadClick = () => {
       // 동영상 업로드 로직 추가 예정
-      setUploadVideos([]);
-      onClose();
+      handleResetAndClose();
     };
 
     const renderVideoUploadItems = (uploadVideos: VideoData[]) => {
@@ -165,7 +168,7 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
               <Button
                 variant="default"
                 className="typo-body-4 flex-1/2 rounded-[.9375rem] bg-gray-200 px-4 py-2 text-black hover:bg-gray-400"
-                onClick={handleCloseClick}
+                onClick={handleResetAndClose}
               >
                 닫기
               </Button>
@@ -186,7 +189,6 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
           hidden
           ref={fileInputRef}
           onChange={handleFileChange}
-          // multiple
         />
       </>
     );
