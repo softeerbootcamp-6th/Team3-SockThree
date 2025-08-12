@@ -1,5 +1,5 @@
 import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
-import { CourseInfoCardDefault } from "@/domain/student/component/course/CourseInfoCardDefault";
+import CourseInfoCardDefault from "@/domain/student/component/course/CourseInfoCardDefault";
 import { Outlet, useParams } from "react-router-dom";
 import CourseDetailTabBar from "@/shared/components/course/CourseDetailTabBar";
 
