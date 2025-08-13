@@ -3,7 +3,7 @@ import Chips from "@/shared/components/Chips";
 import { useState } from "react";
 
 interface FilterModalProps {
-  modalRef: React.RefObject<HTMLDialogElement>;
+  modalRef: React.RefObject<HTMLDialogElement | null>;
   closeModal: () => void;
 
   selectedCategory?: string;
