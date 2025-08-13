@@ -4,6 +4,7 @@ import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
 import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
+import com.seniclass.server.domain.lecture.dto.response.LectureBannerResponse;
 import com.seniclass.server.domain.lecture.dto.response.LectureInfoWidgetResponse;
 import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
 import com.seniclass.server.domain.lecture.dto.response.MyLectureStatusWidgetResponse;
@@ -82,5 +83,12 @@ public class LectureController {
             @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
             @Parameter(description = "조회할 강좌 id") @PathVariable Long lectureId) {
         return lectureService.getMyLectureStatusWidget(userId, lectureId);
+    }
+
+    @Operation(summary = "강좌의 배너", description = "강좌의 대략적인 정보를 포함하여 이미지 링크를 포함하는 배너 정보를 받습니다..")
+    @GetMapping("/{lectureId}/banner")
+    public LectureBannerResponse getLectureBanner(
+            @Parameter(description = "조회할 강좌 id") @PathVariable Long lectureId) {
+        return lectureService.getLectureBanner(lectureId);
     }
 }
