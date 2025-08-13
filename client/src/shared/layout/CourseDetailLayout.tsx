@@ -1,6 +1,6 @@
 import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
 import CourseInfoCardDefault from "@/domain/student/component/course/CourseInfoCardDefault";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router";
 import CourseDetailTabBar from "@/shared/components/course/CourseDetailTabBar";
 
 const CourseDetailLayout = () => {
