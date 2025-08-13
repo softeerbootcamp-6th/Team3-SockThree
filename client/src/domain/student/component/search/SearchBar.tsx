@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import SearchIcon from "@/assets/icons/default/search.svg?react";
 
 interface SearchBarProps {
   value: string;
@@ -27,11 +28,15 @@ const SearchBar = ({ value, onChange }: SearchBarProps) => {
   }, [debounced, value, onChange]);
 
   return (
-    <input
-      placeholder="검색어를 입력하세요"
-      value={local}
-      onChange={(e) => setLocal(e.target.value)}
-    />
+    <div className="flex w-full max-w-[30rem] items-center rounded-full border border-gray-300 px-3 py-8">
+      <SearchIcon className="h-[1rem] w-[1rem] text-gray-600" />
+      <input
+        className="ml-2 w-full border-none text-sm focus:outline-none"
+        placeholder="검색어를 입력하세요"
+        value={local}
+        onChange={(e) => setLocal(e.target.value)}
+      />
+    </div>
   );
 };
 
