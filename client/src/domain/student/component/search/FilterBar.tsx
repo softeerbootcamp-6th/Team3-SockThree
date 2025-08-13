@@ -1,5 +1,6 @@
 import useModal from "@/shared/hook/useModal";
 import Modal from "@/shared/components/Modal.tsx";
+import FilterModal from "@/domain/student/component/search/FilterModal.tsx";
 
 interface FilterBarProps {
   selectedCategory?: string;
@@ -24,17 +25,7 @@ const FilterBar = ({
           ))}
         </>
       )}
-      <Modal ref={modalRef}>
-        <div>필터 선택하는 곳</div>
-        <div>
-          <label>대분류</label>
-        </div>
-        <div>
-          <label>소분류</label>
-        </div>
-        <button onClick={closeModal}>취소</button>
-        <button onClick={closeModal}>적용</button>
-      </Modal>
+      <FilterModal modalRef={modalRef} closeModal={closeModal} />
     </div>
   );
 };
