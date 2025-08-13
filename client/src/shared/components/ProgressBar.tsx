@@ -10,6 +10,9 @@ const progressBarVariant = tv({
   },
   variants: {
     size: {
+      xs: {
+        root: "w-[6.25rem]",
+      },
       md: {
         root: "w-[20rem]",
       },
@@ -23,6 +26,9 @@ const progressBarVariant = tv({
       },
       ratio: {
         label: "text-white typo-body-5",
+      },
+      smallRatio: {
+        label: "typo-label-1",
       },
     },
     color: {
@@ -45,8 +51,8 @@ interface ProgressBarProps {
   current?: number;
   max?: number;
   labelText?: string;
-  type?: "percent" | "ratio";
-  size?: "md" | "lg";
+  type?: "percent" | "ratio" | "smallRatio";
+  size?: "md" | "lg" | "xs";
   color?: "gradient" | "mono";
 }
 
@@ -75,7 +81,9 @@ const ProgressBar = ({
   }, [computedValue]);
 
   const defaultLabel =
-    type === "ratio" && current !== undefined && max !== undefined
+    (type === "ratio" || type === "smallRatio") &&
+    current !== undefined &&
+    max !== undefined
       ? `${current}/${max}`
       : `${Math.round(computedValue)}%`;
 
