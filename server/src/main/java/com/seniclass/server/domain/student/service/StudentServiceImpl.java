@@ -2,8 +2,8 @@ package com.seniclass.server.domain.student.service;
 
 import com.seniclass.server.domain.auth.service.AuthContext;
 import com.seniclass.server.domain.student.domain.Student;
-import com.seniclass.server.domain.student.dto.StudentInfoResponse;
-import com.seniclass.server.domain.student.dto.StudentUpdateRequest;
+import com.seniclass.server.domain.student.dto.request.StudentUpdateRequest;
+import com.seniclass.server.domain.student.dto.response.StudentInfoResponse;
 import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
 import com.seniclass.server.domain.student.repository.StudentRepository;
 import com.seniclass.server.global.exception.CommonException;

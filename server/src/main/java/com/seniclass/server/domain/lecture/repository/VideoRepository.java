@@ -42,4 +42,7 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 """)
     Long sumWatchedSecondsByLectureAndStudent(
             @Param("lectureId") Long lectureId, @Param("studentId") Long studentId);
+      
+    /** 특정 강의의 전체 비디오 개수 조회 */
+    Long countByChapterLectureId(Long lectureId);
 }

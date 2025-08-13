@@ -1,7 +1,7 @@
 package com.seniclass.server.domain.student.service;
 
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionFileRequest;
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionResponse;
+import com.seniclass.server.domain.student.dto.request.AssignmentSubmissionFileRequest;
+import com.seniclass.server.domain.student.dto.response.AssignmentSubmissionResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

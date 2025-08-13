@@ -1,7 +1,7 @@
 package com.seniclass.server.domain.student.domain;
 
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.student.dto.StudentUpdateRequest;
+import com.seniclass.server.domain.student.dto.request.StudentUpdateRequest;
 import com.seniclass.server.domain.student.enums.Gender;
 import com.seniclass.server.domain.user.domain.User;
 import jakarta.persistence.*;

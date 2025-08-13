@@ -1,7 +1,7 @@
 package com.seniclass.server.domain.student.service;
 
-import com.seniclass.server.domain.student.dto.InterestingCategoryRequest;
-import com.seniclass.server.domain.student.dto.InterestingCategoryResponse;
+import com.seniclass.server.domain.student.dto.request.InterestingCategoryRequest;
+import com.seniclass.server.domain.student.dto.response.InterestingCategoryResponse;
 import java.util.List;
 
 public interface InterestingCategoryService {

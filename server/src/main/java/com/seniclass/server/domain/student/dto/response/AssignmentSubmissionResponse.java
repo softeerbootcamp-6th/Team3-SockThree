@@ -1,4 +1,4 @@
-package com.seniclass.server.domain.student.dto;
+package com.seniclass.server.domain.student.dto.response;
 
 import com.seniclass.server.domain.student.domain.AssignmentSubmission;
 import io.swagger.v3.oas.annotations.media.Schema;
