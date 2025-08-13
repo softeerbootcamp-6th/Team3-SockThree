@@ -2,7 +2,7 @@ import CourseProgressCard from "@/domain/student/component/course/CourseProgress
 import InfoChip from "@/shared/components/InfoChip";
 import { fakerKO as faker } from "@faker-js/faker";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 const CurrentCoursePage = () => {
   const navigate = useNavigate();
