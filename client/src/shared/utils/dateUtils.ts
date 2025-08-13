@@ -2,7 +2,7 @@
 export const formatDate = (
   dateInput: Date | string | number,
   delimiter: "-" | ".",
-  fullYear: boolean = false
+  fullYear = false
 ) => {
   const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
 
@@ -10,17 +10,9 @@ export const formatDate = (
     throw new Error("Invalid date");
   }
 
-  let sliceIdx: number;
+  const year = String(date.getFullYear()).slice(fullYear ? 0 : -2);
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
 
-  if (fullYear) {
-    sliceIdx = 4;
-  } else {
-    sliceIdx = 2;
-  }
-
-  const yy = String(date.getFullYear()).slice(-sliceIdx);
-  const mm = String(date.getMonth() + 1).padStart(2, "0");
-  const dd = String(date.getDate()).padStart(2, "0");
-
-  return `${yy}${delimiter}${mm}${delimiter}${dd}`;
+  return [year, month, day].join(delimiter);
 };
