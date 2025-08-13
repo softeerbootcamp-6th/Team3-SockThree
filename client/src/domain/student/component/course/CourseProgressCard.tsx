@@ -10,6 +10,7 @@ interface CourseProgressCardProps {
   endTime?: string;
   currentVideo?: number;
   maxVideo?: number;
+  onClick?: () => void;
 }
 
 const CourseProgressCard = ({
@@ -21,6 +22,7 @@ const CourseProgressCard = ({
   endTime = "12:00",
   currentVideo = 3,
   maxVideo = 10,
+  onClick = () => {},
 }: CourseProgressCardProps) => {
   return (
     <div className="group relative flex h-[32.3125rem] w-[26.9375rem] flex-col gap-[.9375rem] overflow-clip rounded-[1.25rem] bg-white px-[1.375rem] py-[1.6563rem] transition-all duration-300 hover:-translate-y-[1.6875rem] hover:shadow-main">
@@ -29,6 +31,7 @@ const CourseProgressCard = ({
         <Button
           variant="outline"
           className="typo-label-1 h-[3.3125rem] w-[6.25rem] cursor-pointer"
+          onClick={onClick}
         >
           상세 보기
         </Button>
