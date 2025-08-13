@@ -3,9 +3,12 @@ package com.seniclass.server.domain.lecture.service;
 import com.seniclass.server.domain.category.domain.SubCategory;
 import com.seniclass.server.domain.category.repository.SubCategoryRepository;
 import com.seniclass.server.domain.lecture.domain.Lecture;
+import com.seniclass.server.domain.lecture.domain.UploadTime;
 import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
+import com.seniclass.server.domain.lecture.dto.response.LectureInfoWidgetResponse;
 import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
+import com.seniclass.server.domain.lecture.dto.response.UploadTimeResponse;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.teacher.domain.Teacher;
 import com.seniclass.server.domain.teacher.repository.TeacherRepository;
@@ -13,6 +16,7 @@ import com.seniclass.server.global.exception.CommonException;
 import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import com.seniclass.server.global.service.FileStorageService;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -131,6 +135,16 @@ public class LectureServiceImpl implements LectureService {
 
     public void deleteLecture(Long lectureId) {
         lectureRepository.deleteById(lectureId);
+    }
+
+    public LectureInfoWidgetResponse getLectureInfo(Long lectureId) {
+        Lecture lecture = getLectureEntity(lectureId);
+
+        List<UploadTime> uploadTimeList = uploadTimeService.getAllUploadTimesEntity(lecture);
+        List<UploadTimeResponse> uploadTimeResponses =
+                uploadTimeList.stream().map(UploadTimeResponse::from).toList();
+
+        return LectureInfoWidgetResponse.from(lecture, uploadTimeResponses);
     }
 
     private Lecture getLectureEntity(Long lectureId) {

@@ -4,6 +4,7 @@ import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
 import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
+import com.seniclass.server.domain.lecture.dto.response.LectureInfoWidgetResponse;
 import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
 import com.seniclass.server.domain.lecture.service.LectureService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -62,5 +63,12 @@ public class LectureController {
             @Parameter(description = "삭제할 강의 ID") @PathVariable Long lectureId) {
         lectureService.deleteLecture(lectureId);
         return ResponseEntity.ok().build();
+    }
+
+    @Operation(summary = "강좌 상세 화면의 강좌 정보 사이드바 위젯 (학생)", description = "강좌의 강좌 정보 위젯 데이터를 받습니다.")
+    @GetMapping("/{lectureId}/side-widget/lecture-info")
+    public LectureInfoWidgetResponse getLectureInfoWidget(
+            @Parameter(description = "조회할 강좌 id") @PathVariable Long lectureId) {
+        return lectureService.getLectureInfo(lectureId);
     }
 }
