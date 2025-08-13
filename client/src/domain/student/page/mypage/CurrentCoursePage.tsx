@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const CurrentCoursePage = () => {
   const navigate = useNavigate();
   const studentName = "홍길동";
-  let currentCourseLength = 30;
+  const currentCourseLength: number = 30;
 
   const infoChipText =
     currentCourseLength === 0
