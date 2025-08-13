@@ -83,9 +83,9 @@ export const router = createBrowserRouter([
       { path: "home", Component: I.HomePage },
       { path: "mypage", Component: I.MyPage },
       { path: "course/manage", Component: I.ManageCoursePage },
-      { path: "course/create", Component: I.CreateCoursePage },
     ],
   },
+  { path: "/instructor/course/create", Component: I.CreateCoursePage },
 
   // 강사 강좌 상세 페이지
   {
