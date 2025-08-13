@@ -5,11 +5,15 @@ import FilterButton from "@/domain/student/component/search/FilterButton";
 interface FilterBarProps {
   selectedCategory?: string;
   selectedSubcategories?: string[];
+  onCategoryChange?: (category: string) => void;
+  onSubcategoryChange?: (subcategories: string[]) => void;
 }
 
 const FilterBar = ({
   selectedCategory,
   selectedSubcategories = [],
+  onCategoryChange,
+  onSubcategoryChange,
 }: FilterBarProps) => {
   const { modalRef, openModal, closeModal } = useModal();
   const hasFilter = selectedCategory || selectedSubcategories.length > 0;
@@ -25,7 +29,14 @@ const FilterBar = ({
           ))}
         </>
       )}
-      <FilterModal modalRef={modalRef} closeModal={closeModal} />
+      <FilterModal
+        modalRef={modalRef}
+        closeModal={closeModal}
+        selectedCategory={selectedCategory}
+        selectedSubcategories={selectedSubcategories}
+        onCategoryChange={onCategoryChange ?? undefined}
+        onSubcategoriesChange={onSubcategoryChange ?? undefined}
+      />
     </div>
   );
 };
