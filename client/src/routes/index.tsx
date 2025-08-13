@@ -39,6 +39,7 @@ export const router = createBrowserRouter([
   {
     path: "/student/course/:courseId",
     Component: StickyLogoLayout,
+
     children: [
       {
         path: "dashboard",
