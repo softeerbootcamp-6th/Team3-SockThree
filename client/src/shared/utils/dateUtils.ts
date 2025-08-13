@@ -3,7 +3,6 @@ export const formatDate = (
   dateInput: Date | string | number,
   delimiter: "-" | ".",
   fullYear = false
-
 ) => {
   const date = dateInput instanceof Date ? dateInput : new Date(dateInput);
 
