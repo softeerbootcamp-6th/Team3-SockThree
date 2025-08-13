@@ -10,6 +10,17 @@ public record MyLectureStatusWidgetResponse(
         String AssignmentName,
         Boolean isAssignmentSubmitted) {
     public static MyLectureStatusWidgetResponse of(
+            Integer lectureProgressRate, Long totalLectureDuration, Integer totalVideoCount) {
+        return new MyLectureStatusWidgetResponse(
+                lectureProgressRate,
+                (int) (totalLectureDuration / 3600), // Convert seconds to hours
+                totalVideoCount,
+                null,
+                null,
+                null);
+    }
+
+    public static MyLectureStatusWidgetResponse of(
             Integer lectureProgressRate,
             Long totalLectureDuration,
             Integer totalVideoCount,
