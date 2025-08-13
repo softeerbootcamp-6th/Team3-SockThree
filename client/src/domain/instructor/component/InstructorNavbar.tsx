@@ -5,7 +5,7 @@ import { useLocation } from "react-router";
 import { useState } from "react";
 import { fakerKO as faker } from "@faker-js/faker";
 
-const NavbarContainer = () => {
+const InstructorNavbar = () => {
   const location = useLocation();
   const [selectedPath, setSelectedPath] = useState(location.pathname);
 
@@ -25,4 +25,4 @@ const NavbarContainer = () => {
   return <Navbar myPageItem={myPageItem} />;
 };
 
-export default NavbarContainer;
+export default InstructorNavbar;

@@ -8,7 +8,7 @@ import { useState } from "react";
 import { useLocation } from "react-router";
 import { fakerKO as faker } from "@faker-js/faker";
 
-const NavbarContainer = () => {
+const StudentNavbar = () => {
   const navbarMenus = [
     { icon: HomeIcon, label: "홈", routePath: "/student/home" },
     {
@@ -48,4 +48,4 @@ const NavbarContainer = () => {
   return <Navbar myPageItem={myPageItem}>{navbarItems}</Navbar>;
 };
 
-export default NavbarContainer;
+export default StudentNavbar;

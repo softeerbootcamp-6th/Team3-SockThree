@@ -1,4 +1,4 @@
-import InstructorNavbar from "@/domain/instructor/container/NavBarContainer";
+import InstructorNavbar from "@/domain/instructor/component/InstructorNavbar";
 
 import { Outlet } from "react-router";
 
