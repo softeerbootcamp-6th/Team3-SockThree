@@ -1,4 +1,4 @@
-package com.seniclass.server.domain.student.service;
+package com.seniclass.server.domain.widget.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -10,12 +10,12 @@ import static org.mockito.Mockito.when;
 import com.seniclass.server.domain.lecture.domain.Lecture;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.lecture.repository.VideoRepository;
-import com.seniclass.server.domain.student.dto.AgeGroupGenderStatsDto;
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionStatsDto;
-import com.seniclass.server.domain.student.dto.StudentVideoCountDto;
-import com.seniclass.server.domain.student.dto.response.LectureStatisticsResponse;
 import com.seniclass.server.domain.student.enums.Gender;
-import com.seniclass.server.domain.student.repository.LectureStatisticsRepository;
+import com.seniclass.server.domain.widget.dto.AgeGroupGenderStatsDto;
+import com.seniclass.server.domain.widget.dto.AssignmentSubmissionStatsDto;
+import com.seniclass.server.domain.widget.dto.StudentVideoCountDto;
+import com.seniclass.server.domain.widget.dto.response.LectureStatisticsResponse;
+import com.seniclass.server.domain.widget.repository.LectureStatisticsRepository;
 import com.seniclass.server.global.exception.CommonException;
 import java.util.Arrays;
 import java.util.List;

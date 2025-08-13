@@ -1,9 +1,9 @@
-package com.seniclass.server.domain.student.repository;
+package com.seniclass.server.domain.widget.repository;
 
 import com.seniclass.server.domain.student.domain.LectureEnrollment;
-import com.seniclass.server.domain.student.dto.AgeGroupGenderStatsDto;
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionStatsDto;
-import com.seniclass.server.domain.student.dto.StudentVideoCountDto;
+import com.seniclass.server.domain.widget.dto.AgeGroupGenderStatsDto;
+import com.seniclass.server.domain.widget.dto.AssignmentSubmissionStatsDto;
+import com.seniclass.server.domain.widget.dto.StudentVideoCountDto;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +16,7 @@ public interface LectureStatisticsRepository extends JpaRepository<LectureEnroll
 
     /** 현재 수강생들의 비디오 시청 통계 조회 */
     @Query(
-            "SELECT new com.seniclass.server.domain.student.dto.StudentVideoCountDto("
+            "SELECT new com.seniclass.server.domain.widget.dto.StudentVideoCountDto("
                     + "s.id, "
                     + "COUNT(DISTINCT vp.video.id)) "
                     + "FROM LectureEnrollment le "
@@ -47,7 +47,7 @@ public interface LectureStatisticsRepository extends JpaRepository<LectureEnroll
 
     /** 특정 강의의 과제 제출률 통계 (최근 5개) */
     @Query(
-            "SELECT new com.seniclass.server.domain.student.dto.AssignmentSubmissionStatsDto("
+            "SELECT new com.seniclass.server.domain.widget.dto.AssignmentSubmissionStatsDto("
                     + "a.id, a.name, "
                     + "COUNT(DISTINCT le.student.id), "
                     + "COUNT(DISTINCT asub.student.id)) "
@@ -62,7 +62,7 @@ public interface LectureStatisticsRepository extends JpaRepository<LectureEnroll
 
     /** 특정 강의의 연령대별 성별 통계 (순서 보장을 위한 정렬 키 추가) */
     @Query(
-            "SELECT new com.seniclass.server.domain.student.dto.AgeGroupGenderStatsDto("
+            "SELECT new com.seniclass.server.domain.widget.dto.AgeGroupGenderStatsDto("
                     + "CASE "
                     + "  WHEN s.age >= 50 AND s.age < 55 THEN '50-54' "
                     + "  WHEN s.age >= 55 AND s.age < 60 THEN '55-59' "

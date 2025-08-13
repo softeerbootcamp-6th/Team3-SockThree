@@ -1,4 +1,4 @@
-package com.seniclass.server.domain.student.dto;
+package com.seniclass.server.domain.widget.dto;
 
 import com.seniclass.server.domain.student.enums.Gender;
 

@@ -1,6 +1,6 @@
-package com.seniclass.server.domain.student.service;
+package com.seniclass.server.domain.widget.service;
 
-import com.seniclass.server.domain.student.dto.response.LectureStatisticsResponse;
+import com.seniclass.server.domain.widget.dto.response.LectureStatisticsResponse;
 
 public interface LectureStatisticsService {
 
