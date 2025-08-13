@@ -2,8 +2,8 @@ package com.seniclass.server.domain.student.controller;
 
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.student.dto.StudentInfoResponse;
-import com.seniclass.server.domain.student.dto.StudentUpdateRequest;
+import com.seniclass.server.domain.student.dto.request.StudentUpdateRequest;
+import com.seniclass.server.domain.student.dto.response.StudentInfoResponse;
 import com.seniclass.server.domain.student.service.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

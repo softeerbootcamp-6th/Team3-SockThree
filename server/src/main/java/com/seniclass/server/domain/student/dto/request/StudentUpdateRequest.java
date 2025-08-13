@@ -1,4 +1,4 @@
-package com.seniclass.server.domain.student.dto;
+package com.seniclass.server.domain.student.dto.request;
 
 import com.seniclass.server.domain.student.enums.Gender;
 import io.swagger.v3.oas.annotations.media.Schema;

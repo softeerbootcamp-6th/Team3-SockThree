@@ -2,9 +2,9 @@ package com.seniclass.server.domain.student.controller;
 
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.student.dto.LectureQnaAnswerRequest;
-import com.seniclass.server.domain.student.dto.LectureQnaRequest;
-import com.seniclass.server.domain.student.dto.LectureQnaResponse;
+import com.seniclass.server.domain.student.dto.request.LectureQnaAnswerRequest;
+import com.seniclass.server.domain.student.dto.request.LectureQnaRequest;
+import com.seniclass.server.domain.student.dto.response.LectureQnaResponse;
 import com.seniclass.server.domain.student.service.LectureQnaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

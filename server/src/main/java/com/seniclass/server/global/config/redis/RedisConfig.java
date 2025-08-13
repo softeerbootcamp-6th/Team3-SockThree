@@ -1,4 +1,4 @@
-package com.seniclass.server.domain.auth.config;
+package com.seniclass.server.global.config.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
