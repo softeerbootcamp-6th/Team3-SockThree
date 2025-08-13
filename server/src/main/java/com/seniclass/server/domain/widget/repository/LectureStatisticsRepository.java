@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LectureStatisticsRepository extends JpaRepository<LectureEnrollment, Long> {
 
-    /** 현재 수강생들의 비디오 시청 통계 조회 */
+    /** 현재 수강생들의 비디오 시청 통계 조회 (80% 이상이면 수강) */
     @Query(
             "SELECT new com.seniclass.server.domain.widget.dto.StudentVideoCountDto("
                     + "s.id, "
@@ -23,11 +23,12 @@ public interface LectureStatisticsRepository extends JpaRepository<LectureEnroll
                     + "JOIN le.student s "
                     + "LEFT JOIN VideoProgress vp ON vp.student.id = s.id "
                     + "AND vp.video.chapter.lecture.id = :lectureId "
+                    + "AND vp.playedTime >= (vp.video.duration * 0.8) "
                     + "WHERE le.lecture.id = :lectureId "
                     + "GROUP BY s.id")
     List<StudentVideoCountDto> findStudentVideoWatchCounts(@Param("lectureId") Long lectureId);
 
-    /** 모든 비디오를 완주한 학생 수 조회 (NOT EXISTS 패턴으로 성능 최적화) */
+    /** 모든 비디오를 완주한 학생 수 조회 (80% 이상이면 수강) */
     @Query(
             "SELECT COUNT(DISTINCT s.id) "
                     + "FROM LectureEnrollment le "
@@ -40,7 +41,8 @@ public interface LectureStatisticsRepository extends JpaRepository<LectureEnroll
                     + "    AND NOT EXISTS ("
                     + "        SELECT 1 FROM VideoProgress vp "
                     + "        WHERE vp.student.id = s.id "
-                    + "        AND vp.video.id = v.id"
+                    + "        AND vp.video.id = v.id "
+                    + "        AND vp.playedTime >= (v.duration * 0.8)"
                     + "    )"
                     + ")")
     Integer findCompletedStudentsCount(@Param("lectureId") Long lectureId);
