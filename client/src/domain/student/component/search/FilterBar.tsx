@@ -24,8 +24,8 @@ const FilterBar = ({
       {hasFilter && (
         <>
           {selectedCategory && <span>{selectedCategory}</span>}
-          {selectedSubcategories.map((sub) => (
-            <span>{sub}</span>
+          {selectedSubcategories.map((sub, i) => (
+            <span key={i}>{sub}</span>
           ))}
         </>
       )}
