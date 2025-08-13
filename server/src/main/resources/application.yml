@@ -12,9 +12,6 @@ spring:
         format_sql: true
         show_sql: true
     open-in-view: false
-  config:
-    activate:
-      on-profile: "default"
   data:
     redis:
       host: localhost
@@ -50,11 +47,18 @@ springdoc:
   api-docs:
     path: /api-docs
 
-# JWT 설정
+# JWT 설정 (기본값 - 각 프로파일에서 오버라이드)
 jwt:
   secret: ${JWT_SECRET:seniclass-jwt-secret-key-that-should-be-changed-in-production-environment}
   access-token-validity: ${JWT_ACCESS_TOKEN_VALIDITY:3600000}  # 1시간 (밀리초)
   refresh-token-validity: ${JWT_REFRESH_TOKEN_VALIDITY:2592000000}  # 30일 (밀리초)
+
+# CORS 설정 (기본값 - 각 프로파일에서 오버라이드)
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:5174}
+  cookie:
+    secure: ${COOKIE_SECURE:false}  # 기본값은 개발환경 기준
 
 # 로그 설정 추가
 logging:
@@ -66,9 +70,10 @@ logging:
 # 파일 저장 설정
 file:
   upload-dir: ./uploads/assignments
-  max-file-size: 50MB
+  max-file-size: 52428800  # 50MB in bytes
 
 aws:
-  region: ap-northeast-2
+  region: ${AWS_REGION:ap-northeast-2}
   s3:
-    bucket: senicle-bucket
+    bucket: ${AWS_S3_BUCKET:senicle-bucket}
+    enabled: ${AWS_S3_ENABLED:true}  # S3 사용 여부 (false면 로컬 저장소 사용)

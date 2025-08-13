@@ -2,8 +2,8 @@ package com.seniclass.server.domain.student.controller;
 
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.student.dto.LectureBookmarkRequest;
-import com.seniclass.server.domain.student.dto.LectureBookmarkResponse;
+import com.seniclass.server.domain.student.dto.request.LectureBookmarkRequest;
+import com.seniclass.server.domain.student.dto.response.LectureBookmarkResponse;
 import com.seniclass.server.domain.student.service.LectureBookmarkService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -18,7 +18,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Student Lecture Bookmark", description = "학생 강의 북마크 관리 API")
+@Tag(name = "Lecture Bookmark", description = "학생 강의 북마크 관리 API")
 @RestController
 @RequestMapping("/bookmarks")
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class LectureBookmarkController {
 
     private final LectureBookmarkService lectureBookmarkService;
 
-    @Operation(summary = "내 북마크한 강의 목록 조회", description = "현재 로그인한 학생의 북마크한 강의 목록을 조회합니다.")
+    @Operation(summary = "내 북마크한 강의 목록 조회 (수강생)", description = "현재 로그인한 학생의 북마크한 강의 목록을 조회합니다.")
     @GetMapping
     @RequireAuth(roles = {UserRole.STUDENT})
     public Page<LectureBookmarkResponse> getMyBookmarks(
@@ -35,7 +35,7 @@ public class LectureBookmarkController {
         return lectureBookmarkService.getCurrentStudentBookmarks(pageable);
     }
 
-    @Operation(summary = "강의 북마크 추가", description = "강의를 북마크에 추가합니다.")
+    @Operation(summary = "강의 북마크 추가 (수강생)", description = "강의를 북마크에 추가합니다.")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @RequireAuth(roles = {UserRole.STUDENT})
@@ -43,7 +43,7 @@ public class LectureBookmarkController {
         return lectureBookmarkService.addBookmark(request);
     }
 
-    @Operation(summary = "강의 북마크 삭제", description = "북마크를 삭제합니다.")
+    @Operation(summary = "강의 북마크 삭제 (수강생)", description = "북마크를 삭제합니다.")
     @DeleteMapping("/{bookmarkId}")
     @ResponseStatus(HttpStatus.OK)
     @RequireAuth(roles = {UserRole.STUDENT})
@@ -51,7 +51,7 @@ public class LectureBookmarkController {
         lectureBookmarkService.removeBookmark(bookmarkId);
     }
 
-    @Operation(summary = "강의로 북마크 삭제", description = "강의 ID로 북마크를 삭제합니다.")
+    @Operation(summary = "강의로 북마크 삭제 (수강생)", description = "강의 ID로 북마크를 삭제합니다.")
     @DeleteMapping("/lecture/{lectureId}")
     @ResponseStatus(HttpStatus.OK)
     @RequireAuth(roles = {UserRole.STUDENT})
@@ -60,7 +60,7 @@ public class LectureBookmarkController {
         lectureBookmarkService.removeBookmarkByLectureId(lectureId);
     }
 
-    @Operation(summary = "강의 북마크 여부 확인", description = "특정 강의가 북마크되어 있는지 확인합니다.")
+    @Operation(summary = "강의 북마크 여부 확인 (수강생)", description = "특정 강의가 북마크되어 있는지 확인합니다.")
     @GetMapping("/check/{lectureId}")
     @RequireAuth(roles = {UserRole.STUDENT})
     public Map<String, Boolean> checkBookmark(

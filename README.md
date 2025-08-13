@@ -10,6 +10,8 @@
   <a href="#팀원-소개">🌱 팀원 소개</a> <br>
   <a href="#기술-스택">🌱️ 기술 스택</a> <br>
   <a href="#프로젝트-구조">🌱 프로젝트 구조</a> <br>
+  <a href="#ERD">🌱 ERD</a> <br>
+
 </p>
 
 <br/>
@@ -109,3 +111,34 @@
 <br/>
 
 # 프로젝트 구조
+
+## 전체 아키텍처
+<img width="700" alt="image" src="https://github.com/user-attachments/assets/b9a0d787-f56a-440d-a4ac-e5b8b4ddc081" />
+
+
+## 동영상 관련 아키텍처
+<img width="500"  alt="image" src="https://github.com/user-attachments/assets/be924d29-e324-4e41-90a7-488396b2a226" />
+<img width="500"  alt="image" src="https://github.com/user-attachments/assets/ad65f20c-4787-4b14-a518-f83cc3d7d19e" />
+
+
+
+## FE 폴더 구조
+```css
+src
+├── domain
+│   ├── instructor
+│   │   ├── api
+│   │   ├── component
+│   │   ├── hook
+│   │   ├── page
+│   │   └── types
+│   ├── student
+├── shared
+├── routes
+├── App.tsx
+```
+instructor 내부의 api, component, hook, page, types 구조는 student와 shared에도 동일하게 존재합니다.
+
+# ERD
+<img width="1890" height="1082" alt="image" src="https://github.com/user-attachments/assets/970531c9-7e83-4191-85c1-9d26e1866fbd" />
+

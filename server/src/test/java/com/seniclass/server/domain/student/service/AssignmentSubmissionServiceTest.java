@@ -10,8 +10,8 @@ import com.seniclass.server.domain.lecture.domain.Lecture;
 import com.seniclass.server.domain.lecture.repository.AssignmentRepository;
 import com.seniclass.server.domain.student.domain.AssignmentSubmission;
 import com.seniclass.server.domain.student.domain.Student;
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionFileRequest;
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionResponse;
+import com.seniclass.server.domain.student.dto.request.AssignmentSubmissionFileRequest;
+import com.seniclass.server.domain.student.dto.response.AssignmentSubmissionResponse;
 import com.seniclass.server.domain.student.repository.AssignmentSubmissionRepository;
 import com.seniclass.server.domain.student.repository.StudentRepository;
 import com.seniclass.server.global.exception.CommonException;
@@ -98,9 +98,14 @@ class AssignmentSubmissionServiceTest {
         when(assignment.getLecture()).thenReturn(lecture);
         when(lecture.getId()).thenReturn(lectureId);
         when(lecture.getName()).thenReturn(lectureName); // 추가
-        when(newSubmission.getFilePath()).thenReturn(fileName);
+        when(newSubmission.getFileUrl()).thenReturn(fileName); // 추가
         when(newSubmission.getContent()).thenReturn(content);
         when(newSubmission.getCreatedDt()).thenReturn(now); // 추가
+
+        // S3 파일 URL 생성 Mock 설정
+        String expectedFileUrl =
+                "https://test-bucket.s3.ap-northeast-2.amazonaws.com/assignments/" + fileName;
+        when(fileStorageService.getFileUrl(fileName)).thenReturn(expectedFileUrl);
 
         // when
         AssignmentSubmissionResponse response =
@@ -112,6 +117,11 @@ class AssignmentSubmissionServiceTest {
         assertEquals(studentName, response.studentName());
         assertEquals(lectureName, response.lectureName());
         assertEquals(content, response.content());
+        assertEquals(expectedFileUrl, response.fileUrl());
+
+        // S3 관련 메소드 호출 검증
+        verify(fileStorageService, times(1)).storeFile(mockFile, "assignments");
+        verify(fileStorageService, times(1)).getFileUrl(fileName);
     }
 
     // (DeadlinePassed 테스트는 이전과 동일)
@@ -189,8 +199,8 @@ class AssignmentSubmissionServiceTest {
         when(fileStorageService.storeFile(any(MultipartFile.class), anyString()))
                 .thenReturn(newFileName);
 
-        // 5. getFilePath()의 순차적 반환 값을 설정합니다.
-        when(submission.getFilePath())
+        // 5. getFileUrl()의 순차적 반환 값을 설정합니다.
+        when(submission.getFileUrl())
                 .thenReturn(oldFileName) // 첫 번째 호출: 서비스 로직에서 기존 파일 삭제를 위해 사용
                 .thenReturn(newFileName); // 두 번째 호출: 최종 DTO 변환 시 사용
 
@@ -202,6 +212,11 @@ class AssignmentSubmissionServiceTest {
         // 7. repository.save()가 호출되면 `submission` Mock 객체 자신을 반환하도록 설정합니다.
         when(assignmentSubmissionRepository.save(submission)).thenReturn(submission);
 
+        // 8. S3 파일 URL 생성 Mock 설정
+        String expectedFileUrl =
+                "https://test-bucket.s3.ap-northeast-2.amazonaws.com/assignments/" + newFileName;
+        when(fileStorageService.getFileUrl(newFileName)).thenReturn(expectedFileUrl);
+
         // when: 실제 테스트 대상인 서비스 메서드를 호출합니다.
         AssignmentSubmissionResponse response =
                 assignmentSubmissionService.updateSubmission(submissionId, request);
@@ -210,14 +225,41 @@ class AssignmentSubmissionServiceTest {
         // 1. 반환된 DTO가 null이 아닌지, 내용은 올바른지 확인합니다.
         assertNotNull(response);
         assertEquals(newContent, response.content());
-        assertEquals(newFileName, response.filePath());
         assertEquals(studentName, response.studentName());
+        assertEquals(expectedFileUrl, response.fileUrl());
 
         // 2. Mock 객체들의 특정 메서드가 정확한 인자와 함께 호출되었는지 확인합니다.
         verify(submission, times(1)).updateContent(newContent);
-        verify(submission, times(1)).updateFilePath(newFileName);
+        verify(submission, times(1)).updateFileUrl(newFileName);
         verify(fileStorageService, times(1)).storeFile(request.file(), "assignments");
         verify(fileStorageService, times(1)).deleteFile(oldFileName); // "old.pdf"가 삭제되는지 검증
+        verify(fileStorageService, times(1)).getFileUrl(newFileName); // S3 URL 생성 검증
         verify(assignmentSubmissionRepository, times(1)).save(submission);
+    }
+
+    @Test
+    @DisplayName("과제 제출 삭제 성공")
+    void deleteSubmission_Success() {
+        // given
+        Long studentId = 1L;
+        Long submissionId = 1L;
+        String fileName = "test.pdf";
+
+        authContext.when(AuthContext::getCurrentUserId).thenReturn(studentId);
+        AssignmentSubmission submission = mock(AssignmentSubmission.class);
+        Student mockStudent = mock(Student.class);
+
+        when(assignmentSubmissionRepository.findById(submissionId))
+                .thenReturn(Optional.of(submission));
+        when(submission.getStudent()).thenReturn(mockStudent);
+        when(mockStudent.getId()).thenReturn(studentId);
+        when(submission.getFileUrl()).thenReturn(fileName);
+
+        // when
+        assignmentSubmissionService.deleteSubmission(submissionId);
+
+        // then
+        verify(assignmentSubmissionRepository, times(1)).delete(submission);
+        verify(fileStorageService, times(1)).deleteFile(fileName);
     }
 }

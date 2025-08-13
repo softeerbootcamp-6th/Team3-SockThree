@@ -1,6 +1,8 @@
 package com.seniclass.server.domain.lecture.domain;
 
 import com.seniclass.server.domain.common.model.BaseTimeEntity;
+import com.seniclass.server.domain.lecture.dto.WidgetSpec;
+import com.seniclass.server.domain.lecture.enums.WidgetSize;
 import com.seniclass.server.domain.lecture.enums.WidgetType;
 import jakarta.persistence.*;
 import jakarta.persistence.Entity;
@@ -30,10 +32,7 @@ public class WidgetSetting extends BaseTimeEntity {
     private Integer colPosition;
 
     @Column(nullable = false)
-    private Integer width;
-
-    @Column(nullable = false)
-    private Integer height;
+    private WidgetSize widgetSize;
 
     @Column(nullable = false)
     private Boolean visible;
@@ -48,15 +47,13 @@ public class WidgetSetting extends BaseTimeEntity {
             WidgetType widgetType,
             Integer rowPosition,
             Integer colPosition,
-            Integer width,
-            Integer height,
+            WidgetSize widgetSize,
             Boolean visible,
             Lecture lecture) {
         this.widgetType = widgetType;
         this.rowPosition = rowPosition;
         this.colPosition = colPosition;
-        this.width = width;
-        this.height = height;
+        this.widgetSize = widgetSize;
         this.visible = visible;
         this.lecture = lecture;
     }
@@ -65,18 +62,24 @@ public class WidgetSetting extends BaseTimeEntity {
             WidgetType widgetType,
             Integer rowPosition,
             Integer colPosition,
-            Integer width,
-            Integer height,
+            WidgetSize widgetSize,
             Boolean visible,
             Lecture lecture) {
         return WidgetSetting.builder()
                 .widgetType(widgetType)
                 .rowPosition(rowPosition)
                 .colPosition(colPosition)
-                .width(width)
-                .height(height)
+                .widgetSize(widgetSize)
                 .visible(visible)
                 .lecture(lecture)
                 .build();
+    }
+
+    public void updateWidgetSettingFromSpec(WidgetSpec spec) {
+        this.widgetType = spec.type();
+        this.rowPosition = spec.row();
+        this.colPosition = spec.col();
+        this.widgetSize = spec.widgetSize();
+        this.visible = spec.visible();
     }
 }

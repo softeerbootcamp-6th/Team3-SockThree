@@ -39,7 +39,7 @@ const CourseInfoCardDefault = ({
       : (buttonText?.closed ?? "다음 기수 신청 알림 받기");
 
   return (
-    <article className="flex h-fit w-[23.875rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white p-6 shadow-sm">
+    <article className="flex h-fit w-[20.5rem] flex-col gap-[1rem] rounded-[1.25rem] bg-white p-6 shadow-sm">
       {/* 기수 라벨 */}
       <span className="flex w-fit items-center rounded-xl bg-gradient-to-r from-teal-500 to-blue-600 px-[1rem] py-[0.5rem] text-white">
         {order === 1 ? "신규" : `${order}기`}

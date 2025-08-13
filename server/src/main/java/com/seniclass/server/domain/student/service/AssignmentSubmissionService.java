@@ -1,8 +1,7 @@
 package com.seniclass.server.domain.student.service;
 
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionFileRequest;
-import com.seniclass.server.domain.student.dto.AssignmentSubmissionResponse;
-import org.springframework.core.io.Resource;
+import com.seniclass.server.domain.student.dto.request.AssignmentSubmissionFileRequest;
+import com.seniclass.server.domain.student.dto.response.AssignmentSubmissionResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -33,7 +32,4 @@ public interface AssignmentSubmissionService {
 
     /** 현재 학생의 총 과제 제출 수 조회 */
     long getCurrentStudentSubmissionCount();
-
-    /** 제출된 파일 다운로드 */
-    Resource downloadSubmissionFile(Long submissionId);
 }
