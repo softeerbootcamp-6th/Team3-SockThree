@@ -31,6 +31,7 @@ export const router = createBrowserRouter([
       { path: "mypage", Component: S.MyPage },
       { path: "mypage/heart", Component: S.HeartPage },
       { path: "mypage/current-course", Component: S.CurrentCoursePage },
+      { path: "mypage/end-course", Component: S.EndCoursePage },
       { path: "course/search", Component: S.SearchResultPage },
     ],
   },
