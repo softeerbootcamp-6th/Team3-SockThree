@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const CurrentCoursePage = () => {
   const navigate = useNavigate();
   const studentName = "홍길동";
-  let currentCourseLength = 3;
+  let currentCourseLength = 30;
 
   const infoChipText =
     currentCourseLength === 0
@@ -47,7 +47,9 @@ const CurrentCoursePage = () => {
     };
   };
 
-  const course = faker.helpers.multiple(createCourseData, { count: 30 });
+  const course = faker.helpers.multiple(createCourseData, {
+    count: currentCourseLength,
+  });
   const handleCardClick = (id: number) => {
     navigate(`/student/course/${id}/dashboard`);
   };
