@@ -62,37 +62,52 @@ const FilterModal = ({
 
   return (
     <Modal ref={modalRef}>
-      <div>필터 선택하는 곳</div>
-      <label>대분류</label>
-      <div>
-        {categories.map((category) => (
-          <Chips
-            key={category}
-            type="field"
-            title={category}
-            selected={localCategory === category}
-            onClick={() => handleCategoryClick(category)}
-          />
-        ))}
-      </div>
-      {localCategory && (
-        <div>
-          <label>소분류</label>
-          <div>
-            {subCategories[localCategory]?.map((sub) => (
+      <div className="flex min-h-[30rem] min-w-[40rem] flex-col justify-between bg-gray-100 p-[3rem]">
+        <div className="flex flex-col gap-[1rem]">
+          <label className="typo-body-2">대분류</label>
+          <div className="flex flex-wrap gap-2">
+            {categories.map((category) => (
               <Chips
-                key={sub}
+                key={category}
                 type="field"
-                title={sub}
-                selected={localSubcategories.includes(sub)}
-                onClick={() => handleSubcategoryClick(sub)}
+                title={category}
+                selected={localCategory === category}
+                onClick={() => handleCategoryClick(category)}
               />
             ))}
           </div>
+          {localCategory && (
+            <>
+              <label className="typo-body-2">소분류</label>
+              <div className="flex flex-wrap gap-2">
+                {subCategories[localCategory]?.map((sub) => (
+                  <Chips
+                    key={sub}
+                    type="field"
+                    title={sub}
+                    selected={localSubcategories.includes(sub)}
+                    onClick={() => handleSubcategoryClick(sub)}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
-      )}
-      <button onClick={handleCancel}>취소</button>
-      <button onClick={handleApply}>적용</button>
+        <div className="flex justify-end gap-2">
+          <button
+            className="cursor-pointer rounded-md bg-gray-200 px-[1rem] py-[0.6rem] text-gray-600 shadow-gray-200"
+            onClick={handleCancel}
+          >
+            취소
+          </button>
+          <button
+            className="cursor-pointer rounded-md bg-main-500 px-[1rem] py-[0.6rem] text-white shadow-gray-200"
+            onClick={handleApply}
+          >
+            적용
+          </button>
+        </div>
+      </div>
     </Modal>
   );
 };
