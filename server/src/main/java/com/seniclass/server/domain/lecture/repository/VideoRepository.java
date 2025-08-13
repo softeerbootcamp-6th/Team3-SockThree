@@ -9,6 +9,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VideoRepository extends JpaRepository<Video, Long> {
 
+    /** 특정 강의의 전체 비디오 개수 조회 */
+    Long countByChapterLectureId(Long lectureId);
+
     /** 강의에 속한 동영상의 총 재생 시간을 조회합니다. */
     @Query(
             """
@@ -18,16 +21,6 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
     WHERE c.lecture.id = :lectureId
 """)
     Long getTotalDurationByLectureId(@Param("lectureId") Long lectureId);
-
-    /** 강의에 속한 동영상의 개수를 조회합니다. */
-    @Query(
-            """
-    SELECT COUNT (v)
-    FROM Video v
-    JOIN v.chapter c
-    WHERE c.lecture.id = :lectureId
-""")
-    Integer getVideoCountByLectureId(@Param("lectureId") Long lectureId);
 
     // *특정 강의의 학생별 총 재생 시간 조회*/
     @Query(
@@ -42,7 +35,4 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 """)
     Long sumWatchedSecondsByLectureAndStudent(
             @Param("lectureId") Long lectureId, @Param("studentId") Long studentId);
-
-    /** 특정 강의의 전체 비디오 개수 조회 */
-    Long countByChapterLectureId(Long lectureId);
 }
