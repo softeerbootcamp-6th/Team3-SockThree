@@ -1,6 +1,7 @@
 import useModal from "@/shared/hook/useModal";
 import FilterModal from "@/domain/student/component/search/FilterModal";
 import FilterButton from "@/domain/student/component/search/FilterButton";
+import Chips from "@/shared/components/Chips.tsx";
 
 interface FilterBarProps {
   selectedCategory?: string;
@@ -19,7 +20,7 @@ const FilterBar = ({
   const hasFilter = selectedCategory || selectedSubcategories.length > 0;
 
   return (
-    <div>
+    <div className="flex items-center gap-2">
       <FilterButton onClick={openModal} />
       {hasFilter && (
         <>
