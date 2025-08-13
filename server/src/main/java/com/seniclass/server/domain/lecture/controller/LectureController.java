@@ -6,6 +6,7 @@ import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
 import com.seniclass.server.domain.lecture.dto.response.LectureInfoWidgetResponse;
 import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
+import com.seniclass.server.domain.lecture.dto.response.MyLectureStatusWidgetResponse;
 import com.seniclass.server.domain.lecture.service.LectureService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -69,6 +70,17 @@ public class LectureController {
     @GetMapping("/{lectureId}/side-widget/lecture-info")
     public LectureInfoWidgetResponse getLectureInfoWidget(
             @Parameter(description = "조회할 강좌 id") @PathVariable Long lectureId) {
-        return lectureService.getLectureInfo(lectureId);
+        return lectureService.getLectureInfoWidget(lectureId);
+    }
+
+    @Operation(
+            summary = "강좌 상세 화면의 나의 강의 현황 사이드바 위젯 (학생)",
+            description = "수강중인 강좌의 나의 강의 현황 데이터를 받습니다.")
+    @GetMapping("/{lectureId}/side-widget/my-lecture-status")
+    @RequireAuth(roles = {UserRole.STUDENT})
+    public MyLectureStatusWidgetResponse getMyLectureStatusWidget(
+            @Parameter(hidden = true) @RequestAttribute("userId") Long userId,
+            @Parameter(description = "조회할 강좌 id") @PathVariable Long lectureId) {
+        return lectureService.getMyLectureStatusWidget(userId, lectureId);
     }
 }
