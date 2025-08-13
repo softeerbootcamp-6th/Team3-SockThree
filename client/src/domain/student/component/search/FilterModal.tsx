@@ -9,7 +9,7 @@ interface FilterModalProps {
   selectedCategory?: string;
   selectedSubcategories?: string[];
 
-  onCategoryChange?: (category: string | null) => void;
+  onCategoryChange?: (category: string) => void;
   onSubcategoriesChange?: (subcategories: string[]) => void;
 
   onApply?: () => void;
