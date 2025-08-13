@@ -18,7 +18,7 @@ public interface LectureStatisticsRepository extends JpaRepository<LectureEnroll
     @Query(
             "SELECT new com.seniclass.server.domain.student.dto.StudentVideoCountDto("
                     + "s.id, "
-                    + "COUNT(vp.video.id)) " // DISTINCT 제거 (video_progress unique 제약 전제)
+                    + "COUNT(DISTINCT vp.video.id)) "
                     + "FROM LectureEnrollment le "
                     + "JOIN le.student s "
                     + "LEFT JOIN VideoProgress vp ON vp.student.id = s.id "
