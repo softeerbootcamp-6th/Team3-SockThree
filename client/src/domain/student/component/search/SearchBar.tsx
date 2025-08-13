@@ -33,6 +33,7 @@ const SearchBar = ({ value, onChange }: SearchBarProps) => {
       <input
         className="ml-2 w-full border-none text-sm focus:outline-none"
         placeholder="검색어를 입력하세요"
+        type="text"
         value={local}
         onChange={(e) => setLocal(e.target.value)}
       />
