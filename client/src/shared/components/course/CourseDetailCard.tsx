@@ -16,6 +16,7 @@ interface CourseDetailCardProps {
   reviews?: number;
   price?: number;
   defaultFavorite?: boolean;
+  onClick?: () => void;
 }
 
 const CourseDetailCard = ({
@@ -29,6 +30,7 @@ const CourseDetailCard = ({
   reviews = 120,
   price = 2000000,
   defaultFavorite = false,
+  onClick = () => {},
 }: CourseDetailCardProps) => {
   const [favorite, setFavorite] = useState(defaultFavorite);
 
@@ -44,6 +46,7 @@ const CourseDetailCard = ({
         <Button
           variant="outline"
           className="typo-label-1 h-[3.3125rem] w-[6.25rem] cursor-pointer"
+          onClick={onClick}
         >
           상세 보기
         </Button>
