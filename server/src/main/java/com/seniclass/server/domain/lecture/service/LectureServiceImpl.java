@@ -174,7 +174,7 @@ public class LectureServiceImpl implements LectureService {
                                         LectureEnrollmentErrorCode.LECTURE_ENROLLMENT_NOT_FOUND));
 
         // 2. 유저의 해당 강의에 대한 동영상 수강정보로 부터 강의 진행률 확인
-        Long totalLectureDuration = videoRepository.getTotalDurationByLectureId(lectureId);
+        Long totalLectureDuration = videoRepository.countByChapterLectureId(lectureId);
         Long totalWatchedDuration =
                 videoRepository.sumWatchedSecondsByLectureAndStudent(lectureId, userId);
 
