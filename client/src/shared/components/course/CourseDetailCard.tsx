@@ -42,7 +42,7 @@ const CourseDetailCard = ({
       {/* 호버 시 카드 위(z)에 뜨는 버튼 */}
       <div className="absolute top-[19.0625rem] right-[2.3125rem] z-20 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         <Button
-          variant={"outline"}
+          variant="outline"
           className="typo-label-1 h-[3.3125rem] w-[6.25rem] cursor-pointer"
         >
           상세 보기
