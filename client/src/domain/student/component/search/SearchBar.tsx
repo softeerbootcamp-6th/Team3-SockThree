@@ -15,11 +15,22 @@ export const useDebouncedValue = (value: string, delayMs: number) => {
 };
 
 const SearchBar = ({ value, onChange }: SearchBarProps) => {
+  const [local, setLocal] = useState(value);
+  const debounced = useDebouncedValue(local, 300);
+
+  useEffect(() => {
+    setLocal(value);
+  }, [value]);
+
+  useEffect(() => {
+    onChange(debounced);
+  }, [debounced, value, onChange]);
+
   return (
     <input
       placeholder="검색어를 입력하세요"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
+      value={local}
+      onChange={(e) => setLocal(e.target.value)}
     />
   );
 };
