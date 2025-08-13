@@ -25,6 +25,9 @@ public class Video extends BaseTimeEntity {
     private String name;
 
     @Column(nullable = false)
+    private Long duration;
+
+    @Column(nullable = false)
     private String uploadPath;
 
     private String streamingPath;
@@ -43,12 +46,14 @@ public class Video extends BaseTimeEntity {
     @Builder(access = AccessLevel.PRIVATE)
     private Video(
             String name,
+            Long duration,
             String uploadPath,
             String streamingPath,
             LocalDateTime publicationDateTime,
             boolean streamable,
             Chapter chapter) {
         this.name = name;
+        this.duration = duration;
         this.uploadPath = uploadPath;
         this.streamingPath = streamingPath;
         this.publicationDateTime = publicationDateTime;
@@ -57,9 +62,10 @@ public class Video extends BaseTimeEntity {
     }
 
     public static Video createVideo(
-            String name, String uploadPath, LocalDateTime publicationDateTime, Chapter chapter) {
+            String name, Long duration,String uploadPath, LocalDateTime publicationDateTime, Chapter chapter) {
         return Video.builder()
                 .name(name)
+                .duration(duration)
                 .uploadPath(uploadPath)
                 .publicationDateTime(publicationDateTime)
                 .streamable(false)
