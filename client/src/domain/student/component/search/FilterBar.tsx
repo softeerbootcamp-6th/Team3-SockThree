@@ -1,6 +1,6 @@
 import useModal from "@/shared/hook/useModal";
-import Modal from "@/shared/components/Modal.tsx";
-import FilterModal from "@/domain/student/component/search/FilterModal.tsx";
+import FilterModal from "@/domain/student/component/search/FilterModal";
+import FilterButton from "@/domain/student/component/search/FilterButton";
 
 interface FilterBarProps {
   selectedCategory?: string;
@@ -16,7 +16,7 @@ const FilterBar = ({
 
   return (
     <div>
-      <button onClick={openModal}>필터</button>
+      <FilterButton onClick={openModal} />
       {hasFilter && (
         <>
           {selectedCategory && <span>{selectedCategory}</span>}
