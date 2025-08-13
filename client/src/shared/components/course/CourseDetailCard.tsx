@@ -96,10 +96,16 @@ const CourseDetailCard = ({
 
           {/* 가격 */}
           <div className="flex items-end gap-2">
-            <span className="typo-title-3 text-right">
-              {price.toLocaleString()}
-            </span>
-            <span className="typo-body-5">/ 시간</span>
+            {price === 0 ? (
+              <span className="typo-title-3 text-right">무료</span>
+            ) : (
+              <>
+                <span className="typo-title-3 text-right">
+                  {price.toLocaleString()}
+                </span>
+                <span className="typo-body-5">/ 시간</span>
+              </>
+            )}
           </div>
         </div>
       </div>
