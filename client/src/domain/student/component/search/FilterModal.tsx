@@ -49,9 +49,10 @@ const FilterModal = ({
   };
 
   const handleApply = () => {
-    onCategoryChange?.(localCategory || null);
+    onCategoryChange?.(localCategory);
     onSubcategoriesChange?.(localSubcategories);
     onApply?.();
+    closeModal();
   };
 
   const handleCancel = () => {
