@@ -1,22 +1,25 @@
 import RightArrowIcon from "@/assets/icons/default/arrow-right.svg?react";
 
-interface SmallCourseCardProps {
+interface MyPageCardProps {
   subTitle: string;
   title: string;
   courseThumbnail: string;
   onClick?: () => void;
 }
-const SmallCourseCard = ({
+const MyPageCard = ({
   subTitle,
   title,
   courseThumbnail,
   onClick,
-}: SmallCourseCardProps) => {
+}: MyPageCardProps) => {
   return (
     <div
-      className="relative flex h-[28.0956rem] w-[22.625rem] cursor-pointer items-end rounded-[1.25rem] transition-transform duration-300 ease-in-out hover:-translate-y-2.5 hover:shadow-main"
+      className="relative flex h-[28.0956rem] w-[22.625rem] cursor-pointer items-end rounded-[1.25rem] transition-all duration-700 ease-in-out hover:w-[43.9375rem] hover:-translate-y-5 hover:shadow-main"
       style={{
         background: `url(${courseThumbnail})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
       }}
       onClick={onClick}
     >
@@ -31,4 +34,4 @@ const SmallCourseCard = ({
   );
 };
 
-export default SmallCourseCard;
+export default MyPageCard;

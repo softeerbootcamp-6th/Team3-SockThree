@@ -184,7 +184,7 @@ public class LectureServiceImpl implements LectureService {
                         : (int) ((totalWatchedDuration * 100) / totalLectureDuration);
 
         // 3. 해당 강의의 동영상 개수 반환
-        Integer lectureVideoCount = videoRepository.getVideoCountByLectureId(lectureId);
+        Integer lectureVideoCount = videoRepository.countByChapterLectureId(lectureId).intValue();
 
         // 4. 해당 주차 과제 기한 / 과제 이름 / 과제 제출 여부 확인
 
