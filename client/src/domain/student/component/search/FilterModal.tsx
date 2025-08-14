@@ -1,63 +1,72 @@
 import Modal from "@/shared/components/Modal";
 import Chips from "@/shared/components/Chips";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { FilterState } from "@/domain/student/page/course/SearchResultPage";
 
 interface FilterModalProps {
   modalRef: React.RefObject<HTMLDialogElement | null>;
   closeModal: () => void;
-
-  selectedCategory?: string;
-  selectedSubcategories?: string[];
-
-  onCategoryChange?: (category: string) => void;
-  onSubcategoriesChange?: (subcategories: string[]) => void;
-
+  filterState: FilterState;
+  onFilterChange: (filter: FilterState) => void;
   onApply?: () => void;
 }
 
 const FilterModal = ({
   modalRef,
   closeModal,
-  selectedCategory,
-  selectedSubcategories = [],
-  onCategoryChange,
-  onSubcategoriesChange,
+  filterState,
+  onFilterChange,
   onApply,
 }: FilterModalProps) => {
-  const [localCategory, setLocalCategory] = useState(selectedCategory ?? "");
-  const [localSubcategories, setLocalSubcategories] = useState(
-    selectedSubcategories
-  );
+  const [localFilter, setLocalFilter] = useState<FilterState>({
+    category: filterState.category || "",
+    subCategories: filterState.subCategories,
+  });
+
+  useEffect(() => {
+    setLocalFilter({
+      category: filterState.category || "",
+      subCategories: filterState.subCategories,
+    });
+  }, [filterState]);
 
   const handleCategoryClick = (category: string) => {
-    const newCategory = localCategory === category ? "" : category;
-    setLocalCategory(newCategory);
-
-    // 카테고리 변경 시 서브카테고리 초기화
-    if (newCategory !== localCategory) {
-      setLocalSubcategories([]);
-    }
+    const newCategory = localFilter.category === category ? "" : category;
+    setLocalFilter({
+      category: newCategory,
+      subCategories:
+        newCategory !== localFilter.category ? [] : localFilter.subCategories,
+    });
   };
 
-  const handleSubcategoryClick = (subcategory: string) => {
-    const isSelected = localSubcategories.includes(subcategory);
+  const handleSubcategoryClick = (subCategory: string) => {
+    const isSelected = localFilter.subCategories.includes(subCategory);
     const newSubcategories = isSelected
-      ? localSubcategories.filter((sub) => sub !== subcategory)
-      : [...localSubcategories, subcategory];
+      ? localFilter.subCategories.filter((sub) => sub !== subCategory)
+      : [...localFilter.subCategories, subCategory];
 
-    setLocalSubcategories(newSubcategories);
+    setLocalFilter({
+      ...localFilter,
+      subCategories: newSubcategories,
+    });
   };
 
   const handleApply = () => {
-    onCategoryChange?.(localCategory);
-    onSubcategoriesChange?.(localSubcategories);
+    console.log(localFilter.subCategories);
+
+    onFilterChange({
+      category: localFilter.category || undefined,
+      subCategories: localFilter.subCategories,
+    });
     onApply?.();
     closeModal();
   };
 
   const handleCancel = () => {
-    setLocalCategory(selectedCategory ?? "");
-    setLocalSubcategories(selectedSubcategories);
+    setLocalFilter({
+      category: filterState.category || "",
+      subCategories: filterState.subCategories,
+    });
     closeModal();
   };
 
@@ -72,21 +81,21 @@ const FilterModal = ({
                 key={category}
                 type="field"
                 title={category}
-                selected={localCategory === category}
+                selected={localFilter.category === category}
                 onClick={() => handleCategoryClick(category)}
               />
             ))}
           </div>
-          {localCategory && (
+          {localFilter.category && (
             <>
               <label className="typo-body-2">소분류</label>
               <div className="flex flex-wrap gap-2">
-                {subCategories[localCategory]?.map((sub) => (
+                {subCategories[localFilter.category]?.map((sub) => (
                   <Chips
                     key={sub}
                     type="field"
                     title={sub}
-                    selected={localSubcategories.includes(sub)}
+                    selected={localFilter.subCategories.includes(sub)}
                     onClick={() => handleSubcategoryClick(sub)}
                   />
                 ))}

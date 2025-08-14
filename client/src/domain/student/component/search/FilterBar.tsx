@@ -1,30 +1,25 @@
 import useModal from "@/shared/hook/useModal";
 import FilterModal from "@/domain/student/component/search/FilterModal";
 import FilterButton from "@/domain/student/component/search/FilterButton";
+import type { FilterState } from "@/domain/student/page/course/SearchResultPage.tsx";
 
 interface FilterBarProps {
-  selectedCategory?: string;
-  selectedSubcategories?: string[];
-  onCategoryChange?: (category: string) => void;
-  onSubcategoryChange?: (subcategories: string[]) => void;
+  filterState: FilterState;
+  onFilterChange: (filter: FilterState) => void;
 }
 
-const FilterBar = ({
-  selectedCategory,
-  selectedSubcategories = [],
-  onCategoryChange,
-  onSubcategoryChange,
-}: FilterBarProps) => {
+const FilterBar = ({ filterState, onFilterChange }: FilterBarProps) => {
   const { modalRef, openModal, closeModal } = useModal();
-  const hasFilter = selectedCategory || selectedSubcategories.length > 0;
+  const hasFilter =
+    filterState.category || filterState.subCategories.length > 0;
 
   return (
     <div className="flex items-center gap-2">
       <FilterButton onClick={openModal} />
       {hasFilter && (
         <>
-          {selectedCategory && <span>{selectedCategory}</span>}
-          {selectedSubcategories.map((sub, i) => (
+          {filterState.category && <span>{filterState.category}</span>}
+          {filterState.subCategories.map((sub, i) => (
             <span key={i}>{sub}</span>
           ))}
         </>
@@ -32,10 +27,8 @@ const FilterBar = ({
       <FilterModal
         modalRef={modalRef}
         closeModal={closeModal}
-        selectedCategory={selectedCategory}
-        selectedSubcategories={selectedSubcategories}
-        onCategoryChange={onCategoryChange ?? undefined}
-        onSubcategoriesChange={onSubcategoryChange ?? undefined}
+        filterState={filterState}
+        onFilterChange={onFilterChange}
       />
     </div>
   );

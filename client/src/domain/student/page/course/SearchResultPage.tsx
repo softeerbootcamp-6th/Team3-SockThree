@@ -3,75 +3,66 @@ import FilterBar from "@/domain/student/component/search/FilterBar";
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 
+export type FilterState = {
+  category?: string;
+  subCategories: string[];
+  // 추가 될 수 있음
+};
+
 const SearchResultPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [selectedCategory, setSelectedCategory] = useState<
-    string | undefined
-  >();
-  const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>(
-    []
-  );
+  const [filterState, setFilterState] = useState<FilterState>({
+    category: undefined,
+    subCategories: [],
+  });
 
   useEffect(() => {
     const query = searchParams.get("q") || "";
     const category = searchParams.get("category") || undefined;
-    const subcategories =
+    const subCategories =
       searchParams.get("subcategories")?.split(",").filter(Boolean) || [];
 
     setSearchQuery(query);
-    setSelectedCategory(category);
-    setSelectedSubcategories(subcategories);
-  }, []);
+    setFilterState({ category, subCategories });
+  }, [searchParams]);
 
   const updateSearchParams = useCallback(
-    (query: string, category?: string, subcategories: string[] = []) => {
-      const params = new URLSearchParams(searchParams);
+    (query: string, filter: FilterState) => {
+      const params = new URLSearchParams();
       if (params.toString() !== searchParams.toString()) {
         setSearchParams(params);
       }
 
-      if (query.trim()) {
-        params.set("q", query);
-      }
+      if (query.trim()) params.set("q", query);
 
-      if (category) {
-        params.set("category", category);
-      }
+      if (filter.category) params.set("category", filter.category);
 
-      if (subcategories.length > 0) {
-        params.set("subcategories", subcategories.join(","));
-      }
+      if (filter.subCategories.length > 0)
+        params.set("subcategories", filter.subCategories.join(","));
 
       setSearchParams(params);
     },
-    [searchParams, setSearchParams]
+    [setSearchParams]
   );
 
   const handleSearchInputChange = (q: string) => {
     setSearchQuery(q);
-    updateSearchParams(q, selectedCategory, selectedSubcategories);
+    updateSearchParams(q, filterState);
   };
 
-  const handleCategoryChange = (category: string | undefined) => {
-    setSelectedCategory(category);
-    updateSearchParams(searchQuery ?? "", category, selectedSubcategories);
-  };
-
-  const handleSubcategoryChange = (subcategories: string[]) => {
-    setSelectedSubcategories(subcategories);
-    updateSearchParams(searchQuery ?? "", selectedCategory, subcategories);
+  const handleCategoryChange = (newFilter: FilterState) => {
+    setFilterState(newFilter);
+    updateSearchParams(searchQuery, newFilter);
   };
 
   return (
     <div className="mt-[10rem] w-[100rem]">
       <SearchBar value={searchQuery ?? ""} onChange={handleSearchInputChange} />
       <FilterBar
-        selectedCategory={selectedCategory}
-        selectedSubcategories={selectedSubcategories}
-        onCategoryChange={handleCategoryChange}
-        onSubcategoryChange={handleSubcategoryChange}
+        filterState={filterState}
+        onFilterChange={handleCategoryChange}
       />
     </div>
   );
