@@ -5,7 +5,7 @@ const SortBar = () => {
     <>
       <Select
         placeholder="정렬 방식"
-        className="w-[7.6rem] border-none bg-bg shadow-none"
+        className="typo-body-0 w-[7.6rem] border-none bg-bg shadow-none"
         options={[
           { value: "recent", label: "최신순" },
           { value: "popular", label: "인기순" },
