@@ -3,6 +3,7 @@ import FilterBar from "@/domain/student/component/search/FilterBar";
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import SortBar from "@/domain/student/component/search/SortBar";
+import CourseDetailCard from "@/shared/components/course/CourseDetailCard";
 
 export type FilterState = {
   category?: string;
@@ -59,17 +60,22 @@ const SearchResultPage = () => {
   };
 
   return (
-    <div className="flex w-full flex-col gap-[2rem] pr-[10rem]">
+    <div className="mt-[4rem] flex w-full max-w-[1290px] flex-col gap-[2rem]">
       <SearchBar value={searchQuery ?? ""} onChange={handleSearchInputChange} />
-      <FilterBar
-        filterState={filterState}
-        onFilterChange={handleCategoryChange}
-      />
-      <div className="flex justify-end">
+
+      <div className="flex justify-between">
+        <FilterBar
+          filterState={filterState}
+          onFilterChange={handleCategoryChange}
+        />
         <SortBar />
       </div>
       {/*    검색 결과 */}
-      <div className="flex min-h-[10rem] w-full flex-col gap-[2rem] bg-amber-200"></div>
+      <div className="grid grid-cols-3 gap-[2rem]">
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+          <CourseDetailCard key={i} />
+        ))}
+      </div>
     </div>
   );
 };
