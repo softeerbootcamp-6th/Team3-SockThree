@@ -28,4 +28,8 @@ public interface LectureQnaRepository extends JpaRepository<LectureQna, Long> {
 
     /** 답변된 질문 수 (강의별) */
     long countByLectureIdAndAnswerIsNotNull(Long lectureId);
+
+    /** 위젯용: 특정 강의에서 특정 학생의 질문 조회 */
+    Page<LectureQna> findByStudentIdAndLectureIdOrderByCreatedDtDesc(
+            Long studentId, Long lectureId, Pageable pageable);
 }
