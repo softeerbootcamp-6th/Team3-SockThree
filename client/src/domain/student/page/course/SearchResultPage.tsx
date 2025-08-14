@@ -20,18 +20,22 @@ const SearchResultPage = () => {
     subCategories: [],
   });
 
+  const [sortBy, setSortBy] = useState<string>("");
+
   useEffect(() => {
     const query = searchParams.get("q") || "";
     const category = searchParams.get("category") || undefined;
     const subCategories =
       searchParams.get("subcategories")?.split(",").filter(Boolean) || [];
+    const sort = searchParams.get("sort") || "";
 
     setSearchQuery(query);
     setFilterState({ category, subCategories });
+    setSortBy(sort);
   }, [searchParams]);
 
   const updateSearchParams = useCallback(
-    (query: string, filter: FilterState) => {
+    (query: string, filter: FilterState, sort?: string) => {
       const params = new URLSearchParams();
       if (params.toString() !== searchParams.toString()) {
         setSearchParams(params);
@@ -44,6 +48,7 @@ const SearchResultPage = () => {
       if (filter.subCategories.length > 0)
         params.set("subcategories", filter.subCategories.join(","));
 
+      if (sort && sort.trim()) params.set("sort", sort);
       setSearchParams(params);
     },
     [setSearchParams]
@@ -51,12 +56,17 @@ const SearchResultPage = () => {
 
   const handleSearchInputChange = (q: string) => {
     setSearchQuery(q);
-    updateSearchParams(q, filterState);
+    updateSearchParams(q, filterState, sortBy);
   };
 
   const handleCategoryChange = (newFilter: FilterState) => {
     setFilterState(newFilter);
-    updateSearchParams(searchQuery, newFilter);
+    updateSearchParams(searchQuery, newFilter, sortBy);
+  };
+
+  const handleSortChange = (newSort: string) => {
+    setSortBy(newSort);
+    updateSearchParams(searchQuery, filterState, newSort);
   };
 
   return (
@@ -68,7 +78,7 @@ const SearchResultPage = () => {
           filterState={filterState}
           onFilterChange={handleCategoryChange}
         />
-        <SortBar />
+        <SortBar value={sortBy} onSortChange={handleSortChange} />
       </div>
       {/*    검색 결과 */}
       <div className="grid grid-cols-3 gap-[2rem]">
