@@ -50,7 +50,9 @@ const StudentLayout = () => {
   return (
     <div className="flex-start flex h-screen flex-1 flex-row gap-[3rem]">
       <Navbar myPageItem={myPageItem}>{navbarItems}</Navbar>
-      <Outlet />
+      <div className="mt-[4.5rem] w-full">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -28,8 +28,8 @@ const SearchBar = ({ value, onChange }: SearchBarProps) => {
   }, [debounced, value]);
 
   return (
-    <div className="flex w-full max-w-[30rem] items-center rounded-full border border-gray-300 px-3 py-8">
-      <SearchIcon className="h-[1rem] w-[1rem] text-gray-600" />
+    <div className="flex w-full max-w-[30rem] items-center rounded-full border border-gray-300 bg-white px-[1rem] py-[1rem]">
+      <SearchIcon className="h-[1.3rem] w-[1.3rem] text-gray-600" />
       <input
         className="ml-2 w-full border-none text-sm focus:outline-none"
         placeholder="검색어를 입력하세요"

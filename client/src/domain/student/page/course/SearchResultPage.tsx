@@ -2,6 +2,7 @@ import SearchBar from "@/domain/student/component/search/SearchBar";
 import FilterBar from "@/domain/student/component/search/FilterBar";
 import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
+import SortBar from "@/domain/student/component/search/SortBar";
 
 export type FilterState = {
   category?: string;
@@ -58,12 +59,17 @@ const SearchResultPage = () => {
   };
 
   return (
-    <div className="mt-[10rem] w-[100rem]">
+    <div className="flex w-full flex-col gap-[2rem] pr-[10rem]">
       <SearchBar value={searchQuery ?? ""} onChange={handleSearchInputChange} />
       <FilterBar
         filterState={filterState}
         onFilterChange={handleCategoryChange}
       />
+      <div className="flex justify-end">
+        <SortBar />
+      </div>
+      {/*    검색 결과 */}
+      <div className="flex min-h-[10rem] w-full flex-col gap-[2rem] bg-amber-200"></div>
     </div>
   );
 };
