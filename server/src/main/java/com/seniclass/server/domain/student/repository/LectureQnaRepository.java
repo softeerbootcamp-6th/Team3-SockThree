@@ -4,6 +4,8 @@ import com.seniclass.server.domain.student.domain.LectureQna;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -28,4 +30,15 @@ public interface LectureQnaRepository extends JpaRepository<LectureQna, Long> {
 
     /** 답변된 질문 수 (강의별) */
     long countByLectureIdAndAnswerIsNotNull(Long lectureId);
+
+    /** 강의별 평균 답변률 (답변된 질문 수 / 총 질문 수) */
+    @Query(
+            """
+    SELECT COALESCE(AVG(
+            CASE WHEN lq.answer IS NOT NULL AND lq.answer <> '' THEN 100.0 ELSE 0.0 END
+    ), 0.0)
+    FROM LectureQna lq
+    WHERE lq.lecture.id = :lectureId
+""")
+    Double getAnswerPercentByLectureId(@Param("lectureId") Long lectureId);
 }
