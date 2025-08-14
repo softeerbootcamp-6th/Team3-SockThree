@@ -6,8 +6,8 @@ import com.seniclass.server.domain.category.exception.errorcode.CategoryErrorCod
 import com.seniclass.server.domain.category.repository.SubCategoryRepository;
 import com.seniclass.server.domain.student.domain.InterestingCategory;
 import com.seniclass.server.domain.student.domain.Student;
-import com.seniclass.server.domain.student.dto.InterestingCategoryRequest;
-import com.seniclass.server.domain.student.dto.InterestingCategoryResponse;
+import com.seniclass.server.domain.student.dto.request.InterestingCategoryRequest;
+import com.seniclass.server.domain.student.dto.response.InterestingCategoryResponse;
 import com.seniclass.server.domain.student.exception.errorcode.InterestingCategoryErrorCode;
 import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
 import com.seniclass.server.domain.student.repository.InterestingCategoryRepository;

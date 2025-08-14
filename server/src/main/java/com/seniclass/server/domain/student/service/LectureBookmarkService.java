@@ -1,7 +1,7 @@
 package com.seniclass.server.domain.student.service;
 
-import com.seniclass.server.domain.student.dto.LectureBookmarkRequest;
-import com.seniclass.server.domain.student.dto.LectureBookmarkResponse;
+import com.seniclass.server.domain.student.dto.request.LectureBookmarkRequest;
+import com.seniclass.server.domain.student.dto.response.LectureBookmarkResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

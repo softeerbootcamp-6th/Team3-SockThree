@@ -2,8 +2,8 @@ package com.seniclass.server.domain.student.controller;
 
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.student.dto.LectureEnrollmentRequest;
-import com.seniclass.server.domain.student.dto.LectureEnrollmentResponse;
+import com.seniclass.server.domain.student.dto.request.LectureEnrollmentRequest;
+import com.seniclass.server.domain.student.dto.response.LectureEnrollmentResponse;
 import com.seniclass.server.domain.student.service.LectureEnrollmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

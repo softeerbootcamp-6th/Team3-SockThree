@@ -1,58 +1,12 @@
-import Navbar from "@/shared/components/Navbar/Navbar";
-import NavbarItem from "@/shared/components/Navbar/NavbarItem";
+import StudentNavbar from "@/domain/student/component/StudentNavbar";
 
-import HomeIcon from "@/assets/icons/default/home.svg?react";
-import SearchIcon from "@/assets/icons/default/search.svg?react";
-
-import { useState } from "react";
 import { Outlet } from "react-router";
-import { useLocation } from "react-router";
-import { fakerKO as faker } from "@faker-js/faker";
 
 const StudentLayout = () => {
-  const navbarMenus = [
-    { icon: HomeIcon, label: "홈", routePath: "/student/home" },
-    {
-      icon: SearchIcon,
-      label: "강의 검색",
-      routePath: "/student/course/search",
-    },
-  ];
-
-  const location = useLocation();
-  const [selectedPath, setSelectedPath] = useState(location.pathname);
-
-  const handleItemClick = (path: string) => {
-    setSelectedPath(path);
-  };
-
-  const navbarItems = navbarMenus.map((menu) => (
-    <NavbarItem
-      key={menu.routePath}
-      icon={menu.icon}
-      label={menu.label}
-      routePath={menu.routePath}
-      isSelected={selectedPath === menu.routePath}
-      onClick={() => handleItemClick(menu.routePath)}
-    />
-  ));
-
-  const myPageItem = (
-    <NavbarItem
-      imgUrl={faker.image.avatar()}
-      label="마이페이지"
-      routePath="/student/mypage"
-      isSelected={selectedPath === "/student/mypage"}
-      onClick={() => handleItemClick("/student/mypage")}
-    />
-  );
-
   return (
-    <div className="flex-start flex h-screen flex-1 flex-row gap-[3rem]">
-      <Navbar myPageItem={myPageItem}>{navbarItems}</Navbar>
-      <div className="mt-[4.5rem] w-full">
-        <Outlet />
-      </div>
+    <div className="flex h-screen flex-row justify-between">
+      <StudentNavbar />
+      <Outlet />
     </div>
   );
 };
