@@ -18,13 +18,13 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
                     + "ORDER BY r.rating DESC, r.createdDt DESC")
     List<Review> findTopReviewsByLectureId(@Param("lectureId") Long lectureId, Pageable pageable);
 
-    /** 위젯용: 특정 강의의 수강생 대비 리뷰 작성 비율 계산 */
+    /** 위젯용: 특정 학생의 전체 수강 강의 대비 리뷰 작성 비율 계산 */
     @Query(
             "SELECT "
-                    + "CAST(COUNT(DISTINCT r.student.id) AS DOUBLE) / "
-                    + "CAST(COUNT(DISTINCT le.student.id) AS DOUBLE) "
+                    + "CAST(COUNT(DISTINCT r.lecture.id) AS DOUBLE) / "
+                    + "CAST(COUNT(DISTINCT le.lecture.id) AS DOUBLE) "
                     + "FROM LectureEnrollment le "
                     + "LEFT JOIN Review r ON r.student.id = le.student.id AND r.lecture.id = le.lecture.id "
-                    + "WHERE le.lecture.id = :lectureId")
-    Double calculateReviewRatioByLectureId(@Param("lectureId") Long lectureId);
+                    + "WHERE le.student.id = :studentId")
+    Double calculateStudentReviewRatio(@Param("studentId") Long studentId);
 }
