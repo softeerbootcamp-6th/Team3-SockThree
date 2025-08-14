@@ -25,6 +25,6 @@ public interface LectureEnrollmentRepository extends JpaRepository<LectureEnroll
     /** 학생 ID로 수강 강의 개수 조회 */
     long countByStudentId(Long studentId);
 
-    /** 강의 ID로 수강생 개수 조회 */
-    long countByLectureId(Long lectureId);
+    /** 강의 ID로 수강생 수 조회 */
+    Integer countByLectureId(Long lectureId);
 }

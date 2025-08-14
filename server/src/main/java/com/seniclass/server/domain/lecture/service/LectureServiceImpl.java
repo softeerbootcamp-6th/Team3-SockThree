@@ -7,15 +7,13 @@ import com.seniclass.server.domain.lecture.domain.Lecture;
 import com.seniclass.server.domain.lecture.domain.UploadTime;
 import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
-import com.seniclass.server.domain.lecture.dto.response.LectureInfoWidgetResponse;
-import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
-import com.seniclass.server.domain.lecture.dto.response.MyLectureStatusWidgetResponse;
-import com.seniclass.server.domain.lecture.dto.response.UploadTimeResponse;
+import com.seniclass.server.domain.lecture.dto.response.*;
 import com.seniclass.server.domain.lecture.repository.AssignmentRepository;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.lecture.repository.VideoRepository;
 import com.seniclass.server.domain.student.exception.errorcode.LectureEnrollmentErrorCode;
 import com.seniclass.server.domain.student.repository.AssignmentSubmissionRepository;
+import com.seniclass.server.domain.student.repository.LectureBookmarkRepository;
 import com.seniclass.server.domain.student.repository.LectureEnrollmentRepository;
 import com.seniclass.server.domain.student.repository.VideoProgressRepository;
 import com.seniclass.server.domain.teacher.domain.Teacher;
@@ -51,6 +49,7 @@ public class LectureServiceImpl implements LectureService {
     private final AssignmentRepository assignmentRepository;
     private final AssignmentSubmissionRepository assignmentSubmissionRepository;
     private final VideoRepository videoRepository;
+    private final LectureBookmarkRepository lectureBookmarkRepository;
 
     @Override
     public LectureResponse createLecture(
@@ -218,6 +217,36 @@ public class LectureServiceImpl implements LectureService {
                 assignment.getDueDateTime(),
                 assignment.getName(),
                 isAssignmentSubmitted);
+    }
+
+    public LectureBannerResponse getLectureBanner(Long lectureId) {
+        Lecture lecture = getLectureEntity(lectureId);
+        // 1. 강의 이미지 Presigned URL 생성
+        String presignedImageURL = fileStorageService.getFileUrl(lecture.getImageKey());
+
+        // 2. 강의 찜 개수 확인
+        Integer bookMarkCount = lectureBookmarkRepository.countByLectureId(lectureId);
+
+        // 3. 강의 최대 수강 인원, 현재 수강 인원 확인
+        Integer maxStudentCount = lecture.getMaxStudent();
+        Integer enrolledStudentCount = lectureEnrollmentRepository.countByLectureId(lectureId);
+
+        // 4. 강의 기간 계산 ( 개월 단위 )
+        LocalDate startDate = lecture.getStartDate();
+        LocalDate endDate = lecture.getEndDate();
+        Integer lectureDuration = (int) startDate.until(endDate).toTotalMonths() + 1;
+
+        return LectureBannerResponse.of(
+                lectureId,
+                presignedImageURL,
+                lecture.getName(),
+                lecture.getCohort(),
+                bookMarkCount,
+                maxStudentCount,
+                enrolledStudentCount,
+                lecture.getSubCategory().getMainCategory(),
+                lecture.getSubCategory(),
+                lectureDuration);
     }
 
     private Lecture getLectureEntity(Long lectureId) {
