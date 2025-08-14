@@ -4,7 +4,7 @@ import { Outlet } from "react-router";
 
 const StudentLayout = () => {
   return (
-    <div className="flex h-screen flex-row justify-between">
+    <div className="flex-start flex h-screen flex-row gap-[3rem]">
       <StudentNavbar />
       <Outlet />
     </div>
