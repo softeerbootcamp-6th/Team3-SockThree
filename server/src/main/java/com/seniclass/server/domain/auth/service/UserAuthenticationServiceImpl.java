@@ -11,8 +11,10 @@ import com.seniclass.server.domain.teacher.repository.TeacherRepository;
 import com.seniclass.server.domain.user.domain.User;
 import com.seniclass.server.domain.user.repository.UserRepository;
 import com.seniclass.server.global.exception.CommonException;
+import com.seniclass.server.global.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,9 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
     private final StudentRepository studentRepository;
     private final TeacherRepository teacherRepository;
     private final PasswordService passwordService;
+    private final FileStorageService fileStorageService;
+
+    private static final String PROFILE_IMAGE_SUBDIRECTORY = "/students/profile-images";
 
     @Override
     public AuthenticatedUser authenticate(String email, String password) {
@@ -60,8 +65,15 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
 
     @Override
     public String createStudent(
-            String name, String email, Integer age, Gender gender, String encodedPassword) {
-        Student student = Student.createStudent(name, email, age, gender, encodedPassword);
+            String name,
+            String email,
+            Integer age,
+            Gender gender,
+            String encodedPassword,
+            MultipartFile profileImage) {
+        String imageKey = fileStorageService.storeFile(profileImage, PROFILE_IMAGE_SUBDIRECTORY);
+        Student student =
+                Student.createStudent(name, email, age, gender, encodedPassword, imageKey);
         Student savedStudent = studentRepository.save(student);
         return savedStudent.getId().toString();
     }
@@ -73,9 +85,12 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
             Integer age,
             Gender gender,
             String encodedPassword,
-            String instruction) {
+            String instruction,
+            MultipartFile profileImage) {
+        String imageKey = fileStorageService.storeFile(profileImage, "/teachers/profile-images");
         Teacher teacher =
-                Teacher.createTeacher(name, email, age, gender, encodedPassword, instruction);
+                Teacher.createTeacher(
+                        name, email, age, gender, encodedPassword, instruction, imageKey);
         return teacherRepository.save(teacher);
     }
 

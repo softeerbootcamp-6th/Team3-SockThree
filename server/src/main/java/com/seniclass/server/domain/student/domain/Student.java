@@ -30,7 +30,13 @@ public class Student extends User {
     private String imageKey;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private Student(String name, String email, Integer age, Gender gender, String password, String imageKey) {
+    private Student(
+            String name,
+            String email,
+            Integer age,
+            Gender gender,
+            String password,
+            String imageKey) {
         super(email, password, UserRole.STUDENT);
         this.name = name;
         this.age = age;
@@ -39,7 +45,12 @@ public class Student extends User {
     }
 
     public static Student createStudent(
-            String name, String email, Integer age, Gender gender, String password, String imageKey) {
+            String name,
+            String email,
+            Integer age,
+            Gender gender,
+            String password,
+            String imageKey) {
         return Student.builder()
                 .name(name)
                 .email(email)
