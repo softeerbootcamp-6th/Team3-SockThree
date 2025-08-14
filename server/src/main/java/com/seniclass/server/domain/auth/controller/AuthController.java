@@ -28,7 +28,8 @@ public class AuthController {
     @PostMapping(value = "/register/student", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public RegisterResponse registerStudent(
-            @Parameter(description = "수강생 회원가입에 필요한 정보") @Valid @RequestPart("request") StudentRegisterRequest request,
+            @Parameter(description = "수강생 회원가입에 필요한 정보") @Valid @RequestPart("request")
+                    StudentRegisterRequest request,
             @Parameter(description = "수강생 프로필 이미지") @RequestPart("file") MultipartFile file) {
         return authService.registerStudent(request, file);
     }
@@ -37,7 +38,8 @@ public class AuthController {
     @PostMapping(value = "/register/teacher", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public RegisterResponse registerTeacher(
-            @Parameter(description = "강사 회원가입에 필요한 정보") @Valid @RequestPart("request") TeacherRegisterRequest request,
+            @Parameter(description = "강사 회원가입에 필요한 정보") @Valid @RequestPart("request")
+                    TeacherRegisterRequest request,
             @Parameter(description = "강사 프로필 이미지") @RequestPart("file") MultipartFile file) {
         return authService.registerTeacher(request, file);
     }
