@@ -44,9 +44,9 @@ public class WidgetServiceImpl implements WidgetService {
                         .orElseThrow(() -> new IllegalArgumentException("학생 정보를 찾을 수 없습니다."));
 
         // 해당 강의의 마감 기한이 가장 빠른 과제 조회
-        Pageable upcomingPageable = PageRequest.of(0, 1);
         Optional<Assignment> upcomingAssignment =
-                assignmentRepository.findUpcomingAssignmentByLectureId(lectureId, upcomingPageable);
+                assignmentRepository.findTopByLectureIdAndDueDateTimeAfterOrderByDueDateTimeAsc(
+                        lectureId, java.time.LocalDateTime.now());
 
         // 해당 강의에서 가장 최근 제출한 과제 조회
         Pageable recentPageable = PageRequest.of(0, 1);
@@ -76,7 +76,8 @@ public class WidgetServiceImpl implements WidgetService {
     public ReviewWidgetResponse getReviewWidget(Long lectureId) {
         // 해당 강의의 평점이 높은 리뷰 3개 조회
         Pageable pageable = PageRequest.of(0, 3);
-        List<Review> topReviews = reviewRepository.findTopReviewsByLectureId(lectureId, pageable);
+        List<Review> topReviews =
+                reviewRepository.findByLectureIdOrderByRatingDescCreatedDtDesc(lectureId, pageable);
 
         List<ReviewWidgetResponse.ReviewItem> reviewItems =
                 topReviews.stream()

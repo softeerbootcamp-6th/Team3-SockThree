@@ -12,11 +12,7 @@ import org.springframework.stereotype.Repository;
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     /** 위젯용: 특정 강의의 평점이 가장 높은 리뷰 조회 */
-    @Query(
-            "SELECT r FROM Review r "
-                    + "WHERE r.lecture.id = :lectureId "
-                    + "ORDER BY r.rating DESC, r.createdDt DESC")
-    List<Review> findTopReviewsByLectureId(@Param("lectureId") Long lectureId, Pageable pageable);
+    List<Review> findByLectureIdOrderByRatingDescCreatedDtDesc(Long lectureId, Pageable pageable);
 
     /** 위젯용: 특정 학생의 전체 수강 강의 대비 리뷰 작성 비율 계산 */
     @Query(
