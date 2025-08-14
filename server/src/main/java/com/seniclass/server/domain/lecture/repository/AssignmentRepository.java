@@ -2,6 +2,8 @@ package com.seniclass.server.domain.lecture.repository;
 
 import com.seniclass.server.domain.lecture.domain.Assignment;
 import java.time.LocalDateTime;
+import java.util.Optional;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +27,13 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
             @Param("lectureId") Long lectureId,
             @Param("now") LocalDateTime now,
             @Param("nextMondayStart") LocalDateTime nextMondayStart);
+
+    /** 위젯용: 특정 강의에서 마감 기한이 가장 빠른 과제 조회 */
+    @Query(
+            "SELECT a FROM Assignment a "
+                    + "WHERE a.lecture.id = :lectureId "
+                    + "AND a.dueDateTime > CURRENT_TIMESTAMP "
+                    + "ORDER BY a.dueDateTime ASC")
+    Optional<Assignment> findUpcomingAssignmentByLectureId(
+            @Param("lectureId") Long lectureId, Pageable pageable);
 }
