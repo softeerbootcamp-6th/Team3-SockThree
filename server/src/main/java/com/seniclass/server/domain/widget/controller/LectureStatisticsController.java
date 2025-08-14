@@ -34,7 +34,7 @@ public class LectureStatisticsController {
             4. 50대 이상 5살마다 남녀로 나뉜 수강 연령대 통계
             """)
     @GetMapping
-    @RequireAuth(roles = {UserRole.TEACHER})
+    @RequireAuth(roles = {UserRole.TEACHER, UserRole.STUDENT})
     public LectureStatisticsResponse getLectureStatistics(
             @Parameter(description = "강좌 ID") @PathVariable Long lectureId) {
         return lectureStatisticsService.getLectureStatistics(lectureId);
