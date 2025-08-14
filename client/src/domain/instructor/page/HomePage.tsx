@@ -61,11 +61,13 @@ const HomePage = () => {
   return (
     <div className="flex w-full flex-col gap-[1.25rem] pt-[4.9375rem] pr-[3.9375rem]">
       <div className="flex w-full items-center justify-between">
-      <h1 className="typo-title-0">{instructorName} 강사님, 안녕하세요</h1>
+        <h1 className="typo-title-0">{instructorName} 강사님, 안녕하세요</h1>
       </div>
       <div className="relative">
         <div className="absolute top-0 right-20 z-300">
-          <Button variant="outline" onClick={handleNewCourseClick}>신규 강좌 등록하기</Button>
+          <Button variant="outline" onClick={handleNewCourseClick}>
+            신규 강좌 등록하기
+          </Button>
         </div>
         <CourseTab tabItems={tabItems} />
       </div>
