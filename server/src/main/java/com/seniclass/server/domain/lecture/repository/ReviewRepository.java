@@ -1,8 +1,30 @@
 package com.seniclass.server.domain.lecture.repository;
 
 import com.seniclass.server.domain.lecture.domain.Review;
+import java.util.List;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {}
+public interface ReviewRepository extends JpaRepository<Review, Long> {
+
+    /** 위젯용: 특정 강의의 평점이 가장 높은 리뷰 조회 */
+    @Query(
+            "SELECT r FROM Review r "
+                    + "WHERE r.lecture.id = :lectureId "
+                    + "ORDER BY r.rating DESC, r.createdDt DESC")
+    List<Review> findTopReviewsByLectureId(@Param("lectureId") Long lectureId, Pageable pageable);
+
+    /** 위젯용: 특정 강의의 수강생 대비 리뷰 작성 비율 계산 */
+    @Query(
+            "SELECT "
+                    + "CAST(COUNT(DISTINCT r.student.id) AS DOUBLE) / "
+                    + "CAST(COUNT(DISTINCT le.student.id) AS DOUBLE) "
+                    + "FROM LectureEnrollment le "
+                    + "LEFT JOIN Review r ON r.student.id = le.student.id AND r.lecture.id = le.lecture.id "
+                    + "WHERE le.lecture.id = :lectureId")
+    Double calculateReviewRatioByLectureId(@Param("lectureId") Long lectureId);
+}
