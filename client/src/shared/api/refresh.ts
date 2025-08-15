@@ -38,7 +38,8 @@ export const withAutoRefresh = async <T>(fn: () => Promise<T>) => {
       try {
         await refreshAccessToken();
         return fn();
-      } catch (refreshError) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_refreshError) {
         // 재발급 실패시 login 페이지로 리다이렉트
         token.clear();
         throw redirect("/login");
