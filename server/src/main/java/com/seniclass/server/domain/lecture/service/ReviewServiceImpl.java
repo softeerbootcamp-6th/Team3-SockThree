@@ -1,11 +1,11 @@
 package com.seniclass.server.domain.lecture.service;
 
-import com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode;
 import com.seniclass.server.domain.lecture.domain.Lecture;
 import com.seniclass.server.domain.lecture.domain.Review;
 import com.seniclass.server.domain.lecture.dto.request.ReviewCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.ReviewUpdateRequest;
 import com.seniclass.server.domain.lecture.dto.response.ReviewResponse;
+import com.seniclass.server.domain.lecture.exception.errorcode.ReviewErrorCode;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.lecture.repository.ReviewRepository;
 import com.seniclass.server.domain.student.domain.Student;
@@ -50,12 +50,12 @@ public class ReviewServiceImpl implements ReviewService {
         // 수강 중인지 확인
         if (!lectureEnrollmentRepository.existsByStudentIdAndLectureId(
                 userId, request.lectureId())) {
-            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
+            throw new CommonException(ReviewErrorCode.NOT_ENROLLED_STUDENT);
         }
 
         // 이미 리뷰를 작성했는지 확인
         if (reviewRepository.existsByStudentIdAndLectureId(userId, request.lectureId())) {
-            throw new CommonException(LectureErrorCode.LECTURE_INVALID);
+            throw new CommonException(ReviewErrorCode.REVIEW_ALREADY_EXISTS);
         }
 
         Review review = Review.createReview(request.content(), request.rating(), lecture, student);
@@ -73,11 +73,11 @@ public class ReviewServiceImpl implements ReviewService {
         Review review =
                 reviewRepository
                         .findById(reviewId)
-                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
+                        .orElseThrow(() -> new CommonException(ReviewErrorCode.REVIEW_NOT_FOUND));
 
         // 본인의 리뷰인지 확인
         if (!review.getStudent().getId().equals(userId)) {
-            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
+            throw new CommonException(ReviewErrorCode.REVIEW_ACCESS_DENIED);
         }
 
         review.updateReview(request.content(), request.rating());
@@ -95,11 +95,11 @@ public class ReviewServiceImpl implements ReviewService {
         Review review =
                 reviewRepository
                         .findById(reviewId)
-                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
+                        .orElseThrow(() -> new CommonException(ReviewErrorCode.REVIEW_NOT_FOUND));
 
         // 본인의 리뷰인지 확인
         if (!review.getStudent().getId().equals(userId)) {
-            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
+            throw new CommonException(ReviewErrorCode.REVIEW_ACCESS_DENIED);
         }
 
         reviewRepository.delete(review);
@@ -123,7 +123,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review review =
                 reviewRepository
                         .findById(reviewId)
-                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
+                        .orElseThrow(() -> new CommonException(ReviewErrorCode.REVIEW_NOT_FOUND));
 
         return ReviewResponse.from(review);
     }
@@ -133,7 +133,7 @@ public class ReviewServiceImpl implements ReviewService {
         Review review =
                 reviewRepository
                         .findByStudentIdAndLectureId(userId, lectureId)
-                        .orElseThrow(() -> new CommonException(LectureErrorCode.LECTURE_NOT_FOUND));
+                        .orElseThrow(() -> new CommonException(ReviewErrorCode.REVIEW_NOT_FOUND));
 
         return ReviewResponse.from(review);
     }
