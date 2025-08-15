@@ -1,5 +1,5 @@
-import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
 import CourseDetailTabBar from "@/shared/components/course/CourseDetailTabBar";
+import CourseDetailHeader from "@/shared/components/course/CourseDetailHeader";
 
 interface CourseDetailWrapperProps {
   children: React.ReactNode;
@@ -12,26 +12,12 @@ const CourseDetailWrapper = ({
   sidebarContent,
   isDashboard = false,
 }: CourseDetailWrapperProps) => {
-  const headerSection = (
-    <>
-      <CourseInfoCard courseInfo={courseInfo} />
-      <div className="min-h-[10rem] w-full rounded-[1.5rem] bg-white shadow-bg">
-        <div className="flex flex-col gap-[0.5rem] p-[2rem]">
-          <h3 className="typo-body-4">강좌 소개</h3>
-          <span className="line-clamp-5 max-h-[5rem] min-h-[4rem]">
-            {courseInfo.description}
-          </span>
-        </div>
-      </div>
-    </>
-  );
-
   if (isDashboard) {
     return (
       <>
         <div className="flex w-full flex-row items-start justify-between gap-[1rem] pt-[1.5rem]">
           <section className="mb-[1rem] flex w-full flex-col items-start justify-start gap-[1rem]">
-            {headerSection}
+            <CourseDetailHeader courseInfo={courseInfo} />
           </section>
           {sidebarContent && <div>{sidebarContent}</div>}
         </div>
@@ -45,7 +31,7 @@ const CourseDetailWrapper = ({
     <>
       <div className="flex w-full flex-row gap-[1rem] py-6">
         <section className="flex flex-1 flex-col gap-[1rem]">
-          {headerSection}
+          <CourseDetailHeader courseInfo={courseInfo} />
           <CourseDetailTabBar isEnrolled={true} />
           <div className="flex-1">{children}</div>
         </section>
