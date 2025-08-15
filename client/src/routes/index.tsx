@@ -38,7 +38,16 @@ export const router = createBrowserRouter([
         ),
         children: [
           {
-            path: "home",
+            index: true,
+            path: "/",
+            element: (
+              <RouteByRole
+                components={{ student: S.HomePage, instructor: I.HomePage }}
+              />
+            ),
+          },
+          {
+            path: "/home",
             element: (
               <RouteByRole
                 components={{ student: S.HomePage, instructor: I.HomePage }}
