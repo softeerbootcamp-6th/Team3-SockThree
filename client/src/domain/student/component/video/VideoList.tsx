@@ -5,32 +5,22 @@ import TriangleUpIcon from "@/assets/icons/default/triangle-up.svg?react";
 import TriangleDownIcon from "@/assets/icons/default/triangle-down.svg?react";
 import ProgressBar from "@/shared/components/ProgressBar";
 
-interface VideoData {
-  id: number;
-  videoTitle: string;
-  duration: number;
-  updatedDate: Date;
-  watchedTime?: number;
-  isCompleted?: boolean;
-}
+import type { VideoListData } from "@/domain/student/types/video";
 
 interface VideoListProps {
-  contentsId?: number;
-  contentsTitle?: string;
-  videos?: VideoData[];
-  completedVideos?: number;
-  totalVideos?: number;
+  content: VideoListData;
 }
 
-const VideoList = ({
-  contentsId = 1,
-  contentsTitle = "목차명을 입력하세요.",
-  completedVideos = 2,
-  totalVideos = 5,
-
-  videos = [],
-}: VideoListProps) => {
+const VideoList = ({ content }: VideoListProps) => {
   const [isListOpen, setIsListOpen] = useState(true);
+
+  const {
+    contentsId = 1,
+    contentsTitle = "목차명을 입력하세요.",
+    completedVideos = 0,
+    totalVideos = 0,
+    videos = [],
+  } = content;
 
   return (
     <div
@@ -72,15 +62,7 @@ const VideoList = ({
       {isListOpen && (
         <div className="flex flex-col gap-[.75rem] pt-[1.125rem] pb-[.75rem]">
           {videos.map((video, idx) => (
-            <VideoListItem
-              key={video.id}
-              index={idx + 1}
-              title={video.videoTitle}
-              duration={video.duration}
-              updatedDate={video.updatedDate}
-              watchedTime={video.watchedTime}
-              isCompleted={video.isCompleted}
-            />
+            <VideoListItem key={video.id} index={idx + 1} video={video} />
           ))}
         </div>
       )}
