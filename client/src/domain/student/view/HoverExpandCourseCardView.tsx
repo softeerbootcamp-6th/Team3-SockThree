@@ -1,5 +1,5 @@
 import { useState } from "react";
-import HoverExpandCourseCard from "@/domain/student/component/HoverExpandCourseCard";
+import HoverExpandCourseCard from "@/domain/student/component/homepage/HoverExpandCourseCard";
 import { fakerKO as faker } from "@faker-js/faker";
 
 const createRandomCards = () => {

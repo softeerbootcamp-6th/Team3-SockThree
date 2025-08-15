@@ -1,4 +1,4 @@
-import ExpandSearchBar from "@/domain/student/component/ExpandSearchBar";
+import ExpandSearchBar from "@/domain/student/component/homepage/ExpandSearchBar";
 import HoverExpandCourseCardView from "@/domain/student/view/HoverExpandCourseCardView";
 import RecommendedCourseListView from "@/domain/student/view/RecommendedCourseListView";
 
