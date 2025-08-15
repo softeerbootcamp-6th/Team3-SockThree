@@ -24,7 +24,7 @@ export const createStudentRouter = () =>
       children: [
         {
           path: "*",
-          Component: S.CourseDetailDashboardPage,
+          Component: S.CourseDetailPage,
         },
       ],
     },
