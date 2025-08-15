@@ -1,6 +1,6 @@
 // CourseInfoCardAttend.tsx (신청 후)
 import { PieChart, Pie, Cell, Label } from "recharts";
-import { formatDate } from "@/shared/utils/dateUtils";
+import { formatDate } from "@/shared/utils/dateUtils.ts";
 
 interface CourseInfoCardAttendProps {
   progress?: number; // 0~100 (내 진도율)

@@ -1,7 +1,7 @@
 import { useLocation, Routes, Route } from "react-router";
-import CourseInfoCardAttend from "@/domain/student/component/course/CourseInfoCardAttend";
+import CourseInfoCardAttend from "@/shared/components/course/CourseInfoCardAttend";
 import CourseDetailWrapper from "@/shared/components/course/CourseDetailWrapper";
-import CourseInfoCardDefault from "@/domain/student/component/course/CourseInfoCardDefault";
+import CourseInfoCardDefault from "@/shared/components/course/CourseInfoCardDefault";
 
 //"/course/:courseId/*" 이내의 페이지
 import CourseDetailDashboardPage from "@/domain/student/page/course/CourseDetailDashboardPage";
