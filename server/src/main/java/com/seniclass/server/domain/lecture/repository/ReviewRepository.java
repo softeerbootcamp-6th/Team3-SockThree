@@ -2,6 +2,8 @@ package com.seniclass.server.domain.lecture.repository;
 
 import com.seniclass.server.domain.lecture.domain.Review;
 import java.util.List;
+import java.util.Optional;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,4 +25,13 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
                     + "LEFT JOIN Review r ON r.student.id = le.student.id AND r.lecture.id = le.lecture.id "
                     + "WHERE le.student.id = :studentId")
     Double calculateStudentReviewRatio(@Param("studentId") Long studentId);
+
+    /** 특정 강의의 모든 리뷰 조회 (페이징) */
+    Page<Review> findByLectureIdOrderByCreatedDtDesc(Long lectureId, Pageable pageable);
+
+    /** 특정 학생의 특정 강의에 대한 리뷰 조회 */
+    Optional<Review> findByStudentIdAndLectureId(Long studentId, Long lectureId);
+
+    /** 특정 학생의 특정 강의에 대한 리뷰 존재 여부 확인 */
+    boolean existsByStudentIdAndLectureId(Long studentId, Long lectureId);
 }

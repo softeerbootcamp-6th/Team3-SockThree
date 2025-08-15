@@ -7,6 +7,7 @@ import com.seniclass.server.domain.lecture.repository.AssignmentRepository;
 import com.seniclass.server.domain.student.domain.AssignmentSubmission;
 import com.seniclass.server.domain.student.domain.Student;
 import com.seniclass.server.domain.student.dto.request.AssignmentSubmissionFileRequest;
+import com.seniclass.server.domain.student.dto.request.FeedbackUpdateRequest;
 import com.seniclass.server.domain.student.dto.response.AssignmentSubmissionResponse;
 import com.seniclass.server.domain.student.exception.errorcode.AssignmentSubmissionErrorCode;
 import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
@@ -210,6 +211,35 @@ public class AssignmentSubmissionServiceImpl implements AssignmentSubmissionServ
         Long studentId = AuthContext.getCurrentUserId();
 
         return assignmentSubmissionRepository.countByStudentId(studentId);
+    }
+
+    /** 과제 제출 피드백 업데이트 (강사용) */
+    @Transactional
+    @Override
+    public AssignmentSubmissionResponse updateFeedback(
+            Long submissionId, FeedbackUpdateRequest request) {
+        Long teacherId = AuthContext.getCurrentUserId();
+        log.info("강사 {}가 과제 제출 {}에 피드백을 업데이트합니다", teacherId, submissionId);
+
+        AssignmentSubmission submission =
+                assignmentSubmissionRepository
+                        .findById(submissionId)
+                        .orElseThrow(
+                                () ->
+                                        new CommonException(
+                                                AssignmentSubmissionErrorCode
+                                                        .ASSIGNMENT_SUBMISSION_NOT_FOUND));
+
+        // 강사가 해당 과제의 소유자인지 확인
+        if (!submission.getAssignment().getLecture().getTeacher().getId().equals(teacherId)) {
+            throw new CommonException(AuthErrorCode.UNAUTHORIZED);
+        }
+
+        submission.updateFeedback(request.feedback());
+        AssignmentSubmission updatedSubmission = assignmentSubmissionRepository.save(submission);
+
+        log.info("피드백 업데이트 완료: submissionId = {}", submissionId);
+        return convertToResponseWithFileUrl(updatedSubmission);
     }
 
     /** AssignmentSubmission을 Response로 변환 (파일 URL 포함) */

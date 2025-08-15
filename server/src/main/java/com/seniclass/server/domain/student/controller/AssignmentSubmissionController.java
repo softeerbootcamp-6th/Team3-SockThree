@@ -3,11 +3,17 @@ package com.seniclass.server.domain.student.controller;
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
 import com.seniclass.server.domain.student.dto.request.AssignmentSubmissionFileRequest;
+import com.seniclass.server.domain.student.dto.request.FeedbackUpdateRequest;
 import com.seniclass.server.domain.student.dto.response.AssignmentSubmissionResponse;
 import com.seniclass.server.domain.student.service.AssignmentSubmissionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Encoding;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -27,20 +33,65 @@ public class AssignmentSubmissionController {
 
     private final AssignmentSubmissionService assignmentSubmissionService;
 
-    @Operation(summary = "파일로 과제 제출 (수강생)", description = "학생이 파일을 업로드하여 과제를 제출합니다.")
+    @Operation(
+            summary = "파일로 과제 제출 (수강생)",
+            description = "학생이 파일을 업로드하여 과제를 제출합니다.",
+            requestBody =
+                    @RequestBody(
+                            content =
+                                    @Content(
+                                            mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
+                                            encoding = {
+                                                @Encoding(
+                                                        name = "assignmentId",
+                                                        contentType = MediaType.TEXT_PLAIN_VALUE),
+                                                @Encoding(
+                                                        name = "content",
+                                                        contentType = MediaType.TEXT_PLAIN_VALUE),
+                                                @Encoding(
+                                                        name = "file",
+                                                        contentType =
+                                                                MediaType
+                                                                        .APPLICATION_OCTET_STREAM_VALUE)
+                                            })))
     @PostMapping(value = "/submissions", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @RequireAuth(roles = {UserRole.STUDENT})
     @ResponseStatus(HttpStatus.CREATED)
     public AssignmentSubmissionResponse createSubmission(
             @Parameter(description = "과제 ID") @RequestParam Long assignmentId,
             @Parameter(description = "과제 설명") @RequestParam(required = false) String content,
-            @Parameter(description = "업로드할 파일") @RequestParam("file") MultipartFile file) {
+            @Parameter(
+                            description = "과제 제출 파일 (PDF, DOC, DOCX, TXT, ZIP, HWP 등)",
+                            schema =
+                                    @Schema(
+                                            type = "string",
+                                            format = "binary",
+                                            description = "과제 파일"))
+                    @RequestParam("file")
+                    MultipartFile file) {
         AssignmentSubmissionFileRequest request =
                 new AssignmentSubmissionFileRequest(assignmentId, content, file);
         return assignmentSubmissionService.createSubmission(request);
     }
 
-    @Operation(summary = "파일로 과제 제출 수정 (수강생)", description = "학생이 제출한 과제를 파일로 수정합니다.")
+    @Operation(
+            summary = "파일로 과제 제출 수정 (수강생)",
+            description = "학생이 제출한 과제를 파일로 수정합니다.",
+            requestBody =
+                    @RequestBody(
+                            content =
+                                    @Content(
+                                            mediaType = MediaType.MULTIPART_FORM_DATA_VALUE,
+                                            encoding = {
+                                                @Encoding(
+                                                        name = "content",
+                                                        contentType = MediaType.TEXT_PLAIN_VALUE),
+                                                @Encoding(
+                                                        name = "file",
+                                                        contentType =
+                                                                MediaType
+                                                                        .APPLICATION_OCTET_STREAM_VALUE)
+                                            })))
     @PutMapping(
             value = "/submissions/{submissionId}",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -48,7 +99,15 @@ public class AssignmentSubmissionController {
     public AssignmentSubmissionResponse updateSubmission(
             @Parameter(description = "제출 ID") @PathVariable Long submissionId,
             @Parameter(description = "과제 설명") @RequestParam(required = false) String content,
-            @Parameter(description = "업로드할 파일") @RequestParam("file") MultipartFile file) {
+            @Parameter(
+                            description = "과제 제출 파일 (PDF, DOC, DOCX, TXT, ZIP, HWP 등)",
+                            schema =
+                                    @Schema(
+                                            type = "string",
+                                            format = "binary",
+                                            description = "과제 파일"))
+                    @RequestParam("file")
+                    MultipartFile file) {
         AssignmentSubmissionFileRequest request =
                 new AssignmentSubmissionFileRequest(null, content, file);
         return assignmentSubmissionService.updateSubmission(submissionId, request);
@@ -104,5 +163,17 @@ public class AssignmentSubmissionController {
     public Map<String, Long> getCurrentStudentSubmissionCount() {
         long count = assignmentSubmissionService.getCurrentStudentSubmissionCount();
         return Map.of("count", count);
+    }
+
+    @Operation(
+            summary = "과제 제출 피드백 업데이트 (강사)",
+            description = "강사가 학생의 과제 제출에 대한 피드백을 작성하거나 수정합니다. TEACHER 권한 필요.")
+    @PutMapping("/submissions/{submissionId}/feedback")
+    @RequireAuth(roles = {UserRole.TEACHER})
+    public AssignmentSubmissionResponse updateFeedback(
+            @Parameter(description = "제출 ID") @PathVariable Long submissionId,
+            @Parameter(description = "피드백 업데이트 요청") @Valid @RequestBody
+                    FeedbackUpdateRequest request) {
+        return assignmentSubmissionService.updateFeedback(submissionId, request);
     }
 }
