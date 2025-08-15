@@ -9,8 +9,9 @@ import type { VideoData } from "@/domain/student/types/video";
 interface VideoListItemProps {
   index: number;
   video: VideoData;
+  onVideoClick: (videoId: number) => void;
 }
-const VideoListItem = ({ index, video }: VideoListItemProps) => {
+const VideoListItem = ({ index, video, onVideoClick }: VideoListItemProps) => {
   const {
     videoTitle,
     duration,
@@ -36,7 +37,7 @@ const VideoListItem = ({ index, video }: VideoListItemProps) => {
       {/* 왼쪽: 재생버튼 + 제목 + 시간 */}
       <div className={left()}>
         {/* 재생 버튼 */}
-        <button className={playButton()}>
+        <button className={playButton()} onClick={() => onVideoClick(video.id)}>
           <TriangleRightIcon className={playButtonIcon()} />
         </button>
 

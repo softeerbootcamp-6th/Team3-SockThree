@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
+
 import VideoListItem from "@/domain/student/component/video/VideoListItem";
 
 import TriangleUpIcon from "@/assets/icons/default/triangle-up.svg?react";
@@ -15,6 +17,8 @@ interface VideoListProps {
 const VideoList = ({ content, startIndex }: VideoListProps) => {
   const [isListOpen, setIsListOpen] = useState(true);
 
+  const navigate = useNavigate();
+
   const {
     contentsId = 1,
     contentsTitle = "목차명을 입력하세요.",
@@ -22,6 +26,10 @@ const VideoList = ({ content, startIndex }: VideoListProps) => {
     totalVideos = 0,
     videos = [],
   } = content;
+
+  const handleVideoClick = (videoId: number) => {
+    navigate(`chapter/${contentsId}/video/${videoId}`);
+  };
 
   return (
     <div
@@ -67,6 +75,7 @@ const VideoList = ({ content, startIndex }: VideoListProps) => {
               key={video.id}
               video={video}
               index={startIndex + idx}
+              onVideoClick={() => handleVideoClick(video.id)}
             />
           ))}
         </div>
