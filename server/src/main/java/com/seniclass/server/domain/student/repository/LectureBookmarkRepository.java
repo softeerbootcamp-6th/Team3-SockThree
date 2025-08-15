@@ -27,4 +27,7 @@ public interface LectureBookmarkRepository extends JpaRepository<LectureBookmark
 
     /** 학생 ID로 북마크 개수 조회 */
     long countByStudentId(Long studentId);
+
+    /** 강의 ID로 북마크 개수 조회 */
+    Integer countByLectureId(Long lectureId);
 }

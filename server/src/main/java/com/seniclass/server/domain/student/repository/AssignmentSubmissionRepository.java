@@ -30,4 +30,8 @@ public interface AssignmentSubmissionRepository extends JpaRepository<Assignment
 
     /** 특정 과제의 총 제출 수 */
     long countByAssignmentId(Long assignmentId);
+
+    /** 위젯용: 특정 강의에서 학생이 가장 최근에 제출한 과제 조회 */
+    Page<AssignmentSubmission> findByStudentIdAndAssignmentLectureIdOrderByCreatedDtDesc(
+            Long studentId, Long lectureId, Pageable pageable);
 }

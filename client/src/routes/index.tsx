@@ -30,7 +30,8 @@ export const router = createBrowserRouter([
       { path: "home", Component: S.HomePage },
       { path: "mypage", Component: S.MyPage },
       { path: "mypage/heart", Component: S.HeartPage },
-      { path: "mypage/my-course", Component: S.MyCoursePage },
+      { path: "mypage/current-course", Component: S.CurrentCoursePage },
+      { path: "mypage/end-course", Component: S.EndCoursePage },
       { path: "course/search", Component: S.SearchResultPage },
     ],
   },
@@ -39,6 +40,7 @@ export const router = createBrowserRouter([
   {
     path: "/student/course/:courseId",
     Component: StickyLogoLayout,
+
     children: [
       {
         path: "dashboard",

@@ -2,6 +2,7 @@ package com.seniclass.server.domain.lecture.service;
 
 import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
+import com.seniclass.server.domain.lecture.dto.response.LectureBannerResponse;
 import com.seniclass.server.domain.lecture.dto.response.LectureInfoWidgetResponse;
 import com.seniclass.server.domain.lecture.dto.response.LectureResponse;
 import com.seniclass.server.domain.lecture.dto.response.MyLectureStatusWidgetResponse;
@@ -21,4 +22,6 @@ public interface LectureService {
     public LectureInfoWidgetResponse getLectureInfoWidget(Long lectureId);
 
     public MyLectureStatusWidgetResponse getMyLectureStatusWidget(Long userId, Long lectureId);
+
+    public LectureBannerResponse getLectureBanner(Long lectureId);
 }
