@@ -53,4 +53,9 @@ public class Review extends BaseTimeEntity {
                 .student(student)
                 .build();
     }
+
+    public void updateReview(String content, Double rating) {
+        this.content = content;
+        this.rating = rating;
+    }
 }
