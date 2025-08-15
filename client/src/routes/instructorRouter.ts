@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import InstructorLayout from "@/shared/layout/InstructorLayout";
 import * as I from "@/domain/instructor/page";
-import StickyLogoLayout from "@/shared/layout/StickyLogoLayout";
+import LogoHeaderLayout from "@/shared/layout/LogoHeaderLayout";
 
 export const createInstructorRouter = () =>
   createBrowserRouter([
@@ -18,7 +18,7 @@ export const createInstructorRouter = () =>
     { path: "course/create", Component: I.CreateCoursePage },
     {
       path: "/course/:courseId/*",
-      Component: StickyLogoLayout,
+      Component: LogoHeaderLayout,
       children: [{ path: "*", Component: I.CourseDetailPage }],
     },
   ]);
