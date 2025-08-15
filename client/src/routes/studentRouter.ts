@@ -27,10 +27,6 @@ export const createStudentRouter = () =>
           path: "*",
           Component: S.CourseDetailPage,
         },
-        {
-          path: "curriculum/chapter/:chapterId/video/:videoId",
-          Component: S.VideoPlayPage,
-        },
       ],
     },
   ]);
