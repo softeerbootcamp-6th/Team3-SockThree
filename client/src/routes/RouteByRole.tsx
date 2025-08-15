@@ -1,5 +1,6 @@
 import type { UserType } from "@/shared/types/auth";
 import { useAuth } from "@/shared/context/AuthContext";
+import Error404 from "@/shared/page/error/Error404";
 
 export const RouteByRole = ({
   components,
@@ -10,7 +11,7 @@ export const RouteByRole = ({
   const Component = components[userType];
 
   if (!Component) {
-    return <div>404 not found\</div>;
+    return <Error404 />;
   }
   return <Component />;
 };
