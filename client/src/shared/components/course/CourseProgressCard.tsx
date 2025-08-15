@@ -1,5 +1,5 @@
-import Button from "@/shared/components/Button.tsx";
-import ProgressBar from "@/shared/components/ProgressBar.tsx";
+import Button from "@/shared/components/Button";
+import ProgressBar from "@/shared/components/ProgressBar";
 
 interface CourseProgressCardProps {
   imageUrl?: string;

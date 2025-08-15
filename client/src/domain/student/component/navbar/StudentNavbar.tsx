@@ -1,8 +1,8 @@
 import HomeIcon from "@/assets/icons/default/home.svg?react";
 import SearchIcon from "@/assets/icons/default/search.svg?react";
 
-import NavbarItem from "@/shared/components/Navbar/NavbarItem";
-import Navbar from "@/shared/components/Navbar/Navbar";
+import NavbarItem from "@/domain/student/component/navbar/NavbarItem";
+import Navbar from "@/domain/student/component/navbar/Navbar";
 
 import { useState } from "react";
 import { useLocation } from "react-router";

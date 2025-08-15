@@ -1,4 +1,4 @@
-import RecommendedCourseListItem from "@/domain/student/component/RecommendedCourseListItem";
+import RecommendedCourseListItem from "@/domain/student/component/homepage/RecommendedCourseListItem";
 import { useCarousel } from "@/domain/student/hook/useCarousel";
 
 interface listItemData {

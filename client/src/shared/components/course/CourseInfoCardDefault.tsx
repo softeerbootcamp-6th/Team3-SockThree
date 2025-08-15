@@ -1,7 +1,7 @@
 // CourseInfoCard.tsx (신청 전)
 import CalendarIcon from "@/assets/icons/default/calendar.svg?react";
 import StarIcon from "@/assets/icons/default/yellow-star.svg?react";
-import Button from "@/shared/components/Button.tsx";
+import Button from "@/shared/components/Button";
 
 type UploadTime = { dayLabel: string; timeLabel: string };
 

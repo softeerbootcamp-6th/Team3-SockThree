@@ -1,4 +1,4 @@
-export { default as HomePage } from "@/domain/student/page/HomePage";
+export { default as HomePage } from "@/domain/student/page/homepage/HomePage";
 
 export { default as SearchResultPage } from "@/domain/student/page/course/SearchResultPage";
 
