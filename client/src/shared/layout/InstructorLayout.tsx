@@ -1,11 +1,9 @@
-import InstructorNavbar from "@/domain/instructor/component/InstructorNavbar";
-
 import { Outlet } from "react-router";
 
 const InstructorLayout = () => {
   return (
-    <div className="flex h-screen flex-row justify-between">
-      <InstructorNavbar />
+    <div>
+      {/*  Layout 추가 예정 */}
       <Outlet />
     </div>
   );
