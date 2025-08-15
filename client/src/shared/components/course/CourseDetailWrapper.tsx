@@ -47,14 +47,6 @@ const CourseDetailWrapper = ({
 
 export default CourseDetailWrapper;
 
-const MainContainer = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <main className="mx-auto flex max-w-[1720px] min-w-[1280px] flex-col items-center justify-center">
-      {children}
-    </main>
-  );
-};
-
 const courseInfo = {
   id: 1,
   title: "프론트엔드 개발자 양성과정",
