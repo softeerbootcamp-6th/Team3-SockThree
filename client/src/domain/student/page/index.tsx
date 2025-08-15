@@ -5,4 +5,5 @@ export { default as SearchResultPage } from "@/domain/student/page/course/Search
 export { default as MyPage } from "@/domain/student/page/mypage/MyPage";
 export { default as HeartPage } from "@/domain/student/page/mypage/HeartPage";
 export { default as CurrentCoursePage } from "@/domain/student/page/mypage/CurrentCoursePage";
+export { default as EndCoursePage } from "@/domain/student/page/mypage/EndCoursePage";
 export { default as CourseDetailDashboardPage } from "@/domain/student/page/course/CourseDetailDashboardPage";
