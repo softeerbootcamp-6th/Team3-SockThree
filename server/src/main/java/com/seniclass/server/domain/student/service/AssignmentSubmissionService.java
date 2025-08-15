@@ -1,6 +1,7 @@
 package com.seniclass.server.domain.student.service;
 
 import com.seniclass.server.domain.student.dto.request.AssignmentSubmissionFileRequest;
+import com.seniclass.server.domain.student.dto.request.FeedbackUpdateRequest;
 import com.seniclass.server.domain.student.dto.response.AssignmentSubmissionResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,4 +33,7 @@ public interface AssignmentSubmissionService {
 
     /** 현재 학생의 총 과제 제출 수 조회 */
     long getCurrentStudentSubmissionCount();
+
+    /** 과제 제출 피드백 업데이트 (강사용) */
+    AssignmentSubmissionResponse updateFeedback(Long submissionId, FeedbackUpdateRequest request);
 }

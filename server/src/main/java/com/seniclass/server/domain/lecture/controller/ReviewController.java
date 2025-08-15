@@ -65,7 +65,9 @@ public class ReviewController {
         return reviewService.getReview(reviewId);
     }
 
-    @Operation(summary = "강의별 리뷰 목록 조회 (강사, 수강생)", description = "특정 강의의 모든 리뷰를 페이징하여 조회합니다.")
+    @Operation(
+            summary = "[Page] 강의별 리뷰 목록 조회 (강사, 수강생)",
+            description = "특정 강의의 모든 리뷰를 페이징하여 조회합니다.")
     @GetMapping("/lectures/{lectureId}")
     @RequireAuth(roles = {UserRole.TEACHER, UserRole.STUDENT})
     public Page<ReviewResponse> getReviewsByLecture(

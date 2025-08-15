@@ -3,6 +3,7 @@ package com.seniclass.server.domain.student.controller;
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
 import com.seniclass.server.domain.student.dto.request.AssignmentSubmissionFileRequest;
+import com.seniclass.server.domain.student.dto.request.FeedbackUpdateRequest;
 import com.seniclass.server.domain.student.dto.response.AssignmentSubmissionResponse;
 import com.seniclass.server.domain.student.service.AssignmentSubmissionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.media.Encoding;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -161,5 +163,17 @@ public class AssignmentSubmissionController {
     public Map<String, Long> getCurrentStudentSubmissionCount() {
         long count = assignmentSubmissionService.getCurrentStudentSubmissionCount();
         return Map.of("count", count);
+    }
+
+    @Operation(
+            summary = "과제 제출 피드백 업데이트 (강사)",
+            description = "강사가 학생의 과제 제출에 대한 피드백을 작성하거나 수정합니다. TEACHER 권한 필요.")
+    @PutMapping("/submissions/{submissionId}/feedback")
+    @RequireAuth(roles = {UserRole.TEACHER})
+    public AssignmentSubmissionResponse updateFeedback(
+            @Parameter(description = "제출 ID") @PathVariable Long submissionId,
+            @Parameter(description = "피드백 업데이트 요청") @Valid @RequestBody
+                    FeedbackUpdateRequest request) {
+        return assignmentSubmissionService.updateFeedback(submissionId, request);
     }
 }
