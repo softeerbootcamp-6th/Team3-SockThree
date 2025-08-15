@@ -12,9 +12,9 @@ export const createStudentRouter = () =>
       children: [
         { index: true, Component: S.HomePage },
         { path: "home", Component: S.HomePage },
-        { path: "my-page", Component: S.MyPage },
-        { path: "my-page/heart", Component: S.HeartPage },
-        { path: "my-page/my-course", Component: S.MyCoursePage },
+        { path: "mypage", Component: S.MyPage },
+        { path: "mypage/heart", Component: S.HeartPage },
+        { path: "mypage/my-course", Component: S.MyCoursePage },
         { path: "course/search", Component: S.SearchResultPage },
       ],
     },
