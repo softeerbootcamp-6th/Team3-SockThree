@@ -13,9 +13,9 @@ export const createInstructorRouter = () =>
         { path: "home", Component: I.HomePage },
         { path: "my-page", Component: I.MyPage },
         { path: "course/manage", Component: I.ManageCoursePage },
-        { path: "course/create", Component: I.CreateCoursePage },
       ],
     },
+    { path: "course/create", Component: I.CreateCoursePage },
     {
       path: "/course/:courseId/*",
       Component: StickyLogoLayout,
