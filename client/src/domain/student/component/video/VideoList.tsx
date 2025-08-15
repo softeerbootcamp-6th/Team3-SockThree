@@ -9,9 +9,10 @@ import type { VideoListData } from "@/domain/student/types/video";
 
 interface VideoListProps {
   content: VideoListData;
+  startIndex: number;
 }
 
-const VideoList = ({ content }: VideoListProps) => {
+const VideoList = ({ content, startIndex }: VideoListProps) => {
   const [isListOpen, setIsListOpen] = useState(true);
 
   const {
@@ -62,7 +63,11 @@ const VideoList = ({ content }: VideoListProps) => {
       {isListOpen && (
         <div className="flex flex-col gap-[.75rem] pt-[1.125rem] pb-[.75rem]">
           {videos.map((video, idx) => (
-            <VideoListItem key={video.id} index={idx + 1} video={video} />
+            <VideoListItem
+              key={video.id}
+              video={video}
+              index={startIndex + idx}
+            />
           ))}
         </div>
       )}

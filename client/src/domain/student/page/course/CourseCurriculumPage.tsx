@@ -40,11 +40,21 @@ const CourseCurriculumPage = () => {
     },
   ];
 
+  let globalVideoIndex = 0;
+
   return (
     <div>
-      {videoListData.map((content) => (
-        <VideoList key={content.contentsId} content={content} />
-      ))}
+      {videoListData.map((content) => {
+        const startIndex = globalVideoIndex + 1;
+        globalVideoIndex += content.videos.length;
+        return (
+          <VideoList
+            key={content.contentsId}
+            content={content}
+            startIndex={startIndex}
+          />
+        );
+      })}
     </div>
   );
 };
