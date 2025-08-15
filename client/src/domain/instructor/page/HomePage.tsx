@@ -38,7 +38,7 @@ const HomePage = () => {
       rating: faker.number.float({ min: 1, max: 5 }),
       reviews: faker.number.int({ min: 0, max: 500 }),
       price: faker.number.int({ min: 100000, max: 5000000 }),
-      isHeartButton: true,
+      isHeartButton: false,
     };
   };
 
