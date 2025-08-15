@@ -43,7 +43,7 @@ const CourseCurriculumPage = () => {
   let globalVideoIndex = 0;
 
   return (
-    <div>
+    <div className="flex w-full flex-col gap-[1.5rem]">
       {videoListData.map((content) => {
         const startIndex = globalVideoIndex + 1;
         globalVideoIndex += content.videos.length;
