@@ -41,6 +41,7 @@ public class VideoController {
             summary = "동영상 분할 완료 알림 (Lambda)",
             description = "Lambda에서 동영상 분할 완료 후 호출하여 Video 엔티티의 streamable 상태를 true로 변경합니다.")
     @PostMapping("/{videoId}/finalize")
+    @RequireAuth(requireAuth = false) // Lambda에서 호출하므로 인증 불필요
     public ResponseEntity<Void> finalizeVideoUpload(
             @Parameter(description = "강의 ID", example = "1") @PathVariable Long lectureId,
             @Parameter(description = "챕터 ID", example = "1") @PathVariable Long chapterId,
