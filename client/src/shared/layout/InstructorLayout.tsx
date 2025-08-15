@@ -1,11 +1,9 @@
-import InstructorNavbar from "@/domain/instructor/component/InstructorNavbar";
-
 import { Outlet } from "react-router";
 
 const InstructorLayout = () => {
   return (
-    <div className="flex flex-row gap-3">
-      <InstructorNavbar />
+    <div>
+      {/*  Layout 추가 예정 */}
       <Outlet />
     </div>
   );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DatePicker } from "@/domain/instructor/component/DatePicker";
+import { DatePicker } from "@/shared/components/DatePicker";
 
 interface StepDateRangeProps {
   value?: {

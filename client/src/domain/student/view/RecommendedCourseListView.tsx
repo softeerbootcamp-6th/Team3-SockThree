@@ -1,4 +1,4 @@
-import RecommendedCourseListCarousel from "@/domain/student/component/RecommendedCourseListCarousel";
+import RecommendedCourseListCarousel from "@/domain/student/component/homepage/RecommendedCourseListCarousel";
 import { fakerKO as faker } from "@faker-js/faker";
 
 const createRandomLists = () => ({

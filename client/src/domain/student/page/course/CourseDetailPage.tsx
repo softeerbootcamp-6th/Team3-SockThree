@@ -1,22 +1,31 @@
-import { Route, Routes, useLocation } from "react-router";
+import { useLocation, Routes, Route } from "react-router";
+import CourseInfoCardAttend from "@/shared/components/course/CourseInfoCardAttend";
 import CourseDetailWrapper from "@/shared/components/course/CourseDetailWrapper";
+import CourseInfoCardDefault from "@/shared/components/course/CourseInfoCardDefault";
+
+//"/course/:courseId/*" 이내의 페이지
 import CourseDetailDashboardPage from "@/domain/student/page/course/CourseDetailDashboardPage";
+import CourseDetailVideoListPage from "@/domain/student/page/course/CourseDetailVideoListPage";
 
 const CourseDetailPage = () => {
   const location = useLocation();
   const isDashboard = location.pathname.includes("/dashboard");
 
+  const rightSideBarComponent = isDashboard ? (
+    <CourseInfoCardAttend />
+  ) : (
+    <CourseInfoCardDefault status="recruiting" />
+  );
+
   return (
     <CourseDetailWrapper
-      sidebarContent={
-        <div className="w-[20.5rem] bg-white">나의 수강생 현황 컴포넌트</div>
-      }
       isDashboard={isDashboard}
+      sidebarContent={rightSideBarComponent}
     >
       {/*  탭 내부 라우팅 */}
       <Routes>
         <Route index element={<div></div>} />
-        <Route path="curriculum" element={<div>비디오</div>} />
+        <Route path="curriculum" element={<CourseDetailVideoListPage />} />
         <Route path="reviews" element={<div></div>} />
         <Route path="dashboard" element={<CourseDetailDashboardPage />} />
         <Route path="assignments" element={<div></div>} />
