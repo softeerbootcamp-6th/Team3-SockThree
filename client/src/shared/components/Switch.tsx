@@ -4,7 +4,7 @@ import * as SwitchPrimitive from "@radix-ui/react-switch";
 
 import ArrowRight from "@/assets/icons/gradient/arrow_right.svg?react";
 import ArrowLeft from "@/assets/icons/gradient/arrow_left.svg?react";
-import { cn } from "@/shared/shadcn/lib/utils.ts";
+import { cn } from "@/shared/shadcn/lib/utils";
 
 const Switch = ({
   className,
