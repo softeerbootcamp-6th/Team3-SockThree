@@ -49,14 +49,7 @@ public class VideoController {
             @Parameter(description = "HLS 스트리밍 경로") @RequestParam(required = false)
                     String streamingPath) {
 
-        // streamingPath가 없으면 기본 경로 생성
-        if (streamingPath == null) {
-            streamingPath =
-                    String.format(
-                            "lectures/%d/chapters/%d/video/%d/hls", lectureId, chapterId, videoId);
-        }
-
-        videoService.finalizeVideoUpload(videoId, streamingPath);
+        videoService.finalizeVideoUpload(lectureId, chapterId, videoId, streamingPath);
         return ResponseEntity.ok().build();
     }
 }

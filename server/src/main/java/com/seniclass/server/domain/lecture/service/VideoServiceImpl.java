@@ -88,11 +88,19 @@ public class VideoServiceImpl implements VideoService {
     }
 
     @Override
-    public void finalizeVideoUpload(Long videoId, String streamingPath) {
+    public void finalizeVideoUpload(
+            Long lectureId, Long chapterId, Long videoId, String streamingPath) {
         Video video =
                 videoRepository
                         .findById(videoId)
                         .orElseThrow(() -> new CommonException(VideoErrorCode.VIDEO_NOT_FOUND));
+
+        // streamingPath가 null인 경우 기본 경로 생성
+        if (streamingPath == null) {
+            streamingPath =
+                    String.format(
+                            "lectures/%d/chapters/%d/video/%d/hls", lectureId, chapterId, videoId);
+        }
 
         video.finalizeVideoUpload(streamingPath);
         videoRepository.save(video);

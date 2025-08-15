@@ -8,5 +8,5 @@ public interface VideoService {
     VideoUploadResponse createVideoForUpload(
             Long userId, Long lectureId, Long chapterId, VideoUploadRequest request);
 
-    void finalizeVideoUpload(Long videoId, String streamingPath);
+    void finalizeVideoUpload(Long lectureId, Long chapterId, Long videoId, String streamingPath);
 }
