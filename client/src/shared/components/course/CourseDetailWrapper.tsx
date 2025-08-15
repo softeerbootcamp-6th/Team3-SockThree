@@ -28,7 +28,7 @@ const CourseDetailWrapper = ({
 
   if (isDashboard) {
     return (
-      <MainContainer>
+      <>
         <div className="flex w-full flex-row items-start justify-between gap-[1rem] pt-[1.5rem]">
           <section className="mb-[1rem] flex w-full flex-col items-start justify-start gap-[1rem]">
             {headerSection}
@@ -37,12 +37,12 @@ const CourseDetailWrapper = ({
         </div>
         <CourseDetailTabBar isEnrolled={true} />
         <div className="mt-[1rem] w-full">{children}</div>
-      </MainContainer>
+      </>
     );
   }
 
   return (
-    <MainContainer>
+    <>
       <div className="flex w-full flex-row gap-[1rem] py-6">
         <section className="flex flex-1 flex-col gap-[1rem]">
           {headerSection}
@@ -55,7 +55,7 @@ const CourseDetailWrapper = ({
           </aside>
         )}
       </div>
-    </MainContainer>
+    </>
   );
 };
 
