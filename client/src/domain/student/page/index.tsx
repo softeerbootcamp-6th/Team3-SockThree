@@ -7,3 +7,4 @@ export { default as HeartPage } from "@/domain/student/page/mypage/HeartPage";
 export { default as CurrentCoursePage } from "@/domain/student/page/mypage/CurrentCoursePage";
 export { default as EndCoursePage } from "@/domain/student/page/mypage/EndCoursePage";
 export { default as CourseDetailPage } from "@/domain/student/page/course/CourseDetailPage";
+export { default as VideoPlayPage } from "@/domain/student/page/course/VideoPlayPage";
