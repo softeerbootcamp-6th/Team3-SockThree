@@ -15,7 +15,7 @@ interface CourseDetailCardProps {
   rating?: number;
   reviews?: number;
   price?: number;
-  heartButtonInvisible?: boolean;
+  isHeartButton?: boolean;
   defaultFavorite?: boolean;
   onClick?: () => void;
 }
@@ -30,7 +30,7 @@ const CourseDetailCard = ({
   rating = 4.5,
   reviews = 120,
   price = 2000000,
-  heartButtonInvisible = false,
+  isHeartButton = false,
   defaultFavorite = false,
   onClick = () => {},
 }: CourseDetailCardProps) => {
@@ -63,7 +63,7 @@ const CourseDetailCard = ({
         />
 
         {/* 하트 버튼 (즐겨찾기) */}
-        {!heartButtonInvisible && (
+        {!isHeartButton && (
           <div className="absolute top-[1.4375rem] right-[1.4375rem] z-10">
             <CircleButton
               variant="ghost"

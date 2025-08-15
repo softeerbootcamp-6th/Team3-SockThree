@@ -12,7 +12,7 @@ interface CourseDetailCardProps {
   rating?: number;
   reviews?: number;
   price?: number;
-  heartButtonInvisible?: boolean;
+  isHeartButton?: boolean;
   defaultFavorite?: boolean;
 }
 
@@ -48,7 +48,7 @@ const CourseCardContainer = ({ cardItems }: CourseCardContainerProps) => {
                 rating={item.rating}
                 reviews={item.reviews}
                 price={item.price}
-                heartButtonInvisible={item.heartButtonInvisible}
+                isHeartButton={item.isHeartButton}
                 defaultFavorite={item.defaultFavorite}
                 onClick={() => handleCardClick(item.courseId)}
               />
