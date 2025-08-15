@@ -13,6 +13,9 @@ const progressBarVariant = tv({
       xs: {
         root: "w-[6.25rem]",
       },
+      sm: {
+        root: "w-[12.5rem]",
+      },
       md: {
         root: "w-[20rem]",
       },
@@ -28,6 +31,9 @@ const progressBarVariant = tv({
         label: "text-white typo-body-5",
       },
       smallRatio: {
+        label: "typo-label-1",
+      },
+      smallPercent: {
         label: "typo-label-1",
       },
     },
@@ -51,8 +57,8 @@ interface ProgressBarProps {
   current?: number;
   max?: number;
   labelText?: string;
-  type?: "percent" | "ratio" | "smallRatio";
-  size?: "md" | "lg" | "xs";
+  type?: "percent" | "ratio" | "smallRatio" | "smallPercent";
+  size?: "md" | "lg" | "xs" | "sm";
   color?: "gradient" | "mono";
 }
 
@@ -65,7 +71,6 @@ const ProgressBar = ({
   size = "md",
   color = "gradient",
 }: ProgressBarProps) => {
-  // value가 주어지지 않았을 경우 current와 max를 이용해 계산
   const computedValue = computeValue(value ?? 0, current, max);
 
   const { root, track, fill, label } = progressBarVariant({
