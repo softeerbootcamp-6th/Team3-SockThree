@@ -90,17 +90,18 @@ public class LectureServiceImpl implements LectureService {
                         imageKey,
                         teacher);
 
-        LectureResponse savedLecture = LectureResponse.from(lectureRepository.save(lecture));
+        Lecture savedLecture = lectureRepository.save(lecture);
 
         request.uploadTimeList()
                 .forEach(
                         uploadTime -> {
-                            uploadTimeService.createUploadTime(uploadTime, lecture);
+                            uploadTimeService.createUploadTime(uploadTime, savedLecture);
                         });
 
-        widgetSettingService.createDefaultWidgetSettings(lecture);
+        widgetSettingService.createDefaultWidgetSettings(savedLecture);
 
-        return savedLecture;
+        String presignedImageURL = fileStorageService.getFileUrl(imageKey);
+        return LectureResponse.from(savedLecture, presignedImageURL);
     }
 
     @Override
@@ -145,7 +146,8 @@ public class LectureServiceImpl implements LectureService {
                 request.description(),
                 imageKey);
 
-        return LectureResponse.from(lecture);
+        String presignedImageURL = fileStorageService.getFileUrl(imageKey);
+        return LectureResponse.from(lecture, presignedImageURL);
     }
 
     public void deleteLecture(Long lectureId) {
