@@ -59,6 +59,8 @@ export const useLogin = () => {
   return useMutation<LoginResponse, Error, LoginRequest>({
     mutationFn: login,
     onSuccess: (data) => {
+      if (!data.accessToken)
+        throw new Error("Access token is missing in login response");
       token.set(data.accessToken);
       qc.setQueryData(["token", "role"], data);
       qc.invalidateQueries({ queryKey: ["validate"] });
