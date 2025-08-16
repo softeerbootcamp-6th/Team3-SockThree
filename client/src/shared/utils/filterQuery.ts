@@ -1,32 +1,47 @@
-import type { FilterState } from "@/domain/student/page/course/SearchResultPage";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export const parseFilterState = <
+  T extends Record<string, string | string[] | undefined>,
+>(
+  params: URLSearchParams,
+  arrayKeys: (keyof T)[]
+): T => {
+  const state = {} as T;
 
-export const parseFilterState = (params: URLSearchParams): FilterState => {
-  return {
-    query: params.get("q") || undefined,
-    category: params.get("category") || undefined,
-    subCategories:
-      params.get("subcategories")?.split(",").filter(Boolean) || [],
-    sort: params.get("sort") || undefined,
-  };
+  arrayKeys.forEach((key) => {
+    (state as any)[key] = [];
+  });
+
+  params.forEach((value, key) => {
+    if (arrayKeys.includes(key as keyof T)) {
+      (state as any)[key] = value.split(",").filter(Boolean);
+    } else {
+      (state as any)[key] = value || undefined;
+    }
+  });
+
+  return state;
 };
 
-export const serializeFilterState = (filter: FilterState): URLSearchParams => {
+export const serializeFilterState = <
+  T extends Record<string, string | string[] | undefined>,
+>(
+  filter: T,
+  arrayKeys: (keyof T)[]
+): URLSearchParams => {
   const params = new URLSearchParams();
 
-  if (filter.query) {
-    params.set("q", filter.query);
-  }
-  if (filter.category) {
-    params.set("category", filter.category);
-  }
+  Object.entries(filter).forEach(([key, value]) => {
+    if (value === undefined) return;
 
-  if (filter.subCategories.length > 0) {
-    params.set("subcategories", filter.subCategories.join(","));
-  }
-
-  if (filter.sort) {
-    params.set("sort", filter.sort);
-  }
+    if (arrayKeys.includes(key as keyof T)) {
+      const arr = value as string[];
+      if (arr.length > 0) {
+        params.set(key, arr.join(","));
+      }
+    } else {
+      params.set(key, value as string);
+    }
+  });
 
   return params;
 };

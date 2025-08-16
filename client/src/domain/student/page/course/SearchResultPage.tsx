@@ -13,16 +13,20 @@ export type FilterState = {
   category?: string;
   subCategories: string[];
   sort?: string;
-  // 추가 될 수 있음
 };
 
 const SearchResultPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const filterState: FilterState = parseFilterState(searchParams);
+  const filterState: FilterState = parseFilterState<FilterState>(searchParams, [
+    "subCategories",
+  ]);
 
-  const handleFilterChange = (next: FilterState) => {
-    setSearchParams(serializeFilterState(next), { replace: true }); // replace 옵션 추가
+  const handleFilterChange = (newFilter: FilterState) => {
+    setSearchParams(
+      serializeFilterState<FilterState>(newFilter, ["subCategories"]),
+      { replace: true }
+    );
   };
 
   return (
