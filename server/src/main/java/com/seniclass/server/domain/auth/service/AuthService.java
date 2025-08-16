@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -41,12 +42,7 @@ public class AuthService {
         setRefreshTokenCookie(response, refreshToken);
 
         log.info("User logged in successfully: {}", user.getEmail());
-        return new LoginResponse(
-                accessToken,
-                "Bearer",
-                jwtTokenProvider.getAccessTokenValidityInMilliseconds() / 1000,
-                new LoginResponse.UserInfo(
-                        user.getId(), user.getEmail(), user.getRole().getValue()));
+        return new LoginResponse(accessToken, user.getRole());
     }
 
     private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
@@ -128,7 +124,8 @@ public class AuthService {
     }
 
     @Transactional
-    public RegisterResponse registerStudent(StudentRegisterRequest request) {
+    public RegisterResponse registerStudent(
+            StudentRegisterRequest request, MultipartFile profileImage) {
         if (!request.isPasswordMatching()) {
             throw new CommonException(AuthErrorCode.PASSWORD_MISMATCH);
         }
@@ -142,14 +139,16 @@ public class AuthService {
                         request.email(),
                         request.age(),
                         request.gender(),
-                        encodedPassword);
+                        encodedPassword,
+                        profileImage);
         log.info("Student registered successfully: {} ({})", request.name(), request.email());
         return new RegisterResponse(
                 userId, request.name(), request.email(), "STUDENT", "회원가입이 완료되었습니다");
     }
 
     @Transactional
-    public RegisterResponse registerTeacher(TeacherRegisterRequest request) {
+    public RegisterResponse registerTeacher(
+            TeacherRegisterRequest request, MultipartFile profileImage) {
         if (!request.isPasswordMatching()) {
             throw new CommonException(AuthErrorCode.PASSWORD_MISMATCH);
         }
@@ -164,7 +163,8 @@ public class AuthService {
                         request.age(),
                         request.gender(),
                         encodedPassword,
-                        request.instruction());
+                        request.instruction(),
+                        profileImage);
 
         for (CareerRegisterRequest registerRequest : request.careerList()) {
             careerService.createCareer(registerRequest, savedTeacher);

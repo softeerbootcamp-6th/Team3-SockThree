@@ -2,10 +2,7 @@ package com.seniclass.server.domain.widget.controller;
 
 import com.seniclass.server.domain.auth.domain.RequireAuth;
 import com.seniclass.server.domain.auth.enums.UserRole;
-import com.seniclass.server.domain.widget.dto.response.AssignmentWidgetResponse;
-import com.seniclass.server.domain.widget.dto.response.LectureStatisticsResponse;
-import com.seniclass.server.domain.widget.dto.response.QnaWidgetResponse;
-import com.seniclass.server.domain.widget.dto.response.ReviewWidgetResponse;
+import com.seniclass.server.domain.widget.dto.response.*;
 import com.seniclass.server.domain.widget.service.LectureStatisticsService;
 import com.seniclass.server.domain.widget.service.WidgetService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -94,5 +91,20 @@ public class WidgetController {
     public QnaWidgetResponse getQnaWidget(
             @Parameter(description = "강의 ID") @PathVariable Long lectureId) {
         return widgetService.getQnaWidget(lectureId);
+    }
+
+    @Operation(
+            summary = "강사 정보 위젯 데이터 조회 (수강생, 강사)",
+            description =
+                    """
+            특정 강의의 강사 정보 위젯에 필요한 데이터를 조회합니다.
+
+            포함되는 정보:
+            1. 강사의 이름, 나이, 성별, 자기소개, 프로필 이미지
+            """)
+    @GetMapping("/teacher")
+    public TeacherWidgetResponse getTeacherWidget(
+            @Parameter(description = "강의 ID") @PathVariable Long lectureId) {
+        return widgetService.getTeacherWidget(lectureId);
     }
 }

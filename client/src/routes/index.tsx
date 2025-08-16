@@ -5,7 +5,7 @@ import * as S from "@/domain/student/page/index";
 import * as I from "@/domain/instructor/page/index";
 
 /* Layout */
-import RootLayout, { rootLoader } from "@/routes/RootLayout";
+import RootLayout, { rootLoader } from "@/shared/layout/RootLayout";
 import StudentLayout from "@/shared/layout/StudentLayout";
 import InstructorLayout from "@/shared/layout/InstructorLayout";
 import LogoHeaderLayout from "@/shared/layout/LogoHeaderLayout";

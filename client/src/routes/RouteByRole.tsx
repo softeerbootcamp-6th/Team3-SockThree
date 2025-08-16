@@ -1,6 +1,6 @@
 import type { UserType } from "@/shared/types/auth";
-import { useAuth } from "@/shared/context/AuthContext";
 import Error404 from "@/shared/page/error/Error404";
+import { useAuth } from "@/shared/hook/useAuth";
 
 export const RouteByRole = ({
   components,
