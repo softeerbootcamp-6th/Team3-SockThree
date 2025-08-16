@@ -3,6 +3,7 @@ package com.seniclass.server.domain.widget.service;
 import com.seniclass.server.domain.widget.dto.response.AssignmentWidgetResponse;
 import com.seniclass.server.domain.widget.dto.response.QnaWidgetResponse;
 import com.seniclass.server.domain.widget.dto.response.ReviewWidgetResponse;
+import com.seniclass.server.domain.widget.dto.response.TeacherWidgetResponse;
 
 public interface WidgetService {
 
@@ -14,4 +15,7 @@ public interface WidgetService {
 
     /** QNA 위젯 데이터 조회 - 해당 강의의 최근 질문 7개 - 해당 강의에서 내 질문 최대 7개 */
     QnaWidgetResponse getQnaWidget(Long lectureId);
+
+    /** 강사 정보 위젯 데이터 조회 - 강사의 이름, 나이, 성별, 자기소개, 프로필 이미지 */
+    TeacherWidgetResponse getTeacherWidget(Long lectureId);
 }

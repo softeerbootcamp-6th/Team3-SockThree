@@ -34,4 +34,11 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     /** 특정 학생의 특정 강의에 대한 리뷰 존재 여부 확인 */
     boolean existsByStudentIdAndLectureId(Long studentId, Long lectureId);
+
+    // * 강의 ID로 평균 평점 조회 */
+    @Query("SELECT AVG(r.rating) FROM Review r WHERE r.lecture.id = :lectureId")
+    Double findAverageRatingByLectureId(Long lectureId);
+
+    // * 강사 ID로 리뷰 개수 조회 */
+    Integer countByLectureTeacherId(Long teacherId);
 }
