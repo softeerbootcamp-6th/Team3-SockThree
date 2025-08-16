@@ -1,8 +1,8 @@
 package com.seniclass.server.domain.lecture.dto.request;
 
 import com.seniclass.server.domain.lecture.enums.Level;
+import com.seniclass.server.domain.lecture.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.global.exception.CommonException;
-import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import java.time.LocalDate;

@@ -1,6 +1,7 @@
 package com.seniclass.server.domain.widget.service;
 
 import com.seniclass.server.domain.lecture.domain.Lecture;
+import com.seniclass.server.domain.lecture.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.lecture.repository.VideoRepository;
 import com.seniclass.server.domain.student.enums.Gender;
@@ -14,7 +15,6 @@ import com.seniclass.server.domain.widget.dto.response.LectureStatisticsResponse
 import com.seniclass.server.domain.widget.dto.response.LectureStatisticsResponse.VideoStatistics;
 import com.seniclass.server.domain.widget.repository.LectureStatisticsRepository;
 import com.seniclass.server.global.exception.CommonException;
-import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

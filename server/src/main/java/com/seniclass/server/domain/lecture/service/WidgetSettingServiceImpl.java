@@ -7,12 +7,12 @@ import com.seniclass.server.domain.lecture.dto.request.WidgetSettingUpdateReques
 import com.seniclass.server.domain.lecture.dto.response.WidgetSettingResponse;
 import com.seniclass.server.domain.lecture.enums.WidgetSize;
 import com.seniclass.server.domain.lecture.enums.WidgetType;
+import com.seniclass.server.domain.lecture.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.domain.lecture.exception.errorcode.WidgetSettingErrorCode;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.lecture.repository.WidgetSettingRepository;
+import com.seniclass.server.domain.user.exception.errorcode.UserErrorCode;
 import com.seniclass.server.global.exception.CommonException;
-import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
-import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;

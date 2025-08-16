@@ -14,6 +14,7 @@ public enum StudentErrorCode implements BaseErrorCode {
 
     // 404 Not Found
     STUDENT_NOT_FOUND(HttpStatus.NOT_FOUND, "학생을 찾을 수 없습니다."),
+    STUDENT_NOT_ENROLLED(HttpStatus.NOT_FOUND, "해당 강의에 수강 등록되지 않은 학생입니다."),
 
     // 409 Conflict
     EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "이미 등록된 이메일입니다."),

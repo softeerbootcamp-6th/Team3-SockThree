@@ -8,6 +8,7 @@ import com.seniclass.server.domain.lecture.domain.UploadTime;
 import com.seniclass.server.domain.lecture.dto.request.LectureCreateRequest;
 import com.seniclass.server.domain.lecture.dto.request.LectureUpdateRequest;
 import com.seniclass.server.domain.lecture.dto.response.*;
+import com.seniclass.server.domain.lecture.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.domain.lecture.repository.AssignmentRepository;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.lecture.repository.VideoRepository;
@@ -18,9 +19,8 @@ import com.seniclass.server.domain.student.repository.LectureEnrollmentRepositor
 import com.seniclass.server.domain.student.repository.VideoProgressRepository;
 import com.seniclass.server.domain.teacher.domain.Teacher;
 import com.seniclass.server.domain.teacher.repository.TeacherRepository;
+import com.seniclass.server.domain.user.exception.errorcode.UserErrorCode;
 import com.seniclass.server.global.exception.CommonException;
-import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
-import com.seniclass.server.global.exception.errorcode.UserErrorCode;
 import com.seniclass.server.global.service.FileStorageService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

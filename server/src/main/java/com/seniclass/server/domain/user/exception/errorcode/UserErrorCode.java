@@ -1,5 +1,6 @@
-package com.seniclass.server.global.exception.errorcode;
+package com.seniclass.server.domain.user.exception.errorcode;
 
+import com.seniclass.server.global.exception.errorcode.BaseErrorCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

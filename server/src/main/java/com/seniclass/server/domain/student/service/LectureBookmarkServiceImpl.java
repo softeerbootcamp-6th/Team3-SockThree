@@ -2,6 +2,7 @@ package com.seniclass.server.domain.student.service;
 
 import com.seniclass.server.domain.auth.service.AuthContext;
 import com.seniclass.server.domain.lecture.domain.Lecture;
+import com.seniclass.server.domain.lecture.exception.errorcode.LectureErrorCode;
 import com.seniclass.server.domain.lecture.repository.LectureRepository;
 import com.seniclass.server.domain.student.domain.LectureBookmark;
 import com.seniclass.server.domain.student.domain.Student;
@@ -12,7 +13,6 @@ import com.seniclass.server.domain.student.exception.errorcode.StudentErrorCode;
 import com.seniclass.server.domain.student.repository.LectureBookmarkRepository;
 import com.seniclass.server.domain.student.repository.StudentRepository;
 import com.seniclass.server.global.exception.CommonException;
-import com.seniclass.server.global.exception.errorcode.LectureErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
