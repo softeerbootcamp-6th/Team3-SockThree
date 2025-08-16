@@ -5,8 +5,6 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "student": "vite --port 5173",
-    "instructor": "vite --port 5174",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format:check": "prettier . --check"
