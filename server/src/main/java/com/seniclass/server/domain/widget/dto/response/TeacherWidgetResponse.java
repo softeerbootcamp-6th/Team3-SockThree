@@ -2,7 +2,7 @@ package com.seniclass.server.domain.widget.dto.response;
 
 import java.util.List;
 
-public record TeacherInfoLargeWidgetResponse(
+public record TeacherWidgetResponse(
         String profileImageUrl,
         String name,
         Integer qnaResponseRate,
@@ -14,7 +14,7 @@ public record TeacherInfoLargeWidgetResponse(
         Integer experienceCareerCount,
         Integer certificateCareerCount,
         Integer totalReviewCount) {
-    public static TeacherInfoLargeWidgetResponse of(
+    public static TeacherWidgetResponse of(
             String profileImageUrl,
             String name,
             Integer qnaResponseRate,
@@ -26,7 +26,7 @@ public record TeacherInfoLargeWidgetResponse(
             Integer experienceCareerCount,
             Integer certificateCareerCount,
             Integer totalReviewCount) {
-        return new TeacherInfoLargeWidgetResponse(
+        return new TeacherWidgetResponse(
                 profileImageUrl,
                 name,
                 qnaResponseRate,
