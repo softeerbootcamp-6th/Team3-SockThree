@@ -5,9 +5,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.DayOfWeek;
 import java.time.LocalTime;
 
+@Schema(description = "업로드 시간 응답")
 public record UploadTimeResponse(
-        @Schema(description = "요일", example = "월") String dayOfWeek,
-        @Schema(description = "시간", example = "HH:mm") LocalTime scheduledAt) {
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "요일", example = "월")
+                String dayOfWeek,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "시간", example = "HH:mm")
+                LocalTime scheduledAt) {
     public static UploadTimeResponse from(UploadTime uploadTime) {
         DayOfWeek dayOfWeek = uploadTime.getDayOfWeek();
         String dayOfWeekString =
