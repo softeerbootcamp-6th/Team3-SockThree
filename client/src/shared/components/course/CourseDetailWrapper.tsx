@@ -1,14 +1,13 @@
 import CourseDetailTabBar from "@/shared/components/course/CourseDetailTabBar";
 import CourseDetailHeader from "@/shared/components/course/CourseDetailHeader";
+import { Outlet } from "react-router";
 
 interface CourseDetailWrapperProps {
-  children: React.ReactNode;
   sidebarContent?: React.ReactNode;
   isDashboard?: boolean;
 }
 
 const CourseDetailWrapper = ({
-  children,
   sidebarContent,
   isDashboard = false,
 }: CourseDetailWrapperProps) => {
@@ -22,7 +21,9 @@ const CourseDetailWrapper = ({
           {sidebarContent && <div>{sidebarContent}</div>}
         </div>
         <CourseDetailTabBar isEnrolled={true} />
-        <div className="mt-[1rem] w-full">{children}</div>
+        <div className="mt-[1rem] w-full">
+          <Outlet />
+        </div>
       </>
     );
   }
@@ -33,7 +34,9 @@ const CourseDetailWrapper = ({
         <section className="flex flex-1 flex-col gap-[1rem]">
           <CourseDetailHeader courseInfo={courseInfo} />
           <CourseDetailTabBar isEnrolled={true} />
-          <div className="flex-1">{children}</div>
+          <div className="flex-1">
+            <Outlet />
+          </div>
         </section>
         {sidebarContent && (
           <aside>

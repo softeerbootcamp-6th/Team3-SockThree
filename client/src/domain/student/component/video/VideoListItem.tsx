@@ -4,23 +4,22 @@ import { formatDate } from "@/shared/utils/dateUtils";
 
 import { tv } from "tailwind-variants";
 
-interface VideoListItemProps {
-  index?: number;
-  title?: string;
-  duration?: number;
-  updatedDate?: Date;
-  watchedTime?: number;
-  isCompleted?: boolean;
-}
+import type { VideoData } from "@/domain/student/types/video";
 
-const VideoListItem = ({
-  index = 1,
-  title = "싹쓰리 골프의 시작",
-  duration = 100,
-  updatedDate = new Date(),
-  watchedTime = 30,
-  isCompleted = false,
-}: VideoListItemProps) => {
+interface VideoListItemProps {
+  index: number;
+  video: VideoData;
+  onVideoClick: (videoId: number) => void;
+}
+const VideoListItem = ({ index, video, onVideoClick }: VideoListItemProps) => {
+  const {
+    videoTitle,
+    duration,
+    updatedDate,
+    watchedTime = 0,
+    isCompleted = false,
+  } = video;
+
   const formattedDate = formatDate(updatedDate, ".", true);
 
   const {
@@ -38,13 +37,13 @@ const VideoListItem = ({
       {/* 왼쪽: 재생버튼 + 제목 + 시간 */}
       <div className={left()}>
         {/* 재생 버튼 */}
-        <button className={playButton()}>
+        <button className={playButton()} onClick={() => onVideoClick(video.id)}>
           <TriangleRightIcon className={playButtonIcon()} />
         </button>
 
         {/* 순서 + 제목 + 시간 */}
         <span className={titleCls()}>
-          {index}. {title}
+          {index}. {videoTitle}
         </span>
         <div className="flex flex-row items-center gap-[.625rem]">
           <ClockIcon className="w-[1.1356rem] text-gray-400" />
