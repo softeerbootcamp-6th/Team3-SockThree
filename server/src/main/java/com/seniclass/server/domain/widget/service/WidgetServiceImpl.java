@@ -207,7 +207,7 @@ public class WidgetServiceImpl implements WidgetService {
                 careerRepository.countByTeacherIdAndType(teacher.getId(), Type.CERTIFICATE);
 
         // 9. 강사의 총 리뷰 수
-        Integer totalReviewCount = reviewRepository.countByTeacherId(teacher.getId());
+        Integer totalReviewCount = reviewRepository.countByLectureTeacherId(teacher.getId());
 
         return TeacherWidgetResponse.of(
                 presignedImageURL,

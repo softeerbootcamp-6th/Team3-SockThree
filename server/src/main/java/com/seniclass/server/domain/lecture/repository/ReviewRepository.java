@@ -40,6 +40,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Double findAverageRatingByLectureId(Long lectureId);
 
     // * 강사 ID로 리뷰 개수 조회 */
-    @Query("SELECT COUNT(r) FROM Review r WHERE r.lecture.teacher.id = :teacherId")
-    Integer countByTeacherId(Long teacherId);
+    Integer countByLectureTeacherId(Long teacherId);
 }
