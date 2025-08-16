@@ -16,6 +16,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.model.ServerSideEncryption;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.GetObjectPresignRequest;
+import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 @Service
 @RequiredArgsConstructor
@@ -74,5 +75,27 @@ public class S3Service {
                         .build();
 
         return s3Presigner.presignGetObject(presignRequest).url().toString();
+    }
+
+    public String generateUploadPresignedUrl(String key, String contentType) {
+        return generateUploadPresignedUrl(key, contentType, Duration.ofHours(1));
+    }
+
+    public String generateUploadPresignedUrl(String key, String contentType, Duration expiration) {
+        PutObjectRequest putObjectRequest =
+                PutObjectRequest.builder()
+                        .bucket(bucket)
+                        .key(key)
+                        .contentType(contentType)
+                        .serverSideEncryption(ServerSideEncryption.AES256)
+                        .build();
+
+        PutObjectPresignRequest presignRequest =
+                PutObjectPresignRequest.builder()
+                        .signatureDuration(expiration)
+                        .putObjectRequest(putObjectRequest)
+                        .build();
+
+        return s3Presigner.presignPutObject(presignRequest).url().toString();
     }
 }

@@ -1,24 +1,28 @@
-import CourseInfoCard from "@/shared/components/course/CourseInfoCard";
+import { Route, Routes, useLocation } from "react-router";
+import CourseDetailWrapper from "@/shared/components/course/CourseDetailWrapper";
+import CourseDetailDashboardPage from "@/domain/student/page/course/CourseDetailDashboardPage";
 
 const CourseDetailPage = () => {
+  const location = useLocation();
+  const isDashboard = location.pathname.includes("/dashboard");
+
   return (
-    <div className="flex h-full w-[75rem] flex-col overflow-y-auto pt-[4rem] pr-[3.5625rem] pb-[3.75rem] pl-[2.8125rem]">
-      <CourseInfoCard
-        courseInfo={{
-          id: 1,
-          title: "골프 기초부터 마스터하기",
-          description:
-            "골프의 기초부터 고급 기술까지 배울 수 있는 종합 과정입니다.",
-          heartCount: 100,
-          tags: ["운동", "골프", "월/수/금", "D-7"],
-          teacherName: "강사 이름",
-          nowStudents: 30,
-          maxStudents: 30,
-          courseImg:
-            "https://t4.ftcdn.net/jpg/02/42/33/71/360_F_242337142_2rtf0nXrG4N1MGs8gKGswtg5si1TfPEX.jpg",
-        }}
-      />
-    </div>
+    <CourseDetailWrapper
+      sidebarContent={
+        <div className="w-[20.5rem] bg-white">나의 수강생 현황 컴포넌트</div>
+      }
+      isDashboard={isDashboard}
+    >
+      {/*  탭 내부 라우팅 */}
+      <Routes>
+        <Route index element={<div></div>} />
+        <Route path="curriculum" element={<div>비디오</div>} />
+        <Route path="reviews" element={<div></div>} />
+        <Route path="dashboard" element={<CourseDetailDashboardPage />} />
+        <Route path="assignments" element={<div></div>} />
+        <Route path="questions" element={<div></div>} />
+      </Routes>
+    </CourseDetailWrapper>
   );
 };
 

@@ -5,7 +5,7 @@ import RoundTooltip from "@/shared/components/RoundTooltip";
 import HeartIcon from "@/assets/icons/default/heart.svg?react";
 import PersonIcon from "@/assets/icons/default/person.svg?react";
 
-interface Course {
+export interface Course {
   id: number;
   title: string;
   description?: string;

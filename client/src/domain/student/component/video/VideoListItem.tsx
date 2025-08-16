@@ -65,7 +65,7 @@ const VideoListItem = ({
 const VideoListItemVariant = tv({
   slots: {
     container:
-      "flex w-[72.4375rem] items-center justify-between rounded-[.9375rem] border  px-[1.125rem] py-[.9375rem]",
+      "flex items-center justify-between rounded-[.9375rem] border  px-[1.125rem] py-[.9375rem]",
     left: "flex w-[31.25rem] items-center gap-[1.5625rem]",
     playButton:
       "flex h-[3.3125rem] w-[3.3125rem] cursor-pointer items-center justify-center rounded-full border  bg-white p-[.875rem] transition-colors duration-200 ",

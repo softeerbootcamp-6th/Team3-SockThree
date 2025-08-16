@@ -14,7 +14,7 @@ public interface LectureQnaRepository extends JpaRepository<LectureQna, Long> {
     /** 학생 ID로 QnA 목록 조회 (최신순) */
     Page<LectureQna> findByStudentIdOrderByCreatedDtDesc(Long studentId, Pageable pageable);
 
-    /** 강의 ID로 QnA 목록 조회 (최신순) */
+    /** 강의 ID로 QnA 목록 조회 (최신순) - Page 반환 */
     Page<LectureQna> findByLectureIdOrderByCreatedDtDesc(Long lectureId, Pageable pageable);
 
     /** 학생의 총 질문 수 */
@@ -30,6 +30,10 @@ public interface LectureQnaRepository extends JpaRepository<LectureQna, Long> {
 
     /** 답변된 질문 수 (강의별) */
     long countByLectureIdAndAnswerIsNotNull(Long lectureId);
+
+    /** 위젯용: 특정 강의에서 특정 학생의 질문 조회 - Page 반환 */
+    Page<LectureQna> findByStudentIdAndLectureIdOrderByCreatedDtDesc(
+            Long studentId, Long lectureId, Pageable pageable);
 
     /** 강의별 평균 답변률 (답변된 질문 수 / 총 질문 수) */
     @Query(

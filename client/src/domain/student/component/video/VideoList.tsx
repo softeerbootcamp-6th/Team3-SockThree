@@ -35,7 +35,7 @@ const VideoList = ({
   return (
     <div
       id={`${contentsId}`}
-      className="flex w-[74.875rem] flex-col gap-4 rounded-xl bg-white px-[1.625rem] py-[1.5rem] transition-all duration-300 ease-in-out"
+      className="flex w-full flex-col gap-4 rounded-xl bg-white px-[1.625rem] py-[1.5rem] transition-all duration-300 ease-in-out"
     >
       {/* 헤더 */}
       <div className="flex items-center justify-between">

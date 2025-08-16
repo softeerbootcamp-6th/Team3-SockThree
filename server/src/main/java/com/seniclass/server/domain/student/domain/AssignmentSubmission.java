@@ -21,6 +21,9 @@ public class AssignmentSubmission extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    @Column(columnDefinition = "TEXT")
+    private String feedback;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
@@ -31,11 +34,16 @@ public class AssignmentSubmission extends BaseTimeEntity {
 
     @Builder(access = AccessLevel.PRIVATE)
     private AssignmentSubmission(
-            Student student, Assignment assignment, String fileUrl, String content) {
+            Student student,
+            Assignment assignment,
+            String fileUrl,
+            String content,
+            String feedback) {
         this.student = student;
         this.assignment = assignment;
         this.fileUrl = fileUrl;
         this.content = content;
+        this.feedback = feedback;
     }
 
     public static AssignmentSubmission createAssignmentSubmissionWithFile(
@@ -54,5 +62,9 @@ public class AssignmentSubmission extends BaseTimeEntity {
 
     public void updateContent(String content) {
         this.content = content;
+    }
+
+    public void updateFeedback(String feedback) {
+        this.feedback = feedback;
     }
 }
