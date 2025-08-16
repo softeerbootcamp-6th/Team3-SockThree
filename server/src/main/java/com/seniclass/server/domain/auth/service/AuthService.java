@@ -42,12 +42,7 @@ public class AuthService {
         setRefreshTokenCookie(response, refreshToken);
 
         log.info("User logged in successfully: {}", user.getEmail());
-        return new LoginResponse(
-                accessToken,
-                "Bearer",
-                jwtTokenProvider.getAccessTokenValidityInMilliseconds() / 1000,
-                new LoginResponse.UserInfo(
-                        user.getId(), user.getEmail(), user.getRole().getValue()));
+        return new LoginResponse(accessToken, user.getRole());
     }
 
     private void setRefreshTokenCookie(HttpServletResponse response, String refreshToken) {
