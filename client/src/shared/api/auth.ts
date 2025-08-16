@@ -1,8 +1,8 @@
-import { createApi } from "@/shared/api/createApi";
+import { createApi } from "@/shared/api/core/createApi";
 import type { Components } from "@/shared/types/openapi-type";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import { token } from "@/shared/api/token";
+import { token } from "@/shared/api/core/token";
 
 /* endpoint 정의 */
 const authApi = createApi("/auth");

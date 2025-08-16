@@ -1,4 +1,4 @@
-import { request } from "@/shared/api/http";
+import { request } from "@/shared/api/core/http";
 
 export function createApi(basePath: string) {
   return {

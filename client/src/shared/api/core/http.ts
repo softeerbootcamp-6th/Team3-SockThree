@@ -1,7 +1,7 @@
 // src/shared/api/client/http.ts
-import { token } from "@/shared/api/token";
-import { ApiError } from "@/shared/api/error";
-import { withAutoRefresh } from "@/shared/api/refresh";
+import { token } from "@/shared/api/core/token";
+import { ApiError } from "@/shared/api/core/error";
+import { withAutoRefresh } from "@/shared/api/core/refresh";
 
 type RequestOptions<TBody = unknown> = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";

@@ -1,6 +1,6 @@
 import { redirect } from "react-router";
 import type { UserType } from "@/shared/types/auth";
-import { token } from "@/shared/api/token";
+import { token } from "@/shared/api/core/token";
 import { validate } from "@/shared/api/auth";
 
 export const checkAuth = async () => {
