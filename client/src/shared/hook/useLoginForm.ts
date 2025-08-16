@@ -1,5 +1,7 @@
 import { useState } from "react";
-import { useLogin } from "@/shared/api/auth";
+import { login } from "@/shared/api/auth";
+import { useNavigate } from "react-router";
+import { token } from "@/shared/api/core/token";
 
 interface FormErrors {
   email?: string;
@@ -12,9 +14,9 @@ interface LoginFormData {
 }
 
 export const useLoginForm = () => {
-  const { mutate: loginMutate, isPending: isLoading } = useLogin();
+  const navigate = useNavigate();
 
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -84,12 +86,21 @@ export const useLoginForm = () => {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    loginMutate(formData, {
-      onError: (error) => {
-        console.error("로그인 실패:", error);
-        setErrors({ email: "이메일 또는 비밀번호가 올바르지 않습니다." });
-      },
-    });
+    setIsLoading(true);
+
+    try {
+      const data = await login(formData);
+      if (!data.accessToken)
+        throw new Error("Access token is missing in login response");
+      token.set(data.accessToken);
+
+      navigate("/");
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      setErrors({ email: "이메일 또는 비밀번호가 올바르지 않습니다." });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isFormValid =
