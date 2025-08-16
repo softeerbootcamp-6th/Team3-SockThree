@@ -26,7 +26,8 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
     private final PasswordService passwordService;
     private final FileStorageService fileStorageService;
 
-    private static final String PROFILE_IMAGE_SUBDIRECTORY = "/students/profile-images";
+    private static final String STUDENTS_PROFILE_IMAGE_SUBDIRECTORY = "/students/profile-images";
+    private static final String TEACHERS_PROFILE_IMAGE_SUBDIRECTORY = "/teachers/profile-images";
 
     @Override
     public AuthenticatedUser authenticate(String email, String password) {
@@ -71,7 +72,8 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
             Gender gender,
             String encodedPassword,
             MultipartFile profileImage) {
-        String imageKey = fileStorageService.storeFile(profileImage, PROFILE_IMAGE_SUBDIRECTORY);
+        String imageKey =
+                fileStorageService.storeFile(profileImage, STUDENTS_PROFILE_IMAGE_SUBDIRECTORY);
         Student student =
                 Student.createStudent(name, email, age, gender, encodedPassword, imageKey);
         Student savedStudent = studentRepository.save(student);
@@ -87,7 +89,8 @@ public class UserAuthenticationServiceImpl implements UserAuthenticationService 
             String encodedPassword,
             String instruction,
             MultipartFile profileImage) {
-        String imageKey = fileStorageService.storeFile(profileImage, "/teachers/profile-images");
+        String imageKey =
+                fileStorageService.storeFile(profileImage, TEACHERS_PROFILE_IMAGE_SUBDIRECTORY);
         Teacher teacher =
                 Teacher.createTeacher(
                         name, email, age, gender, encodedPassword, instruction, imageKey);
