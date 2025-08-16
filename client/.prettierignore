@@ -7,3 +7,6 @@ node_modules/
 
 # 퍼블릭 정적 파일 (HTML 템플릿, 이미지 등)
 public/
+
+# OpenAPI generated files
+src/shared/types/openapi.ts
