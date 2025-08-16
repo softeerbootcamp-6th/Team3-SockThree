@@ -10,6 +10,7 @@ type RequestOptions<TBody = unknown> = {
   body?: TBody; // JSON 형태의 요청 본문
   headers?: Record<string, string>;
   rawBody?: BodyInit; // JSON 외(FormData, Blob 등)
+  signal?: AbortSignal; // 요청 취소용
 };
 
 const buildUrl = (path: string, query?: RequestOptions["query"]) => {
