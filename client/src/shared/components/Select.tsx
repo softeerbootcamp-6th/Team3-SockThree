@@ -29,6 +29,7 @@ const Select = ({
   value,
   defaultValue,
   onValueChange,
+  className,
   disabled = false,
 }: SelectProps) => {
   return (
@@ -38,7 +39,9 @@ const Select = ({
       onValueChange={onValueChange}
       disabled={disabled}
     >
-      <SelectTrigger className="min-w-[6rem] cursor-pointer border border-gray-600 px-3">
+      <SelectTrigger
+        className={`max-w-[8rem] cursor-pointer border border-gray-600 px-3 outline-none ${className}`}
+      >
         <SelectValue
           placeholder={placeholder}
           className="typo-body-5 min-w-max truncate border border-gray-600"

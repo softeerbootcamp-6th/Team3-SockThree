@@ -42,7 +42,7 @@ const CourseDetailCard = ({
   };
 
   return (
-    <div className="group relative flex h-[32.3125rem] w-[26.9375rem] flex-col gap-[.9375rem] overflow-clip rounded-[1.25rem] bg-white px-[1.375rem] py-[1.6563rem] transition-all duration-300 hover:-translate-y-[1.6875rem] hover:shadow-main">
+    <div className="group relative flex h-[32.3125rem] w-[26.9375rem] flex-col gap-[.9375rem] overflow-clip rounded-[1.25rem] bg-white px-[1.375rem] py-[1.6563rem] transition-all duration-300 hover:shadow-main">
       {/* 호버 시 카드 위(z)에 뜨는 버튼 */}
       <div className="absolute top-[19.0625rem] right-[2.3125rem] z-20 translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
         <Button
