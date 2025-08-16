@@ -12,6 +12,8 @@ interface VideoData {
   duration: number;
   uploadDate: Date;
   releaseDate: Date;
+  isUploading: boolean;
+  uploadProgress?: number;
 }
 
 interface VideoListProps {
@@ -80,6 +82,8 @@ const VideoList = ({
                 duration={video.duration}
                 uploadDate={video.uploadDate}
                 releaseDate={video.releaseDate}
+                isUploading={video.isUploading}
+              uploadProgress={video.uploadProgress} 
               />
             ))}
           </div>
