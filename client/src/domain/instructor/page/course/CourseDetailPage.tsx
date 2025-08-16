@@ -1,6 +1,7 @@
 import { Route, Routes, useLocation } from "react-router";
 import CourseDetailWrapper from "@/shared/components/course/CourseDetailWrapper";
 import CourseDetailDashboardPage from "@/domain/student/page/course/CourseDetailDashboardPage";
+import VideoUploadPage from "@/domain/instructor/page/course/VideoUploadPage";
 
 const CourseDetailPage = () => {
   const location = useLocation();
@@ -21,7 +22,7 @@ const CourseDetailPage = () => {
         }
       >
         <Route index element={<div></div>} />
-        <Route path="curriculum" element={<div>비디오</div>} />
+        <Route path="curriculum" element={<VideoUploadPage/>} />
         <Route path="reviews" element={<div></div>} />
         <Route path="dashboard" element={<CourseDetailDashboardPage />} />
         <Route path="assignments" element={<div></div>} />
