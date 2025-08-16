@@ -6,8 +6,8 @@ import java.time.DayOfWeek;
 import java.time.LocalTime;
 
 public record UploadTimeResponse(
-        @Schema(description = "요일", example = "월") String dayOfWeek,
-        @Schema(description = "시간", example = "HH:mm") LocalTime scheduledAt) {
+        @Schema(required = true, description = "요일", example = "월") String dayOfWeek,
+        @Schema(required = true, description = "시간", example = "HH:mm") LocalTime scheduledAt) {
     public static UploadTimeResponse from(UploadTime uploadTime) {
         DayOfWeek dayOfWeek = uploadTime.getDayOfWeek();
         String dayOfWeekString =

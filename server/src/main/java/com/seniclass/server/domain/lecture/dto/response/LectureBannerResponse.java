@@ -5,17 +5,17 @@ import com.seniclass.server.domain.category.domain.SubCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public record LectureBannerResponse(
-        @Schema(description = "강좌 id", example = "1") Long lectureId,
-        @Schema(description = "강좌 이미지 URL", example = "www.aws.com/s3/image/1")
+        @Schema(required = true, description = "강좌 id", example = "1") Long lectureId,
+        @Schema(required = true, description = "강좌 이미지 URL", example = "www.aws.com/s3/image/1")
                 String presignedImageURL,
-        @Schema(description = "강좌명", example = "골프 왕초보 강좌") String name,
-        @Schema(description = "기수", example = "1") Integer cohort,
-        @Schema(description = "찜 개수", example = "53") Integer bookMarkCount,
-        @Schema(description = "최대 수강 인원", example = "30") Integer maxStudentCount,
-        @Schema(description = "현재 수강 인원", example = "17") Integer enrolledStudentCount,
-        @Schema(description = "메인 카테고리", example = "운동") String mainCategoryName,
-        @Schema(description = "보조 카테고리", example = "골프") String subCategoryName,
-        @Schema(description = "강좌 수강 기간 (개월)", example = "2") Integer lectureDuration) {
+        @Schema(required = true, description = "강좌명", example = "골프 왕초보 강좌") String name,
+        @Schema(required = true, description = "기수", example = "1") Integer cohort,
+        @Schema(required = true, description = "찜 개수", example = "53") Integer bookMarkCount,
+        @Schema(required = true, description = "최대 수강 인원", example = "30") Integer maxStudentCount,
+        @Schema(required = true, description = "현재 수강 인원", example = "17") Integer enrolledStudentCount,
+        @Schema(required = true, description = "메인 카테고리", example = "운동") String mainCategoryName,
+        @Schema(required = true, description = "보조 카테고리", example = "골프") String subCategoryName,
+        @Schema(required = true, description = "강좌 수강 기간 (개월)", example = "2") Integer lectureDuration) {
     public static LectureBannerResponse of(
             Long lectureId,
             String presignedImageURL,
