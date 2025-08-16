@@ -1,5 +1,5 @@
 import type { VideoData } from "@/domain/student/types/video";
-import { formatTime } from "@/shared/utils/timeUtils";
+import { formatSecondsToMMSS } from "@/shared/utils/timeUtils";
 
 interface VideoSideMenuVideoListProps {
   videos: VideoData[];
@@ -34,7 +34,7 @@ const VideoSideMenuVideoList = ({
                 />
                 <span className="flex-1 truncate">{video.videoTitle}</span>
                 <span className="typo-label-4 text-gray-500">
-                  {formatTime(video.duration)}
+                  {formatSecondsToMMSS(video.duration)}
                 </span>
               </button>
             )}
