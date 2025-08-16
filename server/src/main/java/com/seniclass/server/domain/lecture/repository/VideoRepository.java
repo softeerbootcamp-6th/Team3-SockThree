@@ -1,6 +1,7 @@
 package com.seniclass.server.domain.lecture.repository;
 
 import com.seniclass.server.domain.lecture.domain.Video;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -35,4 +36,7 @@ public interface VideoRepository extends JpaRepository<Video, Long> {
 """)
     Long sumWatchedSecondsByLectureAndStudent(
             @Param("lectureId") Long lectureId, @Param("studentId") Long studentId);
+
+    /** 특정 강의의 모든 비디오 조회 */
+    List<Video> findByChapterLectureIdOrderByChapterIdAscIdAsc(Long lectureId);
 }

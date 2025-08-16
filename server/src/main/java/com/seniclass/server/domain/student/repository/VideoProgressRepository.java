@@ -1,6 +1,8 @@
 package com.seniclass.server.domain.student.repository;
 
 import com.seniclass.server.domain.student.domain.VideoProgress;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,4 +34,27 @@ public interface VideoProgressRepository extends JpaRepository<VideoProgress, Lo
             @Param("studentId") Long studentId,
             @Param("lectureId") Long lectureId,
             Pageable pageable);
+
+    /** 특정 강의의 학생별 진행 상황 목록 조회 (페이징 없음) */
+    @Query(
+            "SELECT vp FROM VideoProgress vp "
+                    + "JOIN vp.video v "
+                    + "JOIN v.chapter c "
+                    + "WHERE vp.student.id = :studentId AND c.lecture.id = :lectureId "
+                    + "ORDER BY vp.updatedDt DESC")
+    List<VideoProgress> findByStudentIdAndLectureId(
+            @Param("studentId") Long studentId, @Param("lectureId") Long lectureId);
+
+    /** 특정 강의의 학생별 최근 진행 상황 조회 (특정 날짜 이후) */
+    @Query(
+            "SELECT vp FROM VideoProgress vp "
+                    + "JOIN vp.video v "
+                    + "JOIN v.chapter c "
+                    + "WHERE vp.student.id = :studentId AND c.lecture.id = :lectureId "
+                    + "AND vp.updatedDt >= :afterDate "
+                    + "ORDER BY vp.updatedDt DESC")
+    List<VideoProgress> findByStudentIdAndLectureIdAndUpdatedDtAfter(
+            @Param("studentId") Long studentId,
+            @Param("lectureId") Long lectureId,
+            @Param("afterDate") LocalDateTime afterDate);
 }

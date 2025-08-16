@@ -1,6 +1,7 @@
 package com.seniclass.server.domain.student.repository;
 
 import com.seniclass.server.domain.student.domain.LectureEnrollment;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +16,9 @@ public interface LectureEnrollmentRepository extends JpaRepository<LectureEnroll
 
     /** 강의 ID로 수강생 목록 조회 (생성일시 내림차순, 페이징) */
     Page<LectureEnrollment> findByLectureIdOrderByCreatedDtDesc(Long lectureId, Pageable pageable);
+
+    /** 강의 ID로 수강생 목록 조회 (생성일시 내림차순, 전체) */
+    List<LectureEnrollment> findByLectureIdOrderByCreatedDtDesc(Long lectureId);
 
     /** 학생 ID와 강의 ID로 수강 등록 조회 */
     Optional<LectureEnrollment> findByStudentIdAndLectureId(Long studentId, Long lectureId);

@@ -1,6 +1,8 @@
 package com.seniclass.server.domain.student.repository;
 
 import com.seniclass.server.domain.student.domain.AssignmentSubmission;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,4 +36,8 @@ public interface AssignmentSubmissionRepository extends JpaRepository<Assignment
     /** 위젯용: 특정 강의에서 학생이 가장 최근에 제출한 과제 조회 */
     Page<AssignmentSubmission> findByStudentIdAndAssignmentLectureIdOrderByCreatedDtDesc(
             Long studentId, Long lectureId, Pageable pageable);
+
+    /** 학생의 특정 과제 제출 목록 조회 (특정 날짜 이후) */
+    List<AssignmentSubmission> findByStudentIdAndAssignmentIdAndCreatedDtAfter(
+            Long studentId, Long assignmentId, LocalDateTime afterDate);
 }
