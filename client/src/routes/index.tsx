@@ -5,7 +5,7 @@ import * as S from "@/domain/student/page/index";
 import * as I from "@/domain/instructor/page/index";
 
 /* Layout */
-import RootLayout, { queryClient, rootLoader } from "@/routes/RootLayout";
+import RootLayout, { rootLoader } from "@/routes/RootLayout";
 import StudentLayout from "@/shared/layout/StudentLayout";
 import InstructorLayout from "@/shared/layout/InstructorLayout";
 import LogoHeaderLayout from "@/shared/layout/LogoHeaderLayout";
@@ -18,7 +18,10 @@ import LoginPage from "@/shared/page/login/LoginPage";
 
 /* 권한에 따른 라우팅 */
 import { RouteByRole } from "@/routes/RouteByRole";
+
+/* React Query */
 import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "@/shared/utils/queryClient";
 
 export const router = createBrowserRouter([
   {
