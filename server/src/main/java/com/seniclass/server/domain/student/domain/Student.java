@@ -26,22 +26,38 @@ public class Student extends User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(nullable = false)
+    private String imageKey;
+
     @Builder(access = AccessLevel.PRIVATE)
-    private Student(String name, String email, Integer age, Gender gender, String password) {
+    private Student(
+            String name,
+            String email,
+            Integer age,
+            Gender gender,
+            String password,
+            String imageKey) {
         super(email, password, UserRole.STUDENT);
         this.name = name;
         this.age = age;
         this.gender = gender;
+        this.imageKey = imageKey;
     }
 
     public static Student createStudent(
-            String name, String email, Integer age, Gender gender, String password) {
+            String name,
+            String email,
+            Integer age,
+            Gender gender,
+            String password,
+            String imageKey) {
         return Student.builder()
                 .name(name)
                 .email(email)
                 .age(age)
                 .gender(gender)
                 .password(password)
+                .imageKey(imageKey)
                 .build();
     }
 

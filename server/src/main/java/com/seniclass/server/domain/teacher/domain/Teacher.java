@@ -28,6 +28,9 @@ public class Teacher extends User {
     @Column(nullable = false)
     private String instruction;
 
+    @Column(nullable = false)
+    private String imageKey;
+
     @Builder(access = AccessLevel.PRIVATE)
     private Teacher(
             String name,
@@ -35,12 +38,14 @@ public class Teacher extends User {
             Integer age,
             Gender gender,
             String password,
-            String instruction) {
+            String instruction,
+            String imageKey) {
         super(email, password, UserRole.TEACHER);
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.instruction = instruction;
+        this.imageKey = imageKey;
     }
 
     public static Teacher createTeacher(
@@ -49,7 +54,8 @@ public class Teacher extends User {
             Integer age,
             Gender gender,
             String password,
-            String instruction) {
+            String instruction,
+            String imageKey) {
         return Teacher.builder()
                 .name(name)
                 .email(email)
@@ -57,6 +63,7 @@ public class Teacher extends User {
                 .gender(gender)
                 .password(password)
                 .instruction(instruction)
+                .imageKey(imageKey)
                 .build();
     }
 }
