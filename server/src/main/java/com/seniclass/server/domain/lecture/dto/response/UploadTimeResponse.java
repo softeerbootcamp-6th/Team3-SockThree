@@ -7,8 +7,8 @@ import java.time.LocalTime;
 
 @Schema(name = "Lecture.UploadTimeResponse", description = "업로드 시간 응답")
 public record UploadTimeResponse(
-        @Schema(required = true, description = "요일", example = "월") String dayOfWeek,
-        @Schema(required = true, description = "시간", example = "HH:mm") LocalTime scheduledAt) {
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "요일", example = "월") String dayOfWeek,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "시간", example = "HH:mm") LocalTime scheduledAt) {
     public static UploadTimeResponse from(UploadTime uploadTime) {
         DayOfWeek dayOfWeek = uploadTime.getDayOfWeek();
         String dayOfWeekString =
