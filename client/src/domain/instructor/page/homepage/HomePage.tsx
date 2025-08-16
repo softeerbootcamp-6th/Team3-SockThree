@@ -55,7 +55,7 @@ const HomePage = () => {
   ];
 
   const handleNewCourseClick = () => {
-    navigate("/instructor/course/create");
+    navigate("/course/create");
   };
 
   return (

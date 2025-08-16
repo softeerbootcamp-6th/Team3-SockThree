@@ -24,7 +24,7 @@ const CourseCardContainer = ({ cardItems }: CourseCardContainerProps) => {
   const navigate = useNavigate();
 
   const handleCardClick = (courseId: number) => {
-    navigate(`/instructor/course/${courseId}/dashboard`);
+    navigate(`/course/${courseId}`);
   };
 
   return (
