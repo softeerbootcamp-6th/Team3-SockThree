@@ -20,7 +20,7 @@ interface VideoSidebarProps {
   onSelectVideo?: (videoId: number) => void;
 }
 
-export default function VideoSidebar({
+const VideoSidebar = ({
   courseTitle,
   startDate,
   endDate,
@@ -30,7 +30,7 @@ export default function VideoSidebar({
   activeVideoId,
   isProgress = true,
   onSelectVideo,
-}: VideoSidebarProps) {
+}: VideoSidebarProps) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const handelMenuClick = () => {
@@ -85,4 +85,6 @@ export default function VideoSidebar({
       />
     </aside>
   );
-}
+};
+
+export default VideoSidebar;
