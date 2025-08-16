@@ -34,16 +34,13 @@ export const login = (data: LoginRequest) =>
   authApi.post<LoginResponse, LoginRequest>("/login", data);
 
 // 로그아웃
-export const logout = (signal?: AbortSignal) =>
-  authApi.post<void, void>("/logout", undefined, { signal });
+export const logout = () => authApi.post<void, void>("/logout");
 
 // 토큰 갱신
-export const refresh = (signal?: AbortSignal) =>
-  authApi.post<TokenResponse, void>("/refresh", undefined, { signal });
+export const refresh = () => authApi.post<TokenResponse, void>("/refresh");
 
 // 토큰 검증
-export const validate = (signal?: AbortSignal) =>
-  authApi.get<void>("/validate", undefined, { signal });
+export const validate = () => authApi.get<void>("/validate");
 
 // @TODO 쿼리키 규칙
 // const authKeys = {
