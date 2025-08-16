@@ -2,13 +2,13 @@ import EditVideoInfoItem from "@/domain/instructor/component/video/EditVideoInfo
 import Button from "@/shared/components/Button";
 import GradationChip from "@/shared/components/GradationChip";
 import Modal from "@/shared/components/Modal";
-import { forwardRef, useEffect, useRef, useState } from "react";
-import { truncateToMaxLength } from "@/shared/utils/textUtils";
+import { forwardRef } from "react";
+import { useUploadVideoModal } from "@/domain/instructor/hook/useUploadVideoModal";
 
 interface UploadVideoModalProps {
   onClose: () => void;
   title: string;
-  chapterId?: number | null;
+  chapterId: number | null;
 }
 interface VideoData {
   id: string;
@@ -20,93 +20,17 @@ interface VideoData {
 
 const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
   ({ onClose, title, chapterId }, ref) => {
-    const [contentsTitle, setContentsTitle] = useState(title);
-    const [uploadVideos, setUploadVideos] = useState<VideoData[]>([]);
-    const contentsTitleMaxLength = 30;
-
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    useEffect(() => {
-      setContentsTitle(title);
-    }, [title]);
-
-    const handleVideoAddButtonClick = () => {
-      fileInputRef.current?.click();
-    };
-
-    // 영상 길이 가져오는 helper 함수
-    const getVideoDuration = (file: File): Promise<number> =>
-      new Promise((resolve, reject) => {
-        const url = URL.createObjectURL(file);
-        const video = document.createElement("video");
-        video.preload = "metadata";
-
-        const cleanup = () => {
-          URL.revokeObjectURL(url);
-          video.src = "";
-        };
-
-        video.onloadedmetadata = () => {
-          const seconds = video.duration;
-          cleanup();
-          resolve(seconds);
-        };
-
-        video.onerror = () => {
-          cleanup();
-          reject(new Error("영상 메타데이터를 불러올 수 없어요."));
-        };
-
-        video.src = url;
-      });
-
-    const handleFileChange = async ({
-      target,
-    }: React.ChangeEvent<HTMLInputElement>) => {
-      const file = target.files?.[0];
-      if (!file) return;
-
-      try {
-        const durationSec = await getVideoDuration(file);
-
-        const newItem: VideoData = {
-          id: crypto.randomUUID(),
-          videoName: file.name,
-          videoLength: Math.round(durationSec) / 60,
-          videoTitle: "",
-          videoDescription: "",
-        };
-
-        setUploadVideos((prev) => [...prev, newItem]);
-      } finally {
-        target.value = "";
-      }
-    };
-
-    const handleVideoDelete = (id: string) => {
-      setUploadVideos((prev) => prev.filter((v) => v.id !== id));
-    };
-
-    const handleContentsTitleChange = ({
-      target,
-    }: React.ChangeEvent<HTMLInputElement>) => {
-      target.value = truncateToMaxLength(target.value, contentsTitleMaxLength);
-      setContentsTitle(target.value);
-    };
-
-    const handleReset = () => {
-      setUploadVideos([]);
-    };
-
-    const handleResetAndClose = () => {
-      handleReset();
-      onClose();
-    };
-
-    const handleVideoUploadClick = () => {
-      // 동영상 업로드 로직 추가 예정
-      console.log("업로드할 목차", chapterId);
-      handleResetAndClose();
-    };
+    const {
+      contentsTitle,
+      uploadVideos,
+      fileInputRef,
+      contentsTitleMaxLength,
+      handleFileInputClick,
+      handleFileSelect,
+      handleVideoDelete,
+      handleContentsTitleChange,
+      handleUpload,
+    } = useUploadVideoModal(title);
 
     const renderVideoUploadItems = (uploadVideos: VideoData[]) => {
       if (uploadVideos.length === 0) {
@@ -157,7 +81,7 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
                 <label className="typo-body-4">강의 동영상 업로드</label>
                 <button
                   className="typo-label-0 cursor-pointer"
-                  onClick={handleVideoAddButtonClick}
+                  onClick={handleFileInputClick}
                 >
                   <GradationChip>+ 동영상 업로드</GradationChip>
                 </button>
@@ -172,7 +96,7 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
               <Button
                 variant="default"
                 className="typo-body-4 flex-1/2 rounded-[.9375rem] bg-gray-200 px-4 py-2 text-black hover:bg-gray-400"
-                onClick={handleResetAndClose}
+                onClick={onClose}
               >
                 닫기
               </Button>
@@ -180,7 +104,7 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
               <Button
                 variant="outline"
                 className="typo-body-4 flex-1/2 rounded-[.9375rem]"
-                onClick={handleVideoUploadClick}
+                onClick={() => handleUpload(chapterId)}
               >
                 강의 등록 완료
               </Button>
@@ -192,7 +116,7 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
           accept="video/mp4"
           hidden
           ref={fileInputRef}
-          onChange={handleFileChange}
+          onChange={handleFileSelect}
         />
       </>
     );
