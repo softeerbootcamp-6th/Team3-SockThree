@@ -1,5 +1,6 @@
 import { createApi } from "@/shared/api/core/createApi";
 import type { components } from "@/shared/types/openapi";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 /* endpoint 정의 */
 const lecturesApi = createApi("/lectures");
@@ -71,3 +72,81 @@ const updateWidgetSettings = (
     `/${lectureId}/widget-settings`,
     data
   );
+
+// ========================
+//   * lectures API 훅  *
+// ========================
+
+// 강의 생성 (Mutation)
+export const useCreateLecture = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createLecture,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["lectures"] });
+    },
+  });
+};
+
+// 강의 수정 (Mutation)
+export const useUpdateLecture = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      lectureId,
+      data,
+    }: {
+      lectureId: number;
+      data: { request: LectureUpdateRequest; file?: File };
+    }) => updateLecture(lectureId, data),
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({ queryKey: ["lectures"] });
+      await queryClient.invalidateQueries({
+        queryKey: ["lecture", variables.lectureId],
+      });
+    },
+  });
+};
+
+// 강의 삭제 (Mutation)
+export const useDeleteLecture = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteLecture,
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["lectures"] });
+    },
+  });
+};
+
+// 나의 강의 현황 위젯 조회 (Query)
+export const useMyLectureStatusWidget = (lectureId: number) => {
+  return useQuery({
+    queryKey: ["lecture", lectureId, "my-status-widget"],
+    queryFn: () => getMyLectureStatusWidget(lectureId),
+    enabled: !!lectureId,
+  });
+};
+
+// 위젯 설정 수정 (Mutation)
+export const useUpdateWidgetSettings = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({
+      lectureId,
+      data,
+    }: {
+      lectureId: number;
+      data: WidgetSettingUpdateRequest;
+    }) => updateWidgetSettings(lectureId, data),
+    onSuccess: async (_, variables) => {
+      await queryClient.invalidateQueries({
+        queryKey: ["lecture", variables.lectureId, "widget-settings"],
+      });
+    },
+  });
+};
