@@ -13,7 +13,8 @@ public record AssignmentResponse(
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "내용") String content,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "파일 링크") String fileLink,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "마감일") LocalDate dueDate,
-        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "강의 ID") Long lectureId) {
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "강의 ID")
+                Long lectureId) {
     public static AssignmentResponse from(Assignment assignment) {
         return AssignmentResponse.builder()
                 .id(assignment.getId())

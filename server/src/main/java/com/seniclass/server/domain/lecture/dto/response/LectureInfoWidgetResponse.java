@@ -10,7 +10,8 @@ import java.util.List;
 public record LectureInfoWidgetResponse(
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "강의 ID") Long lectureId,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "기수") Integer cohort,
-        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "업로드 시간 목록") List<UploadTimeResponse> uploadTimesList,
+        @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "업로드 시간 목록")
+                List<UploadTimeResponse> uploadTimesList,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "시작일") LocalDate start,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "종료일") LocalDate endDate,
         @Schema(requiredMode = Schema.RequiredMode.REQUIRED, description = "난이도") Level level,
