@@ -5,13 +5,16 @@ import com.seniclass.server.domain.auth.exception.errorcode.AuthErrorCode;
 import com.seniclass.server.domain.auth.service.AuthService;
 import com.seniclass.server.global.exception.CommonException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Tag(name = "Auth", description = "인증/인가 API")
 @RestController
@@ -22,17 +25,23 @@ public class AuthController {
     private final AuthService authService;
 
     @Operation(summary = "회원가입 (수강생)")
-    @PostMapping("/register/student")
+    @PostMapping(value = "/register/student", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public RegisterResponse registerStudent(@Valid @RequestBody StudentRegisterRequest request) {
-        return authService.registerStudent(request);
+    public RegisterResponse registerStudent(
+            @Parameter(description = "수강생 회원가입에 필요한 정보") @Valid @RequestPart("request")
+                    StudentRegisterRequest request,
+            @Parameter(description = "수강생 프로필 이미지") @RequestPart("file") MultipartFile file) {
+        return authService.registerStudent(request, file);
     }
 
     @Operation(summary = "회원가입 (강사)")
-    @PostMapping("/register/teacher")
+    @PostMapping(value = "/register/teacher", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public RegisterResponse registerTeacher(@Valid @RequestBody TeacherRegisterRequest request) {
-        return authService.registerTeacher(request);
+    public RegisterResponse registerTeacher(
+            @Parameter(description = "강사 회원가입에 필요한 정보") @Valid @RequestPart("request")
+                    TeacherRegisterRequest request,
+            @Parameter(description = "강사 프로필 이미지") @RequestPart("file") MultipartFile file) {
+        return authService.registerTeacher(request, file);
     }
 
     @Operation(summary = "로그인 (공통)")

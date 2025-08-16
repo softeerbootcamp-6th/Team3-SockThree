@@ -1,8 +1,8 @@
 package com.seniclass.server.domain.aws.service;
 
+import com.seniclass.server.domain.aws.exception.errorcode.FileStorageErrorCode;
 import com.seniclass.server.global.config.FileStorageProperties;
 import com.seniclass.server.global.exception.CommonException;
-import com.seniclass.server.global.exception.errorcode.GlobalErrorCode;
 import com.seniclass.server.global.service.FileStorageService;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -31,7 +31,12 @@ public class S3FileStorageService implements FileStorageService {
 
     @Override
     public String storeFile(MultipartFile file, String subDirectory) {
-        String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
+        String originalFileName = file.getOriginalFilename();
+        if (originalFileName == null) {
+            throw new CommonException(FileStorageErrorCode.FILE_NAME_INVALID);
+        }
+
+        originalFileName = StringUtils.cleanPath(originalFileName);
 
         try {
             validateFile(file, originalFileName);
@@ -47,10 +52,10 @@ public class S3FileStorageService implements FileStorageService {
             throw ex;
         } catch (IOException ex) {
             log.error("Could not store file {} in S3", originalFileName, ex);
-            throw new CommonException(GlobalErrorCode.INTERNAL_SERVER_ERROR);
+            throw new CommonException(FileStorageErrorCode.FILE_READ_ERROR);
         } catch (Exception ex) {
             log.error("S3 error while storing file {}: {}", originalFileName, ex.getMessage(), ex);
-            throw new CommonException(GlobalErrorCode.INTERNAL_SERVER_ERROR);
+            throw new CommonException(FileStorageErrorCode.S3_UPLOAD_FAILED);
         }
     }
 
@@ -62,6 +67,8 @@ public class S3FileStorageService implements FileStorageService {
 
         } catch (Exception ex) {
             log.error("Could not delete file {} from S3: {}", filePath, ex.getMessage(), ex);
+            // 파일 삭제 실패는 로그만 남기고 예외를 던지지 않음 (기존 동작 유지)
+            // 필요에 따라 throw new CommonException(FileStorageErrorCode.S3_DELETE_FAILED);로 변경 가능
         }
     }
 
@@ -72,15 +79,24 @@ public class S3FileStorageService implements FileStorageService {
             return new ByteArrayResource(data);
         } catch (Exception ex) {
             log.error("Could not load file {} from S3: {}", filePath, ex.getMessage(), ex);
-            throw new CommonException(GlobalErrorCode.INTERNAL_SERVER_ERROR);
+            throw new CommonException(FileStorageErrorCode.S3_DOWNLOAD_FAILED);
         }
     }
 
     @Override
     public String getFileUrl(String filePath) {
-        // Presigned URL 생성 (1시간 유효)
-        // Private 버킷에서도 접근 가능한 임시 URL 제공
-        return s3Service.generatePresignedUrl(filePath);
+        try {
+            // Presigned URL 생성 (1시간 유효)
+            // Private 버킷에서도 접근 가능한 임시 URL 제공
+            return s3Service.generatePresignedUrl(filePath);
+        } catch (Exception ex) {
+            log.error(
+                    "Could not generate presigned URL for file {}: {}",
+                    filePath,
+                    ex.getMessage(),
+                    ex);
+            throw new CommonException(FileStorageErrorCode.S3_PRESIGNED_URL_GENERATION_FAILED);
+        }
     }
 
     private String generateS3Key(String subDirectory, String originalFileName) {
@@ -96,32 +112,40 @@ public class S3FileStorageService implements FileStorageService {
 
     private void validateFile(MultipartFile file, String fileName) {
         if (file.isEmpty()) {
-            throw new CommonException(GlobalErrorCode.BAD_REQUEST);
+            throw new CommonException(FileStorageErrorCode.FILE_EMPTY);
         }
 
         if (file.getSize() > fileStorageProperties.getMaxFileSize()) {
-            throw new CommonException(GlobalErrorCode.BAD_REQUEST);
+            throw new CommonException(FileStorageErrorCode.FILE_SIZE_EXCEEDED);
         }
 
-        if (fileName.contains("..")) {
-            throw new CommonException(GlobalErrorCode.BAD_REQUEST);
+        if (fileName == null || fileName.contains("..")) {
+            throw new CommonException(FileStorageErrorCode.PATH_TRAVERSAL_DETECTED);
         }
 
         String fileExtension = getFileExtension(fileName);
         if (!isAllowedExtension(fileExtension)) {
-            throw new CommonException(GlobalErrorCode.BAD_REQUEST);
+            throw new CommonException(FileStorageErrorCode.FILE_EXTENSION_NOT_ALLOWED);
         }
     }
 
     private String getFileExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return "";
+        }
+
         int lastIndexOf = fileName.lastIndexOf(".");
-        if (lastIndexOf == -1) {
+        if (lastIndexOf == -1 || lastIndexOf == fileName.length() - 1) {
             return "";
         }
         return fileName.substring(lastIndexOf + 1).toLowerCase();
     }
 
     private String getBaseName(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return "unnamed";
+        }
+
         int lastIndexOf = fileName.lastIndexOf(".");
         if (lastIndexOf == -1) {
             return fileName;
@@ -130,7 +154,10 @@ public class S3FileStorageService implements FileStorageService {
     }
 
     private boolean isAllowedExtension(String extension) {
-        return Arrays.asList(fileStorageProperties.getAllowedExtensions())
-                .contains(extension.toLowerCase());
+        String[] allowedExtensions = fileStorageProperties.getAllowedExtensions();
+        if (allowedExtensions == null || extension == null) {
+            throw new CommonException(FileStorageErrorCode.FILE_STORAGE_CONFIG_ERROR);
+        }
+        return Arrays.asList(allowedExtensions).contains(extension.toLowerCase());
     }
 }

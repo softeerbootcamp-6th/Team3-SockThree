@@ -4,9 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
+import com.seniclass.server.domain.aws.exception.errorcode.FileStorageErrorCode;
 import com.seniclass.server.global.config.FileStorageProperties;
 import com.seniclass.server.global.exception.CommonException;
-import com.seniclass.server.global.exception.errorcode.GlobalErrorCode;
 import java.io.IOException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -83,7 +83,7 @@ class S3FileStorageServiceTest {
                         CommonException.class,
                         () -> s3FileStorageService.storeFile(mockFile, subDirectory));
 
-        assertEquals(GlobalErrorCode.BAD_REQUEST, exception.getErrorCode());
+        assertEquals(FileStorageErrorCode.FILE_EMPTY, exception.getErrorCode());
         verify(s3Service, never()).upload(anyString(), any(byte[].class), anyString());
     }
 
@@ -104,7 +104,7 @@ class S3FileStorageServiceTest {
                         CommonException.class,
                         () -> s3FileStorageService.storeFile(mockFile, subDirectory));
 
-        assertEquals(GlobalErrorCode.BAD_REQUEST, exception.getErrorCode());
+        assertEquals(FileStorageErrorCode.FILE_SIZE_EXCEEDED, exception.getErrorCode());
         verify(s3Service, never()).upload(anyString(), any(byte[].class), anyString());
     }
 
@@ -125,7 +125,7 @@ class S3FileStorageServiceTest {
                         CommonException.class,
                         () -> s3FileStorageService.storeFile(mockFile, subDirectory));
 
-        assertEquals(GlobalErrorCode.BAD_REQUEST, exception.getErrorCode());
+        assertEquals(FileStorageErrorCode.FILE_EXTENSION_NOT_ALLOWED, exception.getErrorCode());
         verify(s3Service, never()).upload(anyString(), any(byte[].class), anyString());
     }
 
@@ -146,7 +146,7 @@ class S3FileStorageServiceTest {
                         CommonException.class,
                         () -> s3FileStorageService.storeFile(mockFile, subDirectory));
 
-        assertEquals(GlobalErrorCode.BAD_REQUEST, exception.getErrorCode());
+        assertEquals(FileStorageErrorCode.PATH_TRAVERSAL_DETECTED, exception.getErrorCode());
         verify(s3Service, never()).upload(anyString(), any(byte[].class), anyString());
     }
 
@@ -205,7 +205,7 @@ class S3FileStorageServiceTest {
                 assertThrows(
                         CommonException.class, () -> s3FileStorageService.loadAsResource(filePath));
 
-        assertEquals(GlobalErrorCode.INTERNAL_SERVER_ERROR, exception.getErrorCode());
+        assertEquals(FileStorageErrorCode.S3_DOWNLOAD_FAILED, exception.getErrorCode());
         verify(s3Service, times(1)).download(filePath);
     }
 
@@ -244,7 +244,24 @@ class S3FileStorageServiceTest {
                         CommonException.class,
                         () -> s3FileStorageService.storeFile(mockFile, subDirectory));
 
-        assertEquals(GlobalErrorCode.INTERNAL_SERVER_ERROR, exception.getErrorCode());
+        assertEquals(FileStorageErrorCode.FILE_READ_ERROR, exception.getErrorCode());
         verify(s3Service, never()).upload(anyString(), any(byte[].class), anyString());
+    }
+
+    @Test
+    @DisplayName("파일 URL 생성 실패 - S3 오류")
+    void getFileUrl_S3Error() {
+        // given
+        String filePath = "assignments/test.pdf";
+        when(s3Service.generatePresignedUrl(filePath)).thenThrow(new RuntimeException("S3 error"));
+
+        // when & then
+        CommonException exception =
+                assertThrows(
+                        CommonException.class, () -> s3FileStorageService.getFileUrl(filePath));
+
+        assertEquals(
+                FileStorageErrorCode.S3_PRESIGNED_URL_GENERATION_FAILED, exception.getErrorCode());
+        verify(s3Service, times(1)).generatePresignedUrl(filePath);
     }
 }

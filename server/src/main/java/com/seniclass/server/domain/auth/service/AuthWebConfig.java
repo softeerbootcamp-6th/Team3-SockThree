@@ -21,6 +21,7 @@ public class AuthWebConfig implements WebMvcConfigurer {
                         "/health",
                         "/docs/**",
                         "/swagger-ui/**",
-                        "/v3/api-docs/**");
+                        "/v3/api-docs/**",
+                        "/lectures/*/chapters/*/video/*/finalize"); // Lambda에서 호출하는 동영상 분할 완료 API
     }
 }

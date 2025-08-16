@@ -81,4 +81,8 @@ public class Video extends BaseTimeEntity {
         this.streamingPath = PATH.CDN_STREAMING_PATH.getPath() + streamingPath;
         streamable = true;
     }
+
+    public void updateUploadPath(String uploadPath) {
+        this.uploadPath = uploadPath;
+    }
 }

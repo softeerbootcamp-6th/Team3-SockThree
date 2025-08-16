@@ -1,4 +1,4 @@
-import StudentNavbar from "@/domain/student/component/StudentNavbar";
+import StudentNavbar from "@/domain/student/component/navbar/StudentNavbar";
 
 import { Outlet } from "react-router";
 

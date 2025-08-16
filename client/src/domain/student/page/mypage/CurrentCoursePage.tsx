@@ -1,4 +1,4 @@
-import CourseProgressCard from "@/domain/student/component/course/CourseProgressCard";
+import CourseProgressCard from "@/shared/components/course/CourseProgressCard";
 import InfoChip from "@/shared/components/InfoChip";
 import { fakerKO as faker } from "@faker-js/faker";
 
