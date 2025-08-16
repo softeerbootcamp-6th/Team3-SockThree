@@ -31,7 +31,7 @@ export default function VideoSidebar({
   isProgress = true,
   onSelectVideo,
 }: VideoSidebarProps) {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   const handelMenuClick = () => {
     setIsOpen(!isOpen);
@@ -45,10 +45,7 @@ export default function VideoSidebar({
     >
       {/* 헤더 */}
       <div className="flex items-start gap-3 p-5">
-        <button
-          onClick={handelMenuClick}
-          className="cursor-pointer p-2"
-        >
+        <button onClick={handelMenuClick} className="cursor-pointer p-2">
           {isOpen ? (
             <ArrowRightIcon className="w-[.8125rem] text-gray-600" />
           ) : (
