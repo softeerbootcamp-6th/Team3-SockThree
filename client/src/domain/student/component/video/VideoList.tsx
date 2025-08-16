@@ -1,36 +1,35 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
+
 import VideoListItem from "@/domain/student/component/video/VideoListItem";
 
 import TriangleUpIcon from "@/assets/icons/default/triangle-up.svg?react";
 import TriangleDownIcon from "@/assets/icons/default/triangle-down.svg?react";
 import ProgressBar from "@/shared/components/ProgressBar";
 
-interface VideoData {
-  id: number;
-  videoTitle: string;
-  duration: number;
-  updatedDate: Date;
-  watchedTime?: number;
-  isCompleted?: boolean;
-}
+import type { VideoListData } from "@/domain/student/types/video";
 
 interface VideoListProps {
-  contentsId?: number;
-  contentsTitle?: string;
-  videos?: VideoData[];
-  completedVideos?: number;
-  totalVideos?: number;
+  content: VideoListData;
+  startIndex: number;
 }
 
-const VideoList = ({
-  contentsId = 1,
-  contentsTitle = "목차명을 입력하세요.",
-  completedVideos = 2,
-  totalVideos = 5,
-
-  videos = [],
-}: VideoListProps) => {
+const VideoList = ({ content, startIndex }: VideoListProps) => {
   const [isListOpen, setIsListOpen] = useState(true);
+
+  const navigate = useNavigate();
+
+  const {
+    contentsId = 1,
+    contentsTitle = "목차명을 입력하세요.",
+    completedVideos = 0,
+    totalVideos = 0,
+    videos = [],
+  } = content;
+
+  const handleVideoClick = (videoId: number) => {
+    navigate(`chapter/${contentsId}/video/${videoId}`);
+  };
 
   return (
     <div
@@ -74,12 +73,9 @@ const VideoList = ({
           {videos.map((video, idx) => (
             <VideoListItem
               key={video.id}
-              index={idx + 1}
-              title={video.videoTitle}
-              duration={video.duration}
-              updatedDate={video.updatedDate}
-              watchedTime={video.watchedTime}
-              isCompleted={video.isCompleted}
+              video={video}
+              index={startIndex + idx}
+              onVideoClick={() => handleVideoClick(video.id)}
             />
           ))}
         </div>

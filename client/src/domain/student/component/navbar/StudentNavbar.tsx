@@ -10,11 +10,11 @@ import { fakerKO as faker } from "@faker-js/faker";
 
 const StudentNavbar = () => {
   const navbarMenus = [
-    { icon: HomeIcon, label: "홈", routePath: "/student/home" },
+    { icon: HomeIcon, label: "홈", routePath: "/home" },
     {
       icon: SearchIcon,
       label: "강의 검색",
-      routePath: "/student/course/search",
+      routePath: "/course/search",
     },
   ];
 
@@ -40,9 +40,9 @@ const StudentNavbar = () => {
     <NavbarItem
       imgUrl={faker.image.avatar()}
       label="마이페이지"
-      routePath="/student/mypage"
-      isSelected={selectedPath === "/student/mypage"}
-      onClick={() => handleItemClick("/student/mypage")}
+      routePath="/mypage"
+      isSelected={selectedPath === "/mypage"}
+      onClick={() => handleItemClick("/mypage")}
     />
   );
   return <Navbar myPageItem={myPageItem}>{navbarItems}</Navbar>;
