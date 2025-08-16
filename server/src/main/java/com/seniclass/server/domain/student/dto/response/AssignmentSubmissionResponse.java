@@ -4,7 +4,7 @@ import com.seniclass.server.domain.student.domain.AssignmentSubmission;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
-@Schema(required = true, description = "과제 제출 응답")
+@Schema(required = true, description = "과제 제출 응답", name = "Student.AssignmentSubmissionResponse")
 public record AssignmentSubmissionResponse(
         @Schema(required = true, description = "제출 ID", example = "1") Long id,
         @Schema(required = true, description = "학생 ID", example = "1") Long studentId,

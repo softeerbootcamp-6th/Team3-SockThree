@@ -5,7 +5,7 @@ import com.seniclass.server.domain.lecture.enums.WidgetSize;
 import com.seniclass.server.domain.lecture.enums.WidgetType;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(required = true, description = "위젯 설정 정보 응답 DTO")
+@Schema(required = true, description = "위젯 설정 정보 응답 DTO", name = "Lecture.WidgetSettingResponse")
 public record WidgetSettingResponse(
         @Schema(required = true, description = "위젯 설정 ID", example = "1") Long id,
         @Schema(required = true, description = "위젯 타입", example = "SUBMISSION") WidgetType widgetType,

@@ -5,7 +5,7 @@ import com.seniclass.server.domain.lecture.enums.Level;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 
-@Schema(required = true, description = "강의 상세 정보 응답 DTO")
+@Schema(required = true, description = "강의 상세 정보 응답 DTO", name = "Lecture.LectureResponse")
 public record LectureResponse(
         @Schema(required = true, description = "강의 ID", example = "1") Long id,
         @Schema(required = true, description = "강의명", example = "왕초보 골프 스윙 마스터 클래스") String name,

@@ -2,7 +2,7 @@ package com.seniclass.server.domain.student.dto.response;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(required = true, description = "관심 카테고리 응답")
+@Schema(required = true, description = "관심 카테고리 응답", name = "Student.InterestingCategoryResponse")
 public record InterestingCategoryResponse(
         @Schema(required = true, description = "관심 카테고리 ID", example = "1") Long id,
         @Schema(required = true, description = "서브 카테고리 ID", example = "1") Long subCategoryId,

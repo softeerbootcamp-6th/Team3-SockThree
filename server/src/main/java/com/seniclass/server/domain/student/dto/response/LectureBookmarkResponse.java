@@ -3,7 +3,7 @@ package com.seniclass.server.domain.student.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
-@Schema(required = true, description = "강의 북마크 응답")
+@Schema(required = true, description = "강의 북마크 응답", name = "Student.LectureBookmarkResponse")
 public record LectureBookmarkResponse(
         @Schema(required = true, description = "북마크 ID", example = "1") Long id,
         @Schema(required = true, description = "학생 ID", example = "1") Long studentId,

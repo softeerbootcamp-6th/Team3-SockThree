@@ -3,7 +3,7 @@ package com.seniclass.server.domain.widget.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.List;
 
-@Schema(description = "강사 위젯 응답")
+@Schema(description = "강사 위젯 응답", name = "Widget.TeacherWidgetResponse")
 public record TeacherWidgetResponse(
         @Schema(required = true, description = "프로필 이미지 URL") String profileImageUrl,
         @Schema(required = true, description = "이름") String name,

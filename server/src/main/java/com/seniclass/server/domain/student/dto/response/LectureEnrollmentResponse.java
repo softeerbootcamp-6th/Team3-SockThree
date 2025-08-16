@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-@Schema(required = true, description = "강의 수강 등록 응답")
+@Schema(required = true, description = "강의 수강 등록 응답", name = "Student.LectureEnrollmentResponse")
 public record LectureEnrollmentResponse(
         @Schema(required = true, description = "수강 등록 ID", example = "1") Long id,
         @Schema(required = true, description = "학생 ID", example = "1") Long studentId,

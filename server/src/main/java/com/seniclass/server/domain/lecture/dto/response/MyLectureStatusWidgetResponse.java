@@ -3,7 +3,7 @@ package com.seniclass.server.domain.lecture.dto.response;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
-@Schema(required = true, description = "내 강의 현황 위젯 응답")
+@Schema(required = true, description = "내 강의 현황 위젯 응답", name = "Lecture.MyLectureStatusWidgetResponse")
 public record MyLectureStatusWidgetResponse(
         @Schema(required = true, description = "강의 진행률", example = "50") Integer lectureProgressRate,
         @Schema(required = true, description = "강좌의 총 동영상 재생시간", example = "121") Integer totalVideoDurationHour,

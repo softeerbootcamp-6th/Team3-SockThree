@@ -2,7 +2,7 @@ package com.seniclass.server.domain.auth.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 
-@Schema(required = true, description = "토큰 응답")
+@Schema(required = true, description = "토큰 응답", name = "Auth.TokenResponse")
 public record TokenResponse(
         @Schema(required = true, description = "액세스 토큰", example = "eyJhbGciOiJIUzUxMiJ9...") String accessToken,
         @Schema(required = true, description = "토큰 타입", example = "Bearer") String tokenType,

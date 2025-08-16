@@ -4,7 +4,7 @@ import com.seniclass.server.domain.lecture.domain.Review;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
-@Schema(required = true, description = "리뷰 응답")
+@Schema(required = true, description = "리뷰 응답", name = "Lecture.ReviewResponse")
 public record ReviewResponse(
         @Schema(required = true, description = "리뷰 ID", example = "1") Long id,
         @Schema(required = true, description = "리뷰 내용", example = "정말 좋은 강의였습니다!") String content,

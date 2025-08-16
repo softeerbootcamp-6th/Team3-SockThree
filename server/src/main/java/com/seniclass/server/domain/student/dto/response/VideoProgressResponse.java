@@ -4,7 +4,7 @@ import com.seniclass.server.domain.student.domain.VideoProgress;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
-@Schema(required = true, description = "비디오 진행 상황 응답")
+@Schema(required = true, description = "비디오 진행 상황 응답", name = "Student.VideoProgressResponse")
 public record VideoProgressResponse(
         @Schema(required = true, description = "진행 상황 ID", example = "1") Long id,
         @Schema(required = true, description = "학생 ID", example = "1") Long studentId,

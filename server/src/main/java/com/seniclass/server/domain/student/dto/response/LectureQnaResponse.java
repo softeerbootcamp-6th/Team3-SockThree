@@ -4,7 +4,7 @@ import com.seniclass.server.domain.student.domain.LectureQna;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 
-@Schema(required = true, description = "강의 QnA 응답")
+@Schema(required = true, description = "강의 QnA 응답", name = "Student.LectureQnaResponse")
 public record LectureQnaResponse(
         @Schema(required = true, description = "QnA ID", example = "1") Long id,
         @Schema(required = true, description = "학생 ID", example = "1") Long studentId,

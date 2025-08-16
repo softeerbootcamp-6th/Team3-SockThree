@@ -4,6 +4,7 @@ import com.seniclass.server.domain.category.domain.MainCategory;
 import com.seniclass.server.domain.category.domain.SubCategory;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+@Schema(name = "Lecture.LectureBannerResponse", description = "강의 배너 응답")
 public record LectureBannerResponse(
         @Schema(required = true, description = "강좌 id", example = "1") Long lectureId,
         @Schema(required = true, description = "강좌 이미지 URL", example = "www.aws.com/s3/image/1")
