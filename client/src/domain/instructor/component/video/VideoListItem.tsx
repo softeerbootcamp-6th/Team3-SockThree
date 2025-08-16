@@ -8,16 +8,19 @@ interface VideoListItemProps {
   index: number;
   title: string;
   duration: number;
-  updatedDate: Date;
+  uploadDate: Date;
+  releaseDate: Date;
 }
 
 const VideoListItem = ({
   index,
   title,
   duration,
-  updatedDate,
+  uploadDate,
+  releaseDate,
 }: VideoListItemProps) => {
-  const formattedDate = formatDate(updatedDate, ".", true);
+  const formattedUploadDate = formatDate(uploadDate, ".", true);
+  const formattedReleaseDate = formatDate(releaseDate, ".", true);
 
   return (
     <div className="flex w-[72.4375rem] items-center justify-between rounded-[.9375rem] border border-gray-400 px-[1.125rem] py-[.9375rem]">
@@ -41,9 +44,12 @@ const VideoListItem = ({
       </div>
 
       {/* 오른쪽: 업데이트 날짜 */}
-      <div className="flex items-center justify-end gap-[.625rem]">
+      <div className="flex items-center justify-end gap-[.9375rem]">
         <span className="typo-label-1 cursor-default text-gray-700">
-          업데이트 : {formattedDate}
+          업로드 : {formattedUploadDate}
+        </span>
+        <span className="typo-label-1 cursor-default text-gray-700">
+          공개 일정 : {formattedReleaseDate}
         </span>
         <button className="cursor-pointer">
           <DeleteIcon className="w-[1.4375rem] text-gray-400 hover:text-gray-600" />

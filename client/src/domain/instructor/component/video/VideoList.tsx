@@ -10,7 +10,8 @@ interface VideoData {
   id: number;
   videoTitle: string;
   duration: number;
-  updatedDate: Date;
+  uploadDate: Date;
+  releaseDate: Date;
 }
 
 interface VideoListProps {
@@ -77,7 +78,8 @@ const VideoList = ({
                 index={idx + 1}
                 title={video.videoTitle}
                 duration={video.duration}
-                updatedDate={video.updatedDate}
+                uploadDate={video.uploadDate}
+                releaseDate={video.releaseDate}
               />
             ))}
           </div>
