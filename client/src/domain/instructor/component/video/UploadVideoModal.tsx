@@ -2,13 +2,13 @@ import EditVideoInfoItem from "@/domain/instructor/component/video/EditVideoInfo
 import Button from "@/shared/components/Button";
 import GradationChip from "@/shared/components/GradationChip";
 import Modal from "@/shared/components/Modal";
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useEffect, useRef, useState } from "react";
 import { truncateToMaxLength } from "@/shared/utils/textUtils";
 
 interface UploadVideoModalProps {
   onClose: () => void;
   title: string;
-  id?: number;
+  chapterId?: number | null;
 }
 interface VideoData {
   id: string;
@@ -19,12 +19,15 @@ interface VideoData {
 }
 
 const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
-  ({ onClose, title }, ref) => {
+  ({ onClose, title, chapterId }, ref) => {
     const [contentsTitle, setContentsTitle] = useState(title);
     const [uploadVideos, setUploadVideos] = useState<VideoData[]>([]);
     const contentsTitleMaxLength = 30;
 
     const fileInputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+      setContentsTitle(title);
+    }, [title]);
 
     const handleVideoAddButtonClick = () => {
       fileInputRef.current?.click();
@@ -101,6 +104,7 @@ const UploadVideoModal = forwardRef<HTMLDialogElement, UploadVideoModalProps>(
 
     const handleVideoUploadClick = () => {
       // 동영상 업로드 로직 추가 예정
+      console.log("업로드할 목차", chapterId);
       handleResetAndClose();
     };
 

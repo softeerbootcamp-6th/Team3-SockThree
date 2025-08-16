@@ -1,13 +1,10 @@
 import { useState } from "react";
 import VideoListItem from "@/domain/instructor/component/video/VideoListItem";
 
-import useModal from "@/shared/hook/useModal";
-
 import TriangleUpIcon from "@/assets/icons/default/triangle-up.svg?react";
 import TriangleDownIcon from "@/assets/icons/default/triangle-down.svg?react";
 import EditIcon from "@/assets/icons/default/edit.svg?react";
 import DeleteIcon from "@/assets/icons/default/delete.svg?react";
-import UploadVideoModal from "@/domain/instructor/component/video/UploadVideoModal";
 
 interface VideoData {
   id: number;
@@ -17,47 +14,34 @@ interface VideoData {
 }
 
 interface VideoListProps {
-  contentsId?: number;
-  contentsTitle?: string;
+  chapterId?: number;
+  chapterTitle?: string;
   videos?: VideoData[];
+  onEditClick: () => void;
 }
 
 const VideoList = ({
-  contentsId = 1,
-  contentsTitle = "목차명을 입력하세요.",
+  chapterId = 1,
+  chapterTitle = "목차명을 입력하세요.",
   videos = [],
+  onEditClick,
 }: VideoListProps) => {
   const [isListOpen, setIsListOpen] = useState(true);
-  const { modalRef, openModal, closeModal } = useModal();
 
   const handleToggleClick = () => {
     setIsListOpen((prev) => !prev);
   };
 
-  const handleEditClick = () => {
-    openModal();
-  };
-
-  const handleCloseClick = () => {
-    closeModal();
-  };
-
   return (
     <>
-      {/* 모달 */}
-      <UploadVideoModal
-        ref={modalRef}
-        onClose={handleCloseClick}
-        title={contentsTitle}
-      />
       <div
-        id={`${contentsId}`}
+        id={`${chapterId}`}
         className="flex w-[74.875rem] flex-col gap-4 rounded-xl bg-white px-[1.625rem] py-[1.5rem] transition-all duration-300 ease-in-out"
       >
         {/* 헤더 */}
         <div className="flex items-center justify-between">
           <div className="flex flex-col">
-            <h2 className="typo-body-4">{contentsTitle}</h2>
+            <h2 className="typo-body-4">{chapterTitle}</h2>
             <div className="flex flex-row items-center gap-[.6875rem]">
               <p className="typo-label-0 py-[.625rem] text-gray-600">
                 총 강의 수{" "}
@@ -75,7 +59,7 @@ const VideoList = ({
 
           {/* 토글 버튼 */}
           <div className="flex items-center gap-[3.625rem]">
-            <button onClick={handleEditClick}>
+            <button onClick={onEditClick}>
               <EditIcon className="w-[1.4375rem] cursor-pointer text-gray-600" />
             </button>
             <button>
