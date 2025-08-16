@@ -1,5 +1,6 @@
 import { createApi } from "@/shared/api/core/createApi";
 import type { components } from "@/shared/types/openapi";
+import { useQuery } from "@tanstack/react-query";
 
 /* endpoint 정의 */
 const lectureApi = createApi("/lectures");
@@ -48,3 +49,70 @@ const getQnaWidget = (lectureId: number) =>
 // 과제 위젯 데이터 조회 (수강생, 강사)
 const getAssignmentWidget = (lectureId: number) =>
   lectureApi.get<AssignmentWidgetResponse>(`/${lectureId}/widgets/assignment`);
+
+// ========================
+//  * lectures API 훅 정의 *
+// ========================
+
+// 강의 단일 조회
+export const useLecture = (lectureId: number) => {
+  return useQuery({
+    queryKey: ["lecture", lectureId],
+    queryFn: () => getLecture(lectureId),
+    enabled: !!lectureId,
+  });
+};
+
+// 강좌 배너 정보 조회
+export const useLectureBanner = (lectureId: number) => {
+  return useQuery({
+    queryKey: ["lecture", lectureId, "banner"],
+    queryFn: () => getLectureBanner(lectureId),
+    enabled: !!lectureId,
+  });
+};
+
+// 강사 정보 위젯 조회
+export const useTeacherWidget = (lectureId: number) => {
+  return useQuery({
+    queryKey: ["lecture", lectureId, "widget", "teacher"],
+    queryFn: () => getTeacherWidget(lectureId),
+    enabled: !!lectureId,
+  });
+};
+
+// 강좌 수강생 통계 조회
+export const useLectureStatistics = (lectureId: number) => {
+  return useQuery({
+    queryKey: ["lecture", lectureId, "widget", "statistics"],
+    queryFn: () => getLectureStatistics(lectureId),
+    enabled: !!lectureId,
+  });
+};
+
+// 리뷰 위젯 조회
+export const useReviewWidget = (lectureId: number) => {
+  return useQuery({
+    queryKey: ["lecture", lectureId, "widget", "review"],
+    queryFn: () => getReviewWidget(lectureId),
+    enabled: !!lectureId,
+  });
+};
+
+// QNA 위젯 조회
+export const useQnaWidget = (lectureId: number) => {
+  return useQuery({
+    queryKey: ["lecture", lectureId, "widget", "qna"],
+    queryFn: () => getQnaWidget(lectureId),
+    enabled: !!lectureId,
+  });
+};
+
+// 과제 위젯 조회
+export const useAssignmentWidget = (lectureId: number) => {
+  return useQuery({
+    queryKey: ["lecture", lectureId, "widget", "assignment"],
+    queryFn: () => getAssignmentWidget(lectureId),
+    enabled: !!lectureId,
+  });
+};
