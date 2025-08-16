@@ -4,7 +4,7 @@ export function createApi(basePath: string) {
   return {
     get: <TRes>(
       path = "",
-      query?: Record<string, string | number | boolean | undefined>,
+      query?: Record<string, string | number | boolean | undefined | object>,
       opts?: { signal?: AbortSignal; headers?: Record<string, string> }
     ) =>
       request<TRes>({
@@ -16,13 +16,13 @@ export function createApi(basePath: string) {
       }),
     post: <TRes, TBody>(
       path = "",
-      body?: TBody,
+      body?: TBody | FormData,
       opts?: { signal?: AbortSignal; headers?: Record<string, string> }
     ) =>
       request<TRes, TBody>({
         method: "POST",
         path: `${basePath}${path}`,
-        body,
+        ...(body instanceof FormData ? { rawBody: body } : { body }),
         signal: opts?.signal,
         headers: opts?.headers,
       }),
@@ -40,13 +40,13 @@ export function createApi(basePath: string) {
       }),
     put: <TRes, TBody>(
       path = "",
-      body?: TBody,
+      body?: TBody | FormData,
       opts?: { signal?: AbortSignal; headers?: Record<string, string> }
     ) =>
       request<TRes, TBody>({
         method: "PUT",
         path: `${basePath}${path}`,
-        body,
+        ...(body instanceof FormData ? { rawBody: body } : { body }),
         signal: opts?.signal,
         headers: opts?.headers,
       }),
@@ -56,7 +56,7 @@ export function createApi(basePath: string) {
     ) =>
       request<TRes>({
         method: "DELETE",
-        path: `${basePath}${path},`,
+        path: `${basePath}${path}`,
         signal: opts?.signal,
         headers: opts?.headers,
       }),

@@ -1270,57 +1270,57 @@ export interface components {
              * @description 진행 상황 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * Format: int64
              * @description 학생 ID
              * @example 1
              */
-            studentId?: number;
+            studentId: number;
             /**
              * @description 학생 이름
              * @example 김학생
              */
-            studentName?: string;
+            studentName: string;
             /**
              * Format: int64
              * @description 비디오 ID
              * @example 1
              */
-            videoId?: number;
+            videoId: number;
             /**
              * @description 비디오 이름
              * @example 1강 - Java 소개
              */
-            videoName?: string;
+            videoName: string;
             /**
              * Format: int64
              * @description 강의 ID
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
             /**
              * @description 강의 이름
              * @example Java 프로그래밍 기초
              */
-            lectureName?: string;
+            lectureName: string;
             /**
              * @description 챕터 이름
              * @example 1장 - Java 기초
              */
-            chapterName?: string;
+            chapterName: string;
             /**
              * Format: int64
              * @description 재생 시간 (초)
              * @example 120
              */
-            playedTime?: number;
+            playedTime: number;
             /**
              * Format: date-time
              * @description 마지막 시청일시
              * @example 2023-12-01T10:00:00
              */
-            lastWatchedAt?: string;
+            lastWatchedAt: string;
         };
         /** @description 학생 정보 수정 요청 */
         StudentUpdateRequest: {
@@ -1342,15 +1342,27 @@ export interface components {
              */
             gender?: "MALE" | "FEMALE";
         };
+        /** @description 학생 정보 응답 */
         StudentInfoResponse: {
-            /** Format: int64 */
-            id?: number;
-            name?: string;
-            email?: string;
-            /** Format: int32 */
-            age?: number;
-            /** @enum {string} */
-            gender?: "MALE" | "FEMALE";
+            /**
+             * Format: int64
+             * @description 학생 ID
+             */
+            id: number;
+            /** @description 이름 */
+            name: string;
+            /** @description 이메일 */
+            email: string;
+            /**
+             * Format: int32
+             * @description 나이
+             */
+            age: number;
+            /**
+             * @description 성별
+             * @enum {string}
+             */
+            gender: "MALE" | "FEMALE";
         };
         /** @description 리뷰 수정 요청 */
         ReviewUpdateRequest: {
@@ -1373,52 +1385,52 @@ export interface components {
              * @description 리뷰 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * @description 리뷰 내용
              * @example 정말 좋은 강의였습니다!
              */
-            content?: string;
+            content: string;
             /**
              * Format: double
              * @description 평점
              * @example 4.5
              */
-            rating?: number;
+            rating: number;
             /**
              * Format: int64
              * @description 강의 ID
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
             /**
              * @description 강의 제목
              * @example Java 기초 강의
              */
-            lectureTitle?: string;
+            lectureTitle: string;
             /**
              * Format: int64
              * @description 학생 ID
              * @example 1
              */
-            studentId?: number;
+            studentId: number;
             /**
              * @description 학생 이름
              * @example 홍길동
              */
-            studentName?: string;
+            studentName: string;
             /**
              * Format: date-time
              * @description 생성일시
              * @example 2024-01-01T10:00:00
              */
-            createdDt?: string;
+            createdDt: string;
             /**
              * Format: date-time
              * @description 수정일시
              * @example 2024-01-01T10:00:00
              */
-            updatedDt?: string;
+            updatedDt: string;
         };
         /** @description 강의 QnA 등록 요청 */
         LectureQnaRequest: {
@@ -1441,56 +1453,56 @@ export interface components {
              * @description QnA ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * Format: int64
              * @description 학생 ID
              * @example 1
              */
-            studentId?: number;
+            studentId: number;
             /**
              * @description 학생 이름
              * @example 김학생
              */
-            studentName?: string;
+            studentName: string;
             /**
              * Format: int64
              * @description 강의 ID
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
             /**
              * @description 강의 이름
              * @example Java 프로그래밍 기초
              */
-            lectureName?: string;
+            lectureName: string;
             /**
              * @description 질문 내용
              * @example 자바의 다형성에 대해 자세히 설명해주세요.
              */
-            question?: string;
+            question: string;
             /**
              * @description 답변 내용
              * @example 다형성은 하나의 객체가...
              */
-            answer?: string;
+            answer: string;
             /**
              * @description 답변 여부
              * @example true
              */
-            isAnswered?: boolean;
+            isAnswered: boolean;
             /**
              * Format: date-time
              * @description 질문 생성일시
              * @example 2023-12-01T10:00:00
              */
-            questionCreatedAt?: string;
+            questionCreatedAt: string;
             /**
              * Format: date-time
              * @description 마지막 수정일시
              * @example 2023-12-01T11:00:00
              */
-            lastModifiedAt?: string;
+            lastModifiedAt: string;
         };
         /** @description 강의 QnA 답변 요청 */
         LectureQnaAnswerRequest: {
@@ -1550,63 +1562,63 @@ export interface components {
              * @description 강의 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * @description 강의명
              * @example 왕초보 골프 스윙 마스터 클래스
              */
-            name?: string;
+            name: string;
             /**
              * Format: int32
              * @description 기수
              * @example 1
              */
-            cohort?: number;
+            cohort: number;
             /**
              * @description 난이도
              * @example BEGINNER
              * @enum {string}
              */
-            level?: "BEGINNER" | "NOVICE" | "INTERMEDIATE" | "ADVANCED" | "EXPERT";
+            level: "BEGINNER" | "NOVICE" | "INTERMEDIATE" | "ADVANCED" | "EXPERT";
             /**
              * Format: date
              * @description 강의 시작일
              * @example 2024-08-01
              */
-            startDate?: string;
+            startDate: string;
             /**
              * Format: date
              * @description 강의 종료일
              * @example 2024-10-31
              */
-            endDate?: string;
+            endDate: string;
             /**
              * Format: int32
              * @description 최대 수강 인원
              * @example 30
              */
-            maxStudent?: number;
+            maxStudent: number;
             /**
              * Format: int32
              * @description 수강료
              * @example 150000
              */
-            fee?: number;
+            fee: number;
             /**
              * @description 강의 소개
              * @example 골프 스윙의 기본부터 응용까지 체계적으로 배워보세요.
              */
-            instruction?: string;
+            instruction: string;
             /**
              * @description 강의 상세 설명
              * @example 본 강의는 초보자를 위한 맞춤형 커리큘럼으로 구성되어 있습니다.
              */
-            description?: string;
+            description: string;
             /**
              * @description 강의 이미지 URL or Key
              * @example https://aws.com/lectures/images/lecture1.jpg?signedKey=123
              */
-            imageURL?: string;
+            imageURL: string;
         };
         /** @description 수정할 위젯 설정 정보 */
         WidgetSettingUpdateRequest: {
@@ -1652,53 +1664,66 @@ export interface components {
              * @description 위젯 설정 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * @description 위젯 타입
              * @example SUBMISSION
              * @enum {string}
              */
-            widgetType?: "QNA" | "SUBMISSION" | "TEACHER_INFO" | "REVIEW" | "NEXT_LECTURE" | "STUDENTS_STATUS";
+            widgetType: "QNA" | "SUBMISSION" | "TEACHER_INFO" | "REVIEW" | "NEXT_LECTURE" | "STUDENTS_STATUS";
             /**
              * Format: int32
              * @description 행 위치
              * @example 1
              */
-            rowPosition?: number;
+            rowPosition: number;
             /**
              * Format: int32
              * @description 열 위치
              * @example 1
              */
-            colPosition?: number;
+            colPosition: number;
             /**
              * @description 위젯 크기
              * @example SMALL
              * @enum {string}
              */
-            widgetSize?: "SMALL" | "LARGE";
+            widgetSize: "SMALL" | "LARGE";
             /**
              * @description 표시 여부
              * @example true
              */
-            visible?: boolean;
+            visible: boolean;
             /**
              * Format: int64
              * @description 강의 ID
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
         };
+        /** @description 과제 응답 */
         AssignmentResponse: {
-            /** Format: int64 */
-            id?: number;
-            title?: string;
-            content?: string;
-            fileLink?: string;
-            /** Format: date */
-            dueDate?: string;
-            /** Format: int64 */
-            lectureId?: number;
+            /**
+             * Format: int64
+             * @description 과제 ID
+             */
+            id: number;
+            /** @description 제목 */
+            title: string;
+            /** @description 내용 */
+            content: string;
+            /** @description 파일 링크 */
+            fileLink: string;
+            /**
+             * Format: date
+             * @description 마감일
+             */
+            dueDate: string;
+            /**
+             * Format: int64
+             * @description 강의 ID
+             */
+            lectureId: number;
         };
         /** @description 과제 제출 응답 */
         AssignmentSubmissionResponse: {
@@ -1707,56 +1732,56 @@ export interface components {
              * @description 제출 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * Format: int64
              * @description 학생 ID
              * @example 1
              */
-            studentId?: number;
+            studentId: number;
             /**
              * @description 학생 이름
              * @example 김학생
              */
-            studentName?: string;
+            studentName: string;
             /**
              * Format: int64
              * @description 과제 ID
              * @example 1
              */
-            assignmentId?: number;
+            assignmentId: number;
             /**
              * @description 과제 이름
              * @example Java 기초 과제
              */
-            assignmentName?: string;
+            assignmentName: string;
             /**
              * Format: int64
              * @description 강의 ID
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
             /**
              * @description 강의 이름
              * @example Java 프로그래밍 기초
              */
-            lectureName?: string;
+            lectureName: string;
             /**
              * @description 파일 다운로드 URL
              * @example https://s3.amazonaws.com/bucket/assignments/file.pdf
              */
-            fileUrl?: string;
+            fileUrl: string;
             /**
              * @description 과제 내용
              * @example 과제 설명입니다.
              */
-            content?: string;
+            content: string;
             /**
              * Format: date-time
              * @description 제출일시
              * @example 2023-12-01T10:00:00
              */
-            submittedAt?: string;
+            submittedAt: string;
         };
         /** @description 피드백 업데이트 요청 */
         FeedbackUpdateRequest: {
@@ -1876,14 +1901,14 @@ export interface components {
              * @description 생성된 비디오 ID
              * @example 1
              */
-            videoId?: number;
+            videoId: number;
             /** @description S3 업로드용 Presigned URL */
-            uploadPresignedUrl?: string;
+            uploadPresignedUrl: string;
             /**
              * @description S3 저장 경로
              * @example lectures/1/chapters/1/video/1/full
              */
-            s3Key?: string;
+            s3Key: string;
         };
         /** @description 관심 카테고리 추가 요청 */
         InterestingCategoryRequest: {
@@ -1901,29 +1926,29 @@ export interface components {
              * @description 관심 카테고리 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * Format: int64
              * @description 서브 카테고리 ID
              * @example 1
              */
-            subCategoryId?: number;
+            subCategoryId: number;
             /**
              * @description 서브 카테고리명
              * @example Java
              */
-            subCategoryName?: string;
+            subCategoryName: string;
             /**
              * Format: int64
              * @description 메인 카테고리 ID
              * @example 1
              */
-            mainCategoryId?: number;
+            mainCategoryId: number;
             /**
              * @description 메인 카테고리명
              * @example 프로그래밍
              */
-            mainCategoryName?: string;
+            mainCategoryName: string;
         };
         /** @description 강의 수강 등록 요청 */
         LectureEnrollmentRequest: {
@@ -1941,60 +1966,60 @@ export interface components {
              * @description 수강 등록 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * Format: int64
              * @description 학생 ID
              * @example 1
              */
-            studentId?: number;
+            studentId: number;
             /**
              * @description 학생 이름
              * @example 김학생
              */
-            studentName?: string;
+            studentName: string;
             /**
              * Format: int64
              * @description 강의 ID
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
             /**
              * @description 강의명
              * @example Java 기초 강의
              */
-            lectureName?: string;
+            lectureName: string;
             /**
              * @description 카테고리명
              * @example 프로그래밍
              */
-            categoryName?: string;
+            categoryName: string;
             /**
              * @description 강의 레벨
              * @example BEGINNER
              */
-            level?: string;
+            level: string;
             /**
              * Format: date
              * @description 강의 시작일
              */
-            startDate?: string;
+            startDate: string;
             /**
              * Format: date
              * @description 강의 종료일
              */
-            endDate?: string;
+            endDate: string;
             /**
              * Format: int32
              * @description 강의 가격
              * @example 50000
              */
-            fee?: number;
+            fee: number;
             /**
              * Format: date-time
              * @description 수강 등록일시
              */
-            enrolledAt?: string;
+            enrolledAt: string;
         };
         /** @description 챕터 생성 요청 DTO */
         ChapterCreateRequest: {
@@ -2017,18 +2042,18 @@ export interface components {
              * @description 챕터 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * @description 챕터명
              * @example 1주차: 스윙 기본
              */
-            name?: string;
+            name: string;
             /**
              * Format: int64
              * @description 강의 ID
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
         };
         /** @description 강의 북마크 추가 요청 */
         LectureBookmarkRequest: {
@@ -2046,45 +2071,45 @@ export interface components {
              * @description 북마크 ID
              * @example 1
              */
-            id?: number;
+            id: number;
             /**
              * Format: int64
              * @description 학생 ID
              * @example 1
              */
-            studentId?: number;
+            studentId: number;
             /**
              * Format: int64
              * @description 강의 ID
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
             /**
              * @description 강의명
              * @example Java 기초 강의
              */
-            lectureName?: string;
+            lectureName: string;
             /**
              * @description 카테고리명
              * @example 프로그래밍
              */
-            categoryName?: string;
+            categoryName: string;
             /**
              * @description 강의 레벨
              * @example BEGINNER
              */
-            level?: string;
+            level: string;
             /**
              * Format: int32
              * @description 강의 가격
              * @example 50000
              */
-            fee?: number;
+            fee: number;
             /**
              * Format: date-time
              * @description 북마크 추가일시
              */
-            createdDt?: string;
+            createdDt: string;
         };
         /** @description 강사 이력 */
         CareerRegisterRequest: {
@@ -2149,27 +2174,27 @@ export interface components {
              * @description 사용자 ID
              * @example 2024001
              */
-            userId?: string;
+            userId: string;
             /**
              * @description 이름
              * @example 홍길동
              */
-            name?: string;
+            name: string;
             /**
              * @description 이메일
              * @example student@example.com
              */
-            email?: string;
+            email: string;
             /**
              * @description 사용자 역할
              * @example STUDENT
              */
-            role?: string;
+            role: string;
             /**
              * @description 회원가입 성공 메시지
              * @example 회원가입이 완료되었습니다
              */
-            message?: string;
+            message: string;
         };
         /** @description 수강생 회원가입에 필요한 정보 */
         StudentRegisterRequest: {
@@ -2213,18 +2238,18 @@ export interface components {
              * @description 액세스 토큰
              * @example eyJhbGciOiJIUzUxMiJ9...
              */
-            accessToken?: string;
+            accessToken: string;
             /**
              * @description 토큰 타입
              * @example Bearer
              */
-            tokenType?: string;
+            tokenType: string;
             /**
              * Format: int64
              * @description 토큰 만료 시간 (초)
              * @example 3600
              */
-            expiresIn?: number;
+            expiresIn: number;
         };
         /** @description 로그인 요청 */
         LoginRequest: {
@@ -2245,13 +2270,13 @@ export interface components {
              * @description 액세스 토큰
              * @example eyJhbGciOiJIUzUxMiJ9...
              */
-            accessToken?: string;
+            accessToken: string;
             /**
              * @description 사용자 역할
              * @example STUDENT
              * @enum {string}
              */
-            role?: "STUDENT" | "TEACHER" | "ADMIN";
+            role: "STUDENT" | "TEACHER" | "ADMIN";
         };
         /** @description 챕터 수정 요청 DTO */
         ChapterUpdateRequest: {
@@ -2338,25 +2363,51 @@ export interface components {
             last?: boolean;
             empty?: boolean;
         };
+        /** @description 강사 위젯 응답 */
         TeacherWidgetResponse: {
-            profileImageUrl?: string;
-            name?: string;
-            /** Format: int32 */
-            qnaResponseRate?: number;
-            /** Format: double */
-            averageReviewRating?: number;
-            instruction?: string;
-            careerList?: string[];
-            /** Format: int32 */
-            totalLectureCount?: number;
-            /** Format: int32 */
-            totalStudentCount?: number;
-            /** Format: int32 */
-            experienceCareerCount?: number;
-            /** Format: int32 */
-            certificateCareerCount?: number;
-            /** Format: int32 */
-            totalReviewCount?: number;
+            /** @description 프로필 이미지 URL */
+            profileImageUrl: string;
+            /** @description 이름 */
+            name: string;
+            /**
+             * Format: int32
+             * @description Q&A 응답률
+             */
+            qnaResponseRate: number;
+            /**
+             * Format: double
+             * @description 평균 리뷰 평점
+             */
+            averageReviewRating: number;
+            /** @description 소개 */
+            instruction: string;
+            /** @description 경력 목록 */
+            careerList: string[];
+            /**
+             * Format: int32
+             * @description 총 강의 수
+             */
+            totalLectureCount: number;
+            /**
+             * Format: int32
+             * @description 총 학생 수
+             */
+            totalStudentCount: number;
+            /**
+             * Format: int32
+             * @description 경험 경력 수
+             */
+            experienceCareerCount: number;
+            /**
+             * Format: int32
+             * @description 자격증 경력 수
+             */
+            certificateCareerCount: number;
+            /**
+             * Format: int32
+             * @description 총 리뷰 수
+             */
+            totalReviewCount: number;
         };
         /** @description 연령대별 수강생 통계 */
         AgeGroupStatistics: {
@@ -2364,17 +2415,17 @@ export interface components {
              * @description 연령대 (50대 이상 5살 단위)
              * @example 50-54
              */
-            ageGroup?: string;
+            ageGroup: string;
             /**
              * Format: int32
              * @description 남성 수강생 수
              */
-            maleCount?: number;
+            maleCount: number;
             /**
              * Format: int32
              * @description 여성 수강생 수
              */
-            femaleCount?: number;
+            femaleCount: number;
         };
         /** @description 과제별 제출률 */
         AssignmentSubmissionRate: {
@@ -2382,38 +2433,38 @@ export interface components {
              * Format: int64
              * @description 과제 ID
              */
-            assignmentId?: number;
+            assignmentId: number;
             /** @description 과제 이름 */
-            assignmentName?: string;
+            assignmentName: string;
             /**
              * Format: double
              * @description 제출률 (0.0 ~ 1.0)
              */
-            submissionRate?: number;
+            submissionRate: number;
             /**
              * Format: int32
              * @description 제출한 학생 수
              */
-            submittedCount?: number;
+            submittedCount: number;
             /**
              * Format: int32
              * @description 전체 수강생 수
              */
-            totalStudentCount?: number;
+            totalStudentCount: number;
         };
         /** @description 과제 제출률 통계 */
         AssignmentSubmissionStatistics: {
             /** @description 최근 5개 과제 제출률 목록 */
-            recentAssignments?: components["schemas"]["AssignmentSubmissionRate"][];
+            recentAssignments: components["schemas"]["AssignmentSubmissionRate"][];
         };
         /** @description 강좌 수강생 통계 응답 */
         LectureStatisticsResponse: {
             /** @description 비디오 수강 통계 */
-            videoStatistics?: components["schemas"]["VideoStatistics"];
+            videoStatistics: components["schemas"]["VideoStatistics"];
             /** @description 과제 제출률 통계 */
-            assignmentStatistics?: components["schemas"]["AssignmentSubmissionStatistics"];
+            assignmentStatistics: components["schemas"]["AssignmentSubmissionStatistics"];
             /** @description 연령대별 수강생 통계 */
-            ageGroupStatistics?: components["schemas"]["AgeGroupStatistics"][];
+            ageGroupStatistics: components["schemas"]["AgeGroupStatistics"][];
         };
         /** @description 비디오 수강 통계 */
         VideoStatistics: {
@@ -2421,57 +2472,106 @@ export interface components {
              * Format: double
              * @description 평균 시청 비디오 수
              */
-            averageWatchedVideos?: number;
+            averageWatchedVideos: number;
             /**
              * Format: int32
              * @description 모든 비디오를 완주한 학생 수
              */
-            completedStudentsCount?: number;
+            completedStudentsCount: number;
         };
+        /** @description 리뷰 항목 */
         ReviewItem: {
-            /** Format: int64 */
-            reviewId?: number;
-            content?: string;
-            /** Format: double */
-            rating?: number;
-            studentName?: string;
-            lectureName?: string;
-            /** Format: double */
-            studentReviewRatio?: number;
+            /**
+             * Format: int64
+             * @description 리뷰 ID
+             */
+            reviewId: number;
+            /** @description 리뷰 내용 */
+            content: string;
+            /**
+             * Format: double
+             * @description 평점
+             */
+            rating: number;
+            /** @description 학생 이름 */
+            studentName: string;
+            /** @description 강의 이름 */
+            lectureName: string;
+            /**
+             * Format: double
+             * @description 학생 리뷰 비율
+             */
+            studentReviewRatio: number;
         };
+        /** @description 리뷰 위젯 응답 */
         ReviewWidgetResponse: {
-            topReviews?: components["schemas"]["ReviewItem"][];
+            /** @description 상위 리뷰 목록 */
+            topReviews: components["schemas"]["ReviewItem"][];
         };
+        /** @description QnA 항목 */
         QnaItem: {
-            /** Format: int64 */
-            qnaId?: number;
-            question?: string;
-            answer?: string;
-            studentName?: string;
-            lectureName?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            isMyQuestion?: boolean;
+            /**
+             * Format: int64
+             * @description QnA ID
+             */
+            qnaId: number;
+            /** @description 질문 */
+            question: string;
+            /** @description 답변 */
+            answer: string;
+            /** @description 학생 이름 */
+            studentName: string;
+            /** @description 강의 이름 */
+            lectureName: string;
+            /**
+             * Format: date-time
+             * @description 생성일
+             */
+            createdAt: string;
+            /** @description 내 질문 여부 */
+            isMyQuestion: boolean;
         };
+        /** @description QnA 위젯 응답 */
         QnaWidgetResponse: {
-            recentQuestions?: components["schemas"]["QnaItem"][];
-            myQuestions?: components["schemas"]["QnaItem"][];
+            /** @description 최근 질문 목록 */
+            recentQuestions: components["schemas"]["QnaItem"][];
+            /** @description 내 질문 목록 */
+            myQuestions: components["schemas"]["QnaItem"][];
         };
+        /** @description 과제 위젯 응답 */
         AssignmentWidgetResponse: {
-            /** Format: int64 */
-            upcomingAssignmentId?: number;
-            upcomingAssignmentName?: string;
-            upcomingAssignmentInstruction?: string;
-            /** Format: date-time */
-            upcomingDueDateTime?: string;
-            /** Format: int64 */
-            recentSubmissionId?: number;
-            recentSubmissionAssignmentName?: string;
-            recentSubmissionContent?: string;
-            recentSubmissionFileUrl?: string;
-            feedback?: string;
-            /** Format: date-time */
-            recentSubmissionDateTime?: string;
+            /**
+             * Format: int64
+             * @description 다가오는 과제 ID
+             */
+            upcomingAssignmentId: number;
+            /** @description 다가오는 과제 이름 */
+            upcomingAssignmentName: string;
+            /** @description 다가오는 과제 설명 */
+            upcomingAssignmentInstruction: string;
+            /**
+             * Format: date-time
+             * @description 다가오는 과제 마감일
+             */
+            upcomingDueDateTime: string;
+            /**
+             * Format: int64
+             * @description 최근 제출 ID
+             */
+            recentSubmissionId: number;
+            /** @description 최근 제출 과제 이름 */
+            recentSubmissionAssignmentName: string;
+            /** @description 최근 제출 내용 */
+            recentSubmissionContent: string;
+            /** @description 최근 제출 파일 URL */
+            recentSubmissionFileUrl: string;
+            /** @description 피드백 */
+            feedback: string;
+            /**
+             * Format: date-time
+             * @description 최근 제출일
+             */
+            recentSubmissionDateTime: string;
         };
         /** @description 내 강의 현황 위젯 응답 */
         MyLectureStatusWidgetResponse: {
@@ -2480,120 +2580,142 @@ export interface components {
              * @description 강의 진행률
              * @example 50
              */
-            lectureProgressRate?: number;
+            lectureProgressRate: number;
             /**
              * Format: int32
              * @description 강좌의 총 동영상 재생시간
              * @example 121
              */
-            totalVideoDurationHour?: number;
+            totalVideoDurationHour: number;
             /**
              * Format: int32
              * @description 총 동영상 개수
              * @example 10
              */
-            lectureVideoCount?: number;
+            lectureVideoCount: number;
             /**
              * Format: date-time
              * @description 가장 가까운 과제 마감일
              * @example 2025-08-20T23:59:59
              */
-            assignmentDueDateTime?: string;
+            assignmentDueDateTime: string;
             /**
              * @description 과제 이름
              * @example 1주차 과제
              */
-            assignmentName?: string;
+            assignmentName: string;
             /**
              * @description 과제 제출 여부
              * @example true
              */
-            isAssignmentSubmitted?: boolean;
+            isAssignmentSubmitted: boolean;
         };
+        /** @description 강의 정보 위젯 응답 */
         LectureInfoWidgetResponse: {
-            /** Format: int64 */
-            lectureId?: number;
-            /** Format: int32 */
-            cohort?: number;
-            uploadTimesList?: components["schemas"]["UploadTimeResponse"][];
-            /** Format: date */
-            start?: string;
-            /** Format: date */
-            endDate?: string;
-            /** @enum {string} */
-            level?: "BEGINNER" | "NOVICE" | "INTERMEDIATE" | "ADVANCED" | "EXPERT";
-            /** Format: int32 */
-            fee?: number;
+            /**
+             * Format: int64
+             * @description 강의 ID
+             */
+            lectureId: number;
+            /**
+             * Format: int32
+             * @description 기수
+             */
+            cohort: number;
+            /** @description 업로드 시간 목록 */
+            uploadTimesList: components["schemas"]["UploadTimeResponse"][];
+            /**
+             * Format: date
+             * @description 시작일
+             */
+            start: string;
+            /**
+             * Format: date
+             * @description 종료일
+             */
+            endDate: string;
+            /**
+             * @description 난이도
+             * @enum {string}
+             */
+            level: "BEGINNER" | "NOVICE" | "INTERMEDIATE" | "ADVANCED" | "EXPERT";
+            /**
+             * Format: int32
+             * @description 수강료
+             */
+            fee: number;
         };
+        /** @description 업로드 시간 응답 */
         UploadTimeResponse: {
             /**
              * @description 요일
              * @example 월
              */
-            dayOfWeek?: string;
+            dayOfWeek: string;
             /**
              * @description 시간
              * @example HH:mm
              */
-            scheduledAt?: string;
+            scheduledAt: string;
         };
+        /** @description 강의 배너 응답 */
         LectureBannerResponse: {
             /**
              * Format: int64
              * @description 강좌 id
              * @example 1
              */
-            lectureId?: number;
+            lectureId: number;
             /**
              * @description 강좌 이미지 URL
              * @example www.aws.com/s3/image/1
              */
-            presignedImageURL?: string;
+            presignedImageURL: string;
             /**
              * @description 강좌명
              * @example 골프 왕초보 강좌
              */
-            name?: string;
+            name: string;
             /**
              * Format: int32
              * @description 기수
              * @example 1
              */
-            cohort?: number;
+            cohort: number;
             /**
              * Format: int32
              * @description 찜 개수
              * @example 53
              */
-            bookMarkCount?: number;
+            bookMarkCount: number;
             /**
              * Format: int32
              * @description 최대 수강 인원
              * @example 30
              */
-            maxStudentCount?: number;
+            maxStudentCount: number;
             /**
              * Format: int32
              * @description 현재 수강 인원
              * @example 17
              */
-            enrolledStudentCount?: number;
+            enrolledStudentCount: number;
             /**
              * @description 메인 카테고리
              * @example 운동
              */
-            mainCategoryName?: string;
+            mainCategoryName: string;
             /**
              * @description 보조 카테고리
              * @example 골프
              */
-            subCategoryName?: string;
+            subCategoryName: string;
             /**
              * Format: int32
              * @description 강좌 수강 기간 (개월)
              * @example 2
              */
-            lectureDuration?: number;
+            lectureDuration: number;
         };
         PageLectureEnrollmentResponse: {
             /** Format: int64 */
