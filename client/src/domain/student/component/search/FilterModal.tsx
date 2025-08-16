@@ -2,6 +2,7 @@ import Modal from "@/shared/components/Modal";
 import Chips from "@/shared/components/Chips";
 import { useEffect, useState } from "react";
 import type { FilterState } from "@/domain/student/page/course/SearchResultPage";
+import { categories, subCategories } from "@/shared/contstant/categories";
 
 interface FilterModalProps {
   modalRef: React.RefObject<HTMLDialogElement | null>;
@@ -123,31 +124,3 @@ const FilterModal = ({
 };
 
 export default FilterModal;
-
-// constants
-const categories = [
-  "운동",
-  "미술",
-  "재테크",
-  "디지털 정보화",
-  "음악",
-  "생활",
-  "자격증",
-  "기타",
-];
-
-const subCategories: Record<string, string[]> = {
-  운동: [
-    "요가",
-    "필라테스",
-    "실버에어로빅",
-    "탁구",
-    "걷기 모임",
-    "골프",
-    "수영",
-    "라인댄스",
-    "직접 입력",
-  ],
-  미술: ["수채화", "유화", "캘리그라피", "색연필화"],
-  음악: ["합창", "오카리나", "우쿨렐레", "통기타"],
-};
