@@ -6,7 +6,7 @@ import { withAutoRefresh } from "@/shared/api/core/refresh";
 type RequestOptions<TBody = unknown> = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
   path: string; // 상대 경로
-  query?: Record<string, string | number | boolean | undefined>;
+  query?: Record<string, string | number | boolean | undefined | object>;
   body?: TBody; // JSON 형태의 요청 본문
   headers?: Record<string, string>;
   rawBody?: BodyInit; // JSON 외(FormData, Blob 등)

@@ -4,7 +4,7 @@ export function createApi(basePath: string) {
   return {
     get: <TRes>(
       path = "",
-      query?: Record<string, string | number | boolean | undefined>,
+      query?: Record<string, string | number | boolean | undefined | object>,
       opts?: { signal?: AbortSignal; headers?: Record<string, string> }
     ) =>
       request<TRes>({
