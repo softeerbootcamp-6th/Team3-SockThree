@@ -6,6 +6,7 @@ import CourseInfoCardDefault from "@/shared/components/course/CourseInfoCardDefa
 //"/course/:courseId/*" 이내의 페이지
 import CourseDetailDashboardPage from "@/domain/student/page/course/CourseDetailDashboardPage";
 import CourseDetailVideoListPage from "@/domain/student/page/course/CourseDetailVideoListPage";
+import VideoPlayPage from "@/shared/page/video/VideoPlayPage";
 
 const CourseDetailPage = () => {
   const location = useLocation();
@@ -18,20 +19,30 @@ const CourseDetailPage = () => {
   );
 
   return (
-    <CourseDetailWrapper
-      isDashboard={isDashboard}
-      sidebarContent={rightSideBarComponent}
-    >
+    <>
       {/*  탭 내부 라우팅 */}
       <Routes>
-        <Route index element={<div></div>} />
-        <Route path="curriculum" element={<CourseDetailVideoListPage />} />
-        <Route path="reviews" element={<div></div>} />
-        <Route path="dashboard" element={<CourseDetailDashboardPage />} />
-        <Route path="assignments" element={<div></div>} />
-        <Route path="questions" element={<div></div>} />
+        <Route
+          element={
+            <CourseDetailWrapper
+              isDashboard={isDashboard}
+              sidebarContent={rightSideBarComponent}
+            />
+          }
+        >
+          <Route index element={<div></div>} />
+          <Route path="curriculum" element={<CourseDetailVideoListPage />} />
+          <Route path="reviews" element={<div></div>} />
+          <Route path="dashboard" element={<CourseDetailDashboardPage />} />
+          <Route path="assignments" element={<div></div>} />
+          <Route path="questions" element={<div></div>} />
+        </Route>
+        <Route
+          path="curriculum/chapter/:chapterId/video/:videoId"
+          element={<VideoPlayPage />}
+        />
       </Routes>
-    </CourseDetailWrapper>
+    </>
   );
 };
 

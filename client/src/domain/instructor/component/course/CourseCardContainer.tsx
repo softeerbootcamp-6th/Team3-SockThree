@@ -33,7 +33,7 @@ const CourseCardContainer = ({ cardItems }: CourseCardContainerProps) => {
         총 {cardItems?.length}건
       </span>
 
-      {cardItems && cardItems.length > 0 ? (
+      {cardItems ? (
         <div className="flex w-full">
           <div className="grid grid-cols-3 gap-[2.125rem]">
             {cardItems.map((item) => (
