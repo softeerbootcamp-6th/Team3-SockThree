@@ -1,5 +1,6 @@
 import { token } from "@/shared/api/token";
 import { ApiError } from "@/shared/api/error";
+import { redirect } from "react-router";
 
 let refreshingPromise: Promise<string | null> | null = null;
 
@@ -34,8 +35,15 @@ export const withAutoRefresh = async <T>(fn: () => Promise<T>) => {
   } catch (err) {
     const e = err as ApiError;
     if (e instanceof ApiError && e.status === 401) {
-      await refreshAccessToken();
-      return fn();
+      try {
+        await refreshAccessToken();
+        return fn();
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_refreshError) {
+        // 재발급 실패시 login 페이지로 리다이렉트
+        token.clear();
+        throw redirect("/login");
+      }
     }
     throw err;
   }
