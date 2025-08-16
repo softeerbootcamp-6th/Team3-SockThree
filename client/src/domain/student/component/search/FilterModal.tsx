@@ -56,6 +56,7 @@ const FilterModal = ({
     console.log(localFilter.subCategories);
 
     onFilterChange({
+      ...filterState,
       category: localFilter.category || undefined,
       subCategories: localFilter.subCategories,
     });
