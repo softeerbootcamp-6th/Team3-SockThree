@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "format:check": "prettier . --check",
-    "openapi-typescript": "dotenv -e .env.local --npx openapi-typescript ${VITE_OPENAPI_URL} --o src/shared/types/openapi.ts"
+    "openapi:gen": "dotenv -e .env.local -- sh -c 'openapi-typescript \"$VITE_OPENAPI_URL\" -o src/shared/types/openapi.ts'",
+    "openapi:watch": "dotenv -e .env.local -- sh -c 'openapi-typescript \"$VITE_OPENAPI_URL\" -o src/shared/types/openapi.ts --watch'"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.1",
