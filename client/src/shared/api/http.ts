@@ -54,7 +54,7 @@ const _request = async <TRes, TBody = unknown>(
     throw new ApiError({ status: res.status, message, code, details: payload });
   }
 
-  return payload as TRes;
+  return payload.data as TRes;
 };
 
 // 외부 노출: 자동 재발급 포함
