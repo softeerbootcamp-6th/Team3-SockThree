@@ -21,7 +21,9 @@ const CourseDetailWrapper = ({
           {sidebarContent && <div>{sidebarContent}</div>}
         </div>
         <CourseDetailTabBar isEnrolled={true} />
-        <div className="mt-[1rem] w-full"><Outlet/></div>
+        <div className="mt-[1rem] w-full">
+          <Outlet />
+        </div>
       </>
     );
   }
@@ -32,7 +34,9 @@ const CourseDetailWrapper = ({
         <section className="flex flex-1 flex-col gap-[1rem]">
           <CourseDetailHeader courseInfo={courseInfo} />
           <CourseDetailTabBar isEnrolled={true} />
-          <div className="flex-1"><Outlet/></div>
+          <div className="flex-1">
+            <Outlet />
+          </div>
         </section>
         {sidebarContent && (
           <aside>

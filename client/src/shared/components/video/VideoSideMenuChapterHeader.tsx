@@ -31,7 +31,6 @@ const VideoSideMenuChapterHeader = ({
         )}
       </span>
       <span className="flex-1 truncate">{title}</span>
-  
     </button>
   );
 };

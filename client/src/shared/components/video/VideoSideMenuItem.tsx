@@ -29,7 +29,7 @@ const VideoSideMenuItem = ({
   };
 
   return (
-    <nav >
+    <nav>
       <ul>
         {videoLists.map((list) => {
           const id = list.contentsId ?? 0;

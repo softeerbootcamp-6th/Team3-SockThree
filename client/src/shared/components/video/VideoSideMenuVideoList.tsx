@@ -32,9 +32,7 @@ const VideoSideMenuVideoList = ({
                     video.isCompleted ? "bg-main-500" : "bg-gray-300"
                   }`}
                 />
-                <span className="flex-1 truncate">
-                  {video.videoTitle}
-                </span>
+                <span className="flex-1 truncate">{video.videoTitle}</span>
                 <span className="typo-label-4 text-gray-500">
                   {formatTime(video.duration)}
                 </span>
