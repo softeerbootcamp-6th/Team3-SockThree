@@ -1,5 +1,8 @@
 import { createApi } from "@/shared/api/createApi";
 import type { Components } from "@/shared/types/openapi-type";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
+import { token } from "@/shared/api/token";
 
 /* endpoint 정의 */
 const authApi = createApi("/auth");
@@ -41,3 +44,27 @@ export const refresh = (signal?: AbortSignal) =>
 // 토큰 검증
 export const validate = (signal?: AbortSignal) =>
   authApi.get<void>("/validate", undefined, { signal });
+
+// @TODO 쿼리키 규칙
+// const authKeys = {
+//   root: ["auth"] as const,
+//   validate: () => [...authKeys.root, "validate"] as const,
+//   token: () => [...authKeys.root, "token"] as const,
+// };
+
+export const useLogin = () => {
+  const qc = useQueryClient();
+  const navigate = useNavigate();
+
+  return useMutation<LoginResponse, Error, LoginRequest>({
+    mutationFn: login,
+    onSuccess: (data) => {
+      token.set(data.accessToken);
+      qc.setQueryData(["token", "role"], data);
+      qc.invalidateQueries({ queryKey: ["validate"] });
+
+      // 홈페이지로 이동
+      navigate("/");
+    },
+  });
+};
