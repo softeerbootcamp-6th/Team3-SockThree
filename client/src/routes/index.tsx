@@ -19,20 +19,10 @@ import LoginPage from "@/shared/page/login/LoginPage";
 /* 권한에 따른 라우팅 */
 import { RouteByRole } from "@/routes/RouteByRole";
 
-/* React Query */
-import { QueryClientProvider } from "@tanstack/react-query";
-import { queryClient } from "@/shared/utils/queryClient";
-
 export const router = createBrowserRouter([
   {
     path: "/login",
-    element: (
-      <>
-        <QueryClientProvider client={queryClient}>
-          <LoginPage />
-        </QueryClientProvider>
-      </>
-    ),
+    element: <LoginPage />,
   },
   {
     path: "/",
