@@ -14,7 +14,7 @@ export const token = {
     }
   },
   has() {
-    return _accessToken;
+    return Boolean(_accessToken?.trim());
   },
   clear() {
     _accessToken = null;

@@ -1,5 +1,7 @@
-// hooks/useLoginForm.ts
 import { useState } from "react";
+import { login } from "@/shared/api/auth";
+import { useNavigate } from "react-router";
+import { token } from "@/shared/api/core/token";
 
 interface FormErrors {
   email?: string;
@@ -12,6 +14,8 @@ interface LoginFormData {
 }
 
 export const useLoginForm = () => {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
@@ -83,11 +87,16 @@ export const useLoginForm = () => {
     if (Object.keys(newErrors).length > 0) return;
 
     setIsLoading(true);
+
     try {
-      console.log("Login data:", formData);
-      // TODO: 실제 로그인 API 연동
+      const data = await login(formData);
+      if (!data.accessToken)
+        throw new Error("Access token is missing in login response");
+      token.set(data.accessToken);
+
+      navigate("/");
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("로그인 실패:", error);
       setErrors({ email: "이메일 또는 비밀번호가 올바르지 않습니다." });
     } finally {
       setIsLoading(false);

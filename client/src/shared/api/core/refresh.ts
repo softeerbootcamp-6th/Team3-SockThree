@@ -1,5 +1,5 @@
-import { token } from "@/shared/api/token";
-import { ApiError } from "@/shared/api/error";
+import { token } from "@/shared/api/core/token";
+import { ApiError } from "@/shared/api/core/error";
 import { redirect } from "react-router";
 
 let refreshingPromise: Promise<string | null> | null = null;

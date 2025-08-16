@@ -1,7 +1,7 @@
 // src/shared/api/client/http.ts
-import { token } from "@/shared/api/token";
-import { ApiError } from "@/shared/api/error";
-import { withAutoRefresh } from "@/shared/api/refresh";
+import { token } from "@/shared/api/core/token";
+import { ApiError } from "@/shared/api/core/error";
+import { withAutoRefresh } from "@/shared/api/core/refresh";
 
 type RequestOptions<TBody = unknown> = {
   method?: "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
@@ -10,6 +10,7 @@ type RequestOptions<TBody = unknown> = {
   body?: TBody; // JSON 형태의 요청 본문
   headers?: Record<string, string>;
   rawBody?: BodyInit; // JSON 외(FormData, Blob 등)
+  signal?: AbortSignal; // 요청 취소용
 };
 
 const buildUrl = (path: string, query?: RequestOptions["query"]) => {
@@ -53,7 +54,7 @@ const _request = async <TRes, TBody = unknown>(
     throw new ApiError({ status: res.status, message, code, details: payload });
   }
 
-  return payload as TRes;
+  return payload.data as TRes;
 };
 
 // 외부 노출: 자동 재발급 포함

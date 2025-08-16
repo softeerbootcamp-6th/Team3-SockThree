@@ -22,7 +22,7 @@ import { RouteByRole } from "@/routes/RouteByRole";
 export const router = createBrowserRouter([
   {
     path: "/login",
-    element: <LoginPage />, // @TODO: 로그인 페이지 컴포넌트
+    element: <LoginPage />,
   },
   {
     path: "/",
