@@ -16,13 +16,15 @@ const VideoSideMenuItem = ({
   onSelectVideo,
   isMenuOpen,
 }: VideoSideMenuItemProps) => {
-  const [openMap, setOpenMap] = useState<Record<number, boolean>>(() => {
-    const init: Record<number, boolean> = {};
-    videoLists.forEach((list) => {
-      if (list.contentsId) init[list.contentsId] = true;
-    });
-    return init;
-  });
+  const [openMap, setOpenMap] = useState<Record<number, boolean>>(() =>
+    videoLists.reduce(
+      (acc, list) => {
+        if (list.contentsId != null) acc[list.contentsId] = true;
+        return acc;
+      },
+      {} as Record<number, boolean>
+    )
+  );
 
   const toggleChapter = (id: number) => {
     setOpenMap((prev) => ({ ...prev, [id]: !prev[id] }));
