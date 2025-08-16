@@ -1,5 +1,5 @@
-// hooks/useLoginForm.ts
 import { useState } from "react";
+import { useLogin } from "@/shared/api/auth";
 
 interface FormErrors {
   email?: string;
@@ -12,7 +12,9 @@ interface LoginFormData {
 }
 
 export const useLoginForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate: loginMutate, isPending: isLoading } = useLogin();
+
+  // const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
@@ -82,16 +84,12 @@ export const useLoginForm = () => {
 
     if (Object.keys(newErrors).length > 0) return;
 
-    setIsLoading(true);
-    try {
-      console.log("Login data:", formData);
-      // TODO: 실제 로그인 API 연동
-    } catch (error) {
-      console.error("Login error:", error);
-      setErrors({ email: "이메일 또는 비밀번호가 올바르지 않습니다." });
-    } finally {
-      setIsLoading(false);
-    }
+    loginMutate(formData, {
+      onError: (error) => {
+        console.error("로그인 실패:", error);
+        setErrors({ email: "이메일 또는 비밀번호가 올바르지 않습니다." });
+      },
+    });
   };
 
   const isFormValid =
