@@ -13,13 +13,16 @@ import LogoHeaderLayout from "@/shared/layout/LogoHeaderLayout";
 /* Error Pages */
 import Error404 from "@/shared/page/error/Error404";
 
+/* Login Page */
+import LoginPage from "@/shared/page/login/LoginPage";
+
 /* 권한에 따른 라우팅 */
 import { RouteByRole } from "@/routes/RouteByRole";
 
 export const router = createBrowserRouter([
   {
     path: "/login",
-    element: <div>로그인 페이지</div>, // @TODO: 로그인 페이지 컴포넌트
+    element: <LoginPage />, // @TODO: 로그인 페이지 컴포넌트
   },
   {
     path: "/",
